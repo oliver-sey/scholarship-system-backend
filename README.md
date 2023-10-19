@@ -9,3 +9,9 @@ We will put code into those branches, then when that feature is done someone els
 then we will move the changed code into the develop branch (I will tell you how this works).
 
 And then later we will move code from 'develop' to 'main' once that code is working all nicely.
+
+
+# **Put a summary of the code here:**
+
+
+# **Put background info of the code and why we did stuff (big picture stuff) here:**
