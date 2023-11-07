@@ -1,3 +1,3 @@
-public class StaffProfile {
+public class StaffProfile extends Profile {
     
 }

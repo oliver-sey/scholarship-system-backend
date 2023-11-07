@@ -1,3 +1,3 @@
-public class DonorProfile {
+public class DonorProfile extends Profile{
     
 }

@@ -1,3 +1,3 @@
-public class AdminProfile {
+public class AdminProfile extends Profile{
     
 }
