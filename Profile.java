@@ -31,17 +31,17 @@ public abstract class Profile {
 	// TODO: will we need getters and setters for the password?
 	// remember that there might be restrictions on what values we want to allow the user to set their name, username, etc. to
 
-	public void setFirstName() {
-		// TODO: implement me
+	public void setFirstName(String inputFirstName) {
+		this.firstName = inputFirstName;
 	};
 
 
-	public void setLastName() {
-		// TODO: implement me
+	public void setLastName(String inputLastName) {
+		this.lastName = inputLastName;
 	};
 	
 
-	public void setUsername() {
-		// TODO: implement me
+	public void setUsername(String inputUsername) {
+		this.username = inputUsername;
 	};
 }
