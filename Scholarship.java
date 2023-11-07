@@ -19,6 +19,22 @@ public class Scholarship {
         return this.awardAmount;
     }
 
+    public DonorProfile getDonarProfile(){
+        return this.Donor;
+    }
+
+    public HashMap getRequirments(){
+        return this.requirements;
+    }
+
+    public applicants getApplicant(){
+        return this.applicants;
+    }
+
+    public application getApplication(){
+        return this.application;
+    }
+
     //setters
 
 	public void setName(String inputName) {
