@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.StringTokenizer;
+
 public class StudentProfile extends Profile {
 	/* "Requirement text: "The Back End system shall store the  name, Student ID, selected major, selected minor if applicable, 
 	citizenship statuses, GPA, academic standing, grade level, expected graduation date, gender, 
@@ -67,7 +70,7 @@ public class StudentProfile extends Profile {
 	}
 
 	// a getter for boolean isUSCitizen
-	public float getIsUSCitizen() {
+	public boolean getIsUSCitizen() {
 		return this.isUSCitizen;
 	}
 
