@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-
 public class MatchRelationship {
     private StudentProfile student;
     private Scholarship scholarship;
@@ -18,6 +17,16 @@ public class MatchRelationship {
         for (int i = 0; i < applicationQuestions.size(); i++) {
             application.put(applicationQuestions.get(i), "");
         }
+        return application;
+    }
+
+    public HashMap<String, String> UpdateApplication(ArrayList<String> applicationQandA) {
+        HashMap<String, String> application = new HashMap<String, String>();
+        
+        for (int i = 0; i < applicationQandA.size(); i = i + 2) {
+                application.put(applicationQandA.get(i), applicationQandA.get(i + 1));
+        }
+
         return application;
     }
 
@@ -71,8 +80,18 @@ public class MatchRelationship {
 		this.applicationStatus = inputApplicationStatus;
     }
 
-    public void setApplicationStatus(HashMap<String, String> inputApplication) {
-        this.application = inputApplication;
+    public void setApplication(ArrayList<String> inputApplication) {
+        try {
+            if (inputApplication.size() % 2 != 0) {
+                throw new Exception("Uneven answer-question pairings!\nPlease enter an empty string for any unanswered questions.");
+            }
+            
+            this.application = UpdateApplication(inputApplication);
+        }
+
+        catch (Exception except) {
+            System.out.println(except.getMessage());
+        }
     }
 
     public void setAdditionalRequirements(HashMap<String, String> inputAdditionalRequirements) {
