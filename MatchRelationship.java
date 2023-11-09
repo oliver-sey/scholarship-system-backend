@@ -56,12 +56,12 @@ public class MatchRelationship {
 
     //constructors
     public MatchRelationship(StudentProfile inputStudent, Scholarship inputScholarship, float inputMatchPercentage, float inputMatchIndex,
-        ArrayList<String> inputApplication, ArrayList<String> inputAdditionalRequirements) {
+         ArrayList<String> inputAdditionalRequirements) {
             this.student = inputStudent;
             this.scholarship = inputScholarship;
             this.matchPercentage = inputMatchPercentage;
             this.matchIndex = inputMatchIndex;
-            this.application = InitializeApplication(inputApplication);
+            this.application = InitializeApplication(inputScholarship.getApplication());
             this.applicationStatus = "Not Started";
             this.additionalRequirements = InitializeAdditionalRequirements(inputAdditionalRequirements);
     }
@@ -86,6 +86,14 @@ public class MatchRelationship {
 
     public HashMap<String, String> getAdditionalRequirements() {
         return this.additionalRequirements;
+    }
+
+    public String getStudentName() {
+        return this.student.getName();
+    }
+
+    public String getScholarshipName() {
+        return this.scholarship.getName();
     }
 
     //setters

@@ -22,6 +22,10 @@ public abstract class Profile {
 	public String getLastName() {
 		return this.lastName;
 	};
+
+	public String getName() {
+		return this.firstName + " " + this.lastName;
+	}
 	
 
 	public String getusername() {
