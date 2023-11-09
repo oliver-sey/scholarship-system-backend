@@ -20,6 +20,7 @@ public class MatchRelationship {
         return application;
     }
 
+    //update application hashmap with answer values
     public HashMap<String, String> UpdateApplication(ArrayList<String> applicationQandA) {
         HashMap<String, String> application = new HashMap<String, String>();
         
@@ -30,18 +31,39 @@ public class MatchRelationship {
         return application;
     }
 
+    //initialize additional requirement questions hashmap with requirements as keys
+    public HashMap<String, String> InitializeAdditionalRequirements(ArrayList<String> additionalRequirementQs) {
+        HashMap<String, String> additionalRequirements = new HashMap<String, String>();
+
+        for (int i = 0; i < additionalRequirementQs.size(); i++) {
+            application.put(additionalRequirementQs.get(i), "");
+        }
+
+        return additionalRequirements;
+    }
+
+    public HashMap<String, String> UpdateAdditionalRequirements(ArrayList<String> additionalRequirementsQandA) {
+        HashMap<String, String> additionalRequirements = new HashMap<String, String>();
+        
+        for (int i = 0; i < additionalRequirementsQandA.size(); i = i + 2) {
+                additionalRequirements.put(additionalRequirementsQandA.get(i), additionalRequirementsQandA.get(i + 1));
+        }
+
+        return additionalRequirements;
+    }
+
     //need method to compare scholarship requirements with student requirements
 
     //constructors
     public MatchRelationship(StudentProfile inputStudent, Scholarship inputScholarship, float inputMatchPercentage, float inputMatchIndex,
-        ArrayList<String> inputApplication) {
+        ArrayList<String> inputApplication, ArrayList<String> inputAdditionalRequirements) {
             this.student = inputStudent;
             this.scholarship = inputScholarship;
             this.matchPercentage = inputMatchPercentage;
             this.matchIndex = inputMatchIndex;
             this.application = InitializeApplication(inputApplication);
             this.applicationStatus = "Not Started";
-            //initialize additional requirements
+            this.additionalRequirements = InitializeAdditionalRequirements(inputAdditionalRequirements);
     }
 
     //getters
@@ -94,8 +116,18 @@ public class MatchRelationship {
         }
     }
 
-    public void setAdditionalRequirements(HashMap<String, String> inputAdditionalRequirements) {
-        this.additionalRequirements = inputAdditionalRequirements;
+    public void setAdditionalRequirements(ArrayList<String> inputAdditionalRequirements) {
+        try {
+            if (inputAdditionalRequirements.size() % 2 != 0) {
+                throw new Exception("Uneven answer-question pairings!\nPlease enter an empty string for any unanswered questions.");
+            }
+            
+            this.additionalRequirements = UpdateAdditionalRequirements(inputAdditionalRequirements);
+        }
+
+        catch (Exception except) {
+            System.out.println(except.getMessage());
+        }
     }
 
 }

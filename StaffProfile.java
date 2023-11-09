@@ -1,8 +1,8 @@
 public class StaffProfile extends Profile {
-   private string jobRole;
+    private String jobRole;
 
-   public String getjobRole() {
-    return this.jobRole;
+    public String getjobRole() {
+        return this.jobRole;
     }; 
 
     public void setjobRole(String inputJobRole) {

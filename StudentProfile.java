@@ -8,6 +8,32 @@ public class StudentProfile extends Profile {
 	whether or not they already receive funding, and a 500 word maximum personal statement." */ 
 
 	// firstName and lastName are already in Profile
+
+
+	//this is auto-generated but there must be a better way to do this than having  to type every one of these in as parameters
+	public StudentProfile(int studentID, String major, String minor, boolean hasAMinor, boolean isUSCitizen, float GPA,
+			boolean inGoodStanding, boolean hasAdvStanding, String gradeLevel, int gradMonth, int gradYear,
+			String gender, HashMap<String, String> extraDemographics, boolean isFullTimeStudent,
+			boolean isTransferStudent, int curNumCredits, boolean receivesFunding, String personalStatement) {
+		this.studentID = studentID;
+		this.major = major;
+		this.minor = minor;
+		this.hasAMinor = hasAMinor;
+		this.isUSCitizen = isUSCitizen;
+		this.GPA = GPA;
+		this.inGoodStanding = inGoodStanding;
+		this.hasAdvStanding = hasAdvStanding;
+		this.gradeLevel = gradeLevel;
+		this.gradMonth = gradMonth;
+		this.gradYear = gradYear;
+		this.gender = gender;
+		this.extraDemographics = extraDemographics;
+		this.isFullTimeStudent = isFullTimeStudent;
+		this.isTransferStudent = isTransferStudent;
+		this.curNumCredits = curNumCredits;
+		this.receivesFunding = receivesFunding;
+		this.personalStatement = personalStatement;
+	}
 	
 	private int studentID;
 	private String major;
@@ -53,6 +79,8 @@ public class StudentProfile extends Profile {
 	public int getStudentID() {
 		return this.studentID;
 	}
+
+	
 
 	// a getter for major
 	public String getMajor() {
