@@ -137,6 +137,7 @@ public class StudentProfile extends Profile {
 
 
 	// setters
+	// TODO: **** eventually add more to the setters to control what values can be set!
 
 	// a setter for int studentID
 	public void studentID(int inputStudentID) {
