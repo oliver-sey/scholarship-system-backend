@@ -9,13 +9,16 @@ public class StudentProfile extends Profile {
 
 	// firstName and lastName are already in Profile
 
-
-	//this is auto-generated but there must be a better way to do this than having  to type every one of these in as parameters
-	public StudentProfile(int studentID, String major, String minor, boolean hasAMinor, boolean isUSCitizen, float GPA,
+	//constructor with everything 
+	public StudentProfile(String firstName, String lastName, int studentID, String username, String password, String major, boolean hasAMinor, String minor, boolean isUSCitizen, float GPA,
 			boolean inGoodStanding, boolean hasAdvStanding, String gradeLevel, int gradMonth, int gradYear,
 			String gender, boolean isFullTimeStudent, boolean isTransferStudent, int curNumCredits, boolean receivesFunding, 
 			String personalStatement) {
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.studentID = studentID;
+		this.username = username;
+		this.password = password;
 		this.major = major;
 		this.minor = minor;
 		this.hasAMinor = hasAMinor;

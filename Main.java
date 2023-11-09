@@ -27,26 +27,30 @@ public class Main {
 		String[] values = line.split(",");
 
 		// Extract values from the array and convert them to the appropriate types
-		int studentID = Integer.parseInt(values[0].trim());
-		String major = values[1].trim();
-		String minor = values[2].trim();
-		boolean hasAMinor = Boolean.parseBoolean(values[3].trim());
-		boolean isUSCitizen = Boolean.parseBoolean(values[4].trim());
-		float GPA = Float.parseFloat(values[5].trim());
-		boolean inGoodStanding = Boolean.parseBoolean(values[6].trim());
-		boolean hasAdvStanding = Boolean.parseBoolean(values[7].trim());
-		String gradeLevel = values[8].trim();
-		int gradMonth = Integer.parseInt(values[9].trim());
-		int gradYear = Integer.parseInt(values[10].trim());
-		String gender = values[11].trim();
-		boolean isFullTimeStudent = Boolean.parseBoolean(values[12].trim());
-		boolean isTransferStudent = Boolean.parseBoolean(values[13].trim());
-		int curNumCredits = Integer.parseInt(values[14].trim());
-		boolean receivesFunding = Boolean.parseBoolean(values[15].trim());
-		String personalStatement = values[16].trim();
+		String firstName = values[0].trim();
+		String lastName = values[1].trim();
+		int studentID = Integer.parseInt(values[2].trim());
+		String username = values[3].trim();
+		String password = values[4].trim();
+		String major = values[5].trim();
+		boolean hasAMinor = Boolean.parseBoolean(values[6].trim());
+		String minor = values[7].trim();
+		boolean isUSCitizen = Boolean.parseBoolean(values[8].trim());
+		float GPA = Float.parseFloat(values[9].trim());
+		boolean inGoodStanding = Boolean.parseBoolean(values[10].trim());
+		boolean hasAdvStanding = Boolean.parseBoolean(values[11].trim());
+		String gradeLevel = values[12].trim();
+		int gradMonth = Integer.parseInt(values[13].trim());
+		int gradYear = Integer.parseInt(values[14].trim());
+		String gender = values[15].trim();
+		boolean isFullTimeStudent = Boolean.parseBoolean(values[16].trim());
+		boolean isTransferStudent = Boolean.parseBoolean(values[17].trim());
+		int curNumCredits = Integer.parseInt(values[18].trim());
+		boolean receivesFunding = Boolean.parseBoolean(values[19].trim());
+		String personalStatement = values[20].trim();
 
 		// Create and return a new instance of StudentProfile
-		return new StudentProfile(studentID, major, minor, hasAMinor, isUSCitizen, GPA, inGoodStanding, hasAdvStanding,
+		return new StudentProfile(firstName, lastName, studentID, username, password, major, hasAMinor, minor, isUSCitizen, GPA, inGoodStanding, hasAdvStanding,
 				gradeLevel, gradMonth, gradYear, gender, isFullTimeStudent, isTransferStudent,
 				curNumCredits, receivesFunding, personalStatement);
         
