@@ -2,11 +2,11 @@
  * An abstract class for a Profile, that will be the parent class for StudentProfile and more
  */
 public abstract class Profile {
-	private String firstName;
-	private String lastName;
-	private String username;
+	protected String firstName;
+	protected String lastName;
+	protected String username;
 	// TODO: is it ok that this is very low security storing the password as plain text??
-	private String password;
+	protected String password;
 
 	// Not sure what data type we should use for the answers to the security questions
 	// maybe a dictionary? I think the syntax would be Hashtable<String, String> my_dict = new Hashtable<String, String>();

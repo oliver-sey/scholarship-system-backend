@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.ArrayList;
 
 
 
@@ -16,6 +17,7 @@ public class Main {
 
        
 	}
+
 
 	//reads student demographics from comma seperated file and initializes a 
 	public static StudentProfile readStudentProfile(String filePath) throws IOException {
@@ -54,5 +56,19 @@ public class Main {
 				gradeLevel, gradMonth, gradYear, gender, isFullTimeStudent, isTransferStudent,
 				curNumCredits, receivesFunding, personalStatement);
         
+	}
+
+	//reads a text file and converts comma seperated text to a list
+	public static ArrayList<String> ConvertTextToArray(String filePath) throws IOException {
+		ArrayList<String> textArray = new ArrayList<>();
+
+		BufferedReader br = new BufferedReader(new FileReader(filePath));
+
+		String line;
+		while ((line = br.readLine()) != null) {
+			textArray.add(line);
+		}
+
+		return textArray;
 	}
 }
