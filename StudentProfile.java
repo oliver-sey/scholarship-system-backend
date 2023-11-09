@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.StringTokenizer;
+
 public class StudentProfile extends Profile {
 	/* "Requirement text: "The Back End system shall store the  name, Student ID, selected major, selected minor if applicable, 
 	citizenship statuses, GPA, academic standing, grade level, expected graduation date, gender, 
@@ -6,42 +9,42 @@ public class StudentProfile extends Profile {
 
 	// firstName and lastName are already in Profile
 	
-	int studentID;
-	String major;
-	String minor;
+	private int studentID;
+	private String major;
+	private String minor;
 	// TODO: do we need this??
-	boolean hasAMinor;
+	private boolean hasAMinor;
 
 	// TODO: what do we do for citizenship statuses?
-	boolean isUSCitizen;
+	private boolean isUSCitizen;
 
-	float GPA;
+	private float GPA;
 
 	// good standing, bad standing, advanced standing
-	boolean inGoodStanding;
-	boolean hasAdvStanding;
+	private boolean inGoodStanding;
+	private boolean hasAdvStanding;
 
-	String gradeLevel;
+	private String gradeLevel;
 
-	int gradMonth;
-	int gradYear;
+	private int gradMonth;
+	private int gradYear;
 
-	String gender;
+	private String gender;
 
 	// TODO: what do we do for 'student demographics'?
 	private HashMap<String, String> extraDemographics = new HashMap<String, String>();
 
 	// for "type of student"
-	boolean isFullTimeStudent;
-	boolean isTransferStudent;
+	private boolean isFullTimeStudent;
+	private boolean isTransferStudent;
 
-	int curNumCredits;
+	private int curNumCredits;
 
 	// whether or not a student already receives scholarship funding
-	boolean receivesFunding;
+	private boolean receivesFunding;
 
 	// a 500-word max personal statement
-	String personalStatement;
+	private String personalStatement;
 
 
 	// getters
@@ -67,7 +70,7 @@ public class StudentProfile extends Profile {
 	}
 
 	// a getter for boolean isUSCitizen
-	public float getIsUSCitizen() {
+	public boolean getIsUSCitizen() {
 		return this.isUSCitizen;
 	}
 
@@ -134,6 +137,7 @@ public class StudentProfile extends Profile {
 
 
 	// setters
+	// TODO: **** eventually add more to the setters to control what values can be set!
 
 	// a setter for int studentID
 	public void studentID(int inputStudentID) {

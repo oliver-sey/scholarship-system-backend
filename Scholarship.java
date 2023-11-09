@@ -23,15 +23,15 @@ public class Scholarship {
         return this.Donor;
     }
 
-    public HashMap getRequirments(){
+    public HashMap<String, String> getRequirments(){
         return this.requirements;
     }
 
-    public applicants getApplicant(){
+    public ArrayList<StudentProfile> getApplicants(){ 
         return this.applicants;
     }
 
-    public application getApplication(){
+    public ArrayList<String> getApplication(){ 
         return this.application;
     }
 
