@@ -10,11 +10,12 @@ public class Scholarship {
     private HashMap<String, String> requirements = new HashMap<String, String>();
     private ArrayList<String> application = new ArrayList<String>();
 
-    public Scholarship(String name, String description, ArrayList<StudentProfile> applicants, DonorProfile donor,
+
+    //constructor
+    public Scholarship(String name, String description, DonorProfile donor,
             float awardAmount, ArrayList<String> requirements, ArrayList<String> application) {
         this.name = name;
         this.description = description;
-        this.applicants = applicants;
         this.Donor = donor;
         this.awardAmount = awardAmount;
 
@@ -32,6 +33,7 @@ public class Scholarship {
         this.application = application;
     }
 
+    //initializes requirement categories and values into a hashmap
     public HashMap<String, String> InitializeRequirements(ArrayList<String> inputRequirements) {
         HashMap<String, String> requirements = new HashMap<String, String>();
 
@@ -84,5 +86,9 @@ public class Scholarship {
     
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void addApplicant(StudentProfile newStudent) {
+        this.applicants.add(newStudent);
     }
 }

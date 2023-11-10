@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.ArrayList;
 
 
@@ -70,5 +71,52 @@ public class Main {
 		}
 
 		return textArray;
+	}
+
+	public static Scholarship readScholarship(String detailsFile, String applicationFile, String requirementsFile, DonorProfile donor) throws IOException {
+        BufferedReader detailsBr = new BufferedReader(new FileReader(detailsFile));
+		ArrayList<String> application = new ArrayList<String>();
+		ArrayList<String> requirements = new ArrayList<String>();
+		
+		// Read the lines from the file
+		String line = detailsBr.readLine();
+
+		// Split the line into an array of strings
+		String[] values = line.split(",");
+
+		// Extract values from the array and convert them to the appropriate types
+		String name = values[0].trim();
+		String description = values[1].trim();
+		float awardAmount = Float.parseFloat(values[2].trim());
+
+		detailsBr.close();
+		
+		BufferedReader applicationBr = new BufferedReader(new FileReader(applicationFile));
+
+		line = applicationBr.readLine();
+		values = null;
+		values = line.split(",");
+
+		for (int i = 0; i < values.length; i++) {
+			application.add(values[i]);
+		}
+
+		applicationBr.close();
+
+		BufferedReader requirementsBr = new BufferedReader(new FileReader(requirementsFile));
+
+		line = requirementsBr.readLine();
+		values = null;
+		values = line.split(",");
+
+		for (int i = 0; i < values.length; i++) {
+			requirements.add(values[i]);
+		}
+
+		requirementsBr.close();
+
+		// Create and return a new instance of StudentProfile
+		return new Scholarship(name, description, donor, awardAmount, requirements, application);
+        
 	}
 }
