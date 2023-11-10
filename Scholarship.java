@@ -9,6 +9,8 @@ public class Scholarship {
     private float awardAmount;
     private HashMap<String, String> requirements = new HashMap<String, String>();
     private ArrayList<String> application = new ArrayList<String>();
+    private boolean isArchived;
+    private boolean isApproved;
 
 
     //constructor
@@ -31,6 +33,8 @@ public class Scholarship {
         }
         
         this.application = application;
+        this.isApproved = false;
+        this.isArchived = false;
     }
 
     //initializes requirement categories and values into a hashmap
@@ -71,7 +75,15 @@ public class Scholarship {
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
+    }
+
+    public boolean getIsApproved() {
+        return this.isApproved;
+    }
+
+    public boolean getIsArchived() {
+        return this.isArchived;
     }
 
     //setters
@@ -90,5 +102,13 @@ public class Scholarship {
 
     public void addApplicant(StudentProfile newStudent) {
         this.applicants.add(newStudent);
+    }
+
+    public void setIsApproved(boolean isApproved) {
+        this.isApproved = isApproved;
+    }
+
+    public void setIsArchived(boolean isArchived) {
+        this.isArchived = isArchived;
     }
 }
