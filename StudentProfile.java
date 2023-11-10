@@ -270,4 +270,17 @@ public class StudentProfile extends Profile {
 		this.personalStatement = inputPersonalStatement;
 	}
 
+
+
+	@Override
+	public String toString() {
+		return "StudentProfile [studentID=" + studentID + ", major=" + major + ", minor=" + minor + ", hasAMinor="
+				+ hasAMinor + ", isUSCitizen=" + isUSCitizen + ", GPA=" + GPA + ", inGoodStanding=" + inGoodStanding
+				+ ", hasAdvStanding=" + hasAdvStanding + ", gradeLevel=" + gradeLevel + ", gradMonth=" + gradMonth
+				+ ", gradYear=" + gradYear + ", gender=" + gender + ", extraDemographics=" + extraDemographics
+				+ ", isFullTimeStudent=" + isFullTimeStudent + ", isTransferStudent=" + isTransferStudent
+				+ ", curNumCredits=" + curNumCredits + ", receivesFunding=" + receivesFunding + ", personalStatement="
+				+ personalStatement + "]";
+	}
+
 }

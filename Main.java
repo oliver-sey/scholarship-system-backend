@@ -13,9 +13,10 @@ import java.util.ArrayList;
 
 
 public class Main {
-	public static void main(String[] args) {
-		
+	public static void main(String[] args) throws IOException {
+		StudentProfile student = readStudentProfile("C:/Users/katel/scholarship-system-backend/studentInfo.txt");
 
+		System.out.print(student.toString());
        
 	}
 
