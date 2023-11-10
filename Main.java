@@ -93,6 +93,8 @@ public class Main {
 		String name = values.get(0);
 		String description = values.get(1);
 		float awardAmount = Float.parseFloat(values.get(2));
+		boolean isApproved = Boolean.parseBoolean(values.get(3));
+		boolean isArchived = Boolean.parseBoolean(values.get(4));
 
 		detailsBr.close();
 		
@@ -120,10 +122,11 @@ public class Main {
 
 		requirementsBr.close();
 
-		return new Scholarship(name, description, donor, awardAmount, requirements, application);
+		return new Scholarship(name, description, donor, awardAmount, requirements, application, isApproved, isArchived);
         
 	}
 
+	//creates match object from student object, schoalrship object, and file
 	public static MatchRelationship initializeMatch(StudentProfile student, Scholarship scholarship, String filePath) throws NumberFormatException, IOException {
 		float matchPercentage;
 		float matchIndex;
