@@ -23,34 +23,36 @@ public class Main {
 	//reads student demographics from comma seperated file and initializes a 
 	public static StudentProfile readStudentProfile(String filePath) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(filePath));
-		// Read the lines from the file
-		String line = br.readLine();
+		
+		ArrayList<String> values = new ArrayList<String>();
+		String str;
 
-		// Split the line into an array of strings
-		String[] values = line.split(",");
+		while((str = br.readLine()) != null) {
+			values.add(str);
+		}
 
 		// Extract values from the array and convert them to the appropriate types
-		String firstName = values[0].trim();
-		String lastName = values[1].trim();
-		int studentID = Integer.parseInt(values[2].trim());
-		String username = values[3].trim();
-		String password = values[4].trim();
-		String major = values[5].trim();
-		boolean hasAMinor = Boolean.parseBoolean(values[6].trim());
-		String minor = values[7].trim();
-		boolean isUSCitizen = Boolean.parseBoolean(values[8].trim());
-		float GPA = Float.parseFloat(values[9].trim());
-		boolean inGoodStanding = Boolean.parseBoolean(values[10].trim());
-		boolean hasAdvStanding = Boolean.parseBoolean(values[11].trim());
-		String gradeLevel = values[12].trim();
-		int gradMonth = Integer.parseInt(values[13].trim());
-		int gradYear = Integer.parseInt(values[14].trim());
-		String gender = values[15].trim();
-		boolean isFullTimeStudent = Boolean.parseBoolean(values[16].trim());
-		boolean isTransferStudent = Boolean.parseBoolean(values[17].trim());
-		int curNumCredits = Integer.parseInt(values[18].trim());
-		boolean receivesFunding = Boolean.parseBoolean(values[19].trim());
-		String personalStatement = values[20].trim();
+		String firstName = values.get(0);
+		String lastName = values.get(1);
+		int studentID = Integer.parseInt(values.get(2));
+		String username = values.get(3);
+		String password = values.get(4);
+		String major = values.get(5);
+		boolean hasAMinor = Boolean.parseBoolean(values.get(6));
+		String minor = values.get(7);
+		boolean isUSCitizen = Boolean.parseBoolean(values.get(8));
+		float GPA = Float.parseFloat(values.get(9));
+		boolean inGoodStanding = Boolean.parseBoolean(values.get(10));
+		boolean hasAdvStanding = Boolean.parseBoolean(values.get(11));
+		String gradeLevel = values.get(12);
+		int gradMonth = Integer.parseInt(values.get(13));
+		int gradYear = Integer.parseInt(values.get(14));
+		String gender = values.get(15);
+		boolean isFullTimeStudent = Boolean.parseBoolean(values.get(16));
+		boolean isTransferStudent = Boolean.parseBoolean(values.get(17));
+		int curNumCredits = Integer.parseInt(values.get(18));
+		boolean receivesFunding = Boolean.parseBoolean(values.get(19));
+		String personalStatement = values.get(20);
 
 		// Create and return a new instance of StudentProfile
 		return new StudentProfile(firstName, lastName, studentID, username, password, major, hasAMinor, minor, isUSCitizen, GPA, inGoodStanding, hasAdvStanding,
@@ -78,40 +80,39 @@ public class Main {
 		ArrayList<String> application = new ArrayList<String>();
 		ArrayList<String> requirements = new ArrayList<String>();
 		
-		// Read the lines from the file
-		String line = detailsBr.readLine();
+		ArrayList<String> values = new ArrayList<String>();
+		String str;
 
-		// Split the line into an array of strings
-		String[] values = line.split(",");
+		while((str = detailsBr.readLine()) != null) {
+			values.add(str);
+		}
 
 		// Extract values from the array and convert them to the appropriate types
-		String name = values[0].trim();
-		String description = values[1].trim();
-		float awardAmount = Float.parseFloat(values[2].trim());
+		String name = values.get(0);
+		String description = values.get(1);
+		float awardAmount = Float.parseFloat(values.get(2));
 
 		detailsBr.close();
 		
 		BufferedReader applicationBr = new BufferedReader(new FileReader(applicationFile));
 
-		line = applicationBr.readLine();
-		values = null;
-		values = line.split(",");
-
-		for (int i = 0; i < values.length; i++) {
-			application.add(values[i]);
+		values.clear();
+		while((str = applicationBr.readLine()) != null) {
+			values.add(str);
 		}
+
+		application = values;
 
 		applicationBr.close();
 
 		BufferedReader requirementsBr = new BufferedReader(new FileReader(requirementsFile));
 
-		line = requirementsBr.readLine();
-		values = null;
-		values = line.split(",");
-
-		for (int i = 0; i < values.length; i++) {
-			requirements.add(values[i]);
+		values.clear();
+		while((str = requirementsBr.readLine()) != null) {
+			values.add(str);
 		}
+
+		requirements = values;
 
 		requirementsBr.close();
 
