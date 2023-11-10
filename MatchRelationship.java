@@ -9,7 +9,6 @@ public class MatchRelationship {
     private float matchIndex;
     private HashMap<String, String> application = new HashMap<String, String>();
     private String applicationStatus;
-    private HashMap<String, String> additionalRequirements = new HashMap<String, String>();
     
     //input string of application questions into a hashmap as the keys
     public HashMap<String, String> InitializeApplication(ArrayList<String> applicationQuestions) {
@@ -55,15 +54,13 @@ public class MatchRelationship {
     //need method to compare scholarship requirements with student requirements
 
     //constructors
-    public MatchRelationship(StudentProfile inputStudent, Scholarship inputScholarship, float inputMatchPercentage, float inputMatchIndex,
-         ArrayList<String> inputAdditionalRequirements) {
+    public MatchRelationship(StudentProfile inputStudent, Scholarship inputScholarship, float inputMatchPercentage, float inputMatchIndex) {
             this.student = inputStudent;
             this.scholarship = inputScholarship;
             this.matchPercentage = inputMatchPercentage;
             this.matchIndex = inputMatchIndex;
             this.application = InitializeApplication(inputScholarship.getApplication());
             this.applicationStatus = "Not Started";
-            this.additionalRequirements = InitializeAdditionalRequirements(inputAdditionalRequirements);
     }
 
     //getters
@@ -82,10 +79,6 @@ public class MatchRelationship {
 
     public HashMap<String, String> getApplication() {
         return this.application;
-    }
-
-    public HashMap<String, String> getAdditionalRequirements() {
-        return this.additionalRequirements;
     }
 
     public String getStudentName() {
@@ -124,18 +117,5 @@ public class MatchRelationship {
         }
     }
 
-    public void setAdditionalRequirements(ArrayList<String> inputAdditionalRequirements) {
-        try {
-            if (inputAdditionalRequirements.size() % 2 != 0) {
-                throw new Exception("Uneven answer-question pairings!\nPlease enter an empty string for any unanswered questions.");
-            }
-            
-            this.additionalRequirements = UpdateAdditionalRequirements(inputAdditionalRequirements);
-        }
-
-        catch (Exception except) {
-            System.out.println(except.getMessage());
-        }
-    }
 
 }

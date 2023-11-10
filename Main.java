@@ -3,10 +3,10 @@
  */
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.ArrayList;
 
 
@@ -75,6 +75,7 @@ public class Main {
 		return textArray;
 	}
 
+	//creates scholarship object from 3 files and donor object
 	public static Scholarship readScholarship(String detailsFile, String applicationFile, String requirementsFile, DonorProfile donor) throws IOException {
         BufferedReader detailsBr = new BufferedReader(new FileReader(detailsFile));
 		ArrayList<String> application = new ArrayList<String>();
@@ -83,17 +84,18 @@ public class Main {
 		ArrayList<String> values = new ArrayList<String>();
 		String str;
 
+		//read deatails file and store in variables
 		while((str = detailsBr.readLine()) != null) {
 			values.add(str);
 		}
 
-		// Extract values from the array and convert them to the appropriate types
 		String name = values.get(0);
 		String description = values.get(1);
 		float awardAmount = Float.parseFloat(values.get(2));
 
 		detailsBr.close();
 		
+		//read application file and store in array
 		BufferedReader applicationBr = new BufferedReader(new FileReader(applicationFile));
 
 		values.clear();
@@ -105,6 +107,7 @@ public class Main {
 
 		applicationBr.close();
 
+		//read requirements file and store in array
 		BufferedReader requirementsBr = new BufferedReader(new FileReader(requirementsFile));
 
 		values.clear();
@@ -116,8 +119,20 @@ public class Main {
 
 		requirementsBr.close();
 
-		// Create and return a new instance of StudentProfile
 		return new Scholarship(name, description, donor, awardAmount, requirements, application);
         
+	}
+
+	public static MatchRelationship initializeMatch(StudentProfile student, Scholarship scholarship, String filePath) throws NumberFormatException, IOException {
+		float matchPercentage;
+		float matchIndex;
+		BufferedReader br = new BufferedReader(new FileReader(filePath));
+		
+		matchPercentage = Float.parseFloat(br.readLine());
+		matchIndex = Float.parseFloat(br.readLine());
+
+		br.close();
+
+		return new MatchRelationship(student, scholarship, matchPercentage, matchIndex);
 	}
 }
