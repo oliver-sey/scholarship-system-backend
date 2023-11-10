@@ -14,8 +14,8 @@ public class Scholarship {
 
 
     //constructor
-    public Scholarship(String name, String description, DonorProfile donor,
-            float awardAmount, ArrayList<String> requirements, ArrayList<String> application) {
+    public Scholarship(String name, String description, DonorProfile donor, float awardAmount, ArrayList<String> requirements, 
+        ArrayList<String> application) {
         this.name = name;
         this.description = description;
         this.Donor = donor;
@@ -35,6 +35,29 @@ public class Scholarship {
         this.application = application;
         this.isApproved = false;
         this.isArchived = false;
+    }
+
+    public Scholarship(String name, String description, DonorProfile donor, float awardAmount, ArrayList<String> requirements, 
+        ArrayList<String> application, boolean isApproved, boolean isArchived) {
+        this.name = name;
+        this.description = description;
+        this.Donor = donor;
+        this.awardAmount = awardAmount;
+
+        try {
+            if (requirements.size() % 2 != 0) {
+                throw new Exception("Uneven category-value pairings!\nPlease validate that every category name and desired value is present.");
+            }
+            
+            this.requirements = InitializeRequirements(requirements);
+        }
+        catch (Exception except) {
+            System.out.println(except.getMessage());
+        }
+        
+        this.application = application;
+        this.isApproved = isApproved;
+        this.isArchived = isArchived;
     }
 
     //initializes requirement categories and values into a hashmap
