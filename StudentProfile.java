@@ -164,60 +164,70 @@ public class StudentProfile extends Profile {
 		return this.personalStatement;
 	}
 
+	// a getter for boolean isUSCitizen
+	public void getIsUSCitizen(boolean inputIsUSCitizen) {
+		this.isUSCitizen = inputIsUSCitizen;
+	}
 
 
 	// setters
 	// TODO: **** eventually add more to the setters to control what values can be set!
 
 	// a setter for int studentID
-	public void studentID(int inputStudentID) {
+	public void setStudentID(int inputStudentID) {
 		this.studentID = inputStudentID;
 	}
 
 	// a setter for String major
-	public void major(String inputMajor) {
+	public void setMajor(String inputMajor) {
 		this.major = inputMajor;
 	}
 
 	// a setter for String minor
-	public void minor(String inputMinor) {
+	public void setMinor(String inputMinor) {
 		this.minor = inputMinor;
 	}
 
 	// a setter for boolean hasAMinor
-	public void hasAMinor(boolean inputHasAMinor) {
+	public void setHasAMinor(boolean inputHasAMinor) {
 		this.hasAMinor = inputHasAMinor;
 	}
 
-	// a getter for boolean isUSCitizen
-	public void getIsUSCitizen(boolean inputIsUSCitizen) {
-		this.isUSCitizen = inputIsUSCitizen;
-	}
 
 	// a setter for float GPA
-	public void GPA(float inputGPA) {
-		// TODO: don't let them set a GPA below 0.0 or above 4.0
-		// have to be careful with comparing floats since sometimes you store 3.0 and it ends up as 3.000004000
-		this.GPA = inputGPA;
+	public void setGPA(float inputGPA) {
+		
+		try {
+            if (inputGPA > 4.0005 || inputGPA < 0) {
+                throw new Exception("GPA entered is not valid. Please enter a number between 0-4");
+            }
+            
+            this.GPA = inputGPA;
+        }
+
+        catch (Exception except) {
+            System.out.println(except.getMessage());
+        }
+		
 	}
 
 	// a setter for boolean inGoodStanding
-	public void inGoodStanding(boolean inputInGoodStanding) {
+	public void setInGoodStanding(boolean inputInGoodStanding) {
 		this.inGoodStanding = inputInGoodStanding;
 	}
 
 	// a setter for boolean hasAdvStanding
-	public void hasAdvStanding(boolean inputHasAdvStanding) {
+	public void setHasAdvStanding(boolean inputHasAdvStanding) {
 		this.hasAdvStanding = inputHasAdvStanding;
 	}
 
 	// a setter for String gradeLevel
-	public void gradeLevel(String inputGradeLevel) {
+	public void setGradeLevel(String inputGradeLevel) {
 		this.gradeLevel = inputGradeLevel;
 	}
 
 	// a setter for int gradMonth
-	public void gradMonth(int inputGradMonth) {
+	public void setGradMonth(int inputGradMonth) {
 		if (inputGradMonth < 1 || inputGradMonth > 12) {
 			throw new IllegalArgumentException("gradMonth must be >= 1 and <= 12");
 		}
@@ -226,27 +236,27 @@ public class StudentProfile extends Profile {
 	}
 
 	// a setter for int gradYear
-	public void gradYear(int inputGradYear) {
+	public void setGradYear(int inputGradYear) {
 		this.gradYear = inputGradYear;
 	}
 
 	// a setter for String gender
-	public void gender(String inputGender) {
+	public void setGender(String inputGender) {
 		this.gender = inputGender;
 	}
 
 	// a setter for boolean isFullTimeStudent
-	public void isFullTimeStudent(boolean inputIsFullTimeStudent) {
+	public void setIsFullTimeStudent(boolean inputIsFullTimeStudent) {
 		this.isFullTimeStudent = inputIsFullTimeStudent;
 	}
 
 	// a setter for boolean isTransferStudent
-	public void isTransferStudent(boolean inputIsTransferStudent) {
+	public void setIsTransferStudent(boolean inputIsTransferStudent) {
 		this.isTransferStudent = inputIsTransferStudent;
 	}
 
 	// a setter for int curNumCredits
-	public void curNumCredits(int inputCurNumCredits) {
+	public void setCurNumCredits(int inputCurNumCredits) {
 		// TODO: what is a reasonable lower and upper limit for a number of credits?
 		if (inputCurNumCredits < 0 || inputCurNumCredits > 35) {
 			throw new IllegalArgumentException("curNumCredits must be >= 0 and <= 35");
@@ -255,12 +265,12 @@ public class StudentProfile extends Profile {
 	}
 
 	// a setter for boolean receivesFunding
-	public void receivesFunding(boolean inputReceivesFunding) {
+	public void setReceivesFunding(boolean inputReceivesFunding) {
 		this.receivesFunding = inputReceivesFunding;
 	}
 
 	// a setter for String personalStatement
-	public void personalStatement(String inputPersonalStatement) {
+	public void setPersonalStatement(String inputPersonalStatement) {
 		// count the actual number of words, since the requirement said max 500 words
 		int numWords = new StringTokenizer(inputPersonalStatement, " ").countTokens();
 
