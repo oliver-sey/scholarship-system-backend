@@ -3,6 +3,7 @@
  */
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -77,10 +78,11 @@ public class Main {
 	}
 
 	//creates scholarship object from 3 files and donor object
-	public static Scholarship readScholarship(String detailsFile, String applicationFile, String requirementsFile, DonorProfile donor) throws IOException {
+	public static Scholarship readScholarship(String detailsFile, String applicationFile, String requirementsFile) throws IOException {
         BufferedReader detailsBr = new BufferedReader(new FileReader(detailsFile));
 		ArrayList<String> application = new ArrayList<String>();
 		ArrayList<String> requirements = new ArrayList<String>();
+		DonorProfile donor;
 		
 		ArrayList<String> values = new ArrayList<String>();
 		String str;
@@ -92,9 +94,10 @@ public class Main {
 
 		String name = values.get(0);
 		String description = values.get(1);
-		float awardAmount = Float.parseFloat(values.get(2));
-		boolean isApproved = Boolean.parseBoolean(values.get(3));
-		boolean isArchived = Boolean.parseBoolean(values.get(4));
+		String donorName = values.get(2);
+		float awardAmount = Float.parseFloat(values.get(3));
+		boolean isApproved = Boolean.parseBoolean(values.get(4));
+		boolean isArchived = Boolean.parseBoolean(values.get(5));
 
 		detailsBr.close();
 		
@@ -122,6 +125,15 @@ public class Main {
 
 		requirementsBr.close();
 
+		//TO DO:find donor object
+		try {
+			donor = SearchForDonor(donorName);
+		}
+		catch(Exception except) {
+			System.out.println(except.getMessage());
+			donor = new DonorProfile("", "", "", "");
+		}
+
 		return new Scholarship(name, description, donor, awardAmount, requirements, application, isApproved, isArchived);
         
 	}
@@ -138,5 +150,75 @@ public class Main {
 		br.close();
 
 		return new MatchRelationship(student, scholarship, matchPercentage, matchIndex);
+	}
+
+	//creates donor object from file
+	public static DonorProfile readDonor(String filePath) throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader(filePath));
+		ArrayList<String> values = new ArrayList<String>();
+		String str;
+
+		//read deatails file and store in variables
+		while((str = br.readLine()) != null) {
+			values.add(str);
+		}
+
+		String firstName = values.get(0);
+		String lastName = values.get(1);
+		String username = values.get(2);
+		String password = values.get(3);
+
+		br.close();
+
+		return new DonorProfile(firstName, lastName, username, password);
+	}
+
+	//search donors by name
+	public static DonorProfile SearchForDonor(String donorName) throws IOException, Exception {
+		File dir = new File("donors");
+  		File[] directoryListing = dir.listFiles();
+		String correctDonorPath = "";
+
+  		try {
+
+			for (File child : directoryListing) {
+      			BufferedReader br = new BufferedReader(new FileReader(child));
+				ArrayList<String> values = new ArrayList<String>();
+				String str;
+
+				//read deatails file and store in variables
+				while((str = br.readLine()) != null) {
+					values.add(str);
+				}
+
+				String firstName = values.get(0);
+				String lastName = values.get(1);
+
+				br.close();
+
+				String fullNameFound = firstName + " " + lastName;
+
+				if (donorName.equals(fullNameFound)) {
+					correctDonorPath = child.getPath();
+				}
+    		}
+
+			if (correctDonorPath == "") {
+				throw new Exception("Donor not found.");
+			}
+
+		} 
+		catch (FileNotFoundException exept) {
+			System.out.println("No donors in system.");
+		} 
+
+		return readDonor(correctDonorPath);
+
+	}
+	
+	//searches a folder for a scholarship with inputted value
+	public static ArrayList<Scholarship> searchScholarships(String inputCategory, String inputSearchValue) {
+		ArrayList<Scholarship> scholarshipsFound = new ArrayList<Scholarship>();
+		return scholarshipsFound;
 	}
 }
