@@ -138,6 +138,13 @@ public class Main {
         
 	}
 
+	//instansiate all scholarships
+	public static ArrayList<Scholarship> InstansiateAllScholarships() {
+		ArrayList<Scholarship> scholarships = new ArrayList<Scholarship>();
+
+		return scholarships;
+	}
+
 	//creates match object from student object, schoalrship object, and file
 	public static MatchRelationship initializeMatch(StudentProfile student, Scholarship scholarship, String filePath) throws NumberFormatException, IOException {
 		float matchPercentage;
@@ -219,6 +226,8 @@ public class Main {
 	//searches a folder for a scholarship with inputted value
 	public static ArrayList<Scholarship> searchScholarships(String inputCategory, String inputSearchValue) {
 		ArrayList<Scholarship> scholarshipsFound = new ArrayList<Scholarship>();
+
+
 		return scholarshipsFound;
 	}
 }

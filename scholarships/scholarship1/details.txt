@@ -1,0 +1,6 @@
+Special Student Scholarship
+For engineers who are special
+John Smith
+1000
+true
+false
