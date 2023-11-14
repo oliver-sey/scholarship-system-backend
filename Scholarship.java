@@ -40,7 +40,7 @@ public class Scholarship {
     }
 
     public Scholarship(String name, String description, DonorProfile donor, float awardAmount, ArrayList<String> requirements, 
-        ArrayList<String> application, boolean isApproved, boolean isArchived) {
+        ArrayList<String> application, ArrayList<StudentProfile> applicants, boolean isApproved, boolean isArchived) {
         this.name = name;
         this.description = description;
         this.Donor = donor;
@@ -58,6 +58,7 @@ public class Scholarship {
         }
         
         this.application = application;
+        this.applicants = applicants;
         this.isApproved = isApproved;
         this.isArchived = isArchived;
     }

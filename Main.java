@@ -16,11 +16,15 @@ import java.util.ArrayList;
 
 public class Main {
 	public static void main(String[] args) throws IOException {
-	
+		ArrayList<StudentProfile> students = new ArrayList<StudentProfile>();
+		ArrayList<DonorProfile> donors = new ArrayList<DonorProfile>();
 		//StudentProfile student = readStudentProfile();
 		//System.out.print(student.toString());
 
-		Scholarship scholarship = ReadScholarship("scholarships/scholarship1");
+		students = InstansiateAllStudents();
+		donors = InstansiateAllDonors();
+
+		Scholarship scholarship = ReadScholarship("scholarships/scholarship1", donors, students);
 		System.out.print(scholarship.toString());
        
 	}
@@ -164,7 +168,7 @@ public class Main {
 	}
 
 	//instansiate all scholarships
-	public static ArrayList<Scholarship> InstansiateAllScholarships() {
+	public static ArrayList<Scholarship> InstansiateAllScholarships(ArrayList<DonorProfile> donors, ArrayList<StudentProfile> students) {
 		ArrayList<Scholarship> scholarships = new ArrayList<Scholarship>();
 		File dir = new File("scholarships");
   		File[] directoryListing = dir.listFiles();
@@ -173,7 +177,7 @@ public class Main {
 		for (File child : directoryListing) {
 
 			try {
-				scholarship  = ReadScholarship(child.getCanonicalPath());
+				scholarship  = ReadScholarship(child.getCanonicalPath(), donors, students);
 				scholarships.add(scholarship);
 			}
 			catch (IOException except) {
@@ -204,6 +208,27 @@ public class Main {
 		}
 
 		return students;
+	}
+
+	public static ArrayList<DonorProfile> InstansiateAllDonors() {
+		ArrayList<DonorProfile> donors = new ArrayList<DonorProfile>();
+		File dir = new File("donors");
+  		File[] directoryListing = dir.listFiles();
+		DonorProfile donor;
+
+		for (File child : directoryListing) {
+
+			try {
+				donor  = readDonor(child.getCanonicalPath());
+				donors.add(donor);
+			}
+			catch (IOException except) {
+				System.out.println("File not found.");
+			}
+			
+		}
+
+		return donors;
 	}
 
 	//creates match object from student object, scholarship object, and file
