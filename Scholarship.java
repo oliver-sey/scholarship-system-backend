@@ -13,9 +13,10 @@ public class Scholarship {
     private ArrayList<String> application = new ArrayList<String>();
     private boolean isArchived;
     private boolean isApproved;
+    //TO DO: due date attribute and methods
 
 
-    //constructor
+    //constructor for donor typing details in 
     public Scholarship(String name, String description, DonorProfile donor, float awardAmount, ArrayList<String> requirements, 
         ArrayList<String> application) {
         this.name = name;
@@ -39,6 +40,7 @@ public class Scholarship {
         this.isArchived = false;
     }
 
+    //constructor for loading data from files into program
     public Scholarship(String name, String description, DonorProfile donor, float awardAmount, ArrayList<String> requirements, 
         ArrayList<String> application, ArrayList<StudentProfile> applicants, boolean isApproved, boolean isArchived) {
         this.name = name;
