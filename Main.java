@@ -141,7 +141,7 @@ public class Main {
 			donor = new DonorProfile("", "", "", "");
 		}
 
-		return new Scholarship(name, description, donor, awardAmount, requirements, application, isApproved, isArchived);
+		return new Scholarship(name, description, donor, awardAmount, requirements, application, applicants, isApproved, isArchived);
         
 	}
 
@@ -167,7 +167,28 @@ public class Main {
 		return scholarships;
 	}
 
-	//creates match object from student object, schoalrship object, and file
+	public static ArrayList<StudentProfile> InstansiateAllStudents() {
+		ArrayList<StudentProfile> students = new ArrayList<StudentProfile>();
+		File dir = new File("students");
+  		File[] directoryListing = dir.listFiles();
+		StudentProfile student;
+
+		for (File child : directoryListing) {
+
+			try {
+				student  = readStudentProfile(child.getCanonicalPath());
+				students.add(student);
+			}
+			catch (IOException except) {
+				System.out.println("File not found.");
+			}
+			
+		}
+
+		return students;
+	}
+
+	//creates match object from student object, scholarship object, and file
 	public static MatchRelationship initializeMatch(StudentProfile student, Scholarship scholarship, String filePath) throws NumberFormatException, IOException {
 		float matchPercentage;
 		float matchIndex;
