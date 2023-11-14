@@ -84,11 +84,12 @@ public class Main {
 	}
 
 	//creates scholarship object from 3 files and donor object
-	public static Scholarship ReadScholarship(String folderPath) throws IOException {
+	public static Scholarship ReadScholarship(String folderPath, ArrayList<DonorProfile> donors, ArrayList<StudentProfile> students) throws IOException {
         BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath + "/details.txt"));
 		ArrayList<String> application = new ArrayList<String>();
 		ArrayList<String> requirements = new ArrayList<String>();
-		DonorProfile donor;
+		ArrayList<StudentProfile> applicants = new ArrayList<StudentProfile>();
+		DonorProfile correctDonor = new DonorProfile("", "", "", "");
 		//scholarships\scholarship1\requirements.txt
 		
 		ArrayList<String> values = new ArrayList<String>();
@@ -132,16 +133,33 @@ public class Main {
 
 		requirementsBr.close();
 
-		//find donor object
-		try {
-			donor = SearchForDonor(donorName);
-		}
-		catch(Exception except) {
-			System.out.println(except.getMessage());
-			donor = new DonorProfile("", "", "", "");
+		//read applicants file
+		BufferedReader applicantsBr = new BufferedReader(new FileReader(folderPath + "/applicants.txt"));
+
+		values.clear();
+		while((str = requirementsBr.readLine()) != null) {
+			values.add(str);
 		}
 
-		return new Scholarship(name, description, donor, awardAmount, requirements, application, applicants, isApproved, isArchived);
+		//find student objects
+		for (String applicantName : values) {
+			for (StudentProfile student: students) {
+				if (applicantName.compareTo(student.getName()) == 0) {
+					applicants.add(student);
+				}
+			}
+		}
+
+		applicantsBr.close();
+
+		//find donor object
+		for (DonorProfile donor: donors) {
+			if (donorName.compareTo(donor.getName()) == 0) {
+				correctDonor = donor;
+			}
+		}
+
+		return new Scholarship(name, description, correctDonor, awardAmount, requirements, application, applicants, isApproved, isArchived);
         
 	}
 
