@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.ArrayList;
 
 
@@ -18,6 +19,9 @@ public class Main {
 	
 		//StudentProfile student = readStudentProfile();
 		//System.out.print(student.toString());
+
+		Scholarship scholarship = ReadScholarship("scholarships/scholarship1");
+		System.out.print(scholarship.toString());
        
 	}
 
@@ -32,6 +36,8 @@ public class Main {
 		while((str = br.readLine()) != null) {
 			values.add(str);
 		}
+
+		br.close();
 
 		// Extract values from the array and convert them to the appropriate types
 		String firstName = values.get(0);
@@ -78,11 +84,12 @@ public class Main {
 	}
 
 	//creates scholarship object from 3 files and donor object
-	public static Scholarship readScholarship(String detailsFile, String applicationFile, String requirementsFile) throws IOException {
-        BufferedReader detailsBr = new BufferedReader(new FileReader(detailsFile));
+	public static Scholarship ReadScholarship(String folderPath) throws IOException {
+        BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath + "/details.txt"));
 		ArrayList<String> application = new ArrayList<String>();
 		ArrayList<String> requirements = new ArrayList<String>();
 		DonorProfile donor;
+		//scholarships\scholarship1\requirements.txt
 		
 		ArrayList<String> values = new ArrayList<String>();
 		String str;
@@ -102,7 +109,7 @@ public class Main {
 		detailsBr.close();
 		
 		//read application file and store in array
-		BufferedReader applicationBr = new BufferedReader(new FileReader(applicationFile));
+		BufferedReader applicationBr = new BufferedReader(new FileReader(folderPath + "/application.txt"));
 
 		values.clear();
 		while((str = applicationBr.readLine()) != null) {
@@ -114,7 +121,7 @@ public class Main {
 		applicationBr.close();
 
 		//read requirements file and store in array
-		BufferedReader requirementsBr = new BufferedReader(new FileReader(requirementsFile));
+		BufferedReader requirementsBr = new BufferedReader(new FileReader(folderPath + "/requirements.txt"));
 
 		values.clear();
 		while((str = requirementsBr.readLine()) != null) {
@@ -125,7 +132,7 @@ public class Main {
 
 		requirementsBr.close();
 
-		//TO DO:find donor object
+		//find donor object
 		try {
 			donor = SearchForDonor(donorName);
 		}
@@ -141,6 +148,21 @@ public class Main {
 	//instansiate all scholarships
 	public static ArrayList<Scholarship> InstansiateAllScholarships() {
 		ArrayList<Scholarship> scholarships = new ArrayList<Scholarship>();
+		File dir = new File("scholarships");
+  		File[] directoryListing = dir.listFiles();
+		Scholarship scholarship;
+
+		for (File child : directoryListing) {
+
+			try {
+				scholarship  = ReadScholarship(child.getCanonicalPath());
+				scholarships.add(scholarship);
+			}
+			catch (IOException except) {
+				System.out.println("File not found.");
+			}
+			
+		}
 
 		return scholarships;
 	}
@@ -224,10 +246,30 @@ public class Main {
 	}
 	
 	//searches a folder for a scholarship with inputted value
-	public static ArrayList<Scholarship> searchScholarships(String inputCategory, String inputSearchValue) {
+	public static ArrayList<Scholarship> searchScholarships(String inputCategory, String inputSearchValue, ArrayList<Scholarship> scholarshipsToSearch) {
 		ArrayList<Scholarship> scholarshipsFound = new ArrayList<Scholarship>();
+		HashMap<String, String> requirements = new HashMap<String, String>();
 
+		if (inputCategory.compareTo("name") == 0) {
 
+		}
+		else if (inputCategory.compareTo("donor") == 0) {
+
+		}
+		else if (inputCategory.compareTo("applicant") == 0) {
+
+		}
+		else {
+			for(Scholarship scholarship : scholarshipsToSearch) {
+				requirements = scholarship.getRequirments();
+
+				for (Map.Entry<String, String> entry : requirements.entrySet()) {
+					//String key = entry.getKey();
+					//Integer value = entry.getValue();
+				}
+			}
+		}
+		
 		return scholarshipsFound;
 	}
 }

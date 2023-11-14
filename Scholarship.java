@@ -2,7 +2,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Scholarship {
-	private String name;
+	
+
+    private String name;
     private String description;
     private ArrayList<StudentProfile> applicants = new ArrayList<StudentProfile>();
     private DonorProfile Donor;
@@ -133,5 +135,12 @@ public class Scholarship {
 
     public void setIsArchived(boolean isArchived) {
         this.isArchived = isArchived;
+    }
+
+    @Override
+    public String toString() {
+        return "Scholarship [name=" + name + ", description=" + description + ", applicants=" + applicants + ", Donor="
+                + Donor.getName() + ", awardAmount=" + awardAmount + ", requirements=" + requirements + ", application="
+                + application + ", isArchived=" + isArchived + ", isApproved=" + isApproved + "]";
     }
 }
