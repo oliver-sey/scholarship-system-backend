@@ -2,17 +2,24 @@ import java.util.HashMap;
 import java.util.StringTokenizer;
 
 public class StudentProfile extends Profile {
-	/* "Requirement text: "The Back End system shall store the  name, Student ID, selected major, selected minor if applicable, 
-	citizenship statuses, GPA, academic standing, grade level, expected graduation date, gender, 
-	student demographics, type of student, number of currently enrolled units, 
-	whether or not they already receive funding, and a 500 word maximum personal statement." */ 
+	/*
+	 * "Requirement text: "The Back End system shall store the name, Student ID,
+	 * selected major, selected minor if applicable,
+	 * citizenship statuses, GPA, academic standing, grade level, expected
+	 * graduation date, gender,
+	 * student demographics, type of student, number of currently enrolled units,
+	 * whether or not they already receive funding, and a 500 word maximum personal
+	 * statement."
+	 */
 
 	// firstName and lastName are already in Profile
 
-	//constructor with everything 
-	public StudentProfile(String firstName, String lastName, int studentID, String username, String password, String major, boolean hasAMinor, String minor, boolean isUSCitizen, float GPA,
+	// constructor with everything
+	public StudentProfile(String firstName, String lastName, int studentID, String username, String password,
+			String major, boolean hasAMinor, String minor, boolean isUSCitizen, float GPA,
 			boolean inGoodStanding, boolean hasAdvStanding, String gradeLevel, int gradMonth, int gradYear,
-			String gender, boolean isFullTimeStudent, boolean isTransferStudent, int curNumCredits, boolean receivesFunding, 
+			String gender, boolean isFullTimeStudent, boolean isTransferStudent, int curNumCredits,
+			boolean receivesFunding,
 			String personalStatement) {
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -36,7 +43,7 @@ public class StudentProfile extends Profile {
 		this.receivesFunding = receivesFunding;
 		this.personalStatement = personalStatement;
 	}
-	
+
 	private int studentID;
 	private String major;
 	private String minor;
@@ -74,15 +81,12 @@ public class StudentProfile extends Profile {
 	// a 500-word max personal statement
 	private String personalStatement;
 
-
 	// getters
 
 	// a getter for studentID
 	public int getStudentID() {
 		return this.studentID;
 	}
-
-	
 
 	// a getter for major
 	public String getMajor() {
@@ -169,9 +173,9 @@ public class StudentProfile extends Profile {
 		this.isUSCitizen = inputIsUSCitizen;
 	}
 
-
 	// setters
-	// TODO: **** eventually add more to the setters to control what values can be set!
+	// TODO: **** eventually add more to the setters to control what values can be
+	// set!
 
 	// a setter for int studentID
 	public void setStudentID(int inputStudentID) {
@@ -193,22 +197,21 @@ public class StudentProfile extends Profile {
 		this.hasAMinor = inputHasAMinor;
 	}
 
-
 	// a setter for float GPA
 	public void setGPA(float inputGPA) {
-		
-		try {
-            if (inputGPA > 4.0005 || inputGPA < 0) {
-                throw new Exception("GPA entered is not valid. Please enter a number between 0-4");
-            }
-            
-            this.GPA = inputGPA;
-        }
 
-        catch (Exception except) {
-            System.out.println(except.getMessage());
-        }
-		
+		try {
+			if (inputGPA > 4.0005 || inputGPA < 0) {
+				throw new Exception("GPA entered is not valid. Please enter a number between 0-4");
+			}
+
+			this.GPA = inputGPA;
+		}
+
+		catch (Exception except) {
+			System.out.println(except.getMessage());
+		}
+
 	}
 
 	// a setter for boolean inGoodStanding
@@ -231,7 +234,7 @@ public class StudentProfile extends Profile {
 		if (inputGradMonth < 1 || inputGradMonth > 12) {
 			throw new IllegalArgumentException("gradMonth must be >= 1 and <= 12");
 		}
-		
+
 		this.gradMonth = inputGradMonth;
 	}
 
@@ -275,12 +278,11 @@ public class StudentProfile extends Profile {
 		int numWords = new StringTokenizer(inputPersonalStatement, " ").countTokens();
 
 		if (numWords > 500) {
-			throw new IllegalArgumentException("personalStatement must be <= 500 words (gets counted as space-separated tokens)");
+			throw new IllegalArgumentException(
+					"personalStatement must be <= 500 words (gets counted as space-separated tokens)");
 		}
 		this.personalStatement = inputPersonalStatement;
 	}
-
-
 
 	@Override
 	public String toString() {

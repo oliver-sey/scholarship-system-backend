@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Scholarship {
-	
 
     private String name;
     private String description;
@@ -13,12 +12,12 @@ public class Scholarship {
     private ArrayList<String> application = new ArrayList<String>();
     private boolean isArchived;
     private boolean isApproved;
-    //TO DO: due date attribute and methods
+    // TO DO: due date attribute and methods
 
-
-    //constructor for donor typing details in 
-    public Scholarship(String name, String description, DonorProfile donor, float awardAmount, ArrayList<String> requirements, 
-        ArrayList<String> application) {
+    // constructor for donor typing details in
+    public Scholarship(String name, String description, DonorProfile donor, float awardAmount,
+            ArrayList<String> requirements,
+            ArrayList<String> application) {
         this.name = name;
         this.description = description;
         this.Donor = donor;
@@ -26,23 +25,25 @@ public class Scholarship {
 
         try {
             if (requirements.size() % 2 != 0) {
-                throw new Exception("Uneven category-value pairings!\nPlease validate that every category name and desired value is present.");
+                throw new Exception(
+                        "Uneven category-value pairings!\nPlease validate that every category name and desired value is present.");
             }
-            
+
             this.requirements = InitializeRequirements(requirements);
-        }
-        catch (Exception except) {
+        } catch (Exception except) {
             System.out.println(except.getMessage());
         }
-        
+
         this.application = application;
         this.isApproved = false;
         this.isArchived = false;
     }
 
-    //constructor for loading data from files into program
-    public Scholarship(String name, String description, DonorProfile donor, float awardAmount, ArrayList<String> requirements, 
-        ArrayList<String> application, ArrayList<StudentProfile> applicants, boolean isApproved, boolean isArchived) {
+    // constructor for loading data from files into program
+    public Scholarship(String name, String description, DonorProfile donor, float awardAmount,
+            ArrayList<String> requirements,
+            ArrayList<String> application, ArrayList<StudentProfile> applicants, boolean isApproved,
+            boolean isArchived) {
         this.name = name;
         this.description = description;
         this.Donor = donor;
@@ -50,55 +51,55 @@ public class Scholarship {
 
         try {
             if (requirements.size() % 2 != 0) {
-                throw new Exception("Uneven category-value pairings!\nPlease validate that every category name and desired value is present.");
+                throw new Exception(
+                        "Uneven category-value pairings!\nPlease validate that every category name and desired value is present.");
             }
-            
+
             this.requirements = InitializeRequirements(requirements);
-        }
-        catch (Exception except) {
+        } catch (Exception except) {
             System.out.println(except.getMessage());
         }
-        
+
         this.application = application;
         this.applicants = applicants;
         this.isApproved = isApproved;
         this.isArchived = isArchived;
     }
 
-    //initializes requirement categories and values into a hashmap
+    // initializes requirement categories and values into a hashmap
     public HashMap<String, String> InitializeRequirements(ArrayList<String> inputRequirements) {
         HashMap<String, String> requirements = new HashMap<String, String>();
 
         for (int i = 0; i < inputRequirements.size(); i = i + 2) {
             requirements.put(inputRequirements.get(i), inputRequirements.get(i + 1));
         }
-        
+
         return requirements;
     }
 
-    //getters
+    // getters
 
-    public String getName(){
-		return this.name;
-	}
+    public String getName() {
+        return this.name;
+    }
 
     public float getAwardAmount() {
         return this.awardAmount;
     }
 
-    public DonorProfile getDonarProfile(){
+    public DonorProfile getDonorProfile() {
         return this.Donor;
     }
 
-    public HashMap<String, String> getRequirments(){
+    public HashMap<String, String> getRequirements() {
         return this.requirements;
     }
 
-    public ArrayList<StudentProfile> getApplicants(){ 
+    public ArrayList<StudentProfile> getApplicants() {
         return this.applicants;
     }
 
-    public ArrayList<String> getApplication(){ 
+    public ArrayList<String> getApplication() {
         return this.application;
     }
 
@@ -114,16 +115,16 @@ public class Scholarship {
         return this.isArchived;
     }
 
-    //setters
+    // setters
 
-	public void setName(String inputName) {
-		this.name = inputName;
-	}
+    public void setName(String inputName) {
+        this.name = inputName;
+    }
 
     public void setAwardAmount(float inputAwardAmount) {
         this.awardAmount = inputAwardAmount;
     }
-    
+
     public void setDescription(String description) {
         this.description = description;
     }
