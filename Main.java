@@ -315,7 +315,9 @@ public class Main {
 		HashMap<String, String> requirements = new HashMap<String, String>();
 
 		if (inputCategory.compareTo("name") == 0) {
-
+			for (Scholarship scholarship: scholarshipsToSearch) {
+				
+			}
 		}
 		else if (inputCategory.compareTo("donor") == 0) {
 
