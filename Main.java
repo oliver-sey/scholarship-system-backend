@@ -172,17 +172,21 @@ public class Main {
 	public static ArrayList<Scholarship> InstantiateAllScholarships(ArrayList<DonorProfile> donors,
 			ArrayList<StudentProfile> students) {
 		ArrayList<Scholarship> scholarships = new ArrayList<Scholarship>();
+		// open the 'scholarships' folder
 		File dir = new File("scholarships");
+		// all the files/folders in the scholarships folder
 		File[] directoryListing = dir.listFiles();
 		Scholarship scholarship;
-
+		
+		// loop through the list of files/folders that are in the 'scholarships' folder
+		// each child is for one scholarship
 		for (File child : directoryListing) {
 
 			try {
 				scholarship = ReadScholarship(child.getCanonicalPath(), donors, students);
 				scholarships.add(scholarship);
 			} catch (IOException except) {
-				System.out.println("File not found.");
+				System.out.println("File not found: " + child.getAbsolutePath());
 			}
 
 		}
@@ -202,7 +206,7 @@ public class Main {
 				student = readStudentProfile(child.getCanonicalPath());
 				students.add(student);
 			} catch (IOException except) {
-				System.out.println("File not found.");
+				System.out.println("File not found: " + child.getAbsolutePath());
 			}
 
 		}
@@ -222,7 +226,7 @@ public class Main {
 				donor = readDonor(child.getCanonicalPath());
 				donors.add(donor);
 			} catch (IOException except) {
-				System.out.println("File not found.");
+				System.out.println("File not found: " + child.getAbsolutePath());
 			}
 
 		}
@@ -300,7 +304,7 @@ public class Main {
 				throw new Exception("Donor not found.");
 			}
 
-		} catch (FileNotFoundException exept) {
+		} catch (FileNotFoundException except) {
 			System.out.println("No donors in system.");
 		}
 
@@ -316,7 +320,7 @@ public class Main {
 
 		if (inputCategory.compareTo("name") == 0) {
 			for (Scholarship scholarship: scholarshipsToSearch) {
-				
+				// TODO: ****implement me!
 			}
 		}
 		else if (inputCategory.compareTo("donor") == 0) {
@@ -330,6 +334,8 @@ public class Main {
 				for (Map.Entry<String, String> entry : requirements.entrySet()) {
 					// String key = entry.getKey();
 					// Integer value = entry.getValue();
+
+					// TODO: implement me!!
 				}
 			}
 		}
