@@ -73,6 +73,7 @@ public class Main {
 	}
 
 	// reads a text file and converts comma separated text to a list
+	//Maybe not needed
 	public static ArrayList<String> ConvertTextToArray(String filePath) throws IOException {
 		ArrayList<String> textArray = new ArrayList<>();
 
@@ -267,6 +268,7 @@ public class Main {
 	}
 
 	// search donors by name
+	//Maybe not needed
 	public static DonorProfile SearchForDonor(String donorName) throws IOException, Exception {
 		File dir = new File("donors");
 		File[] directoryListing = dir.listFiles();
