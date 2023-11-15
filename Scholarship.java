@@ -12,6 +12,19 @@ public class Scholarship {
     private ArrayList<String> application = new ArrayList<String>();
     private boolean isArchived;
     private boolean isApproved;
+
+    // day month and year for when this scholarship was added
+    // would be too complicated to mess around with date objects
+    private int dayAdded;
+    private int monthAdded;
+    private int yearAdded;
+
+    // for the scholarship due date
+    // TODO: are scholarships always due end of day?
+    private int dayDue;
+    private int monthDue;
+    private int yearDue;
+
     // TO DO: due date attribute and methods
 
     // constructor for donor typing details in
@@ -77,6 +90,10 @@ public class Scholarship {
         return requirements;
     }
 
+    public void addApplicant(StudentProfile newStudent) {
+        this.applicants.add(newStudent);
+    }
+
     // getters
 
     public String getName() {
@@ -115,7 +132,37 @@ public class Scholarship {
         return this.isArchived;
     }
 
+    public DonorProfile getDonor() {
+        return Donor;
+    }
+
+    public int getDayAdded() {
+        return dayAdded;
+    }
+
+    public int getMonthAdded() {
+        return monthAdded;
+    }
+
+    public int getYearAdded() {
+        return yearAdded;
+    }
+
+    public int getDayDue() {
+        return dayDue;
+    }
+
+    public int getMonthDue() {
+        return monthDue;
+    }
+
+    public int getYearDue() {
+        return yearDue;
+    }
+
     // setters
+
+    // TODO: ****check if all these auto-generated setters are good!!
 
     public void setName(String inputName) {
         this.name = inputName;
@@ -129,16 +176,85 @@ public class Scholarship {
         this.description = description;
     }
 
-    public void addApplicant(StudentProfile newStudent) {
-        this.applicants.add(newStudent);
-    }
-
     public void setIsApproved(boolean isApproved) {
         this.isApproved = isApproved;
     }
 
     public void setIsArchived(boolean isArchived) {
         this.isArchived = isArchived;
+    }
+
+    public void setApplicants(ArrayList<StudentProfile> applicants) {
+        this.applicants = applicants;
+    }
+
+    // TODO: what to do for this???
+    public void setDonor(DonorProfile donor) {
+        Donor = donor;
+    }
+
+    public void setRequirements(HashMap<String, String> requirements) {
+        this.requirements = requirements;
+    }
+
+    public void setApplication(ArrayList<String> application) {
+        this.application = application;
+    }
+
+    public void setArchived(boolean isArchived) {
+        this.isArchived = isArchived;
+    }
+
+    public void setApproved(boolean isApproved) {
+        this.isApproved = isApproved;
+    }
+
+    public void setDayAdded(int dayAdded) {
+        if (dayAdded < 1 || dayAdded > 31) {
+            throw new IllegalArgumentException("dayAdded must be >= 1 and <= 31");
+        }
+
+        this.dayAdded = dayAdded;
+    }
+
+    public void setMonthAdded(int monthAdded) {
+        if (monthAdded < 1 || monthAdded > 12) {
+            throw new IllegalArgumentException("monthAdded must be >= 1 and <= 12");
+        }
+
+        this.monthAdded = monthAdded;
+    }
+
+    public void setYearAdded(int yearAdded) {
+        if (yearAdded < 2000) {
+            throw new IllegalArgumentException("yearAdded must be >= 2000");
+        }
+
+        this.yearAdded = yearAdded;
+    }
+
+    public void setDayDue(int dayDue) {
+        if (dayDue < 1 || dayDue > 31) {
+            throw new IllegalArgumentException("dayDue must be >= 1 and <= 31");
+        }
+
+        this.dayDue = dayDue;
+    }
+
+    public void setMonthDue(int monthDue) {
+        if (monthDue < 1 || monthDue > 12) {
+            throw new IllegalArgumentException("monthDue must be >= 1 and <= 12");
+        }
+
+        this.monthDue = monthDue;
+    }
+
+    public void setYearDue(int yearDue) {
+        if (yearDue < 2000) {
+            throw new IllegalArgumentException("yearDue must be >= 2000");
+        }
+
+        this.yearDue = yearDue;
     }
 
     @Override
