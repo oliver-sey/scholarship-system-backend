@@ -145,7 +145,7 @@ public class Main {
 		BufferedReader applicantsBr = new BufferedReader(new FileReader(folderPath + "/applicants.txt"));
 
 		values.clear();
-		while ((str = requirementsBr.readLine()) != null) {
+		while ((str = applicantsBr.readLine()) != null) {
 			values.add(str);
 		}
 
