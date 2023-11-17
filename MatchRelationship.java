@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
 public class MatchRelationship {
     private StudentProfile student;
     private Scholarship scholarship;
@@ -9,8 +8,8 @@ public class MatchRelationship {
     private float matchIndex;
     private HashMap<String, String> application = new HashMap<String, String>();
     private String applicationStatus;
-    
-    //input string of application questions into a hashmap as the keys
+
+    // input string of application questions into a hashmap as the keys
     public HashMap<String, String> InitializeApplication(ArrayList<String> applicationQuestions) {
         HashMap<String, String> application = new HashMap<String, String>();
         for (int i = 0; i < applicationQuestions.size(); i++) {
@@ -19,18 +18,18 @@ public class MatchRelationship {
         return application;
     }
 
-    //update application hashmap with answer values
+    // update application hashmap with answer values
     public HashMap<String, String> UpdateApplication(ArrayList<String> applicationQandA) {
         HashMap<String, String> application = new HashMap<String, String>();
-        
+
         for (int i = 0; i < applicationQandA.size(); i = i + 2) {
-                application.put(applicationQandA.get(i), applicationQandA.get(i + 1));
+            application.put(applicationQandA.get(i), applicationQandA.get(i + 1));
         }
 
         return application;
     }
 
-    //initialize additional requirement questions hashmap with requirements as keys
+    // initialize additional requirement questions hashmap with requirements as keys
     public HashMap<String, String> InitializeAdditionalRequirements(ArrayList<String> additionalRequirementQs) {
         HashMap<String, String> additionalRequirements = new HashMap<String, String>();
 
@@ -43,37 +42,38 @@ public class MatchRelationship {
 
     public HashMap<String, String> UpdateAdditionalRequirements(ArrayList<String> additionalRequirementsQandA) {
         HashMap<String, String> additionalRequirements = new HashMap<String, String>();
-        
+
         for (int i = 0; i < additionalRequirementsQandA.size(); i = i + 2) {
-                additionalRequirements.put(additionalRequirementsQandA.get(i), additionalRequirementsQandA.get(i + 1));
+            additionalRequirements.put(additionalRequirementsQandA.get(i), additionalRequirementsQandA.get(i + 1));
         }
 
         return additionalRequirements;
     }
 
-    //need method to compare scholarship requirements with student requirements
+    // need method to compare scholarship requirements with student requirements
 
-    //constructors
-    public MatchRelationship(StudentProfile inputStudent, Scholarship inputScholarship, float inputMatchPercentage, float inputMatchIndex) {
-            this.student = inputStudent;
-            this.scholarship = inputScholarship;
-            this.matchPercentage = inputMatchPercentage;
-            this.matchIndex = inputMatchIndex;
-            this.application = InitializeApplication(inputScholarship.getApplication());
-            this.applicationStatus = "Not Started";
+    // constructors
+    public MatchRelationship(StudentProfile inputStudent, Scholarship inputScholarship, float inputMatchPercentage,
+            float inputMatchIndex) {
+        this.student = inputStudent;
+        this.scholarship = inputScholarship;
+        this.matchPercentage = inputMatchPercentage;
+        this.matchIndex = inputMatchIndex;
+        this.application = InitializeApplication(inputScholarship.getApplication());
+        this.applicationStatus = "Not Started";
     }
 
-    //getters
+    // getters
 
-    public float getMatchPercentage(){
+    public float getMatchPercentage() {
         return this.matchPercentage;
     }
 
-    public float getMatchIndex(){
+    public float getMatchIndex() {
         return this.matchIndex;
     }
 
-    public String getApplicationStatus(){
+    public String getApplicationStatus() {
         return this.applicationStatus;
     }
 
@@ -89,26 +89,27 @@ public class MatchRelationship {
         return this.scholarship.getName();
     }
 
-    //setters
+    // setters
 
-	public void setMatchPercentage(float inputMatchPercentage) {
-		this.matchPercentage = inputMatchPercentage;
+    public void setMatchPercentage(float inputMatchPercentage) {
+        this.matchPercentage = inputMatchPercentage;
     }
 
     public void setMatchIndex(float inputMatchIndex) {
-		this.matchIndex = inputMatchIndex;
+        this.matchIndex = inputMatchIndex;
     }
 
     public void setApplicationStatus(String inputApplicationStatus) {
-		this.applicationStatus = inputApplicationStatus;
+        this.applicationStatus = inputApplicationStatus;
     }
 
     public void setApplication(ArrayList<String> inputApplication) {
         try {
             if (inputApplication.size() % 2 != 0) {
-                throw new Exception("Uneven answer-question pairings!\nPlease enter an empty string for any unanswered questions.");
+                throw new Exception(
+                        "Uneven answer-question pairings!\nPlease enter an empty string for any unanswered questions.");
             }
-            
+
             this.application = UpdateApplication(inputApplication);
         }
 
@@ -116,6 +117,5 @@ public class MatchRelationship {
             System.out.println(except.getMessage());
         }
     }
-
 
 }

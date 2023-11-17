@@ -333,7 +333,7 @@ public class Main {
 
 		} else {
 			for (Scholarship scholarship : scholarshipsToSearch) {
-				requirements = scholarship.getRequirments();
+				requirements = scholarship.getRequirements();
 
 				for (Map.Entry<String, String> entry : requirements.entrySet()) {
 					// String key = entry.getKey();
