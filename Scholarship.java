@@ -6,7 +6,7 @@ public class Scholarship {
     private String name;
     private String description;
     private ArrayList<StudentProfile> applicants = new ArrayList<StudentProfile>();
-    private DonorProfile Donor;
+    private DonorProfile donor;
     private float awardAmount;
     private HashMap<String, String> requirements = new HashMap<String, String>();
     private ArrayList<String> application = new ArrayList<String>();
@@ -33,7 +33,7 @@ public class Scholarship {
             ArrayList<String> application) {
         this.name = name;
         this.description = description;
-        this.Donor = donor;
+        this.donor = donor;
         this.awardAmount = awardAmount;
 
         try {
@@ -59,7 +59,7 @@ public class Scholarship {
             boolean isArchived) {
         this.name = name;
         this.description = description;
-        this.Donor = donor;
+        this.donor = donor;
         this.awardAmount = awardAmount;
 
         try {
@@ -105,7 +105,7 @@ public class Scholarship {
     }
 
     public DonorProfile getDonorProfile() {
-        return this.Donor;
+        return this.donor;
     }
 
     public HashMap<String, String> getRequirements() {
@@ -132,8 +132,8 @@ public class Scholarship {
         return this.isArchived;
     }
 
-    public DonorProfile getDonor() {
-        return Donor;
+    public String getDonorName() {
+        return this.donor.getName();
     }
 
     public int getDayAdded() {
@@ -192,13 +192,6 @@ public class Scholarship {
         this.description = description;
     }
 
-    public void setIsApproved(boolean isApproved) {
-        this.isApproved = isApproved;
-    }
-
-    public void setIsArchived(boolean isArchived) {
-        this.isArchived = isArchived;
-    }
 
     public void setApplicants(ArrayList<StudentProfile> applicants) {
         this.applicants = applicants;
@@ -206,7 +199,7 @@ public class Scholarship {
 
     // TODO: what to do for this???
     public void setDonor(DonorProfile donor) {
-        Donor = donor;
+        this.donor = donor;
     }
 
     public void setRequirements(HashMap<String, String> requirements) {
@@ -276,7 +269,7 @@ public class Scholarship {
     @Override
     public String toString() {
         return "Scholarship [name=" + name + ", description=" + description + ", applicants=" + applicants + ", Donor="
-                + Donor.getName() + ", awardAmount=" + awardAmount + ", requirements=" + requirements + ", application="
+                + donor.getName() + ", awardAmount=" + awardAmount + ", requirements=" + requirements + ", application="
                 + application + ", isArchived=" + isArchived + ", isApproved=" + isApproved + "]";
     }
 }

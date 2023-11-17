@@ -327,9 +327,12 @@ public class Main {
 			for (Scholarship scholarship: scholarshipsToSearch) {
 				// TODO: ****implement me!
 			}
-		}
-		else if (inputCategory.compareTo("donor") == 0) {
-
+		} else if (inputCategory.compareTo("donor") == 0) {
+			for (Scholarship scholarship: scholarshipsToSearch) {
+				if (inputSearchValue.compareTo(scholarship.getDonorName()) == 0) {
+					scholarshipsFound.add(scholarship);
+				}
+			}
 		} else if (inputCategory.compareTo("applicant") == 0) {
 
 		} else {
