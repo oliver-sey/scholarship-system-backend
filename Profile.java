@@ -7,6 +7,7 @@ public abstract class Profile {
 	protected String username;
 	// TODO: is it ok that this is very low security storing the password as plain text??
 	protected String password;
+	protected int clearanceLevel;
 
 	// Not sure what data type we should use for the answers to the security questions
 	// maybe a dictionary? I think the syntax would be Hashtable<String, String> my_dict = new Hashtable<String, String>();

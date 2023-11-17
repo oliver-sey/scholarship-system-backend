@@ -84,6 +84,8 @@ public class Main {
 			textArray.add(line);
 		}
 
+		br.close();
+
 		return textArray;
 	}
 
