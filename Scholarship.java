@@ -152,6 +152,22 @@ public class Scholarship {
         return dayDue;
     }
 
+    /**
+     * 
+     * @return the full date this scholarship was added, in String form.
+     * The format is MM/DD/YY
+     */
+    public String getDateAddedString() {
+        // got this from: https://stackoverflow.com/questions/275711/add-leading-zeroes-to-number-in-java
+        // the 0 is to pad the left with 0's, the 2 specifies a number width of 2
+        // this part should make output = "MM/DD/"
+        String output = String.format("%02d/%02d/", getMonthAdded(), getDayAdded());
+        // this should add the last 2 digits of year to the end
+        output += (getYearAdded() / 100);
+
+        return output;
+    }
+
     public int getMonthDue() {
         return monthDue;
     }

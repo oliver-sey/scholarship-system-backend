@@ -25,6 +25,7 @@ public class Main {
 		Scholarship scholarship = ReadScholarship("scholarships/scholarship1", donors, students);
 		System.out.print(scholarship.toString());
 
+		System.out.println("Test of getDateAddedString(): " + scholarship.getDateAddedString());
 	}
 
 	// reads student demographics from comma separated file and initializes a
