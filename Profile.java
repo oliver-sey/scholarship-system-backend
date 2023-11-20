@@ -3,11 +3,11 @@
  * StudentProfile and more
  */
 public abstract class Profile {
-	private String firstName;
-	private String lastName;
-	private String username;
+	protected String firstName;
+	protected String lastName;
+	protected String username;
 	// TODO: is it ok that this is very low security storing the password as plain text??
-	private String password;
+	protected String password;
 
 	// the questions and the answers for the 3 security questions
 	// setting the length to 3 because we know there will be 3 questions
