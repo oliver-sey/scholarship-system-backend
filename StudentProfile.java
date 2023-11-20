@@ -15,6 +15,10 @@ public class StudentProfile extends Profile {
 
 	// firstName and lastName are already in Profile
 
+	public StudentProfile() {
+		this.firstName = "No name";
+	}
+
 	// constructor with everything
 	public StudentProfile(String firstName, String lastName, int studentID, String username, String password,
 			String major, boolean hasAMinor, String minor, boolean isUSCitizen, float GPA,

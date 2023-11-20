@@ -57,24 +57,25 @@ public class MatchRelationship {
 
     //for typed input
     public MatchRelationship(StudentProfile inputStudent, Scholarship inputScholarship, float inputMatchPercentage,
-            float inputMatchIndex) {
+            float inputMatchIndex, int ID) {
         this.student = inputStudent;
         this.scholarship = inputScholarship;
         this.matchPercentage = inputMatchPercentage;
         this.matchIndex = inputMatchIndex;
         this.application = InitializeApplication(inputScholarship.getApplication());
         this.applicationStatus = "Not Started";
+        this.ID = ID;
     }
 
     //for file read input
     public MatchRelationship(StudentProfile inputStudent, Scholarship inputScholarship, int ID, float inputMatchPercentage,
-            float inputMatchIndex, HashMap<String, String> application, String applicationStatus) {
+            float inputMatchIndex, ArrayList<String> application, String applicationStatus) {
         this.student = inputStudent;
         this.scholarship = inputScholarship;
         this.ID = ID;
         this.matchPercentage = inputMatchPercentage;
         this.matchIndex = inputMatchIndex;
-        this.application = application;
+        this.application = InitializeApplication(application);
         this.applicationStatus = applicationStatus;
     }
 
@@ -104,6 +105,10 @@ public class MatchRelationship {
         return this.scholarship.getName();
     }
 
+    public int getID() {
+        return this.ID;
+    }
+
     // setters
 
     public void setMatchPercentage(float inputMatchPercentage) {
@@ -118,8 +123,8 @@ public class MatchRelationship {
         this.applicationStatus = "In progress";
     }
 
-    public void setApplicationToComplete() {
-        this.applicationStatus = "Complete";
+    public void setApplicationToSubmitted() {
+        this.applicationStatus = "Submitted";
     }
 
     public void setApplication(ArrayList<String> inputApplication) {
@@ -136,5 +141,6 @@ public class MatchRelationship {
             System.out.println(except.getMessage());
         }
     }
+
 
 }

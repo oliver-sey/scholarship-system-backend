@@ -31,7 +31,7 @@ public class Scholarship {
 
     // constructor for donor typing details in
     public Scholarship(String name, String description, DonorProfile donor, float awardAmount,
-            ArrayList<String> requirements, ArrayList<String> application) {
+            ArrayList<String> requirements, ArrayList<String> application, int monthDue, int dayDue, int yearDue) {
         this.name = name;
         this.description = description;
         this.donor = donor;
@@ -51,6 +51,10 @@ public class Scholarship {
         this.application = application;
         this.isApproved = false;
         this.isArchived = false;
+        this.monthDue = monthDue;
+        this.dayDue = dayDue;
+        this.yearDue = yearDue;
+
     }
 
     // constructor for loading data from files into program
@@ -79,6 +83,10 @@ public class Scholarship {
         this.isApproved = isApproved;
         this.isArchived = isArchived;
         this.fileIndex = fileIndex;
+    }
+
+    public Scholarship() {
+        this.name = "No name";
     }
 
     // initializes requirement categories and values into a hashmap
@@ -179,7 +187,8 @@ public class Scholarship {
         // this part should make output = "MM/DD/"
         String output = String.format("%02d/%02d/", getMonthAdded(), getDayAdded());
         // this should add the last 2 digits of year to the end
-        output += (getYearAdded() / 100);
+        String year = String.valueOf(this.yearAdded);
+        output += year.substring(2);
 
         return output;
     }
@@ -203,7 +212,8 @@ public class Scholarship {
         // this part should make output = "MM/DD/"
         String output = String.format("%02d/%02d/", getMonthDue(), getDayDue());
         // this should add the last 2 digits of year to the end
-        output += (getYearDue() / 100);
+        String year = String.valueOf(this.yearAdded);
+        output += year.substring(2);
 
         return output;
     }
@@ -297,7 +307,7 @@ public class Scholarship {
 
         this.yearDue = yearDue;
     }
-    
+
 
     @Override
     public String toString() {

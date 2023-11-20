@@ -192,6 +192,8 @@ public class Main {
 			values.add(str);
 		}
 
+		applicantsBr.close();
+
 		// find student objects
 		for (String applicantName : values) {
 			for (StudentProfile student : students) {
@@ -200,8 +202,6 @@ public class Main {
 				}
 			}
 		}
-
-		applicantsBr.close();
 
 		// find donor object
 		for (DonorProfile donor : donors) {
@@ -286,18 +286,50 @@ public class Main {
 	}
 
 	// creates match object from student object, scholarship object, and file
-	public static MatchRelationship initializeMatch(StudentProfile student, Scholarship scholarship, String filePath)
+	public static MatchRelationship initializeMatch(ArrayList<Scholarship> scholarships, ArrayList<StudentProfile> students, int ID)
 			throws NumberFormatException, IOException {
-		float matchPercentage;
-		float matchIndex;
-		BufferedReader br = new BufferedReader(new FileReader(filePath));
+		String folderPath = "matches/match" + String.valueOf(ID);
+		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath + "/details.txt"));
+		StudentProfile student = new StudentProfile();
+		Scholarship scholarship = new Scholarship();
+		ArrayList<String> application = new ArrayList<String>();
 
-		matchPercentage = Float.parseFloat(br.readLine());
-		matchIndex = Float.parseFloat(br.readLine());
+		String studentName = detailsBr.readLine();
+		String scholarshipName = detailsBr.readLine();
+		float matchPercentage = Float.parseFloat(detailsBr.readLine());
+		float matchIndex = Float.parseFloat(detailsBr.readLine());
+		String applicationStatus = detailsBr.readLine();
 
-		br.close();
+		detailsBr.close();
 
-		return new MatchRelationship(student, scholarship, matchPercentage, matchIndex);
+		// find student objects
+		for (StudentProfile currStudent : students) {
+			if (studentName.compareTo(currStudent.getName()) == 0) {
+				student = currStudent;
+			}
+		}
+		
+		// find scholarship object
+		for (Scholarship currScholarship : scholarships) {
+			if (scholarshipName.compareTo(currScholarship.getName()) == 0) {
+				scholarship = currScholarship;
+			}
+		}
+
+		BufferedReader applicationBr = new BufferedReader(new FileReader(folderPath + "/application.txt"));
+
+		ArrayList<String> values = new ArrayList<String>();
+		String str;
+
+		// read details file and store in variables
+		while ((str = applicationBr.readLine()) != null) {
+			values.add(str);
+		}
+
+		application = values;
+		applicationBr.close();
+
+		return new MatchRelationship(student, scholarship, ID, matchPercentage, matchIndex, application, applicationStatus);
 	}
 
 	// creates donor object from file
