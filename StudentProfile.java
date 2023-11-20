@@ -1,18 +1,53 @@
 import java.util.HashMap;
 import java.util.StringTokenizer;
+import java.util.ArrayList;
 
 public class StudentProfile extends Profile {
-	/* "Requirement text: "The Back End system shall store the  name, Student ID, selected major, selected minor if applicable, 
-	citizenship statuses, GPA, academic standing, grade level, expected graduation date, gender, 
-	student demographics, type of student, number of currently enrolled units, 
-	whether or not they already receive funding, and a 500 word maximum personal statement." */ 
+	/*
+	 * "Requirement text: "The Back End system shall store the name, Student ID,
+	 * selected major, selected minor if applicable,
+	 * citizenship statuses, GPA, academic standing, grade level, expected
+	 * graduation date, gender,
+	 * student demographics, type of student, number of currently enrolled units,
+	 * whether or not they already receive funding, and a 500 word maximum personal
+	 * statement."
+	 */
 
 	// firstName and lastName are already in Profile
-	
+
+	// constructor with everything
+	public StudentProfile(String firstName, String lastName, int studentID, String username, String password,
+			String major, boolean hasAMinor, String minor, boolean isUSCitizen, float GPA,
+			boolean inGoodStanding, boolean hasAdvStanding, String gradeLevel, int gradMonth, int gradYear,
+			String gender, boolean isFullTimeStudent, boolean isTransferStudent, int curNumCredits,
+			boolean receivesFunding, String personalStatement, int fileIndex) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.studentID = studentID;
+		this.username = username;
+		this.password = password;
+		this.major = major;
+		this.minor = minor;
+		this.hasAMinor = hasAMinor;
+		this.isUSCitizen = isUSCitizen;
+		this.GPA = GPA;
+		this.inGoodStanding = inGoodStanding;
+		this.hasAdvStanding = hasAdvStanding;
+		this.gradeLevel = gradeLevel;
+		this.gradMonth = gradMonth;
+		this.gradYear = gradYear;
+		this.gender = gender;
+		this.isFullTimeStudent = isFullTimeStudent;
+		this.isTransferStudent = isTransferStudent;
+		this.curNumCredits = curNumCredits;
+		this.receivesFunding = receivesFunding;
+		this.personalStatement = personalStatement;
+		this.fileIndex = fileIndex;
+	}
+
 	private int studentID;
 	private String major;
 	private String minor;
-	// TODO: do we need this??
 	private boolean hasAMinor;
 
 	// TODO: what do we do for citizenship statuses?
@@ -20,7 +55,6 @@ public class StudentProfile extends Profile {
 
 	private float GPA;
 
-	// good standing, bad standing, advanced standing
 	private boolean inGoodStanding;
 	private boolean hasAdvStanding;
 
@@ -45,6 +79,8 @@ public class StudentProfile extends Profile {
 
 	// a 500-word max personal statement
 	private String personalStatement;
+
+	private ArrayList<Integer> matchObjects = new ArrayList<Integer>();
 
 
 	// getters
@@ -134,89 +170,103 @@ public class StudentProfile extends Profile {
 		return this.personalStatement;
 	}
 
-
-
-	// setters
-	// TODO: **** eventually add more to the setters to control what values can be set!
-
-	// a setter for int studentID
-	public void studentID(int inputStudentID) {
-		this.studentID = inputStudentID;
+	public ArrayList<Integer> getMatchObjectIds() {
+		return this.matchObjects;
 	}
 
-	// a setter for String major
-	public void major(String inputMajor) {
-		this.major = inputMajor;
-	}
-
-	// a setter for String minor
-	public void minor(String inputMinor) {
-		this.minor = inputMinor;
-	}
-
-	// a setter for boolean hasAMinor
-	public void hasAMinor(boolean inputHasAMinor) {
-		this.hasAMinor = inputHasAMinor;
-	}
-
-	// a getter for boolean isUSCitizen
+	// a setter for boolean isUSCitizen
 	public void getIsUSCitizen(boolean inputIsUSCitizen) {
 		this.isUSCitizen = inputIsUSCitizen;
 	}
 
+
+	// setters
+	// TODO: **** eventually add more to the setters to control what values can be
+	// set!
+
+	// a setter for int studentID
+	public void setStudentID(int inputStudentID) {
+		this.studentID = inputStudentID;
+	}
+
+	// a setter for String major
+	public void setMajor(String inputMajor) {
+		this.major = inputMajor;
+	}
+
+	// a setter for String minor
+	public void setMinor(String inputMinor) {
+		this.minor = inputMinor;
+	}
+
+	// a setter for boolean hasAMinor
+	public void setHasAMinor(boolean inputHasAMinor) {
+		this.hasAMinor = inputHasAMinor;
+	}
+
 	// a setter for float GPA
-	public void GPA(float inputGPA) {
-		// TODO: don't let them set a GPA below 0.0 or above 4.0
-		// have to be careful with comparing floats since sometimes you store 3.0 and it ends up as 3.000004000
-		this.GPA = inputGPA;
+	public void setGPA(float inputGPA) {
+
+		try {
+			if (inputGPA > 4.0005 || inputGPA < 0) {
+				throw new Exception("GPA entered is not valid. Please enter a number between 0-4");
+			}
+
+			this.GPA = inputGPA;
+		}
+
+		catch (Exception except) {
+			System.out.println(except.getMessage());
+		}
+
 	}
 
 	// a setter for boolean inGoodStanding
-	public void inGoodStanding(boolean inputInGoodStanding) {
+	public void setInGoodStanding(boolean inputInGoodStanding) {
 		this.inGoodStanding = inputInGoodStanding;
 	}
 
 	// a setter for boolean hasAdvStanding
-	public void hasAdvStanding(boolean inputHasAdvStanding) {
+	public void setHasAdvStanding(boolean inputHasAdvStanding) {
 		this.hasAdvStanding = inputHasAdvStanding;
 	}
 
 	// a setter for String gradeLevel
-	public void gradeLevel(String inputGradeLevel) {
+	public void setGradeLevel(String inputGradeLevel) {
 		this.gradeLevel = inputGradeLevel;
 	}
 
 	// a setter for int gradMonth
-	public void gradMonth(int inputGradMonth) {
+	public void setGradMonth(int inputGradMonth) {
 		if (inputGradMonth < 1 || inputGradMonth > 12) {
 			throw new IllegalArgumentException("gradMonth must be >= 1 and <= 12");
 		}
-		
+
 		this.gradMonth = inputGradMonth;
 	}
 
 	// a setter for int gradYear
-	public void gradYear(int inputGradYear) {
+	public void setGradYear(int inputGradYear) {
 		this.gradYear = inputGradYear;
 	}
 
 	// a setter for String gender
-	public void gender(String inputGender) {
+	public void setGender(String inputGender) {
 		this.gender = inputGender;
 	}
 
 	// a setter for boolean isFullTimeStudent
-	public void isFullTimeStudent(boolean inputIsFullTimeStudent) {
+	public void setIsFullTimeStudent(boolean inputIsFullTimeStudent) {
 		this.isFullTimeStudent = inputIsFullTimeStudent;
 	}
 
 	// a setter for boolean isTransferStudent
-	public void isTransferStudent(boolean inputIsTransferStudent) {
+	public void setIsTransferStudent(boolean inputIsTransferStudent) {
 		this.isTransferStudent = inputIsTransferStudent;
 	}
 
 	// a setter for int curNumCredits
-	public void curNumCredits(int inputCurNumCredits) {
+	public void setCurNumCredits(int inputCurNumCredits) {
 		// TODO: what is a reasonable lower and upper limit for a number of credits?
 		if (inputCurNumCredits < 0 || inputCurNumCredits > 35) {
 			throw new IllegalArgumentException("curNumCredits must be >= 0 and <= 35");
@@ -225,19 +275,56 @@ public class StudentProfile extends Profile {
 	}
 
 	// a setter for boolean receivesFunding
-	public void receivesFunding(boolean inputReceivesFunding) {
+	public void setReceivesFunding(boolean inputReceivesFunding) {
 		this.receivesFunding = inputReceivesFunding;
 	}
 
 	// a setter for String personalStatement
-	public void personalStatement(String inputPersonalStatement) {
+	public void setPersonalStatement(String inputPersonalStatement) {
 		// count the actual number of words, since the requirement said max 500 words
 		int numWords = new StringTokenizer(inputPersonalStatement, " ").countTokens();
 
 		if (numWords > 500) {
-			throw new IllegalArgumentException("personalStatement must be <= 500 words (gets counted as space-separated tokens)");
+			throw new IllegalArgumentException(
+					"personalStatement must be <= 500 words (gets counted as space-separated tokens)");
 		}
 		this.personalStatement = inputPersonalStatement;
+	}
+
+	public String getFileText() {
+		return
+        this.firstName + "\n" +
+        this.lastName + "\n" +
+        this.studentID + "\n" +
+        this.username + "\n" +
+        this.password + "\n" +
+        this.major + "\n" +
+        this.hasAMinor + "\n" +
+        this.minor + "\n" +
+        this.isUSCitizen + "\n" +
+        this.GPA + "\n" +
+        this.inGoodStanding + "\n" +
+        this.hasAdvStanding + "\n" +
+        this.gradeLevel + "\n" +
+        this.gradMonth + "\n" +
+        this.gradYear + "\n" +
+        this.gender + "\n" +
+        this.isFullTimeStudent + "\n" +
+        this.isTransferStudent + "\n" +
+        this.curNumCredits + "\n" +
+        this.receivesFunding + "\n" +
+        this.personalStatement + "\n";
+	}
+
+	@Override
+	public String toString() {
+		return "StudentProfile [studentID=" + studentID + ", major=" + major + ", minor=" + minor + ", hasAMinor="
+				+ hasAMinor + ", isUSCitizen=" + isUSCitizen + ", GPA=" + GPA + ", inGoodStanding=" + inGoodStanding
+				+ ", hasAdvStanding=" + hasAdvStanding + ", gradeLevel=" + gradeLevel + ", gradMonth=" + gradMonth
+				+ ", gradYear=" + gradYear + ", gender=" + gender + ", extraDemographics=" + extraDemographics
+				+ ", isFullTimeStudent=" + isFullTimeStudent + ", isTransferStudent=" + isTransferStudent
+				+ ", curNumCredits=" + curNumCredits + ", receivesFunding=" + receivesFunding + ", personalStatement="
+				+ personalStatement + "]";
 	}
 
 }
