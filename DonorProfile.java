@@ -7,6 +7,7 @@ public class DonorProfile extends Profile{
 
     //create constructor for Donor child class
     public DonorProfile(){
+       clearanceLevel = 2;
         firstName = "invalidFirstName";
         lastName = "invalidLastName";
         username = "invalidUserName";
@@ -15,8 +16,6 @@ public class DonorProfile extends Profile{
         email = "N/A";
     }
 
-    clearanceLevel = 2;
-    
     public String getPhoneNumber() {
 		return this.phoneNumber;
 	}

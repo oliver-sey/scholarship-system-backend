@@ -1,10 +1,10 @@
 public class StaffProfile extends Profile {
    private String jobRole;
-
-   clearanceLevel = 1;
+   
 
    //create constructor for Staff child class
    public StaffProfile() {
+      clearanceLevel = 1;
     firstName = "invalidFirstName";
     lastName = "invalidLastName";
     username = "invalidUserName";
