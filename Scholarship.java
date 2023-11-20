@@ -13,16 +13,16 @@ public class Scholarship {
     private boolean isArchived;
     private boolean isApproved;
 
-    // day month and year for when this scholarship was added
+    // month, day, and year for when this scholarship was added
     // would be too complicated to mess around with date objects
-    private int dayAdded;
     private int monthAdded;
+    private int dayAdded;
     private int yearAdded;
 
     // for the scholarship due date
     // TODO: are scholarships always due end of day?
-    private int dayDue;
     private int monthDue;
+    private int dayDue;
     private int yearDue;
 
     // TO DO: due date attribute and methods
@@ -174,6 +174,22 @@ public class Scholarship {
 
     public int getYearDue() {
         return yearDue;
+    }
+
+    /**
+     * 
+     * @return the full date this scholarship is due, in String form. (a copy-paste of getDateAddedString())
+     * The format is MM/DD/YY
+     */
+    public String getDateDueString() {
+        // got this from: https://stackoverflow.com/questions/275711/add-leading-zeroes-to-number-in-java
+        // the 0 is to pad the left with 0's, the 2 specifies a number width of 2
+        // this part should make output = "MM/DD/"
+        String output = String.format("%02d/%02d/", getMonthDue(), getDayDue());
+        // this should add the last 2 digits of year to the end
+        output += (getYearDue() / 100);
+
+        return output;
     }
 
     // setters

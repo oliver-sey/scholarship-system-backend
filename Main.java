@@ -23,9 +23,11 @@ public class Main {
 		donors = InstantiateAllDonors();
 
 		Scholarship scholarship = ReadScholarship("scholarships/scholarship1", donors, students);
-		System.out.print(scholarship.toString());
+		System.out.println(scholarship.toString());
 
-		System.out.println("Test of getDateAddedString(): " + scholarship.getDateAddedString());
+		System.out.println("\nTest of getDateAddedString(): " + scholarship.getDateAddedString());		
+		System.out.println("Test of getDateDueString(): " + scholarship.getDateDueString());
+
 	}
 
 	// reads student demographics from comma separated file and initializes a
