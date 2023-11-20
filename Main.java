@@ -340,10 +340,12 @@ public class Main {
 				requirements = scholarship.getRequirements();
 
 				for (Map.Entry<String, String> entry : requirements.entrySet()) {
-					// String key = entry.getKey();
-					// Integer value = entry.getValue();
-
-					// TODO: implement me!!
+					if (entry.getKey().compareTo(inputCategory) == 0){
+						if (entry.getValue().compareTo(inputSearchValue) == 0) {
+							scholarshipsFound.add(scholarship);
+						}
+					}
+					
 				}
 			}
 		}
