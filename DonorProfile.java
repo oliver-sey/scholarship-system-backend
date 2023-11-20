@@ -1,22 +1,36 @@
 import java.util.ArrayList;
 
 public class DonorProfile extends Profile{
-    ArrayList<Scholarship> scholarships = new ArrayList<Scholarship>();
+    //contact information - phone number and email
+    private String phoneNumber;
+    private String email;
 
-    public DonorProfile(String firstName, String lastName, String username, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.username = username;
-        this.password = password;
+    //create constructor for Donor child class
+    public DonorProfile(){
+        firstName = "invalidFirstName";
+        lastName = "invalidLastName";
+        username = "invalidUserName";
+        password = "invalidPassword";
+        phoneNumber = "0000000000";
+        email = "N/A";
     }
 
-    public void addScholarship(Scholarship newScholarship) {
-        scholarships.add(newScholarship);
-    }
-
-    public ArrayList<Scholarship> getScholarships () {
-        return this.scholarships;
-    }
+    clearanceLevel = 2;
     
+    public String getPhoneNumber() {
+		return this.phoneNumber;
+	}
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setPhoneNumber(String inputPhoneNumber) {
+		this.phoneNumber = inputPhoneNumber;
+	}
+
+    public void setEmail(String inputEmail) {
+		this.Email = inputEmail;
+	}
 
 }
