@@ -4,6 +4,7 @@ import java.util.HashMap;
 public class MatchRelationship {
     private StudentProfile student;
     private Scholarship scholarship;
+    private int ID;
     private float matchPercentage;
     private float matchIndex;
     private HashMap<String, String> application = new HashMap<String, String>();
@@ -53,6 +54,8 @@ public class MatchRelationship {
     // need method to compare scholarship requirements with student requirements
 
     // constructors
+
+    //for typed input
     public MatchRelationship(StudentProfile inputStudent, Scholarship inputScholarship, float inputMatchPercentage,
             float inputMatchIndex) {
         this.student = inputStudent;
@@ -61,6 +64,18 @@ public class MatchRelationship {
         this.matchIndex = inputMatchIndex;
         this.application = InitializeApplication(inputScholarship.getApplication());
         this.applicationStatus = "Not Started";
+    }
+
+    //for file read input
+    public MatchRelationship(StudentProfile inputStudent, Scholarship inputScholarship, int ID, float inputMatchPercentage,
+            float inputMatchIndex, HashMap<String, String> application, String applicationStatus) {
+        this.student = inputStudent;
+        this.scholarship = inputScholarship;
+        this.ID = ID;
+        this.matchPercentage = inputMatchPercentage;
+        this.matchIndex = inputMatchIndex;
+        this.application = application;
+        this.applicationStatus = applicationStatus;
     }
 
     // getters
@@ -99,8 +114,12 @@ public class MatchRelationship {
         this.matchIndex = inputMatchIndex;
     }
 
-    public void setApplicationStatus(String inputApplicationStatus) {
-        this.applicationStatus = inputApplicationStatus;
+    public void setApplicationToInProgress() {
+        this.applicationStatus = "In progress";
+    }
+
+    public void setApplicationToComplete() {
+        this.applicationStatus = "Complete";
     }
 
     public void setApplication(ArrayList<String> inputApplication) {

@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.StringTokenizer;
+import java.util.ArrayList;
 
 public class StudentProfile extends Profile {
 	/*
@@ -78,6 +79,8 @@ public class StudentProfile extends Profile {
 
 	// a 500-word max personal statement
 	private String personalStatement;
+
+	private ArrayList<Integer> matchObjects = new ArrayList<Integer>();
 
 
 	// getters
@@ -167,10 +170,15 @@ public class StudentProfile extends Profile {
 		return this.personalStatement;
 	}
 
-	// a getter for boolean isUSCitizen
+	public ArrayList<Integer> getMatchObjectIds() {
+		return this.matchObjects;
+	}
+
+	// a setter for boolean isUSCitizen
 	public void getIsUSCitizen(boolean inputIsUSCitizen) {
 		this.isUSCitizen = inputIsUSCitizen;
 	}
+
 
 	// setters
 	// TODO: **** eventually add more to the setters to control what values can be
