@@ -1,7 +1,17 @@
 public class DonorProfile extends Profile{
     //contact information - phone number and email
-    private phoneNumber;
-    private email;
+    private String phoneNumber;
+    private String email;
+
+    //create constructor for Donor child class
+    public DonorProfile(){
+        firstName = "invalidFirstName";
+        lastName = "invalidLastName";
+        username = "invalidUserName";
+        password = "invalidPassword";
+        phoneNumber = "0000000000";
+        email = "N/A";
+    }
 
     clearanceLevel = 2;
     
