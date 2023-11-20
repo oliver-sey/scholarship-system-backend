@@ -1,19 +1,22 @@
 public class StaffProfile extends Profile {
-    private String jobRole;
+   private String jobRole;
 
-    public StaffProfile(String firstName, String lastName, String username, String password, String jobRole) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.username = username;
-        this.password = password;
-        this.jobRole = jobRole;
-    }
+   clearanceLevel = 1;
 
-    public String getjobRole() {
-        return this.jobRole;
-    }; 
+   //create constructor for Staff child class
+   public StaffProfile() {
+    firstName = "invalidFirstName";
+    lastName = "invalidLastName";
+    username = "invalidUserName";
+    password = "invalidPassword";
+    jobRole = "noJobListed";
+`   }
+
+   public String getjobRole() {
+    return this.jobRole;
+    } 
 
     public void setjobRole(String inputJobRole) {
 		this.jobRole = inputJobRole;
-	};
+	}
 }
