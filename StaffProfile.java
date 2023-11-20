@@ -10,7 +10,7 @@ public class StaffProfile extends Profile {
     username = "invalidUserName";
     password = "invalidPassword";
     jobRole = "noJobListed";
-`   }
+   }
 
    public String getjobRole() {
     return this.jobRole;

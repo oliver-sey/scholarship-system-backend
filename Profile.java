@@ -15,6 +15,7 @@ public abstract class Profile {
 	protected String[] securityQAnswers = new String[3];
 
 	// TODO: what do we do with clearance Level???
+	protected int clearanceLevel;
 
 	public String getFirstName() {
 		return this.firstName;
