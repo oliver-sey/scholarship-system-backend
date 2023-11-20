@@ -29,8 +29,7 @@ public class Scholarship {
 
     // constructor for donor typing details in
     public Scholarship(String name, String description, DonorProfile donor, float awardAmount,
-            ArrayList<String> requirements,
-            ArrayList<String> application) {
+            ArrayList<String> requirements, ArrayList<String> application) {
         this.name = name;
         this.description = description;
         this.donor = donor;
@@ -114,6 +113,16 @@ public class Scholarship {
 
     public ArrayList<StudentProfile> getApplicants() {
         return this.applicants;
+    }
+
+    public ArrayList<String> getApplicantNames() {
+        ArrayList<String> applicantNames = new ArrayList<String>();
+
+        for (StudentProfile student : this.applicants) {
+            applicantNames.add(student.getName());
+        }
+        
+        return applicantNames;
     }
 
     public ArrayList<String> getApplication() {

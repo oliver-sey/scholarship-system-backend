@@ -321,7 +321,7 @@ public class Main {
 
 	// searches a folder for a scholarship with inputted value
 	public static ArrayList<Scholarship> searchScholarships(String inputCategory, String inputSearchValue,
-			ArrayList<Scholarship> scholarshipsToSearch) {
+		ArrayList<Scholarship> scholarshipsToSearch) {
 		ArrayList<Scholarship> scholarshipsFound = new ArrayList<Scholarship>();
 		HashMap<String, String> requirements = new HashMap<String, String>();
 
@@ -336,7 +336,17 @@ public class Main {
 				}
 			}
 		} else if (inputCategory.compareTo("applicant") == 0) {
+			ArrayList<String> applicantNames = new ArrayList<String>();
 
+			for (Scholarship scholarship: scholarshipsToSearch) {
+				applicantNames = scholarship.getApplicantNames();
+
+				for (String name : applicantNames){
+					if (inputSearchValue.compareTo(name) == 0) {
+						scholarshipsFound.add(scholarship);
+					}
+				}
+			}
 		} else {
 			for (Scholarship scholarship : scholarshipsToSearch) {
 				requirements = scholarship.getRequirements();
