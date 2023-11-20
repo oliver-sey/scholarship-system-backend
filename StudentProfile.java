@@ -283,6 +283,31 @@ public class StudentProfile extends Profile {
 		this.personalStatement = inputPersonalStatement;
 	}
 
+	public String getFileText() {
+		return
+        this.firstName + "\n" +
+        this.lastName + "\n" +
+        this.studentID + "\n" +
+        this.username + "\n" +
+        this.password + "\n" +
+        this.major + "\n" +
+        this.hasAMinor + "\n" +
+        this.minor + "\n" +
+        this.isUSCitizen + "\n" +
+        this.GPA + "\n" +
+        this.inGoodStanding + "\n" +
+        this.hasAdvStanding + "\n" +
+        this.gradeLevel + "\n" +
+        this.gradMonth + "\n" +
+        this.gradYear + "\n" +
+        this.gender + "\n" +
+        this.isFullTimeStudent + "\n" +
+        this.isTransferStudent + "\n" +
+        this.curNumCredits + "\n" +
+        this.receivesFunding + "\n" +
+        this.personalStatement + "\n";
+	}
+
 	@Override
 	public String toString() {
 		return "StudentProfile [studentID=" + studentID + ", major=" + major + ", minor=" + minor + ", hasAMinor="

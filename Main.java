@@ -76,13 +76,44 @@ public class Main {
 
 	}
 
+	//writes student profile data to file
 	public static void StoreStudentProfile(StudentProfile student, int fileIndex) throws IOException {
 		File studentFile = new File("students/student" + String.valueOf(fileIndex) + ".txt");
 
 		studentFile.createNewFile();
 
 		FileWriter writer = new FileWriter(studentFile);
+
+		writer.write(student.getFileText());
+
+		writer.close();
+	}
+
+	//find next index available in folder to store new object
+	public static int findNextFileIndex(String dataType) throws Exception{
+		int fileIndex;
 		
+
+		if (dataType.compareTo("donor") == 0) {
+			File dir = new File("donors");
+			
+			fileIndex = dir.listFiles().length + 1;
+		}
+		else if (dataType.compareTo("scholarhsip") == 0) {
+			File dir = new File("scholarships");
+			
+			fileIndex = dir.listFiles().length + 1;
+		}
+		else if (dataType.compareTo("student") == 0) {
+			File dir = new File("students");
+			
+			fileIndex = dir.listFiles().length + 1;
+		}
+		else {
+			throw new Exception("Data type is not valid.");
+		}
+
+		return fileIndex;
 	}
 
 	// reads a text file and converts comma separated text to a list
