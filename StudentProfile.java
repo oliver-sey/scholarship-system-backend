@@ -19,8 +19,7 @@ public class StudentProfile extends Profile {
 			String major, boolean hasAMinor, String minor, boolean isUSCitizen, float GPA,
 			boolean inGoodStanding, boolean hasAdvStanding, String gradeLevel, int gradMonth, int gradYear,
 			String gender, boolean isFullTimeStudent, boolean isTransferStudent, int curNumCredits,
-			boolean receivesFunding,
-			String personalStatement) {
+			boolean receivesFunding, String personalStatement, int fileIndex) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.studentID = studentID;
@@ -42,12 +41,12 @@ public class StudentProfile extends Profile {
 		this.curNumCredits = curNumCredits;
 		this.receivesFunding = receivesFunding;
 		this.personalStatement = personalStatement;
+		this.fileIndex = fileIndex;
 	}
 
 	private int studentID;
 	private String major;
 	private String minor;
-	// TODO: do we need this??
 	private boolean hasAMinor;
 
 	// TODO: what do we do for citizenship statuses?
@@ -55,7 +54,6 @@ public class StudentProfile extends Profile {
 
 	private float GPA;
 
-	// good standing, bad standing, advanced standing
 	private boolean inGoodStanding;
 	private boolean hasAdvStanding;
 
@@ -80,6 +78,7 @@ public class StudentProfile extends Profile {
 
 	// a 500-word max personal statement
 	private String personalStatement;
+
 
 	// getters
 

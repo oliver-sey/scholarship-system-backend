@@ -22,7 +22,7 @@ public class Main {
 		students = InstantiateAllStudents();
 		donors = InstantiateAllDonors();
 
-		Scholarship scholarship = ReadScholarship("scholarships/scholarship1", donors, students);
+		Scholarship scholarship = ReadScholarship(1, donors, students);
 		System.out.println(scholarship.toString());
 
 		System.out.println("\nTest of getDateAddedString(): " + scholarship.getDateAddedString());		
@@ -32,8 +32,8 @@ public class Main {
 
 	// reads student demographics from comma separated file and initializes a
 	// _______????
-	public static StudentProfile readStudentProfile(String filePath) throws IOException {
-		BufferedReader br = new BufferedReader(new FileReader(filePath));
+	public static StudentProfile readStudentProfile(int fileIndex) throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader("students/student" + String.valueOf(fileIndex) + ".txt"));
 
 		ArrayList<String> values = new ArrayList<String>();
 		String str;
@@ -71,7 +71,11 @@ public class Main {
 		return new StudentProfile(firstName, lastName, studentID, username, password, major, hasAMinor, minor,
 				isUSCitizen, GPA, inGoodStanding, hasAdvStanding,
 				gradeLevel, gradMonth, gradYear, gender, isFullTimeStudent, isTransferStudent,
-				curNumCredits, receivesFunding, personalStatement);
+				curNumCredits, receivesFunding, personalStatement, fileIndex);
+
+	}
+
+	public static void StoreStudentProfile(StudentProfile student) {
 
 	}
 
@@ -93,14 +97,14 @@ public class Main {
 	}
 
 	// creates scholarship object from 3 files and donor object
-	public static Scholarship ReadScholarship(String folderPath, ArrayList<DonorProfile> donors,
+	public static Scholarship ReadScholarship(int fileIndex, ArrayList<DonorProfile> donors,
 			ArrayList<StudentProfile> students) throws IOException {
+		String folderPath = "scholarships/scholarship" + String.valueOf(fileIndex);
 		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath + "/details.txt"));
 		ArrayList<String> application = new ArrayList<String>();
 		ArrayList<String> requirements = new ArrayList<String>();
 		ArrayList<StudentProfile> applicants = new ArrayList<StudentProfile>();
 		DonorProfile correctDonor = new DonorProfile("", "", "", "");
-		// scholarships\scholarship1\requirements.txt
 
 		ArrayList<String> values = new ArrayList<String>();
 		String str;
@@ -170,7 +174,7 @@ public class Main {
 		}
 
 		return new Scholarship(name, description, correctDonor, awardAmount, requirements, application, applicants,
-				isApproved, isArchived);
+				isApproved, isArchived, fileIndex);
 
 	}
 
@@ -183,18 +187,20 @@ public class Main {
 		// all the files/folders in the scholarships folder
 		File[] directoryListing = dir.listFiles();
 		Scholarship scholarship;
+		int fileIndex = 1;
 		
 		// loop through the list of files/folders that are in the 'scholarships' folder
 		// each child is for one scholarship
 		for (File child : directoryListing) {
 
 			try {
-				scholarship = ReadScholarship(child.getCanonicalPath(), donors, students);
+				scholarship = ReadScholarship(fileIndex, donors, students);
 				scholarships.add(scholarship);
 			} catch (IOException except) {
 				System.out.println("File not found: " + child.getAbsolutePath());
 			}
 
+			fileIndex++;
 		}
 
 		return scholarships;
@@ -205,16 +211,18 @@ public class Main {
 		File dir = new File("students");
 		File[] directoryListing = dir.listFiles();
 		StudentProfile student;
+		int fileIndex = 1;
 
 		for (File child : directoryListing) {
 
 			try {
-				student = readStudentProfile(child.getCanonicalPath());
+				student = readStudentProfile(fileIndex);
 				students.add(student);
 			} catch (IOException except) {
 				System.out.println("File not found: " + child.getAbsolutePath());
 			}
 
+			fileIndex++;
 		}
 
 		return students;
@@ -330,12 +338,14 @@ public class Main {
 				// TODO: ****implement me!
 			}
 		} else if (inputCategory.compareTo("donor") == 0) {
+			//retrieves donor name from each scholarship
 			for (Scholarship scholarship: scholarshipsToSearch) {
 				if (inputSearchValue.compareTo(scholarship.getDonorName()) == 0) {
 					scholarshipsFound.add(scholarship);
 				}
 			}
 		} else if (inputCategory.compareTo("applicant") == 0) {
+			//retrieves array of applicant names from each scholarship and iterates through them
 			ArrayList<String> applicantNames = new ArrayList<String>();
 
 			for (Scholarship scholarship: scholarshipsToSearch) {
@@ -346,8 +356,11 @@ public class Main {
 						scholarshipsFound.add(scholarship);
 					}
 				}
+				applicantNames.clear();
 			}
 		} else {
+			//assumes any search category will be a requirement
+			//retrieves requirement hashmap from scholarship and compares category and value
 			for (Scholarship scholarship : scholarshipsToSearch) {
 				requirements = scholarship.getRequirements();
 

@@ -10,6 +10,7 @@ public abstract class Profile {
 	// text??
 	protected String password;
 	protected int clearanceLevel;
+	protected int fileIndex;
 
 	// Not sure what data type we should use for the answers to the security
 	// questions
@@ -36,6 +37,10 @@ public abstract class Profile {
 
 	public String getPassword() {
 		return this.password;
+	}
+
+	public int getFileIndex() {
+		return this.fileIndex;
 	}
 
 	// TODO: will we need getters and setters for the password?

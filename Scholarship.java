@@ -25,6 +25,8 @@ public class Scholarship {
     private int dayDue;
     private int yearDue;
 
+    private int fileIndex;
+
     // TO DO: due date attribute and methods
 
     // constructor for donor typing details in
@@ -55,7 +57,7 @@ public class Scholarship {
     public Scholarship(String name, String description, DonorProfile donor, float awardAmount,
             ArrayList<String> requirements,
             ArrayList<String> application, ArrayList<StudentProfile> applicants, boolean isApproved,
-            boolean isArchived) {
+            boolean isArchived, int fileIndex) {
         this.name = name;
         this.description = description;
         this.donor = donor;
@@ -76,6 +78,7 @@ public class Scholarship {
         this.applicants = applicants;
         this.isApproved = isApproved;
         this.isArchived = isArchived;
+        this.fileIndex = fileIndex;
     }
 
     // initializes requirement categories and values into a hashmap
@@ -159,6 +162,10 @@ public class Scholarship {
 
     public int getDayDue() {
         return dayDue;
+    }
+
+    public int getFileIndex() {
+        return this.fileIndex;
     }
 
     /**
