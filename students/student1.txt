@@ -1,0 +1,21 @@
+Katelyn
+McLean
+12345
+katelyn@gmail.com
+password5
+Industrial Engineering
+True
+Software Engineering
+True
+3.45
+True
+True
+Junior
+05
+2025
+Female
+True
+False
+15
+False
+I love engineering!
