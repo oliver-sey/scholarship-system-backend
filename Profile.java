@@ -17,6 +17,9 @@ public abstract class Profile {
 	// TODO: what do we do with clearance Level???
 	protected int clearanceLevel;
 
+	// TODO: wasn't sure what to do with this, but it gets used in several places so I figured I'd add it
+	protected int fileIndex;
+
 	public String getFirstName() {
 		return this.firstName;
 	};
