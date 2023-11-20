@@ -297,6 +297,7 @@ public class Scholarship {
 
         this.yearDue = yearDue;
     }
+    
 
     @Override
     public String toString() {
