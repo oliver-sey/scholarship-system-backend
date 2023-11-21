@@ -165,6 +165,22 @@ public class Scholarship {
         return recipient;
     }
 
+    public LocalDate getDateAdded() {
+        return this.dateAdded;
+    }
+
+    public String getDateAddedString() {
+        return this.dateAdded.toString();
+    }
+
+    public LocalDate getDateDue() {
+        return this.dateDue;
+    }
+
+    public String getDateDueString() {
+        return this.dateDue.toString();
+    }
+
 
     // setters
 
@@ -215,6 +231,25 @@ public class Scholarship {
     public void setRecipient(StudentProfile recipient) {
         this.recipient = recipient;
     }
+
+    // Adding this just in case we want to set the date from a LocalDate object,
+    // but there is also the method below to set it from a String
+    public void setDateAdded(LocalDate dateAdded) {
+        this.dateAdded = dateAdded;
+    }
+
+    public void setDateAdded(String dateAddedString) {
+        this.dateAdded = LocalDate.parse(dateAddedString);
+    }
+
+    public void setDateDue(LocalDate dateDue) {
+        this.dateDue = dateDue;
+    }
+
+    public void setDateDue(String dateDueString) {
+        this.dateDue = LocalDate.parse(dateDueString);
+    }
+
 
     @Override
     public String toString() {
