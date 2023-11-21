@@ -95,7 +95,7 @@ public class Main {
 			
 			fileIndex = dir.listFiles().length + 1;
 		}
-		else if (dataType.compareTo("scholarhsip") == 0) {
+		else if (dataType.compareTo("scholarship") == 0) {
 			File dir = new File("scholarships");
 			
 			fileIndex = dir.listFiles().length + 1;
