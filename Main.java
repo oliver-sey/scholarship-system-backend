@@ -93,7 +93,7 @@ public class Main {
 	public static int findNextFileIndex(String dataType) throws Exception{
 		int fileIndex;
 		
-
+		//counts files in appropriate folder and returns next available
 		if (dataType.compareTo("donor") == 0) {
 			File dir = new File("donors");
 			

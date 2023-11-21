@@ -83,6 +83,8 @@ public class Scholarship {
         this.fileIndex = fileIndex;
     }
 
+    //empty constructor for error mitigation purposes
+    //TO DO: fill out
     public Scholarship() {
 
     }
