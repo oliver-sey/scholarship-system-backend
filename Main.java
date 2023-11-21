@@ -153,7 +153,14 @@ public class Main {
 		float awardAmount = Float.parseFloat(values.get(3));
 		boolean isApproved = Boolean.parseBoolean(values.get(4));
 		boolean isArchived = Boolean.parseBoolean(values.get(5));
-		
+
+		// just using the Strings here because that's what we read from the file,
+		// and that's what the constructor takes as a parameter
+		// The constructor will then convert it to a LocalDate object
+		String dateAddedString = values.get(6);
+		String dateDueString = values.get(7);
+
+
 		detailsBr.close();
 
 		// read application file and store in array
@@ -207,7 +214,7 @@ public class Main {
 		}
 
 		return new Scholarship(name, description, correctDonor, awardAmount, requirements, application, applicants,
-				isApproved, isArchived, fileIndex);
+				isApproved, isArchived, fileIndex, dateAddedString, dateDueString);
 
 	}
 
