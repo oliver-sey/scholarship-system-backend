@@ -246,19 +246,18 @@ public class Main {
 		return scholarships;
 	}
 
-	public static void StoreScholarship(Scholarship scholarship, int fileIndex) {
+	public static void StoreScholarship(Scholarship scholarship, int fileIndex) throws IOException {
 		
-		/*
-		File studentFile = new File("students/student" + String.valueOf(fileIndex) + ".txt");
+		File folder = new File("scholarships/scholarship" + String.valueOf(fileIndex));
+		folder.mkdirs();
 
-		studentFile.createNewFile();
+		File detailsFile = new File(folder, "details.txt");
 
-		FileWriter writer = new FileWriter(studentFile);
+		FileWriter writer = new FileWriter(detailsFile);
 
-		writer.write(student.getFileText());
+		writer.write(scholarship.getDetailsFileText());
 
 		writer.close();
-		*/
 	}
 
 	public static ArrayList<StudentProfile> InstantiateAllStudents() {
