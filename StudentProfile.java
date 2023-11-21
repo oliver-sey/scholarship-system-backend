@@ -86,6 +86,8 @@ public class StudentProfile extends Profile {
 
 	private ArrayList<Integer> matchObjects = new ArrayList<Integer>();
 
+	private ArrayList<Scholarship> awardsRecieved = new ArrayList<Scholarship>();
+
 	// getters
 
 	// a getter for studentID
@@ -175,6 +177,11 @@ public class StudentProfile extends Profile {
 
 	public ArrayList<Integer> getMatchObjectIds() {
 		return this.matchObjects;
+	}
+
+	//a getter for awardsRecieved
+	public ArrayList<Scholarship> getAwardsRecieved() {
+		return this.awardsRecieved;
 	}
 
 	// a setter for boolean isUSCitizen
@@ -292,6 +299,10 @@ public class StudentProfile extends Profile {
 		}
 		this.personalStatement = inputPersonalStatement;
 	}
+
+	public void setAwardsRecieved(ArrayList<Scholarship> awardsRecieved) {
+        this.awardsRecieved = awardsRecieved;
+    }
 
 	public String getFileText() {
 		return this.firstName + "\n" +
