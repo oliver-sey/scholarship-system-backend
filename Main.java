@@ -286,7 +286,7 @@ public class Main {
 	}
 
 	// creates match object from student object, scholarship object, and file
-	public static MatchRelationship initializeMatch(ArrayList<Scholarship> scholarships, ArrayList<StudentProfile> students, int ID)
+	public static MatchRelationship readMatch(ArrayList<Scholarship> scholarships, ArrayList<StudentProfile> students, int ID)
 			throws NumberFormatException, IOException {
 		String folderPath = "matches/match" + String.valueOf(ID);
 		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath + "/details.txt"));
@@ -330,6 +330,23 @@ public class Main {
 		applicationBr.close();
 
 		return new MatchRelationship(student, scholarship, ID, matchPercentage, matchIndex, application, applicationStatus);
+	}
+
+	public static ArrayList<MatchRelationship> InstantiateAllMatches(ArrayList<Scholarship> scholarships, 
+			ArrayList<StudentProfile> students) throws NumberFormatException, IOException {
+
+		ArrayList<MatchRelationship> matches = new ArrayList<MatchRelationship>();
+		File dir = new File("matches");		
+		MatchRelationship match;
+
+		for (int i = 1; i <= dir.listFiles().length; i++) {
+
+			match = readMatch(scholarships, students, i);
+			matches.add(match);
+		}
+
+		return matches;
+
 	}
 
 	// creates donor object from file
