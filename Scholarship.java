@@ -14,6 +14,8 @@ public class Scholarship {
     private ArrayList<String> application = new ArrayList<String>();
     private boolean isArchived;
     private boolean isApproved;
+    private boolean isAwarded;
+    private StudentProfile recipient;
 
     // month, day, and year for when this scholarship was added
     // would be too complicated to mess around with date objects
@@ -176,6 +178,14 @@ public class Scholarship {
         return this.fileIndex;
     }
 
+    public boolean getIsAwarded() {
+        return isAwarded;
+    }
+
+    public StudentProfile getRecipient() {
+        return recipient;
+    }
+
     /**
      * 
      * @return the full date this scholarship was added, in String form.
@@ -308,6 +318,13 @@ public class Scholarship {
         this.yearDue = yearDue;
     }
     
+    public void setAwarded(boolean isAwarded) {
+        this.isAwarded = isAwarded;
+    }
+
+    public void setRecipient(StudentProfile recipient) {
+        this.recipient = recipient;
+    }
 
     @Override
     public String toString() {
