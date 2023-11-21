@@ -21,11 +21,11 @@ public abstract class Profile {
 
 	public String getFirstName() {
 		return this.firstName;
-	};
+	}
 
 	public String getLastName() {
 		return this.lastName;
-	};
+	}
 
 	public String getName() {
 		return this.firstName + " " + this.lastName;
@@ -33,7 +33,7 @@ public abstract class Profile {
 
 	public String getUsername() {
 		return this.username;
-	};
+	}
 
 	public String getPassword() {
 		return this.password;
@@ -75,19 +75,19 @@ public abstract class Profile {
 
 	public void setFirstName(String inputFirstName) {
 		this.firstName = inputFirstName;
-	};
+	}
 
 	public void setLastName(String inputLastName) {
 		this.lastName = inputLastName;
-	};
+	}
 
 	public void setUsername(String inputUsername) {
 		this.username = inputUsername;
-	};
+	}
 
 	public void setPassword(String inputPassword) {
 		this.password = inputPassword;
-	};
+	}
 
 	public void setAllSecurityQuestions(String[] securityQuestions) {
 		this.securityQuestions = securityQuestions;
