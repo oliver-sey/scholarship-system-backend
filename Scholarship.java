@@ -30,7 +30,7 @@ public class Scholarship {
 
     // constructor for donor typing details in
     public Scholarship(String name, String description, DonorProfile donor, float awardAmount,
-            ArrayList<String> requirements, ArrayList<String> application) {
+            ArrayList<String> requirements, ArrayList<String> application, String dateAddedString, String dateDueString) {
         this.name = name;
         this.description = description;
         this.donor = donor;
@@ -48,15 +48,22 @@ public class Scholarship {
         }
 
         this.application = application;
+        // default values, these didn't get passed in this specific constructor
         this.isApproved = false;
         this.isArchived = false;
+
+        // the dateAdded and dateDue are stored as LocalDate objects in the
+        // Scholarship, but we parse them (and get them as a parameter into this constructor)
+        // as a String, so we have to parse the dates from the Strings
+        this.dateAdded = LocalDate.parse(dateAddedString);
+        this.dateDue = LocalDate.parse(dateDueString);
     }
 
     // constructor for loading data from files into program
     public Scholarship(String name, String description, DonorProfile donor, float awardAmount,
             ArrayList<String> requirements,
             ArrayList<String> application, ArrayList<StudentProfile> applicants, boolean isApproved,
-            boolean isArchived, int fileIndex) {
+            boolean isArchived, int fileIndex, String dateAddedString, String dateDueString) {
         this.name = name;
         this.description = description;
         this.donor = donor;
@@ -78,6 +85,12 @@ public class Scholarship {
         this.isApproved = isApproved;
         this.isArchived = isArchived;
         this.fileIndex = fileIndex;
+
+        // the dateAdded and dateDue are stored as LocalDate objects in the
+        // Scholarship, but we parse them (and get them as a parameter into this constructor)
+        // as a String, so we have to parse the dates from the Strings
+        this.dateAdded = LocalDate.parse(dateAddedString);
+        this.dateDue = LocalDate.parse(dateDueString);
     }
 
     //empty constructor for error mitigation purposes

@@ -153,7 +153,7 @@ public class Main {
 		float awardAmount = Float.parseFloat(values.get(3));
 		boolean isApproved = Boolean.parseBoolean(values.get(4));
 		boolean isArchived = Boolean.parseBoolean(values.get(5));
-
+		
 		detailsBr.close();
 
 		// read application file and store in array
