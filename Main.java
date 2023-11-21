@@ -246,8 +246,19 @@ public class Main {
 		return scholarships;
 	}
 
-	public static void StoreScholarship(Scholarship scholarship) {
+	public static void StoreScholarship(Scholarship scholarship, int fileIndex) {
 		
+		/*
+		File studentFile = new File("students/student" + String.valueOf(fileIndex) + ".txt");
+
+		studentFile.createNewFile();
+
+		FileWriter writer = new FileWriter(studentFile);
+
+		writer.write(student.getFileText());
+
+		writer.close();
+		*/
 	}
 
 	public static ArrayList<StudentProfile> InstantiateAllStudents() {
