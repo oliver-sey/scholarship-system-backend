@@ -383,8 +383,21 @@ public class Main {
 
 	}
 
-	public static void StoreMatch(MatchRelationship match, int fileIndex) {
+	public static void StoreMatch(MatchRelationship match, int fileIndex) throws IOException {
+		File folder = new File("matches/match" + String.valueOf(fileIndex));
+		folder.mkdirs();
+
+		File detailsFile = new File(folder, "details.txt");
+		FileWriter detailsWriter = new FileWriter(detailsFile);
+
+		detailsWriter.write(match.getDetailsFileText());
+		detailsWriter.close();
 		
+		File applicationFile = new File(folder, "application.txt");
+		FileWriter applicationWriter = new FileWriter(applicationFile);
+
+		applicationWriter.write(match.getApplicationFileText());
+		applicationWriter.close();
 	}
 
 	// creates donor object from file

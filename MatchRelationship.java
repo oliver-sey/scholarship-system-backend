@@ -142,4 +142,26 @@ public class MatchRelationship {
         }
     }
 
+    public String getDetailsFileText() {
+        return this.student + "\n"
+        + this.scholarship + "\n"
+        + this.matchPercentage + "\n"
+        + this.matchIndex + "\n"
+        + this.application + "\n"
+        + this.applicationStatus;
+    }
+
+    public String getApplicationFileText() {
+        ArrayList<String> applicationList = new ArrayList<String>();
+
+        for (HashMap.Entry<String, String> entry : this.application.entrySet()) {
+            applicationList.add(entry.getKey());
+            applicationList.add(entry.getValue());
+        }
+        
+        String fileText = String.join("\n", applicationList);
+
+        return fileText;
+    }
+
 }
