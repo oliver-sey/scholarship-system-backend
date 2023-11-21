@@ -300,7 +300,7 @@ public class StudentProfile extends Profile {
 		this.personalStatement = inputPersonalStatement;
 	}
 
-	public void setAwardsRecieved(ArrayList<Scholarship> awardsRecieved) {
+	public void setAwardsReceived(ArrayList<Scholarship> awardsRecieved) {
         this.awardsRecieved = awardsRecieved;
     }
 
