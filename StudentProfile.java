@@ -45,6 +45,10 @@ public class StudentProfile extends Profile {
 		this.fileIndex = fileIndex;
 	}
 
+	public StudentProfile() {
+		
+	}
+
 	private int studentID;
 	private String major;
 	private String minor;

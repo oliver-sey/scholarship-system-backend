@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.script.ScriptEngine;
+
 public class Scholarship {
 
     private String name;
@@ -79,6 +81,10 @@ public class Scholarship {
         this.isApproved = isApproved;
         this.isArchived = isArchived;
         this.fileIndex = fileIndex;
+    }
+
+    public Scholarship() {
+
     }
 
     // initializes requirement categories and values into a hashmap
@@ -179,7 +185,8 @@ public class Scholarship {
         // this part should make output = "MM/DD/"
         String output = String.format("%02d/%02d/", getMonthAdded(), getDayAdded());
         // this should add the last 2 digits of year to the end
-        output += (getYearAdded() / 100);
+        String year = String.valueOf(this.yearAdded);
+        output += year.substring(2);
 
         return output;
     }
@@ -203,7 +210,8 @@ public class Scholarship {
         // this part should make output = "MM/DD/"
         String output = String.format("%02d/%02d/", getMonthDue(), getDayDue());
         // this should add the last 2 digits of year to the end
-        output += (getYearDue() / 100);
+        String year = String.valueOf(this.yearAdded);
+        output += year.substring(2);
 
         return output;
     }
