@@ -44,9 +44,30 @@ public class StudentProfile extends Profile {
 		this.personalStatement = personalStatement;
 		this.fileIndex = fileIndex;
 	}
-
+	// create constructor for StudentProfile child class
 	public StudentProfile() {
-
+		firstName = "invalidFirstName";
+		lastName = "invalidLastName";
+		studentID = -1;
+		username = "invalidUserName";
+		password = "invalidPassword";
+		major = "invalidMajor";
+		minor = "invalidMinor";
+		hasAMinor = false;
+		isUSCitizen = false;
+		GPA = -1;
+		inGoodStanding = false;
+		hasAdvStanding = false;
+		gradeLevel = "invalidGradeLevel";
+		gradMonth = -1;
+		gradYear = -1;
+		gender = "invalidGender";
+		isFullTimeStudent = false;
+		isTransferStudent = false;
+		curNumCredits = -1;
+		receivesFunding = false;
+		personalStatement = "invalidPersonalStatement";
+		fileIndex = -1;
 	}
 
 	private int studentID;
