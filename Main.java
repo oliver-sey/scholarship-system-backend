@@ -160,7 +160,7 @@ public class Main {
 		String dateAddedString = values.get(6);
 		String dateDueString = values.get(7);
 
-
+		
 		detailsBr.close();
 
 		// read application file and store in array
