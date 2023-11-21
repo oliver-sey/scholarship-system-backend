@@ -1,3 +1,5 @@
-public class AdminProfile extends Profile{
-    
+public class AdminProfile extends Profile {
+    public AdminProfile() {
+        clearanceLevel = 4;
+    }
 }
