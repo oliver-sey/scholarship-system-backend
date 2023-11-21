@@ -245,7 +245,7 @@ public class Scholarship {
         this.recipient = recipient;
     }
 
-    public String getDetailFileText() {
+    public String getDetailsFileText() {
         return this.name + "\n"
         + this.description + "\n"
         + getDonorName() + "\n"

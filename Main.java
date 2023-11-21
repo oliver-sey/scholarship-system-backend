@@ -95,7 +95,7 @@ public class Main {
 			
 			fileIndex = dir.listFiles().length + 1;
 		}
-		else if (dataType.compareTo("scholarship") == 0) {
+		else if (dataType.compareTo("scholarhsip") == 0) {
 			File dir = new File("scholarships");
 			
 			fileIndex = dir.listFiles().length + 1;
@@ -153,14 +153,7 @@ public class Main {
 		float awardAmount = Float.parseFloat(values.get(3));
 		boolean isApproved = Boolean.parseBoolean(values.get(4));
 		boolean isArchived = Boolean.parseBoolean(values.get(5));
-
-		// just using the Strings here because that's what we read from the file,
-		// and that's what the constructor takes as a parameter
-		// The constructor will then convert it to a LocalDate object
-		String dateAddedString = values.get(6);
-		String dateDueString = values.get(7);
-
-
+		
 		detailsBr.close();
 
 		// read application file and store in array
@@ -214,7 +207,7 @@ public class Main {
 		}
 
 		return new Scholarship(name, description, correctDonor, awardAmount, requirements, application, applicants,
-				isApproved, isArchived, fileIndex, dateAddedString, dateDueString);
+				isApproved, isArchived, fileIndex);
 
 	}
 
@@ -246,19 +239,18 @@ public class Main {
 		return scholarships;
 	}
 
-	public static void StoreScholarship(Scholarship scholarship, int fileIndex) {
+	public static void StoreScholarship(Scholarship scholarship, int fileIndex) throws IOException {
 		
-		/*
-		File studentFile = new File("students/student" + String.valueOf(fileIndex) + ".txt");
+		File folder = new File("scholarships/scholarship" + String.valueOf(fileIndex));
+		folder.mkdirs();
 
-		studentFile.createNewFile();
+		File detailsFile = new File(folder, "details.txt");
 
-		FileWriter writer = new FileWriter(studentFile);
+		FileWriter writer = new FileWriter(detailsFile);
 
-		writer.write(student.getFileText());
+		writer.write(scholarship.getDetailsFileText());
 
 		writer.close();
-		*/
 	}
 
 	public static ArrayList<StudentProfile> InstantiateAllStudents() {
