@@ -46,7 +46,7 @@ public class StudentProfile extends Profile {
 	}
 
 	public StudentProfile() {
-		
+
 	}
 
 	private int studentID;
@@ -85,7 +85,6 @@ public class StudentProfile extends Profile {
 	private String personalStatement;
 
 	private ArrayList<Integer> matchObjects = new ArrayList<Integer>();
-
 
 	// getters
 
@@ -182,7 +181,6 @@ public class StudentProfile extends Profile {
 	public void getIsUSCitizen(boolean inputIsUSCitizen) {
 		this.isUSCitizen = inputIsUSCitizen;
 	}
-
 
 	// setters
 	// TODO: **** eventually add more to the setters to control what values can be
@@ -296,28 +294,27 @@ public class StudentProfile extends Profile {
 	}
 
 	public String getFileText() {
-		return
-        this.firstName + "\n" +
-        this.lastName + "\n" +
-        this.studentID + "\n" +
-        this.username + "\n" +
-        this.password + "\n" +
-        this.major + "\n" +
-        this.hasAMinor + "\n" +
-        this.minor + "\n" +
-        this.isUSCitizen + "\n" +
-        this.GPA + "\n" +
-        this.inGoodStanding + "\n" +
-        this.hasAdvStanding + "\n" +
-        this.gradeLevel + "\n" +
-        this.gradMonth + "\n" +
-        this.gradYear + "\n" +
-        this.gender + "\n" +
-        this.isFullTimeStudent + "\n" +
-        this.isTransferStudent + "\n" +
-        this.curNumCredits + "\n" +
-        this.receivesFunding + "\n" +
-        this.personalStatement + "\n";
+		return this.firstName + "\n" +
+				this.lastName + "\n" +
+				this.studentID + "\n" +
+				this.username + "\n" +
+				this.password + "\n" +
+				this.major + "\n" +
+				this.hasAMinor + "\n" +
+				this.minor + "\n" +
+				this.isUSCitizen + "\n" +
+				this.GPA + "\n" +
+				this.inGoodStanding + "\n" +
+				this.hasAdvStanding + "\n" +
+				this.gradeLevel + "\n" +
+				this.gradMonth + "\n" +
+				this.gradYear + "\n" +
+				this.gender + "\n" +
+				this.isFullTimeStudent + "\n" +
+				this.isTransferStudent + "\n" +
+				this.curNumCredits + "\n" +
+				this.receivesFunding + "\n" +
+				this.personalStatement + "\n";
 	}
 
 	@Override

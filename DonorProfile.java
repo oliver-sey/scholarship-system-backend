@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class DonorProfile extends Profile{
+public class DonorProfile extends Profile {
     ArrayList<Scholarship> scholarships = new ArrayList<Scholarship>();
 
     public DonorProfile(String firstName, String lastName, String username, String password) {
@@ -14,9 +14,8 @@ public class DonorProfile extends Profile{
         scholarships.add(newScholarship);
     }
 
-    public ArrayList<Scholarship> getScholarships () {
+    public ArrayList<Scholarship> getScholarships() {
         return this.scholarships;
     }
-    
 
 }
