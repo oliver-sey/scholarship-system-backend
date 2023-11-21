@@ -252,12 +252,29 @@ public class Main {
 		folder.mkdirs();
 
 		File detailsFile = new File(folder, "details.txt");
+		FileWriter detailsWriter = new FileWriter(detailsFile);
 
-		FileWriter writer = new FileWriter(detailsFile);
+		detailsWriter.write(scholarship.getDetailsFileText());
+		detailsWriter.close();
+		
+		File applicationFile = new File(folder, "application.txt");
+		FileWriter applicationWriter = new FileWriter(applicationFile);
 
-		writer.write(scholarship.getDetailsFileText());
+		applicationWriter.write(scholarship.getApplicationFileText());
+		applicationWriter.close();
 
-		writer.close();
+		File applicantsFile = new File(folder, "applicants.txt");
+		FileWriter applicantsWriter = new FileWriter(applicantsFile);
+
+		applicantsWriter.write(scholarship.getApplicantsFileText());
+		applicantsWriter.close();
+
+		File requirementsFile = new File(folder, "requirements.txt");
+		FileWriter requirementsWriter = new FileWriter(requirementsFile);
+
+		requirementsWriter.write(scholarship.getRequirementsFileText());
+		requirementsWriter.close();
+
 	}
 
 	public static ArrayList<StudentProfile> InstantiateAllStudents() {
@@ -364,6 +381,10 @@ public class Main {
 
 		return matches;
 
+	}
+
+	public static void StoreMatch(MatchRelationship match, int fileIndex) {
+		
 	}
 
 	// creates donor object from file
