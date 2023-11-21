@@ -326,6 +326,40 @@ public class Scholarship {
         this.recipient = recipient;
     }
 
+    public String getDetailFileText() {
+        return this.name + "\n"
+        + this.description + "\n"
+        + getDonorName() + "\n"
+        + this.awardAmount + "\n"
+        + this.isApproved + "\n"
+        + this.isArchived;
+    }
+
+    public String getApplicationFileText() {
+        String fileText = String.join("\n", this.application);
+
+        return fileText;
+    }
+
+    public String getApplicantsFileText() {
+        String fileText = String.join("\n", getApplicantNames());
+
+        return fileText;
+    }
+
+    public String getRequirementsFileText() {
+        ArrayList<String> requirementsList = new ArrayList<String>();
+
+        for (HashMap.Entry<String, String> entry : this.requirements.entrySet()) {
+            requirementsList.add(entry.getKey());
+            requirementsList.add(entry.getValue());
+        }
+        
+        String fileText = String.join("\n", requirementsList);
+
+        return fileText;
+    }
+
     @Override
     public String toString() {
         return "Scholarship [name=" + name + ", description=" + description + ", applicants=" + applicants + ", Donor="

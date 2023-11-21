@@ -243,6 +243,10 @@ public class Main {
 		return scholarships;
 	}
 
+	public static void StoreScholarship(Scholarship scholarship) {
+		
+	}
+
 	public static ArrayList<StudentProfile> InstantiateAllStudents() {
 		ArrayList<StudentProfile> students = new ArrayList<StudentProfile>();
 		File dir = new File("students");
