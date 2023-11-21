@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -17,17 +18,11 @@ public class Scholarship {
     private boolean isAwarded;
     private StudentProfile recipient;
 
-    // month, day, and year for when this scholarship was added
-    // would be too complicated to mess around with date objects
-    private int monthAdded;
-    private int dayAdded;
-    private int yearAdded;
-
-    // for the scholarship due date
-    // TODO: are scholarships always due end of day?
-    private int monthDue;
-    private int dayDue;
-    private int yearDue;
+    // a LocalDate object (has a date but no time) for when this scholarship was added
+    private LocalDate dateAdded;
+    // a LocalDate object for when this scholarship is due. The scholarship is always due at the end 
+    // of the day, so if today is the same date as dateDue, you can still apply
+    private LocalDate dateDue;
 
     private int fileIndex;
 
@@ -158,22 +153,6 @@ public class Scholarship {
         return this.donor.getName();
     }
 
-    public int getDayAdded() {
-        return dayAdded;
-    }
-
-    public int getMonthAdded() {
-        return monthAdded;
-    }
-
-    public int getYearAdded() {
-        return yearAdded;
-    }
-
-    public int getDayDue() {
-        return dayDue;
-    }
-
     public int getFileIndex() {
         return this.fileIndex;
     }
@@ -186,47 +165,6 @@ public class Scholarship {
         return recipient;
     }
 
-    /**
-     * 
-     * @return the full date this scholarship was added, in String form.
-     * The format is MM/DD/YY
-     */
-    public String getDateAddedString() {
-        // got this from: https://stackoverflow.com/questions/275711/add-leading-zeroes-to-number-in-java
-        // the 0 is to pad the left with 0's, the 2 specifies a number width of 2
-        // this part should make output = "MM/DD/"
-        String output = String.format("%02d/%02d/", getMonthAdded(), getDayAdded());
-        // this should add the last 2 digits of year to the end
-        String year = String.valueOf(this.yearAdded);
-        output += year.substring(2);
-
-        return output;
-    }
-
-    public int getMonthDue() {
-        return monthDue;
-    }
-
-    public int getYearDue() {
-        return yearDue;
-    }
-
-    /**
-     * 
-     * @return the full date this scholarship is due, in String form. (a copy-paste of getDateAddedString())
-     * The format is MM/DD/YY
-     */
-    public String getDateDueString() {
-        // got this from: https://stackoverflow.com/questions/275711/add-leading-zeroes-to-number-in-java
-        // the 0 is to pad the left with 0's, the 2 specifies a number width of 2
-        // this part should make output = "MM/DD/"
-        String output = String.format("%02d/%02d/", getMonthDue(), getDayDue());
-        // this should add the last 2 digits of year to the end
-        String year = String.valueOf(this.yearAdded);
-        output += year.substring(2);
-
-        return output;
-    }
 
     // setters
 
@@ -270,54 +208,6 @@ public class Scholarship {
         this.isApproved = isApproved;
     }
 
-    public void setDayAdded(int dayAdded) {
-        if (dayAdded < 1 || dayAdded > 31) {
-            throw new IllegalArgumentException("dayAdded must be >= 1 and <= 31");
-        }
-
-        this.dayAdded = dayAdded;
-    }
-
-    public void setMonthAdded(int monthAdded) {
-        if (monthAdded < 1 || monthAdded > 12) {
-            throw new IllegalArgumentException("monthAdded must be >= 1 and <= 12");
-        }
-
-        this.monthAdded = monthAdded;
-    }
-
-    public void setYearAdded(int yearAdded) {
-        if (yearAdded < 2000) {
-            throw new IllegalArgumentException("yearAdded must be >= 2000");
-        }
-
-        this.yearAdded = yearAdded;
-    }
-
-    public void setDayDue(int dayDue) {
-        if (dayDue < 1 || dayDue > 31) {
-            throw new IllegalArgumentException("dayDue must be >= 1 and <= 31");
-        }
-
-        this.dayDue = dayDue;
-    }
-
-    public void setMonthDue(int monthDue) {
-        if (monthDue < 1 || monthDue > 12) {
-            throw new IllegalArgumentException("monthDue must be >= 1 and <= 12");
-        }
-
-        this.monthDue = monthDue;
-    }
-
-    public void setYearDue(int yearDue) {
-        if (yearDue < 2000) {
-            throw new IllegalArgumentException("yearDue must be >= 2000");
-        }
-
-        this.yearDue = yearDue;
-    }
-    
     public void setAwarded(boolean isAwarded) {
         this.isAwarded = isAwarded;
     }
@@ -364,6 +254,6 @@ public class Scholarship {
     public String toString() {
         return "Scholarship [name=" + name + ", description=" + description + ", applicants=" + applicants + ", Donor="
                 + donor.getName() + ", awardAmount=" + awardAmount + ", requirements=" + requirements + ", application="
-                + application + ", isArchived=" + isArchived + ", isApproved=" + isApproved + "]";
+                + application + ", isArchived=" + isArchived + ", isApproved=" + isApproved + ", dateAdded=" + dateAdded + ", dateDue=" + dateDue + "]";
     }
 }
