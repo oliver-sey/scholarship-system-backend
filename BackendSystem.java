@@ -26,7 +26,7 @@ public class BackendSystem {
 		this.allScholarships = InstantiateAllScholarships();
 		this.allDonors = InstantiateAllDonors();
 		this.allMatchRelationships = InstantiateAllMatches();
-		// TO DO: make the rest of the instantiate all methods
+		// TODO: make the rest of the instantiate all methods
 	}
 
 	public StudentProfile readStudentProfile(int fileIndex) throws IOException {
@@ -84,8 +84,19 @@ public class BackendSystem {
 	}
 
 	// writes student profile data to file
-	public void StoreStudentProfile(StudentProfile student, int fileIndex) throws IOException {
+	public void updateStudentProfileFile(StudentProfile student, int fileIndex) throws IOException {
 		File studentFile = new File("students/student" + String.valueOf(fileIndex) + ".txt");
+
+		FileWriter writer = new FileWriter(studentFile, false);
+
+		writer.write(student.getFileText());
+
+		writer.close();
+	}
+
+	public void storeNewStudentProfile(StudentProfile student) throws Exception {
+		int nextFileIndex = findNextFileIndex("student");
+		File studentFile = new File("students/student" + String.valueOf(nextFileIndex) + ".txt");
 
 		studentFile.createNewFile();
 
@@ -94,6 +105,7 @@ public class BackendSystem {
 		writer.write(student.getFileText());
 
 		writer.close();
+		
 	}
 
 	// find next index available in folder to store new object
@@ -113,7 +125,12 @@ public class BackendSystem {
 			File dir = new File("students");
 
 			fileIndex = dir.listFiles().length + 1;
-		} else {
+		} else if (dataType.compareTo("match") == 0) {
+			File dir = new File("matches");
+
+			fileIndex = dir.listFiles().length + 1;
+		}
+		else {
 			throw new Exception("Data type is not valid.");
 		}
 
@@ -791,4 +808,36 @@ public class BackendSystem {
 
 	}
 
+	// A getter that I added so I could check some details of scholarships in a test method in Main
+	public ArrayList<Scholarship> getAllScholarships() {
+		return this.allScholarships;
+	}
+
+	public ArrayList<StudentProfile> getAllStudents() {
+		return allStudents;
+	}
+
+	public ArrayList<MatchRelationship> getAllMatchRelationships() {
+		return allMatchRelationships;
+	}
+
+	public ArrayList<DonorProfile> getAllDonors() {
+		return allDonors;
+	}
+
+	public ArrayList<AdminProfile> getAllAdmins() {
+		return allAdmins;
+	}
+
+	public Profile getCurrentUser() {
+		return currentUser;
+	}
+
+
+	public void testStoringStudents() throws Exception {
+		StudentProfile newStudent = new StudentProfile("Jess", "Mess", 12345, "user", "pass", "IE", true, "SFWEE", true, 
+		3.6, true, true, "Freshman", 5, 2025, "Female", true, false, 12, false, "I love school!");
+
+		storeNewStudentProfile(newStudent);
+	}
 }

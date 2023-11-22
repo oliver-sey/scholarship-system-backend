@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -112,6 +113,24 @@ public class Scholarship {
 
     public void addApplicant(StudentProfile newStudent) {
         this.applicants.add(newStudent);
+    }
+
+    /**
+     * This method is so we can check if a scholarship should be archived, 
+     * we have a requirement that scholarships should be stored for 5 years past their due date.
+     * And then our requirement doesn't specify what happens but we decided to archive them
+     * 
+     * @return returns true if this scholarship's due date is 5 years ago today, or earlier
+     */
+    public boolean due5PlusYearsAgo() {
+        LocalDate todaysDate = LocalDate.now();
+        
+        // the time from the due date to today's date, can be either positive or negative
+        Period timeSinceDue = Period.between(this.getDateDue(), todaysDate);
+
+        // return true if it was due 5 years ago or longer than that
+        // if it's 4 years and 364 days it's still ok, but after 5 years it should be archived
+        return (timeSinceDue.getYears() >= 5);
     }
 
     // getters
