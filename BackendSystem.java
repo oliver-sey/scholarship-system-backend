@@ -643,6 +643,7 @@ public class BackendSystem {
 			// 3 if the user type was not accepted
 			returnVal = checkLoginDetails(userType, username, password);
 
+			scnr.close();
 			// if the return value is 0, checkLoginDetails() will set the currentUser
 			// variable
 			if (returnVal == 0) {
@@ -783,6 +784,8 @@ public class BackendSystem {
 		System.out.print("Your answer: ");
 
 		String userAnswer = scnr.nextLine();
+
+		scnr.close();
 
 		if (userAnswer.equalsIgnoreCase(correctAnswer)) {
 			System.out.println("Correct answer!");
