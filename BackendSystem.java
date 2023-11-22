@@ -17,6 +17,9 @@ public class BackendSystem {
 	private ArrayList<DonorProfile> allDonors = new ArrayList<DonorProfile>();
 	private ArrayList<AdminProfile> allAdmins = new ArrayList<AdminProfile>();
 
+	// the user that is currently using the system
+	private Profile currentUser;
+
 	//constructor
 	public BackendSystem() throws NumberFormatException, IOException {
 		this.allStudents = InstantiateAllStudents();
@@ -521,7 +524,8 @@ public class BackendSystem {
 	// after 2 wrong passwords get to still do 3 security question attempts
 
 	// TODO: return user object so we can pass it to check security question
-	public void login() {
+	// this returns null if the login was unsuccessful and the program should stop!!!!!
+	public Profile login() {
 		// TODO: implement me!!!
 		Scanner scnr = new Scanner(System.in);
 		int returnVal;
@@ -531,7 +535,7 @@ public class BackendSystem {
 			System.out.print("Please enter your user type (as one word, i.e. 'Student', 'FundSteward'): ");
 			
 			// TODO: what to do with scanning newlines \n?
-			System.out.print("Please enter your username: ");
+			System.out.print("Please enter your user type: ");
 			String userType = scnr.nextLine();
 
 			System.out.print("Please enter your username: ");
@@ -540,18 +544,29 @@ public class BackendSystem {
 			System.out.print("Please enter your password: ");
 			String password = scnr.nextLine();
 			
-			// TODO: figure out students, donors, etc. lists!!
-			returnVal = 5;
-			// checkLoginDetails(students, donors, userType, username, password);
-
-			// return values:
+			// possible return values from checkLoginDetails():
 			// 0 if the username and password matched,
 			// 1 if the user could not be found/does not exist, 
 			// 2 if the user was found but the password was wrong
 			// 3 if the user type was not accepted
+			returnVal = checkLoginDetails(userType, username, password);
 
+			// if the return value is 0, checkLoginDetails() will set the currentUser variable
 			if (returnVal == 0) {
-				System.out.println("Successful login!");
+				// correct username and password, have to now make them do a security question
+				// TODO: get the Profile object here? need it for the call to checkOneSecurity question and will have to return it from this method
+				boolean correctAnswer = false;
+				for (int questionNum = 1; questionNum <= 3; questionNum++) {
+					// if the security question answer was correct
+					if (checkOneSecurityQuestion(questionNum, currentUser)) {
+						correctAnswer = true;
+						// exit the loop early, don't ask them the later security questions
+						break;
+					}
+				}
+				if (!correctAnswer) {
+					return null;
+				}
 			}
 			if (returnVal == 1) {
 				System.out.println("The entered username could not be found in the system for the entered user type.");
@@ -578,11 +593,14 @@ public class BackendSystem {
 	 * 2 if the user was found but the password was wrong
 	 * 3 if the user type was not accepted
 	 */
-	public int checkLoginDetails(ArrayList<StudentProfile> students, ArrayList<DonorProfile> donors, String userType, String enteredUsername, String enteredPassword) {
+	public int checkLoginDetails(String userType, String enteredUsername, String enteredPassword) {
 		if (userType.equals("Student")) {
-			for (StudentProfile student : this.allStudents) {
-				if (student.username.equalsIgnoreCase(enteredUsername)) {
-					if (student.password.equals(enteredPassword)) {
+			for (int i = 0; i < allStudents.size(); i++) {
+				if (allStudents.get(i).username.equalsIgnoreCase(enteredUsername)) {
+					if (allStudents.get(i).password.equals(enteredPassword)) {
+						// store this user in the currentUser variable
+						currentUser = allStudents.get(i);
+
 						// return 0 since we have a successful username/password match
 						return 0;
 					}
@@ -597,34 +615,34 @@ public class BackendSystem {
 		}
 
 		else if (userType.equals("Donor")) {
-			for (DonorProfile donor : this.allDonors) {
-				if (donor.username.equalsIgnoreCase(enteredUsername)) {
-					if (donor.password.equals(enteredPassword)) {
+			for (int i = 0; i < this.allDonors.size(); i++) {
+				if (allDonors.get(i).username.equalsIgnoreCase(enteredUsername)) {
+					if (allDonors.get(i).password.equals(enteredPassword)) {
+						// store this user in the currentUser variable
+						currentUser = allDonors.get(i);
+
 						// return 0 since we have a successful username/password match
 						return 0;
 					}
 					else {
 						// valid username but incorrect password
-						// usernames are unique so we know that we found the right user
-						// but the password was just wrong
 						return 2;
 					}
 				}
 			}	
 		}
 		else if (userType.equals("Admin")) {
-			
-			// TODO: implement this method for Admins!!
-			for (AdminProfile admin : this.allAdmins) {
-				if (admin.username.equalsIgnoreCase(enteredUsername)) {
-					if (admin.password.equals(enteredPassword)) {
+			for (int i = 0; i < this.allAdmins.size(); i++) {
+				if (allAdmins.get(i).username.equalsIgnoreCase(enteredUsername)) {
+					if (allAdmins.get(i).password.equals(enteredPassword)) {
+						// store this user in the currentUser variable
+						currentUser = allAdmins.get(i);
+
 						// return 0 since we have a successful username/password match
 						return 0;
 					}
 					else {
 						// valid username but incorrect password
-						// usernames are unique so we know that we found the right user
-						// but the password was just wrong
 						return 2;
 					}
 				}
