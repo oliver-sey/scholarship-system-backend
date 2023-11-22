@@ -71,7 +71,7 @@ public class BackendSystem {
 
 		values.clear();
 
-		while ((str = detailsBr.readLine()) != null) {
+		while ((str = awardsBr.readLine()) != null) {
 			values.add(str);
 		}
 
