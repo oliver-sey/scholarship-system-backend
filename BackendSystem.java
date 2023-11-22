@@ -875,7 +875,7 @@ public class BackendSystem {
 
 	public void testStoringStudents() throws Exception {
 		StudentProfile newStudent = new StudentProfile("Jess", "Mess", 12345, "user", "pass", "IE", true, "SFWEE", true, 
-		3.6, true, true, "Freshman", 5, 2025, "Female", true, false, 12, false, "I love school!");
+		3.6, true, true, "Freshman", 5, 2025, "Female", true, false, 12, false, "I love school!", "Smith", "The eagles", "New York");
 
 		storeNewStudentProfile(newStudent);
 
