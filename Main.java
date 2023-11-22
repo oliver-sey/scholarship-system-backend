@@ -514,4 +514,79 @@ public class Main {
 
 		return scholarshipsFound;
 	}
+
+	public void login() {
+		// TODO: implement me!!!
+	}
+
+	/**
+	 * A method to check if a username exists and if the entered password is correct 
+	 * 
+	 * @param userType - 'Student', 'Donor', 'Admin', 'FundSteward', 'Staff'
+	 * @param enteredUsername - the username/email that the user entered
+	 * @param enteredPassword - the password the user entered
+	 * 
+	 * @return 0 if the username and password matched,
+	 * 1 if the user could not be found/does not exist, 
+	 * 2 if the user was found but the password was wrong
+	 * 3 if the user type was not accepted
+	 */
+	public int checkLoginDetails(ArrayList<StudentProfile> students, ArrayList<DonorProfile> donors, String userType, String enteredUsername, String enteredPassword) {
+		if (userType.equals("Student")) {
+			for (StudentProfile student : students) {
+				if (student.username.equals(enteredUsername)) {
+					if (student.password.equals(enteredPassword)) {
+						// return 0 since we have a successful username/password match
+						return 0;
+					}
+					else {
+						// valid username but incorrect password
+						// usernames are unique so we know that we found the right user
+						// but the password was just wrong
+						return 2;
+					}
+				}
+			}	
+		}
+
+		else if (userType.equals("Donor")) {
+			for (DonorProfile donor : donors) {
+				if (donor.username.equals(enteredUsername)) {
+					if (donor.password.equals(enteredPassword)) {
+						// return 0 since we have a successful username/password match
+						return 0;
+					}
+					else {
+						// valid username but incorrect password
+						// usernames are unique so we know that we found the right user
+						// but the password was just wrong
+						return 2;
+					}
+				}
+			}	
+		}
+		else if (userType.equals("Admin")) {
+			// TODO: implement this method for Admins!!
+			System.out.println("checkLoginDetails has not yet been implemented for Admins");
+		}
+		else if (userType.equals("FundSteward")) {
+			// TODO: implement this method for FundStewards!!
+			System.out.println("checkLoginDetails has not yet been implemented for FundStewards");
+		}
+		else if (userType.equals("Staff")) {
+			// TODO: implement this method for Staffs!!
+			System.out.println("checkLoginDetails has not yet been implemented for Staffs");
+		}
+		else {
+			System.out.println("Invalid user type in checkLoginDetails() - returning 3.");
+			return 3;
+		}
+
+		// should only reach here if there was a valid userType and we entered 
+		// one of the if or else-if statements (not the else because we would have returned early)
+
+		// had a valid userType but never found the username and thus didn't return early
+		// return 1 since the user was not found
+		return 1;
+	}
 }
