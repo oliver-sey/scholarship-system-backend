@@ -1,26 +1,26 @@
-gradeLevel
+Grade Level
 Sophomore
-gradeLevel
+Grade Level
 Junior
-gradeLevel
+Grade Level
 Senior
-isFullTimeStudent
+Full Time Student
 True
-isFullTimeStudent
+Full Time Student
 False
-gradMonth
+Graduation Month
 05
-gradMonth
+Graduation Month
 12
-gradYear
+Graduation Year
 2024
-gradYear
+Graduation Year
 2025
-gradYear
+Graduation Year
 2026
-gradYear
+Graduation Year
 2027
-gradYear
+Graduation Year
 2028
-inGoodStanding
+Good Standing
 True

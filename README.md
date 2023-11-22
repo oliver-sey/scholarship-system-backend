@@ -21,6 +21,9 @@ The files in these folders get imported and parsed, and the data gets put into v
 
 # ***More background info here??**
 
+### Student Applicants Qualifications
+We are not concerned with whether or not a student that applies to a scholarship actually qualifies for the scholarship, that is not relevant to back end subsystem functionalities. 
+
 
 # Details of the data import files:
 
