@@ -9,13 +9,13 @@ import java.util.Scanner;
 public class Main {
 
 	public static void main(String[] args) throws Exception {
-
+		runDifferentTests();
 
 
 	}
 
 
-	public void runDifferentTests() throws Exception {
+	public static void runDifferentTests() throws Exception {
 		Scanner scnr = new Scanner(System.in);
 		System.out.println("Hello! Welcome to the backend for our Scholarship Management System.");
 
@@ -27,7 +27,7 @@ public class Main {
 			// have to add the ability to give extra commands
 			System.out.println("1 - Run the program normally, no specific test case");
 			System.out.println("2 - check if scholarship that were due 5+ years ago, are handled correctly");
-			System.out.println("3 - idk yet");
+			System.out.println("3 - check login");
 			System.out.println("0 - EXIT");
 
 			System.out.print("\nYour choice: ");
@@ -57,9 +57,13 @@ public class Main {
 				}
 			}
 
+			// checking the login
 			else if (userSelection == 3) {
 				// instantiate the backend and all the students, scholarships, etc.
-				
+				BackendSystem backend = new BackendSystem();
+				// prompt users for their login details
+				// this will call checkLoginDetails(), which will do the security questions
+				backend.login();
 			}
 			
 			else {
