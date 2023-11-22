@@ -393,7 +393,10 @@ public class StudentProfile extends Profile {
 				this.isTransferStudent + "\n" +
 				this.curNumCredits + "\n" +
 				this.receivesFunding + "\n" +
-				this.personalStatement + "\n";
+				this.personalStatement + "\n"+
+				this.securityQAnswers[0] + "\n"+
+				this.securityQAnswers[1] + "\n"+
+				this.securityQAnswers[2] + "\n";
 	}
 
 	@Override

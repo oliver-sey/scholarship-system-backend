@@ -66,6 +66,9 @@ public class BackendSystem {
 		int curNumCredits = Integer.parseInt(values.get(18));
 		boolean receivesFunding = Boolean.parseBoolean(values.get(19));
 		String personalStatement = values.get(20);
+		String sq1 = values.get(21);
+		String sq2 = values.get(22);
+		String sq3 = values.get(23);
 
 
 		BufferedReader awardsBr = new BufferedReader(new FileReader(folderPath + "/awards.txt"));
@@ -90,7 +93,7 @@ public class BackendSystem {
 		return new StudentProfile(firstName, lastName, studentID, username, password, major, hasAMinor, minor,
 				isUSCitizen, GPA, inGoodStanding, hasAdvStanding,
 				gradeLevel, gradMonth, gradYear, gender, isFullTimeStudent, isTransferStudent,
-				curNumCredits, receivesFunding, personalStatement, awardedScholarships, fileIndex);
+				curNumCredits, receivesFunding, personalStatement, sq1, sq2, sq3, awardedScholarships, fileIndex);
 
 	}
 
@@ -123,6 +126,8 @@ public class BackendSystem {
 		int nextFileIndex = findNextFileIndex("student");
 		String folderPath = "students/student" + String.valueOf(nextFileIndex);
 		ArrayList<String> awardNames = new ArrayList<String>();
+		File dir = new File(folderPath);
+		dir.mkdir();
 
 		File detailsF = new File(folderPath + "/details.txt");
 		detailsF.createNewFile();

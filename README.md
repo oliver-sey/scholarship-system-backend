@@ -59,6 +59,7 @@ Graduation Year
 Good Standing
 Gender
 Transfer Student
+Currently Receives Funding 
   
 ## In the Match folder:
 
