@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Main {
@@ -515,6 +516,118 @@ public class Main {
 		}
 
 		return scholarshipsFound;
+	}
+
+	public void login() {
+		// TODO: implement me!!!
+		Scanner scnr = new Scanner(System.in);
+		int returnVal;
+		do {
+			System.out.print("Please enter your user type (as one word, i.e. 'Student', 'FundSteward'): ");
+			
+			// TODO: what to do with scanning newlines \n?
+			System.out.print("Please enter your username: ");
+			String userType = scnr.nextLine();
+
+			System.out.print("Please enter your username: ");
+			String username = scnr.nextLine();
+			
+			System.out.print("Please enter your password: ");
+			String password = scnr.nextLine();
+			
+			// TODO: figure out students, donors, etc. lists!!
+			returnVal = checkLoginDetails(students, donors, userType, username, password);
+
+			// return values:
+			// 0 if the username and password matched,
+			// 1 if the user could not be found/does not exist, 
+			// 2 if the user was found but the password was wrong
+			// 3 if the user type was not accepted
+
+			if (returnVal == 0) {
+				System.out.println("Successful login!");
+			}
+			if (returnVal == 1) {
+				System.out.println("The entered username could not be found in the system for the entered user type.");
+			}
+			else if (returnVal == 2) {
+				System.out.println("Incorrect password for the entered username and user type");
+			}
+			else if (returnVal == 3) {
+				System.out.println("Invalid user type");
+			}
+		} while (returnVal != 0);
+	}
+
+	/**
+	 * A method to check if a username exists and if the entered password is correct 
+	 * 
+	 * @param userType - 'Student', 'Donor', 'Admin', 'FundSteward', 'Staff'
+	 * @param enteredUsername - the username/email that the user entered
+	 * @param enteredPassword - the password the user entered
+	 * 
+	 * @return 0 if the username and password matched,
+	 * 1 if the user could not be found/does not exist, 
+	 * 2 if the user was found but the password was wrong
+	 * 3 if the user type was not accepted
+	 */
+	public int checkLoginDetails(ArrayList<StudentProfile> students, ArrayList<DonorProfile> donors, String userType, String enteredUsername, String enteredPassword) {
+		if (userType.equals("Student")) {
+			for (StudentProfile student : students) {
+				if (student.username.equalsIgnoreCase(enteredUsername)) {
+					if (student.password.equals(enteredPassword)) {
+						// return 0 since we have a successful username/password match
+						return 0;
+					}
+					else {
+						// valid username but incorrect password
+						// usernames are unique so we know that we found the right user
+						// but the password was just wrong
+						return 2;
+					}
+				}
+			}	
+		}
+
+		else if (userType.equals("Donor")) {
+			for (DonorProfile donor : donors) {
+				if (donor.username.equalsIgnoreCase(enteredUsername)) {
+					if (donor.password.equals(enteredPassword)) {
+						// return 0 since we have a successful username/password match
+						return 0;
+					}
+					else {
+						// valid username but incorrect password
+						// usernames are unique so we know that we found the right user
+						// but the password was just wrong
+						return 2;
+					}
+				}
+			}	
+		}
+		else if (userType.equals("Admin")) {
+			// TODO: implement this method for Admins!!
+			System.out.println("checkLoginDetails has not yet been implemented for Admins");
+		}
+		else if (userType.equals("FundSteward")) {
+			// TODO: implement this method for FundStewards!!
+			System.out.println("checkLoginDetails has not yet been implemented for FundStewards");
+		}
+		else if (userType.equals("Staff")) {
+			// TODO: implement this method for Staffs!!
+			System.out.println("checkLoginDetails has not yet been implemented for Staffs");
+		}
+		else {
+			System.out.println("Invalid user type in checkLoginDetails() - returning 3.");
+			return 3;
+		}
+
+		// should only reach here if there was a valid userType and we entered 
+		// one of the if or else-if statements (not the else because we would have returned early)
+
+		// had a valid userType but never found the username and thus didn't return early
+		// return 1 since the user was not found
+		return 1;
 	}
 
 	public static double stringSimilarity(String str1, String str2) {
