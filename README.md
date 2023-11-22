@@ -1,15 +1,28 @@
 # scholarship-system-backend
-A Java backend for a hypothetical Scholarship Management System (creating scholarship funds, applying, selecting recipients, and more).
+A Java backend for a hypothetical Scholarship Management System (creating scholarship funds, applying, selecting recipients, and more). We also wrote a complete set of software requirements for this backend and also 3 other subsystem, in Jama.
 
-In Fall 2023, by Anna Fravel, Katelyn McLean, Oliver Seymour, Juliette Nevarez, and MiLee Vogel.
+Fall 2023, by Anna Fravel, Katelyn McLean, Oliver Seymour, Juliette Nevarez, and MiLee Vogel.
 
 # **Put a summary of the code here:**
+This code is just the backend for this hypothetical system, it is not meant to be a complete application. A complete system would also include the Frontend, Matching Engine (between a scholarship and applicants), and a Reports Generation Engine.
 
+Users can run the code from the Main file, which creates an instance of BackendSystem, which actually has all of our business logic.
+In Main you can also run various acceptance tests, which show that we successfully implemented all of the backend subsystem requirements 
+that we wrote and refined as part of this project.
+
+To test our backend subsystem, we need test data, which gets imported from text files, in folders such as 'donors', 'matches' (between a student and a scholarship), 'scholarships', and 'students'. 
+
+Within these folders you have, for example, a folder called 'scholarship1', which contains multiple text files with different details about it.
+(**More information on the specifics of what information is in each data import file, can be found below.)
+
+The files in these folders get imported and parsed, and the data gets put into various objects, of type Scholarship, StudentProfile, MatchRelationship, and more.
 
 # **Put background info of the code and why we did stuff (big picture stuff) here:**
 
 
 # Details of the data import files:
+
+NOTE: you have to be very careful to not have extra blank lines at the end of files, or within the text file somewhere, it will affect the parsing of the data.
 
 ## In the Scholarship folder:
 Each scholarship has its own folder within 'Scholarship', and within that there are 4 text files with information about the scholarship.
