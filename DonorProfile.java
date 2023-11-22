@@ -6,12 +6,14 @@ public class DonorProfile extends Profile {
     // create constructor for DonorProfile child class
     public DonorProfile(){
         clearanceLevel = 2;
+        fileIndex = -1;
         firstName = "invalidFirstName";
         lastName = "invalidLastName";
         username = "invalidUserName";
         password = "invalidPassword";   
     }
 
+     //TO DO: add for fileIndex?
     public DonorProfile(String firstName, String lastName, String username, String password) {
         clearanceLevel = 1;
         this.firstName = firstName;

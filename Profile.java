@@ -19,6 +19,11 @@ public abstract class Profile {
 
 	// Clearance Level?
 
+	// create constructor for Profile class
+	public Profile(){
+
+	}
+
 	public String getFirstName() {
 		return this.firstName;
 	}
