@@ -49,3 +49,7 @@ First name, Last name, username, password
 
 ### Scholarships:
 Scholarship name 1, scholarship name 2
+
+
+### Student Profile File:
+firstName(str), lastName(str), studentID(int), username(str), password(strs), major(str), hasAMinor(T/F), minor(str), isUSCitizen(T/F), GPA(fl), inGoodStanding(T/F), hasAdvStanding(T/F), gradeLevel(str), gradMonth(int), gradYear(int), gender(str), isFullTimeStudent(T/F), isTransferStudent(T/F), curNumCredits(int), receivesFunding(T/F), personalStatement(str)
