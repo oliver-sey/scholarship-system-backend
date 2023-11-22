@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Main {
@@ -517,6 +518,43 @@ public class Main {
 
 	public void login() {
 		// TODO: implement me!!!
+		Scanner scnr = new Scanner(System.in);
+		int returnVal;
+		do {
+			System.out.print("Please enter your user type (as one word, i.e. 'Student', 'FundSteward'): ");
+			
+			// TODO: what to do with scanning newlines \n?
+			System.out.print("Please enter your username: ");
+			String userType = scnr.nextLine();
+
+			System.out.print("Please enter your username: ");
+			String username = scnr.nextLine();
+			
+			System.out.print("Please enter your password: ");
+			String password = scnr.nextLine();
+			
+			// TODO: figure out students, donors, etc. lists!!
+			returnVal = checkLoginDetails(students, donors, userType, username, password);
+
+			// return values:
+			// 0 if the username and password matched,
+			// 1 if the user could not be found/does not exist, 
+			// 2 if the user was found but the password was wrong
+			// 3 if the user type was not accepted
+
+			if (returnVal == 0) {
+				System.out.println("Successful login!");
+			}
+			if (returnVal == 1) {
+				System.out.println("The entered username could not be found in the system for the entered user type.");
+			}
+			else if (returnVal == 2) {
+				System.out.println("Incorrect password for the entered username and user type");
+			}
+			else if (returnVal == 3) {
+				System.out.println("Invalid user type");
+			}
+		} while (returnVal != 0);
 	}
 
 	/**
@@ -534,7 +572,7 @@ public class Main {
 	public int checkLoginDetails(ArrayList<StudentProfile> students, ArrayList<DonorProfile> donors, String userType, String enteredUsername, String enteredPassword) {
 		if (userType.equals("Student")) {
 			for (StudentProfile student : students) {
-				if (student.username.equals(enteredUsername)) {
+				if (student.username.equalsIgnoreCase(enteredUsername)) {
 					if (student.password.equals(enteredPassword)) {
 						// return 0 since we have a successful username/password match
 						return 0;
@@ -551,7 +589,7 @@ public class Main {
 
 		else if (userType.equals("Donor")) {
 			for (DonorProfile donor : donors) {
-				if (donor.username.equals(enteredUsername)) {
+				if (donor.username.equalsIgnoreCase(enteredUsername)) {
 					if (donor.password.equals(enteredPassword)) {
 						// return 0 since we have a successful username/password match
 						return 0;
