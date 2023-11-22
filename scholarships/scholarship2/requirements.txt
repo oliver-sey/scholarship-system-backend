@@ -1,12 +1,12 @@
-Year
+Grade Level
 Freshman
-Year
+Grade Level
 Sophomore
-Year
+Grade Level
 Junior
-Year
+Grade Level
 Senior
-isFullTimeStudent
+Full Time Student
 True
 GPA
 2.0
