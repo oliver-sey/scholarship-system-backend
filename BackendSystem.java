@@ -470,8 +470,9 @@ public class BackendSystem {
 
 	}
 
-	public void StoreMatch(MatchRelationship match, int fileIndex) throws IOException {
-		File folder = new File("matches/match" + String.valueOf(fileIndex));
+	public void storeNewMatch(MatchRelationship match) throws IOException {
+		int nextFileIndex = findNextFileIndex("match");
+		File folder = new File("matches/match" + String.valueOf(nextFileIndex));
 		folder.mkdirs();
 
 		File detailsFile = new File(folder, "details.txt");
@@ -482,6 +483,23 @@ public class BackendSystem {
 
 		File applicationFile = new File(folder, "application.txt");
 		FileWriter applicationWriter = new FileWriter(applicationFile);
+
+		applicationWriter.write(match.getApplicationFileText());
+		applicationWriter.close();
+	}
+
+	public void updateMatchFile(MatchRelationship match) throws IOException {
+		
+		File folder = new File("matches/match" + String.valueOf(match.getID()));
+
+		File detailsFile = new File(folder, "details.txt");
+		FileWriter detailsWriter = new FileWriter(detailsFile, false);
+
+		detailsWriter.write(match.getDetailsFileText());
+		detailsWriter.close();
+
+		File applicationFile = new File(folder, "application.txt");
+		FileWriter applicationWriter = new FileWriter(applicationFile, false);
 
 		applicationWriter.write(match.getApplicationFileText());
 		applicationWriter.close();
@@ -585,6 +603,7 @@ public class BackendSystem {
 					schol3 = scholarship;
 					max3 = percentage;
 				}
+
 			}
 
 			scholarshipsFound.add(schol1);
