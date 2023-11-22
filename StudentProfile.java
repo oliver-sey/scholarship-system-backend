@@ -17,7 +17,7 @@ public class StudentProfile extends Profile {
 
 	// constructor for reading from file
 	public StudentProfile(String firstName, String lastName, int studentID, String username, String password,
-			String major, boolean hasAMinor, String minor, boolean isUSCitizen, float GPA,
+			String major, boolean hasAMinor, String minor, boolean isUSCitizen, double GPA,
 			boolean inGoodStanding, boolean hasAdvStanding, String gradeLevel, int gradMonth, int gradYear,
 			String gender, boolean isFullTimeStudent, boolean isTransferStudent, int curNumCredits,
 			boolean receivesFunding, String personalStatement, ArrayList<Scholarship> scholarshipsAwarded, int fileIndex) {
@@ -46,6 +46,34 @@ public class StudentProfile extends Profile {
 		this.fileIndex = fileIndex;
 	}
 
+	public StudentProfile(String firstName, String lastName, int studentID, String username, String password,
+			String major, boolean hasAMinor, String minor, boolean isUSCitizen, double GPA,
+			boolean inGoodStanding, boolean hasAdvStanding, String gradeLevel, int gradMonth, int gradYear,
+			String gender, boolean isFullTimeStudent, boolean isTransferStudent, int curNumCredits,
+			boolean receivesFunding, String personalStatement) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.studentID = studentID;
+		this.username = username;
+		this.password = password;
+		this.major = major;
+		this.minor = minor;
+		this.hasAMinor = hasAMinor;
+		this.isUSCitizen = isUSCitizen;
+		this.GPA = GPA;
+		this.inGoodStanding = inGoodStanding;
+		this.hasAdvStanding = hasAdvStanding;
+		this.gradeLevel = gradeLevel;
+		this.gradMonth = gradMonth;
+		this.gradYear = gradYear;
+		this.gender = gender;
+		this.isFullTimeStudent = isFullTimeStudent;
+		this.isTransferStudent = isTransferStudent;
+		this.curNumCredits = curNumCredits;
+		this.receivesFunding = receivesFunding;
+		this.personalStatement = personalStatement;
+	}
+
 	public StudentProfile() {
 
 	}
@@ -58,7 +86,7 @@ public class StudentProfile extends Profile {
 	// TODO: what do we do for citizenship statuses?
 	private boolean isUSCitizen;
 
-	private float GPA;
+	private double GPA;
 
 	private boolean inGoodStanding;
 	private boolean hasAdvStanding;
@@ -117,7 +145,7 @@ public class StudentProfile extends Profile {
 	}
 
 	// a getter for GPA
-	public float getGPA() {
+	public double getGPA() {
 		return this.GPA;
 	}
 
@@ -183,6 +211,10 @@ public class StudentProfile extends Profile {
 	//a getter for awardsRecieved
 	public ArrayList<Scholarship> getAwardsRecieved() {
 		return this.awardsRecieved;
+	}
+
+	public int getFileIndex() {
+		return this.fileIndex;
 	}
 
 	// a setter for boolean isUSCitizen
@@ -304,6 +336,10 @@ public class StudentProfile extends Profile {
 	public void setAwardsReceived(ArrayList<Scholarship> awardsRecieved) {
         this.awardsRecieved = awardsRecieved;
     }
+
+	public void setFileIndex(int fileIndex) {
+		this.fileIndex = fileIndex;
+	}
 
 	public String getFileText() {
 		return this.firstName + "\n" +
