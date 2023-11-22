@@ -33,13 +33,16 @@ NOTE: you have to be very careful to not have extra blank lines at the end of fi
 ## In the Scholarship folder:
 Each scholarship has its own folder within 'Scholarship', and within that there are 4 text files with information about the scholarship.
 
+### Scholarship Applicants File (applicants.txt):
+student name 1, student name 2, etc.
+
+### Scholarship Application File (applicants.txt):
+Like the other files, there is one property per line. They will be Question1, Question2, etc.
+
 ### Scholarship Details File (details.txt):
 There is one property per line. In order, they are:
 Name, description, donor name, award amount, isApproved, isArchived, dateAdded, and dateDue.
 The two dates are in the format YYYY-MM-DD, and they eventually get parsed into LocalDate objects. (This is the format that LocalDate.parse(String) accepts).
-
-### Scholarship Application File (applicants.txt):
-Like the other files, there is one property per line. They will be Question1, Question2, etc.
 
 ### Scholarship Requirements File (requirements.txt):
 Like the other files, there is one property per line. They will be Category1, desired value 1 (the value for Category1), Category2, desired value 2, etc.
@@ -56,9 +59,6 @@ Graduation Year
 Good Standing
 Gender
 Transfer Student
-
-### Scholarship Applicants File (applicants.txt):
-student name 1, student name 2, etc.
   
 ## In the Match folder:
 
@@ -77,5 +77,11 @@ First name, Last name, username, password
 Scholarship name 1, scholarship name 2
 
 
-### Student Profile File:
+## In the Students folder:
+
+### Student Awards File:
+
+TODO: fill this out!!
+
+### Student Details File:
 firstName(str), lastName(str), studentID(int), username(str), password(strs), major(str), hasAMinor(T/F), minor(str), isUSCitizen(T/F), GPA(fl), inGoodStanding(T/F), hasAdvStanding(T/F), gradeLevel(str), gradMonth(int), gradYear(int), gender(str), isFullTimeStudent(T/F), isTransferStudent(T/F), curNumCredits(int), receivesFunding(T/F), personalStatement(str)
