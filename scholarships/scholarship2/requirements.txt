@@ -1,0 +1,12 @@
+Year
+Freshman
+Year
+Sophomore
+Year
+Junior
+Year
+Senior
+isFullTimeStudent
+True
+GPA
+2.0
