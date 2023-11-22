@@ -14,17 +14,20 @@ import java.util.Map;
 import java.util.ArrayList;
 
 public class Main {
+
 	public static void main(String[] args) throws IOException {
-		ArrayList<StudentProfile> students = new ArrayList<StudentProfile>();
+		/*ArrayList<StudentProfile> students = new ArrayList<StudentProfile>();
 		ArrayList<DonorProfile> donors = new ArrayList<DonorProfile>();
-		// StudentProfile student = readStudentProfile();
-		// System.out.print(student.toString());
 
 		students = InstantiateAllStudents();
 		donors = InstantiateAllDonors();
 
 		Scholarship scholarship = ReadScholarship(1, donors, students);
 		System.out.println(scholarship.toString());
+		*/
+
+		System.out.println(stringSimilarity("research scholarship", "Seymour Research scholarship for engineers"));
+		System.out.println(stringSimilarity("research scholarship", "Scholarhips for seaching for love"));
 	}
 
 	// reads student demographics from comma separated file and initializes a
@@ -471,9 +474,18 @@ public class Main {
 		HashMap<String, String> requirements = new HashMap<String, String>();
 
 		if (inputCategory.compareTo("name") == 0) {
-			for (Scholarship scholarship: scholarshipsToSearch) {
-				// TODO: ****implement me!
+			HashMap<String, Double> rankedScholarships = new HashMap<String, Double>();
+			double sim;
+			double max1, max2, max3;
+
+			for (int i = 0; i < 3; i++) {
+				rankedScholarships.put("", 0.0);
 			}
+
+			for (Scholarship scholarship: scholarshipsToSearch) {
+				
+			}
+
 		} else if (inputCategory.compareTo("donor") == 0) {
 			//retrieves donor name from each scholarship
 			for (Scholarship scholarship: scholarshipsToSearch) {
@@ -514,4 +526,52 @@ public class Main {
 
 		return scholarshipsFound;
 	}
+
+	public static double stringSimilarity(String str1, String str2) {
+		String longer = str1, shorter = str2;
+
+		if (str1.length() < str2.length()) { // longer should always have greater length
+		  longer = str2; shorter = str1;
+		}
+
+		int longerLength = longer.length();
+		if (longerLength == 0) { return 1.0; }
+
+		String s1 = longer;
+		String s2 = shorter;
+
+		s1 = s1.toLowerCase();
+		s2 = s2.toLowerCase();
+	
+		int[] costs = new int[s2.length() + 1];
+
+		for (int i = 0; i <= s1.length(); i++) {
+		  	int lastValue = i;
+
+		  	for (int j = 0; j <= s2.length(); j++) {
+				if (i == 0)
+			 		costs[j] = j;
+				else {
+					if (j > 0) {
+						int newValue = costs[j - 1];
+
+						if (s1.charAt(i - 1) != s2.charAt(j - 1)) {
+							newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
+						}
+
+						costs[j - 1] = lastValue;
+						lastValue = newValue;
+					}
+				}
+		  	}
+
+		  	if (i > 0) {
+				costs[s2.length()] = lastValue;
+		  	}
+		}
+		
+		return (longerLength - costs[s2.length()]) / (double) longerLength;
+	
+	}
+
 }
