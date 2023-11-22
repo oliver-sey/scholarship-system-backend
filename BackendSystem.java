@@ -580,7 +580,7 @@ public class BackendSystem {
 	 */
 	public int checkLoginDetails(ArrayList<StudentProfile> students, ArrayList<DonorProfile> donors, String userType, String enteredUsername, String enteredPassword) {
 		if (userType.equals("Student")) {
-			for (StudentProfile student : students) {
+			for (StudentProfile student : this.allStudents) {
 				if (student.username.equalsIgnoreCase(enteredUsername)) {
 					if (student.password.equals(enteredPassword)) {
 						// return 0 since we have a successful username/password match
@@ -597,7 +597,7 @@ public class BackendSystem {
 		}
 
 		else if (userType.equals("Donor")) {
-			for (DonorProfile donor : donors) {
+			for (DonorProfile donor : this.allDonors) {
 				if (donor.username.equalsIgnoreCase(enteredUsername)) {
 					if (donor.password.equals(enteredPassword)) {
 						// return 0 since we have a successful username/password match
@@ -613,8 +613,22 @@ public class BackendSystem {
 			}	
 		}
 		else if (userType.equals("Admin")) {
+			
 			// TODO: implement this method for Admins!!
-			System.out.println("checkLoginDetails has not yet been implemented for Admins");
+			for (AdminProfile admin : this.allAdmins) {
+				if (admin.username.equalsIgnoreCase(enteredUsername)) {
+					if (admin.password.equals(enteredPassword)) {
+						// return 0 since we have a successful username/password match
+						return 0;
+					}
+					else {
+						// valid username but incorrect password
+						// usernames are unique so we know that we found the right user
+						// but the password was just wrong
+						return 2;
+					}
+				}
+			}	
 		}
 		else if (userType.equals("FundSteward")) {
 			// TODO: implement this method for FundStewards!!
