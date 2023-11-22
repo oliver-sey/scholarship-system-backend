@@ -9,11 +9,13 @@ import java.util.Scanner;
 public class Main {
 
 	public static void main(String[] args) throws Exception {
-		
+
+
+
 	}
 
 
-	public void runDifferentTests() throws IOException {
+	public void runDifferentTests() throws Exception {
 		Scanner scnr = new Scanner(System.in);
 		System.out.println("Hello! Welcome to the backend for our Scholarship Management System.");
 
@@ -57,9 +59,7 @@ public class Main {
 
 			else if (userSelection == 3) {
 				// instantiate the backend and all the students, scholarships, etc.
-				BackendSystem backend = new BackendSystem();
 				
-				backend.testStoringStudents();
 			}
 			
 			else {
