@@ -466,28 +466,41 @@ public class BackendSystem {
 		HashMap<String, String> requirements = new HashMap<String, String>();
 
 		if (inputCategory.compareTo("name") == 0) {
-			HashMap<Scholarship, Double> rankedScholarships = new HashMap<Scholarship, Double>();
+			
 			double percentage;
 			double max1 = 0.0;
 			double max2 = 0.0;
 			double max3 = 0.0;
-			
-
-			for (int i = 0; i < 3; i++) {
-				rankedScholarships.put(null, 0.0);
-			}
+			Scholarship schol1 = new Scholarship();
+			Scholarship schol2 = new Scholarship();
+			Scholarship schol3 = new Scholarship();
 
 			for (Scholarship scholarship: this.allScholarships) {
 				percentage = stringSimilarity(scholarship.getName(), inputSearchValue);
 
-				if (percentage > max3 + 0.0001) {
-					for (Map.Entry<Scholarship, Double> entry : rankedScholarships.entrySet()) {
-						if (Math.abs(entry.getValue() - percentage) < 0.000001) {
-							
-						}
-					}
+				if (percentage - max1 > 0.00001) {
+					schol3 = schol2;
+					max3 = max2;
+					schol2 = schol1;
+					max2 = max1;
+					schol1 = scholarship;
+					max1 = percentage;
+				}
+				else if (percentage - max2 > 0.00001) {
+					schol3 = schol2;
+					max3 = max2;
+					schol2 = scholarship;
+					max2 = percentage;
+				}
+				else if (percentage - max3 > 0.00001) {
+					schol3 = scholarship;
+					max3 = percentage;
 				}
 			}
+
+			scholarshipsFound.add(schol1);
+			scholarshipsFound.add(schol2);
+			scholarshipsFound.add(schol3);
 
 		} else if (inputCategory.compareTo("donor") == 0) {
 			//retrieves donor name from each scholarship
