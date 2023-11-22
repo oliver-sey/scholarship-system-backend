@@ -26,7 +26,7 @@ public class BackendSystem {
 		this.allScholarships = InstantiateAllScholarships();
 		this.allDonors = InstantiateAllDonors();
 		this.allMatchRelationships = InstantiateAllMatches();
-		// TO DO: make the rest of the instantiate all methods
+		// TODO: make the rest of the instantiate all methods
 	}
 
 	public StudentProfile readStudentProfile(int fileIndex) throws IOException {
