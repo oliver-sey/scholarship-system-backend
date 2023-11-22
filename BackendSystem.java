@@ -545,10 +545,9 @@ public class BackendSystem {
 	// program stops
 	// after 2 wrong passwords get to still do 3 security question attempts
 
-	// TODO: return user object so we can pass it to check security question
-	// this returns null if the login was unsuccessful and the program should
-	// stop!!!!!
-	public Profile login() {
+	// this returns true for a successful login, false if the login was unsuccessful 
+	// and the program should stop!!!!!
+	public boolean login() {
 		// TODO: implement me!!!
 		Scanner scnr = new Scanner(System.in);
 		int returnVal;
@@ -557,7 +556,7 @@ public class BackendSystem {
 		do {
 			System.out.print("Please enter your user type (as one word, i.e. 'Student', 'FundSteward'): ");
 
-			// TODO: what to do with scanning newlines \n?
+			// TODO: what to do with scanning newlines '\n'?
 			System.out.print("Please enter your user type: ");
 			String userType = scnr.nextLine();
 
@@ -580,28 +579,36 @@ public class BackendSystem {
 				// correct username and password, have to now make them do a security question
 				// TODO: get the Profile object here? need it for the call to checkOneSecurity
 				// question and will have to return it from this method
-				boolean correctAnswer = false;
 				for (int questionNum = 1; questionNum <= 3; questionNum++) {
 					// if the security question answer was correct
 					if (checkOneSecurityQuestion(questionNum, currentUser)) {
-						correctAnswer = true;
-						// exit the loop early, don't ask them the later security questions
-						break;
+						// return and exit the loop early, don't ask them the later security questions
+						return true;
 					}
 				}
-				if (!correctAnswer) {
-					return null;
-				}
+				// if we get here they went through the 3 questions and didn't get any right
+				// so we return false for an unsuccessful login
+				return false;
 			}
 			if (returnVal == 1) {
 				System.out.println("The entered username could not be found in the system for the entered user type.");
 			} else if (returnVal == 2) {
 				System.out.println("Incorrect password for the entered username and user type");
 				failedPWAttempts++;
+
+				// if they have now gotten their password wrong 3 times, return false
+				// for an unsuccessful login, and the program should quit
+				if (failedPWAttempts == 3) {
+					return false;
+				}
 			} else if (returnVal == 3) {
 				System.out.println("Invalid user type");
+				// don't return false, we want to let them try more logins
 			}
 		} while (returnVal != 0);
+
+		// will never get here but have to return something to make the compiler happy
+		return false;
 	}
 
 	/**
