@@ -19,3 +19,6 @@ False
 19
 False
 My essay is the right length. 
+English
+Otters
+Houston

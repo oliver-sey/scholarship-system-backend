@@ -19,3 +19,6 @@ True
 14
 False
 Wow I really love engineering and computer science, I want to design space systems.
+Johnson
+Wildcats
+Indianapolis
