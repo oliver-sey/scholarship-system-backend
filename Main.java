@@ -160,7 +160,7 @@ public class Main {
 		String dateAddedString = values.get(6);
 		String dateDueString = values.get(7);
 
-
+		
 		detailsBr.close();
 
 		// read application file and store in array
@@ -252,12 +252,29 @@ public class Main {
 		folder.mkdirs();
 
 		File detailsFile = new File(folder, "details.txt");
+		FileWriter detailsWriter = new FileWriter(detailsFile);
 
-		FileWriter writer = new FileWriter(detailsFile);
+		detailsWriter.write(scholarship.getDetailsFileText());
+		detailsWriter.close();
+		
+		File applicationFile = new File(folder, "application.txt");
+		FileWriter applicationWriter = new FileWriter(applicationFile);
 
-		writer.write(scholarship.getDetailsFileText());
+		applicationWriter.write(scholarship.getApplicationFileText());
+		applicationWriter.close();
 
-		writer.close();
+		File applicantsFile = new File(folder, "applicants.txt");
+		FileWriter applicantsWriter = new FileWriter(applicantsFile);
+
+		applicantsWriter.write(scholarship.getApplicantsFileText());
+		applicantsWriter.close();
+
+		File requirementsFile = new File(folder, "requirements.txt");
+		FileWriter requirementsWriter = new FileWriter(requirementsFile);
+
+		requirementsWriter.write(scholarship.getRequirementsFileText());
+		requirementsWriter.close();
+
 	}
 
 	public static ArrayList<StudentProfile> InstantiateAllStudents() {
@@ -364,6 +381,23 @@ public class Main {
 
 		return matches;
 
+	}
+
+	public static void StoreMatch(MatchRelationship match, int fileIndex) throws IOException {
+		File folder = new File("matches/match" + String.valueOf(fileIndex));
+		folder.mkdirs();
+
+		File detailsFile = new File(folder, "details.txt");
+		FileWriter detailsWriter = new FileWriter(detailsFile);
+
+		detailsWriter.write(match.getDetailsFileText());
+		detailsWriter.close();
+		
+		File applicationFile = new File(folder, "application.txt");
+		FileWriter applicationWriter = new FileWriter(applicationFile);
+
+		applicationWriter.write(match.getApplicationFileText());
+		applicationWriter.close();
 	}
 
 	// creates donor object from file
@@ -479,5 +513,80 @@ public class Main {
 		}
 
 		return scholarshipsFound;
+	}
+
+	public void login() {
+		// TODO: implement me!!!
+	}
+
+	/**
+	 * A method to check if a username exists and if the entered password is correct 
+	 * 
+	 * @param userType - 'Student', 'Donor', 'Admin', 'FundSteward', 'Staff'
+	 * @param enteredUsername - the username/email that the user entered
+	 * @param enteredPassword - the password the user entered
+	 * 
+	 * @return 0 if the username and password matched,
+	 * 1 if the user could not be found/does not exist, 
+	 * 2 if the user was found but the password was wrong
+	 * 3 if the user type was not accepted
+	 */
+	public int checkLoginDetails(ArrayList<StudentProfile> students, ArrayList<DonorProfile> donors, String userType, String enteredUsername, String enteredPassword) {
+		if (userType.equals("Student")) {
+			for (StudentProfile student : students) {
+				if (student.username.equals(enteredUsername)) {
+					if (student.password.equals(enteredPassword)) {
+						// return 0 since we have a successful username/password match
+						return 0;
+					}
+					else {
+						// valid username but incorrect password
+						// usernames are unique so we know that we found the right user
+						// but the password was just wrong
+						return 2;
+					}
+				}
+			}	
+		}
+
+		else if (userType.equals("Donor")) {
+			for (DonorProfile donor : donors) {
+				if (donor.username.equals(enteredUsername)) {
+					if (donor.password.equals(enteredPassword)) {
+						// return 0 since we have a successful username/password match
+						return 0;
+					}
+					else {
+						// valid username but incorrect password
+						// usernames are unique so we know that we found the right user
+						// but the password was just wrong
+						return 2;
+					}
+				}
+			}	
+		}
+		else if (userType.equals("Admin")) {
+			// TODO: implement this method for Admins!!
+			System.out.println("checkLoginDetails has not yet been implemented for Admins");
+		}
+		else if (userType.equals("FundSteward")) {
+			// TODO: implement this method for FundStewards!!
+			System.out.println("checkLoginDetails has not yet been implemented for FundStewards");
+		}
+		else if (userType.equals("Staff")) {
+			// TODO: implement this method for Staffs!!
+			System.out.println("checkLoginDetails has not yet been implemented for Staffs");
+		}
+		else {
+			System.out.println("Invalid user type in checkLoginDetails() - returning 3.");
+			return 3;
+		}
+
+		// should only reach here if there was a valid userType and we entered 
+		// one of the if or else-if statements (not the else because we would have returned early)
+
+		// had a valid userType but never found the username and thus didn't return early
+		// return 1 since the user was not found
+		return 1;
 	}
 }
