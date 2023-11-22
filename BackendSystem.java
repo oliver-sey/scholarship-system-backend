@@ -466,16 +466,27 @@ public class BackendSystem {
 		HashMap<String, String> requirements = new HashMap<String, String>();
 
 		if (inputCategory.compareTo("name") == 0) {
-			HashMap<String, Double> rankedScholarships = new HashMap<String, Double>();
-			double sim;
-			double max1, max2, max3;
+			HashMap<Scholarship, Double> rankedScholarships = new HashMap<Scholarship, Double>();
+			double percentage;
+			double max1 = 0.0;
+			double max2 = 0.0;
+			double max3 = 0.0;
+			
 
 			for (int i = 0; i < 3; i++) {
-				rankedScholarships.put("", 0.0);
+				rankedScholarships.put(null, 0.0);
 			}
 
 			for (Scholarship scholarship: this.allScholarships) {
-				
+				percentage = stringSimilarity(scholarship.getName(), inputSearchValue);
+
+				if (percentage > max3 + 0.0001) {
+					for (Map.Entry<Scholarship, Double> entry : rankedScholarships.entrySet()) {
+						if (Math.abs(entry.getValue() - percentage) < 0.000001) {
+							
+						}
+					}
+				}
 			}
 
 		} else if (inputCategory.compareTo("donor") == 0) {
