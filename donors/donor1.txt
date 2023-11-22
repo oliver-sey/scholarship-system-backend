@@ -2,3 +2,6 @@ John
 Smith
 johnsmith@email.com
 password123
+Seegan
+Turtles
+San Fransisco
