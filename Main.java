@@ -16,18 +16,8 @@ import java.util.ArrayList;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
-		/*ArrayList<StudentProfile> students = new ArrayList<StudentProfile>();
-		ArrayList<DonorProfile> donors = new ArrayList<DonorProfile>();
+		
 
-		students = InstantiateAllStudents();
-		donors = InstantiateAllDonors();
-
-		Scholarship scholarship = ReadScholarship(1, donors, students);
-		System.out.println(scholarship.toString());
-		*/
-
-		System.out.println(stringSimilarity("research scholarship", "Seymour Research scholarship for engineers"));
-		System.out.println(stringSimilarity("research scholarship", "Scholarhips for seaching for love"));
 	}
 
 	// reads student demographics from comma separated file and initializes a
