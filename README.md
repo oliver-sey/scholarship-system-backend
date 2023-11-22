@@ -47,6 +47,14 @@ There has to be an equal number of categories and values, each category needs a 
 
 If a category accepts multiple values, i.e., you want to allow students from multiple different majors to apply to this scholarship, then you should do Major (newline) major1, and then Major (newline) major2, etc. As if each accepted major is a value for a different category.
 
+Categories are all capitalized. Not written as variables from student profile. Categories are:
+Major
+Grade Level
+GPA
+Full Time Student
+Graduation Year
+Good Standing
+
 ### Scholarship Applicants File (applicants.txt):
 student name 1, student name 2, etc.
   
