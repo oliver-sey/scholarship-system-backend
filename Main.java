@@ -69,6 +69,8 @@ public class Main {
 				System.out.println("Invalid selection, please try again");
 			}
 		} while (userSelection != 0);
+
+		scnr.close();
 	}
 
 	public static void check5YearsPastDue() throws IOException {

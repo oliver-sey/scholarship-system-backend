@@ -205,7 +205,7 @@ public class BackendSystem {
 		ArrayList<String> requirements = new ArrayList<String>();
 		ArrayList<String> applicantNames = new ArrayList<String>();
 		ArrayList<StudentProfile> applicants = new ArrayList<StudentProfile>();
-		DonorProfile correctDonor = new DonorProfile("", "", "", "");
+		DonorProfile correctDonor = new DonorProfile();
 
 		ArrayList<String> values = new ArrayList<String>();
 		String str;
@@ -520,10 +520,13 @@ public class BackendSystem {
 		String lastName = values.get(1);
 		String username = values.get(2);
 		String password = values.get(3);
+		String securityQAnswer1 = values.get(4); 
+		String securityQAnswer2 = values.get(5); 
+		String securityQAnswer3 = values.get(6);
 
 		br.close();
 
-		return new DonorProfile(firstName, lastName, username, password);
+		return new DonorProfile(firstName, lastName, username, password, securityQAnswer1, securityQAnswer2, securityQAnswer3);
 	}
 
 	// search donors by name
