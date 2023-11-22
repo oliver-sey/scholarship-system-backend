@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class BackendSystem {
-	
+
 	private ArrayList<StudentProfile> allStudents = new ArrayList<StudentProfile>();
 	private ArrayList<Scholarship> allScholarships = new ArrayList<Scholarship>();
 	private ArrayList<MatchRelationship> allMatchRelationships = new ArrayList<MatchRelationship>();
@@ -20,16 +20,16 @@ public class BackendSystem {
 	// the user that is currently using the system
 	private Profile currentUser;
 
-	//constructor
+	// constructor
 	public BackendSystem() throws NumberFormatException, IOException {
 		this.allStudents = InstantiateAllStudents();
 		this.allScholarships = InstantiateAllScholarships();
 		this.allDonors = InstantiateAllDonors();
 		this.allMatchRelationships = InstantiateAllMatches();
-		//TO DO: make the rest of the instantiate all methods
+		// TO DO: make the rest of the instantiate all methods
 	}
 
-	public  StudentProfile readStudentProfile(int fileIndex) throws IOException {
+	public StudentProfile readStudentProfile(int fileIndex) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader("students/student" + String.valueOf(fileIndex) + ".txt"));
 
 		ArrayList<String> values = new ArrayList<String>();
@@ -72,8 +72,8 @@ public class BackendSystem {
 
 	}
 
-	//writes student profile data to file
-	public  void StoreStudentProfile(StudentProfile student, int fileIndex) throws IOException {
+	// writes student profile data to file
+	public void StoreStudentProfile(StudentProfile student, int fileIndex) throws IOException {
 		File studentFile = new File("students/student" + String.valueOf(fileIndex) + ".txt");
 
 		studentFile.createNewFile();
@@ -85,27 +85,24 @@ public class BackendSystem {
 		writer.close();
 	}
 
-	//find next index available in folder to store new object
-	public  int findNextFileIndex(String dataType) throws Exception{
+	// find next index available in folder to store new object
+	public int findNextFileIndex(String dataType) throws Exception {
 		int fileIndex;
-		
-		//counts files in appropriate folder and returns next available
+
+		// counts files in appropriate folder and returns next available
 		if (dataType.compareTo("donor") == 0) {
 			File dir = new File("donors");
-			
+
 			fileIndex = dir.listFiles().length + 1;
-		}
-		else if (dataType.compareTo("scholarship") == 0) {
+		} else if (dataType.compareTo("scholarship") == 0) {
 			File dir = new File("scholarships");
-			
+
 			fileIndex = dir.listFiles().length + 1;
-		}
-		else if (dataType.compareTo("student") == 0) {
+		} else if (dataType.compareTo("student") == 0) {
 			File dir = new File("students");
-			
+
 			fileIndex = dir.listFiles().length + 1;
-		}
-		else {
+		} else {
 			throw new Exception("Data type is not valid.");
 		}
 
@@ -113,8 +110,8 @@ public class BackendSystem {
 	}
 
 	// reads a text file and converts comma separated text to a list
-	//Maybe not needed
-	public  ArrayList<String> ConvertTextToArray(String filePath) throws IOException {
+	// Maybe not needed
+	public ArrayList<String> ConvertTextToArray(String filePath) throws IOException {
 		ArrayList<String> textArray = new ArrayList<>();
 
 		BufferedReader br = new BufferedReader(new FileReader(filePath));
@@ -130,7 +127,7 @@ public class BackendSystem {
 	}
 
 	// creates scholarship object from 3 files and donor object
-	public  Scholarship ReadScholarship(int fileIndex) throws IOException {
+	public Scholarship ReadScholarship(int fileIndex) throws IOException {
 		String folderPath = "scholarships/scholarship" + String.valueOf(fileIndex);
 		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath + "/details.txt"));
 		ArrayList<String> application = new ArrayList<String>();
@@ -159,7 +156,6 @@ public class BackendSystem {
 		String dateAddedString = values.get(6);
 		String dateDueString = values.get(7);
 
-		
 		detailsBr.close();
 
 		// read application file and store in array
@@ -218,7 +214,7 @@ public class BackendSystem {
 	}
 
 	// instantiate all scholarships
-	public  ArrayList<Scholarship> InstantiateAllScholarships() {
+	public ArrayList<Scholarship> InstantiateAllScholarships() {
 		ArrayList<Scholarship> scholarships = new ArrayList<Scholarship>();
 		// open the 'scholarships' folder
 		File dir = new File("scholarships");
@@ -226,7 +222,7 @@ public class BackendSystem {
 		File[] directoryListing = dir.listFiles();
 		Scholarship scholarship;
 		int fileIndex = 1;
-		
+
 		// loop through the list of files/folders that are in the 'scholarships' folder
 		// each child is for one scholarship
 		for (File child : directoryListing) {
@@ -244,8 +240,8 @@ public class BackendSystem {
 		return scholarships;
 	}
 
-	public  void StoreScholarship(Scholarship scholarship, int fileIndex) throws IOException {
-		
+	public void StoreScholarship(Scholarship scholarship, int fileIndex) throws IOException {
+
 		File folder = new File("scholarships/scholarship" + String.valueOf(fileIndex));
 		folder.mkdirs();
 
@@ -254,7 +250,7 @@ public class BackendSystem {
 
 		detailsWriter.write(scholarship.getDetailsFileText());
 		detailsWriter.close();
-		
+
 		File applicationFile = new File(folder, "application.txt");
 		FileWriter applicationWriter = new FileWriter(applicationFile);
 
@@ -297,7 +293,7 @@ public class BackendSystem {
 		return students;
 	}
 
-	public  ArrayList<DonorProfile> InstantiateAllDonors() {
+	public ArrayList<DonorProfile> InstantiateAllDonors() {
 		ArrayList<DonorProfile> donors = new ArrayList<DonorProfile>();
 		File dir = new File("donors");
 		File[] directoryListing = dir.listFiles();
@@ -318,7 +314,7 @@ public class BackendSystem {
 	}
 
 	// creates match object from student object, scholarship object, and file
-	public  MatchRelationship readMatch(int ID)
+	public MatchRelationship readMatch(int ID)
 			throws NumberFormatException, IOException {
 		String folderPath = "matches/match" + String.valueOf(ID);
 		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath + "/details.txt"));
@@ -361,13 +357,14 @@ public class BackendSystem {
 		application = values;
 		applicationBr.close();
 
-		return new MatchRelationship(student, scholarship, ID, matchPercentage, matchIndex, application, applicationStatus);
+		return new MatchRelationship(student, scholarship, ID, matchPercentage, matchIndex, application,
+				applicationStatus);
 	}
 
-	public  ArrayList<MatchRelationship> InstantiateAllMatches() throws NumberFormatException, IOException {
+	public ArrayList<MatchRelationship> InstantiateAllMatches() throws NumberFormatException, IOException {
 
 		ArrayList<MatchRelationship> matches = new ArrayList<MatchRelationship>();
-		File dir = new File("matches");		
+		File dir = new File("matches");
 		MatchRelationship match;
 
 		for (int i = 1; i <= dir.listFiles().length; i++) {
@@ -379,7 +376,7 @@ public class BackendSystem {
 
 	}
 
-	public  void StoreMatch(MatchRelationship match, int fileIndex) throws IOException {
+	public void StoreMatch(MatchRelationship match, int fileIndex) throws IOException {
 		File folder = new File("matches/match" + String.valueOf(fileIndex));
 		folder.mkdirs();
 
@@ -388,7 +385,7 @@ public class BackendSystem {
 
 		detailsWriter.write(match.getDetailsFileText());
 		detailsWriter.close();
-		
+
 		File applicationFile = new File(folder, "application.txt");
 		FileWriter applicationWriter = new FileWriter(applicationFile);
 
@@ -397,7 +394,7 @@ public class BackendSystem {
 	}
 
 	// creates donor object from file
-	public  DonorProfile readDonor(String filePath) throws IOException {
+	public DonorProfile readDonor(String filePath) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(filePath));
 		ArrayList<String> values = new ArrayList<String>();
 		String str;
@@ -418,8 +415,8 @@ public class BackendSystem {
 	}
 
 	// search donors by name
-	//Maybe not needed
-	public  DonorProfile SearchForDonor(String donorName) throws IOException, Exception {
+	// Maybe not needed
+	public DonorProfile SearchForDonor(String donorName) throws IOException, Exception {
 		File dir = new File("donors");
 		File[] directoryListing = dir.listFiles();
 		String correctDonorPath = "";
@@ -461,12 +458,12 @@ public class BackendSystem {
 	}
 
 	// searches a folder for a scholarship with inputted value
-	public  ArrayList<Scholarship> searchScholarships(String inputCategory, String inputSearchValue) {
+	public ArrayList<Scholarship> searchScholarships(String inputCategory, String inputSearchValue) {
 		ArrayList<Scholarship> scholarshipsFound = new ArrayList<Scholarship>();
 		HashMap<String, String> requirements = new HashMap<String, String>();
 
 		if (inputCategory.compareTo("name") == 0) {
-			
+
 			double percentage;
 			double max1 = 0.0;
 			double max2 = 0.0;
@@ -475,7 +472,7 @@ public class BackendSystem {
 			Scholarship schol2 = new Scholarship();
 			Scholarship schol3 = new Scholarship();
 
-			for (Scholarship scholarship: this.allScholarships) {
+			for (Scholarship scholarship : this.allScholarships) {
 				percentage = stringSimilarity(scholarship.getName(), inputSearchValue);
 
 				if (percentage - max1 > 0.00001) {
@@ -485,14 +482,12 @@ public class BackendSystem {
 					max2 = max1;
 					schol1 = scholarship;
 					max1 = percentage;
-				}
-				else if (percentage - max2 > 0.00001) {
+				} else if (percentage - max2 > 0.00001) {
 					schol3 = schol2;
 					max3 = max2;
 					schol2 = scholarship;
 					max2 = percentage;
-				}
-				else if (percentage - max3 > 0.00001) {
+				} else if (percentage - max3 > 0.00001) {
 					schol3 = scholarship;
 					max3 = percentage;
 				}
@@ -503,20 +498,21 @@ public class BackendSystem {
 			scholarshipsFound.add(schol3);
 
 		} else if (inputCategory.compareTo("donor") == 0) {
-			//retrieves donor name from each scholarship
-			for (Scholarship scholarship: this.allScholarships) {
+			// retrieves donor name from each scholarship
+			for (Scholarship scholarship : this.allScholarships) {
 				if (inputSearchValue.compareTo(scholarship.getDonorName()) == 0) {
 					scholarshipsFound.add(scholarship);
 				}
 			}
 		} else if (inputCategory.compareTo("applicant") == 0) {
-			//retrieves array of applicant names from each scholarship and iterates through them
+			// retrieves array of applicant names from each scholarship and iterates through
+			// them
 			ArrayList<String> applicantNames = new ArrayList<String>();
 
-			for (Scholarship scholarship: this.allScholarships) {
+			for (Scholarship scholarship : this.allScholarships) {
 				applicantNames = scholarship.getApplicantNames();
 
-				for (String name : applicantNames){
+				for (String name : applicantNames) {
 					if (inputSearchValue.compareTo(name) == 0) {
 						scholarshipsFound.add(scholarship);
 					}
@@ -524,18 +520,19 @@ public class BackendSystem {
 				applicantNames.clear();
 			}
 		} else {
-			//assumes any search category will be a requirement
-			//retrieves requirement hashmap from scholarship and compares category and value
+			// assumes any search category will be a requirement
+			// retrieves requirement hashmap from scholarship and compares category and
+			// value
 			for (Scholarship scholarship : this.allScholarships) {
 				requirements = scholarship.getRequirements();
 
 				for (Map.Entry<String, String> entry : requirements.entrySet()) {
-					if (entry.getKey().compareTo(inputCategory) == 0){
+					if (entry.getKey().compareTo(inputCategory) == 0) {
 						if (entry.getValue().compareTo(inputSearchValue) == 0) {
 							scholarshipsFound.add(scholarship);
 						}
 					}
-					
+
 				}
 			}
 		}
@@ -544,11 +541,13 @@ public class BackendSystem {
 	}
 
 	// from our discussion/from the elicitation:
-	// get 3 max wrong password attempts then get a message to contact admin, program stops
+	// get 3 max wrong password attempts then get a message to contact admin,
+	// program stops
 	// after 2 wrong passwords get to still do 3 security question attempts
 
 	// TODO: return user object so we can pass it to check security question
-	// this returns null if the login was unsuccessful and the program should stop!!!!!
+	// this returns null if the login was unsuccessful and the program should
+	// stop!!!!!
 	public Profile login() {
 		// TODO: implement me!!!
 		Scanner scnr = new Scanner(System.in);
@@ -557,28 +556,30 @@ public class BackendSystem {
 		int failedPWAttempts = 0;
 		do {
 			System.out.print("Please enter your user type (as one word, i.e. 'Student', 'FundSteward'): ");
-			
+
 			// TODO: what to do with scanning newlines \n?
 			System.out.print("Please enter your user type: ");
 			String userType = scnr.nextLine();
 
 			System.out.print("Please enter your username: ");
 			String username = scnr.nextLine();
-			
+
 			System.out.print("Please enter your password: ");
 			String password = scnr.nextLine();
-			
+
 			// possible return values from checkLoginDetails():
 			// 0 if the username and password matched,
-			// 1 if the user could not be found/does not exist, 
+			// 1 if the user could not be found/does not exist,
 			// 2 if the user was found but the password was wrong
 			// 3 if the user type was not accepted
 			returnVal = checkLoginDetails(userType, username, password);
 
-			// if the return value is 0, checkLoginDetails() will set the currentUser variable
+			// if the return value is 0, checkLoginDetails() will set the currentUser
+			// variable
 			if (returnVal == 0) {
 				// correct username and password, have to now make them do a security question
-				// TODO: get the Profile object here? need it for the call to checkOneSecurity question and will have to return it from this method
+				// TODO: get the Profile object here? need it for the call to checkOneSecurity
+				// question and will have to return it from this method
 				boolean correctAnswer = false;
 				for (int questionNum = 1; questionNum <= 3; questionNum++) {
 					// if the security question answer was correct
@@ -594,28 +595,26 @@ public class BackendSystem {
 			}
 			if (returnVal == 1) {
 				System.out.println("The entered username could not be found in the system for the entered user type.");
-			}
-			else if (returnVal == 2) {
+			} else if (returnVal == 2) {
 				System.out.println("Incorrect password for the entered username and user type");
 				failedPWAttempts++;
-			}
-			else if (returnVal == 3) {
+			} else if (returnVal == 3) {
 				System.out.println("Invalid user type");
 			}
 		} while (returnVal != 0);
 	}
 
 	/**
-	 * A method to check if a username exists and if the entered password is correct 
+	 * A method to check if a username exists and if the entered password is correct
 	 * 
-	 * @param userType - 'Student', 'Donor', 'Admin', 'FundSteward', 'Staff'
+	 * @param userType        - 'Student', 'Donor', 'Admin', 'FundSteward', 'Staff'
 	 * @param enteredUsername - the username/email that the user entered
 	 * @param enteredPassword - the password the user entered
 	 * 
 	 * @return 0 if the username and password matched,
-	 * 1 if the user could not be found/does not exist, 
-	 * 2 if the user was found but the password was wrong
-	 * 3 if the user type was not accepted
+	 *         1 if the user could not be found/does not exist,
+	 *         2 if the user was found but the password was wrong
+	 *         3 if the user type was not accepted
 	 */
 	public int checkLoginDetails(String userType, String enteredUsername, String enteredPassword) {
 		if (userType.equals("Student")) {
@@ -627,15 +626,14 @@ public class BackendSystem {
 
 						// return 0 since we have a successful username/password match
 						return 0;
-					}
-					else {
+					} else {
 						// valid username but incorrect password
 						// usernames are unique so we know that we found the right user
 						// but the password was just wrong
 						return 2;
 					}
 				}
-			}	
+			}
 		}
 
 		else if (userType.equals("Donor")) {
@@ -647,15 +645,13 @@ public class BackendSystem {
 
 						// return 0 since we have a successful username/password match
 						return 0;
-					}
-					else {
+					} else {
 						// valid username but incorrect password
 						return 2;
 					}
 				}
-			}	
-		}
-		else if (userType.equals("Admin")) {
+			}
+		} else if (userType.equals("Admin")) {
 			for (int i = 0; i < this.allAdmins.size(); i++) {
 				if (allAdmins.get(i).username.equalsIgnoreCase(enteredUsername)) {
 					if (allAdmins.get(i).password.equals(enteredPassword)) {
@@ -664,31 +660,29 @@ public class BackendSystem {
 
 						// return 0 since we have a successful username/password match
 						return 0;
-					}
-					else {
+					} else {
 						// valid username but incorrect password
 						return 2;
 					}
 				}
-			}	
-		}
-		else if (userType.equals("FundSteward")) {
+			}
+		} else if (userType.equals("FundSteward")) {
 			// TODO: implement this method for FundStewards!!
 			System.out.println("checkLoginDetails has not yet been implemented for FundStewards");
-		}
-		else if (userType.equals("Staff")) {
+		} else if (userType.equals("Staff")) {
 			// TODO: implement this method for Staffs!!
 			System.out.println("checkLoginDetails has not yet been implemented for Staffs");
-		}
-		else {
+		} else {
 			System.out.println("Invalid user type in checkLoginDetails() - returning 3.");
 			return 3;
 		}
 
-		// should only reach here if there was a valid userType and we entered 
-		// one of the if or else-if statements (not the else because we would have returned early)
+		// should only reach here if there was a valid userType and we entered
+		// one of the if or else-if statements (not the else because we would have
+		// returned early)
 
-		// had a valid userType but never found the username and thus didn't return early
+		// had a valid userType but never found the username and thus didn't return
+		// early
 		// return 1 since the user was not found
 		return 1;
 	}
@@ -696,9 +690,11 @@ public class BackendSystem {
 	// security question answers are case **insensitive
 	/**
 	 * 
-	 * @param questionNum should be 1, 2, or 3 just like in Profile.getOneSecurityQuestion()
-	 * @param user the user object who is trying to log in
-	 * @return if the answer to the security question was correct or not (capitalization doesn't matter)
+	 * @param questionNum should be 1, 2, or 3 just like in
+	 *                    Profile.getOneSecurityQuestion()
+	 * @param user        the user object who is trying to log in
+	 * @return if the answer to the security question was correct or not
+	 *         (capitalization doesn't matter)
 	 */
 	public boolean checkOneSecurityQuestion(int questionNum, Profile user) {
 		Scanner scnr = new Scanner(System.in);
@@ -714,37 +710,39 @@ public class BackendSystem {
 		if (userAnswer.equalsIgnoreCase(correctAnswer)) {
 			System.out.println("Correct answer!");
 			return true;
-		}
-		else {
+		} else {
 			System.out.println("Incorrect answer");
 			return false;
 		}
 	}
 
-	public  double stringSimilarity(String str1, String str2) {
+	public double stringSimilarity(String str1, String str2) {
 		String longer = str1, shorter = str2;
 
 		if (str1.length() < str2.length()) { // longer should always have greater length
-		  longer = str2; shorter = str1;
+			longer = str2;
+			shorter = str1;
 		}
 
 		int longerLength = longer.length();
-		if (longerLength == 0) { return 1.0; }
+		if (longerLength == 0) {
+			return 1.0;
+		}
 
 		String s1 = longer;
 		String s2 = shorter;
 
 		s1 = s1.toLowerCase();
 		s2 = s2.toLowerCase();
-	
+
 		int[] costs = new int[s2.length() + 1];
 
 		for (int i = 0; i <= s1.length(); i++) {
-		  	int lastValue = i;
+			int lastValue = i;
 
-		  	for (int j = 0; j <= s2.length(); j++) {
+			for (int j = 0; j <= s2.length(); j++) {
 				if (i == 0)
-			 		costs[j] = j;
+					costs[j] = j;
 				else {
 					if (j > 0) {
 						int newValue = costs[j - 1];
@@ -757,15 +755,15 @@ public class BackendSystem {
 						lastValue = newValue;
 					}
 				}
-		  	}
+			}
 
-		  	if (i > 0) {
+			if (i > 0) {
 				costs[s2.length()] = lastValue;
-		  	}
+			}
 		}
-		
+
 		return (longerLength - costs[s2.length()]) / (double) longerLength;
-	
+
 	}
 
 }
