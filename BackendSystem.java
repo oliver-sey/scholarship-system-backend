@@ -67,6 +67,7 @@ public class BackendSystem {
 		boolean receivesFunding = Boolean.parseBoolean(values.get(19));
 		String personalStatement = values.get(20);
 
+
 		BufferedReader awardsBr = new BufferedReader(new FileReader(folderPath + "/awards.txt"));
 
 		values.clear();
@@ -108,7 +109,7 @@ public class BackendSystem {
 		File awardsF = new File(folderPath + "/awards.txt");
 		FileWriter awardsW = new FileWriter(awardsF, false);
 
-		for (Scholarship scholarship : student.getAwardsRecieved()) {
+		for (Scholarship scholarship : student.getAwardsReceived()) {
 			awardNames.add(scholarship.getName());
 		}
 
@@ -135,7 +136,7 @@ public class BackendSystem {
 		awardsF.createNewFile();
 		FileWriter awardsW = new FileWriter(awardsF, false);
 
-		for (Scholarship scholarship : student.getAwardsRecieved()) {
+		for (Scholarship scholarship : student.getAwardsReceived()) {
 			awardNames.add(scholarship.getName());
 		}
 
