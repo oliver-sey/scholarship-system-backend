@@ -70,6 +70,7 @@ public class BackendSystem {
 		String sq2 = values.get(22);
 		String sq3 = values.get(23);
 
+
 		BufferedReader awardsBr = new BufferedReader(new FileReader(folderPath + "/awards.txt"));
 
 		values.clear();
@@ -111,7 +112,7 @@ public class BackendSystem {
 		File awardsF = new File(folderPath + "/awards.txt");
 		FileWriter awardsW = new FileWriter(awardsF, false);
 
-		for (Scholarship scholarship : student.getAwardsRecieved()) {
+		for (Scholarship scholarship : student.getAwardsReceived()) {
 			awardNames.add(scholarship.getName());
 		}
 
@@ -140,7 +141,7 @@ public class BackendSystem {
 		awardsF.createNewFile();
 		FileWriter awardsW = new FileWriter(awardsF, false);
 
-		for (Scholarship scholarship : student.getAwardsRecieved()) {
+		for (Scholarship scholarship : student.getAwardsReceived()) {
 			awardNames.add(scholarship.getName());
 		}
 
