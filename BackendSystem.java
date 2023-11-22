@@ -146,7 +146,7 @@ public class BackendSystem {
 	}
 
 	// find next index available in folder to store new object
-	public int findNextFileIndex(String dataType) throws Exception {
+	public int findNextFileIndex(String dataType) throws IllegalArgumentException {
 		int fileIndex;
 
 		// counts files in appropriate folder and returns next available
@@ -168,7 +168,7 @@ public class BackendSystem {
 			fileIndex = dir.listFiles().length + 1;
 		}
 		else {
-			throw new Exception("Data type is not valid.");
+			throw new IllegalArgumentException("Data type is not valid.");
 		}
 
 		return fileIndex;
