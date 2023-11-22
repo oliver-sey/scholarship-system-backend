@@ -306,9 +306,9 @@ public class BackendSystem {
 		return scholarships;
 	}
 
-	public void StoreScholarship(Scholarship scholarship, int fileIndex) throws IOException {
-
-		File folder = new File("scholarships/scholarship" + String.valueOf(fileIndex));
+	public void storeNewScholarship(Scholarship scholarship) throws IOException {
+		int nextFileIndex = findNextFileIndex("scholarship");
+		File folder = new File("scholarships/scholarship" + String.valueOf(nextFileIndex));
 		folder.mkdirs();
 
 		File detailsFile = new File(folder, "details.txt");
@@ -331,6 +331,36 @@ public class BackendSystem {
 
 		File requirementsFile = new File(folder, "requirements.txt");
 		FileWriter requirementsWriter = new FileWriter(requirementsFile);
+
+		requirementsWriter.write(scholarship.getRequirementsFileText());
+		requirementsWriter.close();
+
+	}
+
+	public void updateScholarshipFile(Scholarship scholarship) throws IOException {
+		int nextFileIndex = findNextFileIndex("scholarship");
+		File folder = new File("scholarships/scholarship" + String.valueOf(nextFileIndex));
+
+		File detailsFile = new File(folder, "details.txt");
+		FileWriter detailsWriter = new FileWriter(detailsFile, false);
+
+		detailsWriter.write(scholarship.getDetailsFileText());
+		detailsWriter.close();
+
+		File applicationFile = new File(folder, "application.txt");
+		FileWriter applicationWriter = new FileWriter(applicationFile, false);
+
+		applicationWriter.write(scholarship.getApplicationFileText());
+		applicationWriter.close();
+
+		File applicantsFile = new File(folder, "applicants.txt");
+		FileWriter applicantsWriter = new FileWriter(applicantsFile, false);
+
+		applicantsWriter.write(scholarship.getApplicantsFileText());
+		applicantsWriter.close();
+
+		File requirementsFile = new File(folder, "requirements.txt");
+		FileWriter requirementsWriter = new FileWriter(requirementsFile, false);
 
 		requirementsWriter.write(scholarship.getRequirementsFileText());
 		requirementsWriter.close();
@@ -440,8 +470,9 @@ public class BackendSystem {
 
 	}
 
-	public void StoreMatch(MatchRelationship match, int fileIndex) throws IOException {
-		File folder = new File("matches/match" + String.valueOf(fileIndex));
+	public void storeNewMatch(MatchRelationship match) throws IOException {
+		int nextFileIndex = findNextFileIndex("match");
+		File folder = new File("matches/match" + String.valueOf(nextFileIndex));
 		folder.mkdirs();
 
 		File detailsFile = new File(folder, "details.txt");
@@ -452,6 +483,23 @@ public class BackendSystem {
 
 		File applicationFile = new File(folder, "application.txt");
 		FileWriter applicationWriter = new FileWriter(applicationFile);
+
+		applicationWriter.write(match.getApplicationFileText());
+		applicationWriter.close();
+	}
+
+	public void updateMatchFile(MatchRelationship match) throws IOException {
+		
+		File folder = new File("matches/match" + String.valueOf(match.getID()));
+
+		File detailsFile = new File(folder, "details.txt");
+		FileWriter detailsWriter = new FileWriter(detailsFile, false);
+
+		detailsWriter.write(match.getDetailsFileText());
+		detailsWriter.close();
+
+		File applicationFile = new File(folder, "application.txt");
+		FileWriter applicationWriter = new FileWriter(applicationFile, false);
 
 		applicationWriter.write(match.getApplicationFileText());
 		applicationWriter.close();
@@ -558,6 +606,7 @@ public class BackendSystem {
 					schol3 = scholarship;
 					max3 = percentage;
 				}
+
 			}
 
 			scholarshipsFound.add(schol1);
