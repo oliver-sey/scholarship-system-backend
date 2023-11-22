@@ -796,4 +796,24 @@ public class BackendSystem {
 		return this.allScholarships;
 	}
 
+	public ArrayList<StudentProfile> getAllStudents() {
+		return allStudents;
+	}
+
+	public ArrayList<MatchRelationship> getAllMatchRelationships() {
+		return allMatchRelationships;
+	}
+
+	public ArrayList<DonorProfile> getAllDonors() {
+		return allDonors;
+	}
+
+	public ArrayList<AdminProfile> getAllAdmins() {
+		return allAdmins;
+	}
+
+	public Profile getCurrentUser() {
+		return currentUser;
+	}
+
 }
