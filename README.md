@@ -19,7 +19,6 @@ Within these folders you have, for example, a folder called 'scholarship1', whic
 
 The files in these folders get imported and parsed, and the data gets put into various objects, of type Scholarship, StudentProfile, MatchRelationship, and more.
 
-&NewLine;
 # ***More background info here??**
 
 
@@ -47,17 +46,15 @@ If a category accepts multiple values, i.e., you want to allow students from mul
 
 ### Scholarship Applicants File (applicants.txt):
 student name 1, student name 2, etc.
-&NewLine;
-&NewLine;
+  
 ## In the Match folder:
 
 ### Scholarship Match Info File:
 Student name, scholarship name, Match percentage, match index, application status
 
 ### Application File:
-Question 1, answer 1, question 2, answer2, etc.
-&NewLine;
-&NewLine;
+Question 1, answer 1, question 2, answer2, etc.  
+
 ## In the Donor folder:
 
 ### Donor details:
