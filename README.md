@@ -72,7 +72,7 @@ Question 1, answer 1, question 2, answer2, etc.
 ## In the Donor folder:
 
 ### Donor details:
-First name, Last name, username, password
+First name, Last name, username, password, secturityAnswer1(str), secturityAnswer2(str), secturityAnswer3(str), 
 
 ### Scholarships:
 Scholarship name 1, scholarship name 2
@@ -85,4 +85,9 @@ Scholarship name 1, scholarship name 2
 TODO: fill this out!!
 
 ### Student Details File:
-firstName(str), lastName(str), studentID(int), username(str), password(strs), major(str), hasAMinor(T/F), minor(str), isUSCitizen(T/F), GPA(fl), inGoodStanding(T/F), hasAdvStanding(T/F), gradeLevel(str), gradMonth(int), gradYear(int), gender(str), isFullTimeStudent(T/F), isTransferStudent(T/F), curNumCredits(int), receivesFunding(T/F), personalStatement(str)
+firstName(str), lastName(str), studentID(int), username(str), password(strs), major(str), hasAMinor(T/F), minor(str), isUSCitizen(T/F), GPA(fl), inGoodStanding(T/F), hasAdvStanding(T/F), gradeLevel(str), gradMonth(int), gradYear(int), gender(str), isFullTimeStudent(T/F), isTransferStudent(T/F), curNumCredits(int), receivesFunding(T/F), personalStatement(str),secturityAnswer1(str), secturityAnswer2(str), secturityAnswer3(str)
+
+### Security Questions:
+Mother’s Maiden Name
+Mascot of your middle school
+Name of city you were born in
