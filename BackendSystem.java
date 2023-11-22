@@ -205,7 +205,7 @@ public class BackendSystem {
 		ArrayList<String> requirements = new ArrayList<String>();
 		ArrayList<String> applicantNames = new ArrayList<String>();
 		ArrayList<StudentProfile> applicants = new ArrayList<StudentProfile>();
-		DonorProfile correctDonor = new DonorProfile("", "", "", "");
+		DonorProfile correctDonor = new DonorProfile();
 
 		ArrayList<String> values = new ArrayList<String>();
 		String str;
