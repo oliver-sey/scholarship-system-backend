@@ -20,7 +20,8 @@ public class StudentProfile extends Profile {
 			String major, boolean hasAMinor, String minor, boolean isUSCitizen, double GPA,
 			boolean inGoodStanding, boolean hasAdvStanding, String gradeLevel, int gradMonth, int gradYear,
 			String gender, boolean isFullTimeStudent, boolean isTransferStudent, int curNumCredits,
-			boolean receivesFunding, String personalStatement, ArrayList<Scholarship> scholarshipsAwarded, int fileIndex) {
+			boolean receivesFunding, String personalStatement, String securityQAnswer1, String securityQAnswer2, 
+			String securityQAnswer3, ArrayList<Scholarship> scholarshipsAwarded, int fileIndex) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.studentID = studentID;
@@ -42,15 +43,18 @@ public class StudentProfile extends Profile {
 		this.curNumCredits = curNumCredits;
 		this.receivesFunding = receivesFunding;
 		this.personalStatement = personalStatement;
-		this.awardsRecieved = scholarshipsAwarded;
+		this.awardsReceived = scholarshipsAwarded;
 		this.fileIndex = fileIndex;
+		this.securityQAnswers[0] = securityQAnswer1;
+		this.securityQAnswers[1] = securityQAnswer2;
+		this.securityQAnswers[2] = securityQAnswer3;
 	}
 
 	public StudentProfile(String firstName, String lastName, int studentID, String username, String password,
 			String major, boolean hasAMinor, String minor, boolean isUSCitizen, double GPA,
 			boolean inGoodStanding, boolean hasAdvStanding, String gradeLevel, int gradMonth, int gradYear,
 			String gender, boolean isFullTimeStudent, boolean isTransferStudent, int curNumCredits,
-			boolean receivesFunding, String personalStatement) {
+			boolean receivesFunding, String personalStatement, String securityQAnswer1, String securityQAnswer2, String securityQAnswer3) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.studentID = studentID;
@@ -72,6 +76,9 @@ public class StudentProfile extends Profile {
 		this.curNumCredits = curNumCredits;
 		this.receivesFunding = receivesFunding;
 		this.personalStatement = personalStatement;
+		this.securityQAnswers[0] = securityQAnswer1;
+		this.securityQAnswers[1] = securityQAnswer2;
+		this.securityQAnswers[2] = securityQAnswer3;
 	}
 
 	public StudentProfile() {
@@ -97,6 +104,9 @@ public class StudentProfile extends Profile {
 		receivesFunding = false;
 		personalStatement = "invalidPersonalStatement";
 		fileIndex = -1;
+		securityQAnswers[0] = "invalidSecurityQAnswer1";
+		securityQAnswers[1] = "invalidSecurityQAnswer2";
+		securityQAnswers[2] = "invalidSecurityQAnswer3";
 	}
 
 	private int studentID;
@@ -136,7 +146,7 @@ public class StudentProfile extends Profile {
 
 	private ArrayList<Integer> matchObjects = new ArrayList<Integer>();
 
-	private ArrayList<Scholarship> awardsRecieved = new ArrayList<Scholarship>();
+	private ArrayList<Scholarship> awardsReceived = new ArrayList<Scholarship>();
 
 	// getters
 
@@ -230,8 +240,8 @@ public class StudentProfile extends Profile {
 	}
 
 	//a getter for awardsRecieved
-	public ArrayList<Scholarship> getAwardsRecieved() {
-		return this.awardsRecieved;
+	public ArrayList<Scholarship> getAwardsReceived() {
+		return this.awardsReceived;
 	}
 
 	public int getFileIndex() {
@@ -355,7 +365,7 @@ public class StudentProfile extends Profile {
 	}
 
 	public void setAwardsReceived(ArrayList<Scholarship> awardsRecieved) {
-        this.awardsRecieved = awardsRecieved;
+        this.awardsReceived = awardsRecieved;
     }
 
 	public void setFileIndex(int fileIndex) {
@@ -383,7 +393,10 @@ public class StudentProfile extends Profile {
 				this.isTransferStudent + "\n" +
 				this.curNumCredits + "\n" +
 				this.receivesFunding + "\n" +
-				this.personalStatement + "\n";
+				this.personalStatement + "\n"+
+				this.securityQAnswers[0] + "\n"+
+				this.securityQAnswers[1] + "\n"+
+				this.securityQAnswers[2] + "\n";
 	}
 
 	@Override

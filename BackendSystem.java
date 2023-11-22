@@ -66,6 +66,10 @@ public class BackendSystem {
 		int curNumCredits = Integer.parseInt(values.get(18));
 		boolean receivesFunding = Boolean.parseBoolean(values.get(19));
 		String personalStatement = values.get(20);
+		String sq1 = values.get(21);
+		String sq2 = values.get(22);
+		String sq3 = values.get(23);
+
 
 		BufferedReader awardsBr = new BufferedReader(new FileReader(folderPath + "/awards.txt"));
 
@@ -89,7 +93,7 @@ public class BackendSystem {
 		return new StudentProfile(firstName, lastName, studentID, username, password, major, hasAMinor, minor,
 				isUSCitizen, GPA, inGoodStanding, hasAdvStanding,
 				gradeLevel, gradMonth, gradYear, gender, isFullTimeStudent, isTransferStudent,
-				curNumCredits, receivesFunding, personalStatement, awardedScholarships, fileIndex);
+				curNumCredits, receivesFunding, personalStatement, sq1, sq2, sq3, awardedScholarships, fileIndex);
 
 	}
 
@@ -108,7 +112,7 @@ public class BackendSystem {
 		File awardsF = new File(folderPath + "/awards.txt");
 		FileWriter awardsW = new FileWriter(awardsF, false);
 
-		for (Scholarship scholarship : student.getAwardsRecieved()) {
+		for (Scholarship scholarship : student.getAwardsReceived()) {
 			awardNames.add(scholarship.getName());
 		}
 
@@ -137,7 +141,7 @@ public class BackendSystem {
 		awardsF.createNewFile();
 		FileWriter awardsW = new FileWriter(awardsF, false);
 
-		for (Scholarship scholarship : student.getAwardsRecieved()) {
+		for (Scholarship scholarship : student.getAwardsReceived()) {
 			awardNames.add(scholarship.getName());
 		}
 
@@ -640,6 +644,7 @@ public class BackendSystem {
 			// 3 if the user type was not accepted
 			returnVal = checkLoginDetails(userType, username, password);
 
+			scnr.close();
 			// if the return value is 0, checkLoginDetails() will set the currentUser
 			// variable
 			if (returnVal == 0) {
@@ -781,6 +786,8 @@ public class BackendSystem {
 
 		String userAnswer = scnr.nextLine();
 
+		scnr.close();
+
 		if (userAnswer.equalsIgnoreCase(correctAnswer)) {
 			System.out.println("Correct answer!");
 			return true;
@@ -868,7 +875,7 @@ public class BackendSystem {
 
 	public void testStoringStudents() throws Exception {
 		StudentProfile newStudent = new StudentProfile("Jess", "Mess", 12345, "user", "pass", "IE", true, "SFWEE", true, 
-		3.6, true, true, "Freshman", 5, 2025, "Female", true, false, 12, false, "I love school!");
+		3.6, true, true, "Freshman", 5, 2025, "Female", true, false, 12, false, "I love school!", "Smith", "The eagles", "New York");
 
 		storeNewStudentProfile(newStudent);
 
