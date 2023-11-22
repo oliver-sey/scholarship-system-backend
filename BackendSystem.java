@@ -409,6 +409,31 @@ public class BackendSystem {
 		return donors;
 	}
 
+	// writes donor profile data to file
+	// TODO: finish updating this for donors
+	public void updateDonorProfileFile(DonorProfile donor) throws IOException {
+		String folderPath = "donors/donor" + String.valueOf(donor.getFileIndex());
+		ArrayList<String> awardNames = new ArrayList<String>();
+
+		// for details.txt
+		File detailsFile = new File(folderPath + "/details.txt");
+		FileWriter detailsWriter = new FileWriter(detailsFile, false);
+		
+		// get the text that should be written to the details.txt file, and write it
+		detailsWriter.write(donor.getDetailsFileText());
+		detailsWriter.close();
+
+
+		// for scholarships.txt
+		File scholsFile = new File(folderPath + "/scholarships.txt");
+		FileWriter scholsWriter = new FileWriter(scholsFile, false);
+
+		// get the text that should be written to the scholarships.txt file, and write it
+		scholsWriter.write(donor.getScholarshipFileText());
+		scholsWriter.close();
+	}
+
+
 	// creates match object from student object, scholarship object, and file
 	public MatchRelationship readMatch(int ID)
 			throws NumberFormatException, IOException {
