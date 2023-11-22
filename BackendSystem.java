@@ -551,13 +551,20 @@ public class BackendSystem {
 		return scholarshipsFound;
 	}
 
-	// from our discussion/from the elicitation:
-	// get 3 max wrong password attempts then get a message to contact admin,
-	// program stops
-	// after 2 wrong passwords get to still do 3 security question attempts
+	
 
-	// this returns true for a successful login, false if the login was unsuccessful 
-	// and the program should stop!!!!!
+	/**
+	 * Prompts the user for their login details and then security questions
+	 * If this function ends, either the program should end or the user is fully successfully logged in
+	 * 
+	 * from our discussion/from the elicitation:
+	 * get 3 max wrong password attempts then get a message to contact admin,
+	 * program stops
+	 * after 2 wrong passwords get to still do 3 security question attempts
+	 * 
+	 * @return returns true for a successful login, false if the login was unsuccessful 
+	// and the program should stop!!
+	 */
 	public boolean login() {
 		// TODO: implement me!!!
 		Scanner scnr = new Scanner(System.in);
