@@ -12,6 +12,7 @@ public class Main {
 		
 	}
 
+
 	public void runDifferentTests() throws IOException {
 		Scanner scnr = new Scanner(System.in);
 		System.out.println("Hello! Welcome to the backend for our Scholarship Management System.");
