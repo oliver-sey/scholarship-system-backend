@@ -94,27 +94,54 @@ public class BackendSystem {
 	}
 
 	// writes student profile data to file
-	public void updateStudentProfileFile(StudentProfile student, int fileIndex) throws IOException {
-		File studentFile = new File("students/student" + String.valueOf(fileIndex) + ".txt");
+	public void updateStudentProfileFile(StudentProfile student) throws IOException {
+		String folderPath = "students/student" + String.valueOf(student.getFileIndex());
+		ArrayList<String> awardNames = new ArrayList<String>();
 
-		FileWriter writer = new FileWriter(studentFile, false);
+		File detailsF = new File(folderPath + "/details.txt");
+		FileWriter detailsW = new FileWriter(detailsF, false);
 
-		writer.write(student.getFileText());
+		detailsW.write(student.getFileText());
 
-		writer.close();
+		detailsW.close();
+
+		File awardsF = new File(folderPath + "/awards.txt");
+		FileWriter awardsW = new FileWriter(awardsF, false);
+
+		for (Scholarship scholarship : student.getAwardsRecieved()) {
+			awardNames.add(scholarship.getName());
+		}
+
+		awardsW.write(String.join("\n", awardNames));
+		
+		awardsW.close();
+
 	}
 
 	public void storeNewStudentProfile(StudentProfile student) throws Exception {
 		int nextFileIndex = findNextFileIndex("student");
-		File studentFile = new File("students/student" + String.valueOf(nextFileIndex) + ".txt");
+		String folderPath = "students/student" + String.valueOf(nextFileIndex);
+		ArrayList<String> awardNames = new ArrayList<String>();
 
-		studentFile.createNewFile();
+		File detailsF = new File(folderPath + "/details.txt");
+		detailsF.createNewFile();
+		FileWriter detailsW = new FileWriter(detailsF);
 
-		FileWriter writer = new FileWriter(studentFile);
+		detailsW.write(student.getFileText());
 
-		writer.write(student.getFileText());
+		detailsW.close();
 
-		writer.close();
+		File awardsF = new File(folderPath + "/awards.txt");
+		awardsF.createNewFile();
+		FileWriter awardsW = new FileWriter(awardsF, false);
+
+		for (Scholarship scholarship : student.getAwardsRecieved()) {
+			awardNames.add(scholarship.getName());
+		}
+
+		awardsW.write(String.join("\n", awardNames));
+		
+		awardsW.close();
 		
 	}
 
