@@ -1,0 +1,21 @@
+Bob
+Myers
+20001
+bobby01@yahoo.com
+rollTide
+Mechanical Engineering
+False
+
+True
+3.4
+True
+False
+Sophomore
+05
+2026
+Male
+True
+True
+14
+False
+Wow I really love engineering and computer science, I want to design space systems.
