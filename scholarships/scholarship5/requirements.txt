@@ -1,0 +1,30 @@
+Gender
+Female
+Gender
+Nonbinary
+Gender
+Questioning
+Major
+Aerospace Engineering
+Major
+Systems Engineering
+Major
+Industrial Engineering
+Major
+Mechanical Engineering
+Major
+Computer Engineering
+Major
+Architectural Engineering
+Major
+Mining Engineering
+Major
+Software Engineering
+Major
+Electrical Engineering
+GPA
+2.5
+Good Standing
+True
+Full Time Student
+True
