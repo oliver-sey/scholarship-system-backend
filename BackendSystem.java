@@ -41,6 +41,8 @@ public class BackendSystem {
 
 		br.close();
 
+		ArrayList<Scholarship> awardedScholarships = new ArrayList<Scholarship>();
+
 		// Extract values from the array and convert them to the appropriate types
 		String firstName = values.get(0);
 		String lastName = values.get(1);
@@ -63,12 +65,21 @@ public class BackendSystem {
 		int curNumCredits = Integer.parseInt(values.get(18));
 		boolean receivesFunding = Boolean.parseBoolean(values.get(19));
 		String personalStatement = values.get(20);
+		String[] scholarshipNames = values.get(21).split(",");
+
+		for(String name : scholarshipNames) {
+			for (Scholarship scholarship : this.allScholarships) {
+				if(name.compareTo(scholarship.getName()) == 0) {
+					awardedScholarships.add(scholarship);
+				}
+			}
+		}
 
 		// Create and return a new instance of StudentProfile
 		return new StudentProfile(firstName, lastName, studentID, username, password, major, hasAMinor, minor,
 				isUSCitizen, GPA, inGoodStanding, hasAdvStanding,
 				gradeLevel, gradMonth, gradYear, gender, isFullTimeStudent, isTransferStudent,
-				curNumCredits, receivesFunding, personalStatement, fileIndex);
+				curNumCredits, receivesFunding, personalStatement, awardedScholarships, fileIndex);
 
 	}
 
