@@ -36,4 +36,24 @@ public class DonorProfile extends Profile {
         return this.scholarships;
     }
 
+    public String getDetailsFileText() {
+        return this.firstName + "\n" +
+        this.lastName + "\n" +
+        this.username + "\n" +
+        this.password + "\n" +
+        this.securityQAnswers[0] + "\n" +
+		this.securityQAnswers[1] + "\n" +
+		this.securityQAnswers[2];
+    }
+    
+    public String getScholarshipFileText() {
+        ArrayList<String> scholarshipNames = new ArrayList<String>();
+
+        for (Scholarship scholarship : this.scholarships) {
+            scholarshipNames.add(scholarship.getName());
+        }
+
+        return String.join("/n", scholarshipNames);
+    }
+
 }
