@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -576,6 +577,7 @@ public class BackendSystem {
 	public ArrayList<Scholarship> searchScholarships(String inputCategory, String inputSearchValue) {
 		ArrayList<Scholarship> scholarshipsFound = new ArrayList<Scholarship>();
 		HashMap<String, String> requirements = new HashMap<String, String>();
+		LocalDate inputDate;
 
 		if (inputCategory.compareTo("name") == 0) {
 
@@ -635,7 +637,33 @@ public class BackendSystem {
 				}
 				applicantNames.clear();
 			}
-		} else {
+		} else if (inputCategory.compareTo("due date") == 0) {
+
+			for (Scholarship scholarship : this.allScholarships) {
+				inputDate = LocalDate.parse(inputSearchValue);
+				if (scholarship.getDateDue().compareTo(inputDate) == 0) {
+					scholarshipsFound.add(scholarship);
+				}
+			}
+
+		}  else if (inputCategory.compareTo("date posted") == 0) {
+
+			for (Scholarship scholarship : this.allScholarships) {
+				inputDate = LocalDate.parse(inputSearchValue);
+				if (scholarship.getDateAdded().compareTo(inputDate) == 0) {
+					scholarshipsFound.add(scholarship);
+				}
+			}
+			
+		} else if (inputCategory.compareTo("award amount") == 0) {
+
+			for (Scholarship scholarship : this.allScholarships) {
+				if (Float.compare(scholarship.getAwardAmount(), Float.parseFloat(inputSearchValue)) >= 0) {
+					scholarshipsFound.add(scholarship);
+				}
+			}
+		} 
+		else {
 			// assumes any search category will be a requirement
 			// retrieves requirement hashmap from scholarship and compares category and
 			// value
