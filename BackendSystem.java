@@ -197,6 +197,7 @@ public class BackendSystem {
 		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath + "/details.txt"));
 		ArrayList<String> application = new ArrayList<String>();
 		ArrayList<String> requirements = new ArrayList<String>();
+		ArrayList<String> applicantNames = new ArrayList<String>();
 		ArrayList<StudentProfile> applicants = new ArrayList<StudentProfile>();
 		DonorProfile correctDonor = new DonorProfile("", "", "", "");
 
@@ -226,39 +227,33 @@ public class BackendSystem {
 		// read application file and store in array
 		BufferedReader applicationBr = new BufferedReader(new FileReader(folderPath + "/application.txt"));
 
-		values.clear();
 		while ((str = applicationBr.readLine()) != null) {
-			values.add(str);
+			application.add(str);
 		}
 
-		application = values;
 
 		applicationBr.close();
 
 		// read requirements file and store in array
 		BufferedReader requirementsBr = new BufferedReader(new FileReader(folderPath + "/requirements.txt"));
 
-		values.clear();
 		while ((str = requirementsBr.readLine()) != null) {
-			values.add(str);
+			requirements.add(str);
 		}
-
-		requirements = values;
 
 		requirementsBr.close();
 
 		// read applicants file
 		BufferedReader applicantsBr = new BufferedReader(new FileReader(folderPath + "/applicants.txt"));
 
-		values.clear();
 		while ((str = applicantsBr.readLine()) != null) {
-			values.add(str);
+			applicantNames.add(str);
 		}
 
 		applicantsBr.close();
 
 		// find student objects
-		for (String applicantName : values) {
+		for (String applicantName : applicantNames) {
 			for (StudentProfile student : this.allStudents) {
 				if (applicantName.compareTo(student.getName()) == 0) {
 					applicants.add(student);
@@ -411,15 +406,13 @@ public class BackendSystem {
 
 		BufferedReader applicationBr = new BufferedReader(new FileReader(folderPath + "/application.txt"));
 
-		ArrayList<String> values = new ArrayList<String>();
 		String str;
 
 		// read details file and store in variables
 		while ((str = applicationBr.readLine()) != null) {
-			values.add(str);
+			application.add(str);
 		}
 
-		application = values;
 		applicationBr.close();
 
 		return new MatchRelationship(student, scholarship, ID, matchPercentage, matchIndex, application,
