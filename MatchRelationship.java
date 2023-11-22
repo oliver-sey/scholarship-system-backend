@@ -63,7 +63,7 @@ public class MatchRelationship {
         this.matchPercentage = inputMatchPercentage;
         this.matchIndex = inputMatchIndex;
         this.application = InitializeApplication(inputScholarship.getApplication());
-        this.applicationStatus = "Not Started";
+        this.applicationStatus = "not started";
         this.ID = ID;
     }
 
@@ -120,11 +120,11 @@ public class MatchRelationship {
     }
 
     public void setApplicationToInProgress() {
-        this.applicationStatus = "In progress";
+        this.applicationStatus = "in progress";
     }
 
     public void setApplicationToSubmitted() {
-        this.applicationStatus = "Submitted";
+        this.applicationStatus = "submitted";
     }
 
     public void setApplication(ArrayList<String> inputApplication) {
