@@ -122,6 +122,8 @@ public class BackendSystem {
 		int nextFileIndex = findNextFileIndex("student");
 		String folderPath = "students/student" + String.valueOf(nextFileIndex);
 		ArrayList<String> awardNames = new ArrayList<String>();
+		File dir = new File(folderPath);
+		dir.mkdir();
 
 		File detailsF = new File(folderPath + "/details.txt");
 		detailsF.createNewFile();
