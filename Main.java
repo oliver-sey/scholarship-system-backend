@@ -9,11 +9,10 @@ import java.util.Scanner;
 public class Main {
 
 	public static void main(String[] args) throws Exception {
-// TODO: do we need a backend instance in the main method, or should each
-		// testing method
-		// just make its own?
-		// BackendSystem backend = new BackendSystem();
+		
+	}
 
+	public void runDifferentTests() throws IOException {
 		Scanner scnr = new Scanner(System.in);
 		System.out.println("Hello! Welcome to the backend for our Scholarship Management System.");
 
