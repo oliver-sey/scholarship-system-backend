@@ -9,6 +9,7 @@ public class StaffProfile extends Profile {
         lastName = "invalidLastName";
         username = "invalidUserName";
         password = "invalidPassword";
+        jobRole = "invalidJobRole";
     }
     
     //TO DO: add for fileIndex?
