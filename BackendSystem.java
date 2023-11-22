@@ -10,9 +10,23 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class BackendSystem {
-	// reads student demographics from comma separated file and initializes a
-	// _______????
-	public static StudentProfile readStudentProfile(int fileIndex) throws IOException {
+	
+	private ArrayList<StudentProfile> allStudents = new ArrayList<StudentProfile>();
+	private ArrayList<Scholarship> allScholarships = new ArrayList<Scholarship>();
+	private ArrayList<MatchRelationship> allMatchRelationships = new ArrayList<MatchRelationship>();
+	private ArrayList<DonorProfile> allDonors = new ArrayList<DonorProfile>();
+	private ArrayList<AdminProfile> allAdmins = new ArrayList<AdminProfile>();
+
+	//constructor
+	public BackendSystem() throws NumberFormatException, IOException {
+		this.allStudents = InstantiateAllStudents();
+		this.allScholarships = InstantiateAllScholarships();
+		this.allDonors = InstantiateAllDonors();
+		this.allMatchRelationships = InstantiateAllMatches();
+		//TO DO: make the rest of the instantiate all methods
+	}
+
+	public  StudentProfile readStudentProfile(int fileIndex) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader("students/student" + String.valueOf(fileIndex) + ".txt"));
 
 		ArrayList<String> values = new ArrayList<String>();
@@ -56,7 +70,7 @@ public class BackendSystem {
 	}
 
 	//writes student profile data to file
-	public static void StoreStudentProfile(StudentProfile student, int fileIndex) throws IOException {
+	public  void StoreStudentProfile(StudentProfile student, int fileIndex) throws IOException {
 		File studentFile = new File("students/student" + String.valueOf(fileIndex) + ".txt");
 
 		studentFile.createNewFile();
@@ -69,7 +83,7 @@ public class BackendSystem {
 	}
 
 	//find next index available in folder to store new object
-	public static int findNextFileIndex(String dataType) throws Exception{
+	public  int findNextFileIndex(String dataType) throws Exception{
 		int fileIndex;
 		
 		//counts files in appropriate folder and returns next available
@@ -97,7 +111,7 @@ public class BackendSystem {
 
 	// reads a text file and converts comma separated text to a list
 	//Maybe not needed
-	public static ArrayList<String> ConvertTextToArray(String filePath) throws IOException {
+	public  ArrayList<String> ConvertTextToArray(String filePath) throws IOException {
 		ArrayList<String> textArray = new ArrayList<>();
 
 		BufferedReader br = new BufferedReader(new FileReader(filePath));
@@ -113,8 +127,7 @@ public class BackendSystem {
 	}
 
 	// creates scholarship object from 3 files and donor object
-	public static Scholarship ReadScholarship(int fileIndex, ArrayList<DonorProfile> donors,
-			ArrayList<StudentProfile> students) throws IOException {
+	public  Scholarship ReadScholarship(int fileIndex) throws IOException {
 		String folderPath = "scholarships/scholarship" + String.valueOf(fileIndex);
 		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath + "/details.txt"));
 		ArrayList<String> application = new ArrayList<String>();
@@ -182,7 +195,7 @@ public class BackendSystem {
 
 		// find student objects
 		for (String applicantName : values) {
-			for (StudentProfile student : students) {
+			for (StudentProfile student : this.allStudents) {
 				if (applicantName.compareTo(student.getName()) == 0) {
 					applicants.add(student);
 				}
@@ -190,7 +203,7 @@ public class BackendSystem {
 		}
 
 		// find donor object
-		for (DonorProfile donor : donors) {
+		for (DonorProfile donor : this.allDonors) {
 			if (donorName.compareTo(donor.getName()) == 0) {
 				correctDonor = donor;
 			}
@@ -202,8 +215,7 @@ public class BackendSystem {
 	}
 
 	// instantiate all scholarships
-	public static ArrayList<Scholarship> InstantiateAllScholarships(ArrayList<DonorProfile> donors,
-			ArrayList<StudentProfile> students) {
+	public  ArrayList<Scholarship> InstantiateAllScholarships() {
 		ArrayList<Scholarship> scholarships = new ArrayList<Scholarship>();
 		// open the 'scholarships' folder
 		File dir = new File("scholarships");
@@ -217,7 +229,7 @@ public class BackendSystem {
 		for (File child : directoryListing) {
 
 			try {
-				scholarship = ReadScholarship(fileIndex, donors, students);
+				scholarship = ReadScholarship(fileIndex);
 				scholarships.add(scholarship);
 			} catch (IOException except) {
 				System.out.println("File not found: " + child.getAbsolutePath());
@@ -229,7 +241,7 @@ public class BackendSystem {
 		return scholarships;
 	}
 
-	public static void StoreScholarship(Scholarship scholarship, int fileIndex) throws IOException {
+	public  void StoreScholarship(Scholarship scholarship, int fileIndex) throws IOException {
 		
 		File folder = new File("scholarships/scholarship" + String.valueOf(fileIndex));
 		folder.mkdirs();
@@ -260,7 +272,7 @@ public class BackendSystem {
 
 	}
 
-	public static ArrayList<StudentProfile> InstantiateAllStudents() {
+	public ArrayList<StudentProfile> InstantiateAllStudents() {
 		ArrayList<StudentProfile> students = new ArrayList<StudentProfile>();
 		File dir = new File("students");
 		File[] directoryListing = dir.listFiles();
@@ -282,7 +294,7 @@ public class BackendSystem {
 		return students;
 	}
 
-	public static ArrayList<DonorProfile> InstantiateAllDonors() {
+	public  ArrayList<DonorProfile> InstantiateAllDonors() {
 		ArrayList<DonorProfile> donors = new ArrayList<DonorProfile>();
 		File dir = new File("donors");
 		File[] directoryListing = dir.listFiles();
@@ -303,7 +315,7 @@ public class BackendSystem {
 	}
 
 	// creates match object from student object, scholarship object, and file
-	public static MatchRelationship readMatch(ArrayList<Scholarship> scholarships, ArrayList<StudentProfile> students, int ID)
+	public  MatchRelationship readMatch(int ID)
 			throws NumberFormatException, IOException {
 		String folderPath = "matches/match" + String.valueOf(ID);
 		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath + "/details.txt"));
@@ -320,14 +332,14 @@ public class BackendSystem {
 		detailsBr.close();
 
 		// find student objects
-		for (StudentProfile currStudent : students) {
+		for (StudentProfile currStudent : this.allStudents) {
 			if (studentName.compareTo(currStudent.getName()) == 0) {
 				student = currStudent;
 			}
 		}
 
 		// find scholarship object
-		for (Scholarship currScholarship : scholarships) {
+		for (Scholarship currScholarship : this.allScholarships) {
 			if (scholarshipName.compareTo(currScholarship.getName()) == 0) {
 				scholarship = currScholarship;
 			}
@@ -349,16 +361,14 @@ public class BackendSystem {
 		return new MatchRelationship(student, scholarship, ID, matchPercentage, matchIndex, application, applicationStatus);
 	}
 
-	public static ArrayList<MatchRelationship> InstantiateAllMatches(ArrayList<Scholarship> scholarships, 
-			ArrayList<StudentProfile> students) throws NumberFormatException, IOException {
+	public  ArrayList<MatchRelationship> InstantiateAllMatches() throws NumberFormatException, IOException {
 
 		ArrayList<MatchRelationship> matches = new ArrayList<MatchRelationship>();
 		File dir = new File("matches");		
 		MatchRelationship match;
 
 		for (int i = 1; i <= dir.listFiles().length; i++) {
-
-			match = readMatch(scholarships, students, i);
+			match = readMatch(i);
 			matches.add(match);
 		}
 
@@ -366,7 +376,7 @@ public class BackendSystem {
 
 	}
 
-	public static void StoreMatch(MatchRelationship match, int fileIndex) throws IOException {
+	public  void StoreMatch(MatchRelationship match, int fileIndex) throws IOException {
 		File folder = new File("matches/match" + String.valueOf(fileIndex));
 		folder.mkdirs();
 
@@ -384,7 +394,7 @@ public class BackendSystem {
 	}
 
 	// creates donor object from file
-	public static DonorProfile readDonor(String filePath) throws IOException {
+	public  DonorProfile readDonor(String filePath) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(filePath));
 		ArrayList<String> values = new ArrayList<String>();
 		String str;
@@ -406,7 +416,7 @@ public class BackendSystem {
 
 	// search donors by name
 	//Maybe not needed
-	public static DonorProfile SearchForDonor(String donorName) throws IOException, Exception {
+	public  DonorProfile SearchForDonor(String donorName) throws IOException, Exception {
 		File dir = new File("donors");
 		File[] directoryListing = dir.listFiles();
 		String correctDonorPath = "";
@@ -448,8 +458,7 @@ public class BackendSystem {
 	}
 
 	// searches a folder for a scholarship with inputted value
-	public static ArrayList<Scholarship> searchScholarships(String inputCategory, String inputSearchValue,
-		ArrayList<Scholarship> scholarshipsToSearch) {
+	public  ArrayList<Scholarship> searchScholarships(String inputCategory, String inputSearchValue) {
 		ArrayList<Scholarship> scholarshipsFound = new ArrayList<Scholarship>();
 		HashMap<String, String> requirements = new HashMap<String, String>();
 
@@ -462,13 +471,13 @@ public class BackendSystem {
 				rankedScholarships.put("", 0.0);
 			}
 
-			for (Scholarship scholarship: scholarshipsToSearch) {
+			for (Scholarship scholarship: this.allScholarships) {
 				
 			}
 
 		} else if (inputCategory.compareTo("donor") == 0) {
 			//retrieves donor name from each scholarship
-			for (Scholarship scholarship: scholarshipsToSearch) {
+			for (Scholarship scholarship: this.allScholarships) {
 				if (inputSearchValue.compareTo(scholarship.getDonorName()) == 0) {
 					scholarshipsFound.add(scholarship);
 				}
@@ -477,7 +486,7 @@ public class BackendSystem {
 			//retrieves array of applicant names from each scholarship and iterates through them
 			ArrayList<String> applicantNames = new ArrayList<String>();
 
-			for (Scholarship scholarship: scholarshipsToSearch) {
+			for (Scholarship scholarship: this.allScholarships) {
 				applicantNames = scholarship.getApplicantNames();
 
 				for (String name : applicantNames){
@@ -490,7 +499,7 @@ public class BackendSystem {
 		} else {
 			//assumes any search category will be a requirement
 			//retrieves requirement hashmap from scholarship and compares category and value
-			for (Scholarship scholarship : scholarshipsToSearch) {
+			for (Scholarship scholarship : this.allScholarships) {
 				requirements = scholarship.getRequirements();
 
 				for (Map.Entry<String, String> entry : requirements.entrySet()) {
@@ -656,7 +665,7 @@ public class BackendSystem {
 		}
 	}
 
-	public static double stringSimilarity(String str1, String str2) {
+	public  double stringSimilarity(String str1, String str2) {
 		String longer = str1, shorter = str2;
 
 		if (str1.length() < str2.length()) { // longer should always have greater length
