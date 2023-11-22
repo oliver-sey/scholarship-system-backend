@@ -41,6 +41,8 @@ public class BackendSystem {
 
 		br.close();
 
+		ArrayList<Scholarship> awardedScholarships = new ArrayList<Scholarship>();
+
 		// Extract values from the array and convert them to the appropriate types
 		String firstName = values.get(0);
 		String lastName = values.get(1);
@@ -63,12 +65,21 @@ public class BackendSystem {
 		int curNumCredits = Integer.parseInt(values.get(18));
 		boolean receivesFunding = Boolean.parseBoolean(values.get(19));
 		String personalStatement = values.get(20);
+		String[] scholarshipNames = values.get(21).split(",");
+
+		for(String name : scholarshipNames) {
+			for (Scholarship scholarship : this.allScholarships) {
+				if(name.compareTo(scholarship.getName()) == 0) {
+					awardedScholarships.add(scholarship);
+				}
+			}
+		}
 
 		// Create and return a new instance of StudentProfile
 		return new StudentProfile(firstName, lastName, studentID, username, password, major, hasAMinor, minor,
 				isUSCitizen, GPA, inGoodStanding, hasAdvStanding,
 				gradeLevel, gradMonth, gradYear, gender, isFullTimeStudent, isTransferStudent,
-				curNumCredits, receivesFunding, personalStatement, fileIndex);
+				curNumCredits, receivesFunding, personalStatement, awardedScholarships, fileIndex);
 
 	}
 
@@ -540,13 +551,20 @@ public class BackendSystem {
 		return scholarshipsFound;
 	}
 
-	// from our discussion/from the elicitation:
-	// get 3 max wrong password attempts then get a message to contact admin,
-	// program stops
-	// after 2 wrong passwords get to still do 3 security question attempts
+	
 
-	// this returns true for a successful login, false if the login was unsuccessful 
-	// and the program should stop!!!!!
+	/**
+	 * Prompts the user for their login details and then security questions
+	 * If this function ends, either the program should end or the user is fully successfully logged in
+	 * 
+	 * from our discussion/from the elicitation:
+	 * get 3 max wrong password attempts then get a message to contact admin,
+	 * program stops
+	 * after 2 wrong passwords get to still do 3 security question attempts
+	 * 
+	 * @return returns true for a successful login, false if the login was unsuccessful 
+	// and the program should stop!!
+	 */
 	public boolean login() {
 		// TODO: implement me!!!
 		Scanner scnr = new Scanner(System.in);

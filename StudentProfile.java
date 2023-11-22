@@ -15,12 +15,12 @@ public class StudentProfile extends Profile {
 
 	// firstName and lastName are already in Profile
 
-	// constructor with everything
+	// constructor for reading from file
 	public StudentProfile(String firstName, String lastName, int studentID, String username, String password,
 			String major, boolean hasAMinor, String minor, boolean isUSCitizen, float GPA,
 			boolean inGoodStanding, boolean hasAdvStanding, String gradeLevel, int gradMonth, int gradYear,
 			String gender, boolean isFullTimeStudent, boolean isTransferStudent, int curNumCredits,
-			boolean receivesFunding, String personalStatement, int fileIndex) {
+			boolean receivesFunding, String personalStatement, ArrayList<Scholarship> scholarshipsAwarded, int fileIndex) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.studentID = studentID;
@@ -42,6 +42,7 @@ public class StudentProfile extends Profile {
 		this.curNumCredits = curNumCredits;
 		this.receivesFunding = receivesFunding;
 		this.personalStatement = personalStatement;
+		this.awardsRecieved = scholarshipsAwarded;
 		this.fileIndex = fileIndex;
 	}
 
