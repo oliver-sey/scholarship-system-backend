@@ -55,6 +55,7 @@ Full Time Student
 Graduation Year
 Good Standing
 Gender
+Transfer Student
 
 ### Scholarship Applicants File (applicants.txt):
 student name 1, student name 2, etc.
