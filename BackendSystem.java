@@ -30,16 +30,17 @@ public class BackendSystem {
 	}
 
 	public StudentProfile readStudentProfile(int fileIndex) throws IOException {
-		BufferedReader br = new BufferedReader(new FileReader("students/student" + String.valueOf(fileIndex) + ".txt"));
+		String folderPath = "students/student" + String.valueOf(fileIndex);
+		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath + "/details.txt"));
 
 		ArrayList<String> values = new ArrayList<String>();
 		String str;
 
-		while ((str = br.readLine()) != null) {
+		while ((str = detailsBr.readLine()) != null) {
 			values.add(str);
 		}
 
-		br.close();
+		detailsBr.close();
 
 		ArrayList<Scholarship> awardedScholarships = new ArrayList<Scholarship>();
 
@@ -65,9 +66,18 @@ public class BackendSystem {
 		int curNumCredits = Integer.parseInt(values.get(18));
 		boolean receivesFunding = Boolean.parseBoolean(values.get(19));
 		String personalStatement = values.get(20);
-		String[] scholarshipNames = values.get(21).split(",");
 
-		for(String name : scholarshipNames) {
+		BufferedReader awardsBr = new BufferedReader(new FileReader(folderPath + "/awards.txt"));
+
+		values.clear();
+
+		while ((str = detailsBr.readLine()) != null) {
+			values.add(str);
+		}
+
+		awardsBr.close();
+
+		for(String name : values) {
 			for (Scholarship scholarship : this.allScholarships) {
 				if(name.compareTo(scholarship.getName()) == 0) {
 					awardedScholarships.add(scholarship);
@@ -839,5 +849,7 @@ public class BackendSystem {
 		3.6, true, true, "Freshman", 5, 2025, "Female", true, false, 12, false, "I love school!");
 
 		storeNewStudentProfile(newStudent);
+
+		System.out.print(newStudent.toString());
 	}
 }
