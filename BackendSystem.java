@@ -507,10 +507,17 @@ public class BackendSystem {
 		return scholarshipsFound;
 	}
 
+	// from our discussion/from the elicitation:
+	// get 3 max wrong password attempts then get a message to contact admin, program stops
+	// after 2 wrong passwords get to still do 3 security question attempts
+
+	// TODO: return user object so we can pass it to check security question
 	public void login() {
 		// TODO: implement me!!!
 		Scanner scnr = new Scanner(System.in);
 		int returnVal;
+		// the number of times the user gets a wrong password
+		int failedPWAttempts = 0;
 		do {
 			System.out.print("Please enter your user type (as one word, i.e. 'Student', 'FundSteward'): ");
 			
@@ -525,7 +532,8 @@ public class BackendSystem {
 			String password = scnr.nextLine();
 			
 			// TODO: figure out students, donors, etc. lists!!
-			returnVal = checkLoginDetails(students, donors, userType, username, password);
+			returnVal = 5;
+			// checkLoginDetails(students, donors, userType, username, password);
 
 			// return values:
 			// 0 if the username and password matched,
@@ -541,6 +549,7 @@ public class BackendSystem {
 			}
 			else if (returnVal == 2) {
 				System.out.println("Incorrect password for the entered username and user type");
+				failedPWAttempts++;
 			}
 			else if (returnVal == 3) {
 				System.out.println("Invalid user type");
@@ -617,6 +626,34 @@ public class BackendSystem {
 		// had a valid userType but never found the username and thus didn't return early
 		// return 1 since the user was not found
 		return 1;
+	}
+
+	// security question answers are case **insensitive
+	/**
+	 * 
+	 * @param questionNum should be 1, 2, or 3 just like in Profile.getOneSecurityQuestion()
+	 * @param user the user object who is trying to log in
+	 * @return if the answer to the security question was correct or not (capitalization doesn't matter)
+	 */
+	public boolean checkOneSecurityQuestion(int questionNum, Profile user) {
+		Scanner scnr = new Scanner(System.in);
+
+		String questionText = user.getOneSecurityQuestion(questionNum);
+		String correctAnswer = user.getOneSecurityQAnswer(questionNum);
+
+		System.out.println("Please answer this security question (capitalization doesn't matter): " + questionText);
+		System.out.print("Your answer: ");
+
+		String userAnswer = scnr.nextLine();
+
+		if (userAnswer.equalsIgnoreCase(correctAnswer)) {
+			System.out.println("Correct answer!");
+			return true;
+		}
+		else {
+			System.out.println("Incorrect answer");
+			return false;
+		}
 	}
 
 	public static double stringSimilarity(String str1, String str2) {
