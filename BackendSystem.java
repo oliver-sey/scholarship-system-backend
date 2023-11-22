@@ -791,4 +791,9 @@ public class BackendSystem {
 
 	}
 
+	// A getter that I added so I could check some details of scholarships in a test method in Main
+	public ArrayList<Scholarship> getAllScholarships() {
+		return this.allScholarships;
+	}
+
 }
