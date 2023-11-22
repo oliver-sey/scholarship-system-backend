@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class Main {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
 // TODO: do we need a backend instance in the main method, or should each
 		// testing method
 		// just make its own?
@@ -53,6 +53,13 @@ public class Main {
 				for (Scholarship scholarshipObj : backend.getAllScholarships()) {
 					System.out.println(scholarshipObj.getName() + ", due date: " + scholarshipObj.getDateDueString() + ", due 5+ years ago: " + scholarshipObj.due5PlusYearsAgo());
 				}
+			}
+
+			else if (userSelection == 3) {
+				// instantiate the backend and all the students, scholarships, etc.
+				BackendSystem backend = new BackendSystem();
+				
+				backend.testStoringStudents();
 			}
 			
 			else {
