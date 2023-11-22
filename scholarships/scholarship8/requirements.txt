@@ -1,0 +1,10 @@
+Major
+Software Engineering
+GPA
+3.0
+Good Standing
+True
+Full Time Student
+True
+Transfer Student
+False
