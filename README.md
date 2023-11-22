@@ -8,6 +8,9 @@ In Fall 2023, by Anna Fravel, Katelyn McLean, Oliver Seymour, Juliette Nevarez, 
 
 # **Put background info of the code and why we did stuff (big picture stuff) here:**
 
+### Student Applicants Qualifications
+We are not concerned with whether or not a student that applies to a scholarship actually qualifies for the scholarship, that is not relevant to back end subsystem functionalities. 
+
 
 # Details of the data import files:
 
