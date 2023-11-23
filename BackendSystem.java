@@ -394,16 +394,18 @@ public class BackendSystem {
 		File dir = new File("donors");
 		File[] directoryListing = dir.listFiles();
 		DonorProfile donor;
-
+		// starting value is 1
+		int fileIndex = 1;
 		for (File child : directoryListing) {
 
 			try {
-				donor = readDonor(child.getCanonicalPath());
+				donor = readDonor(fileIndex);
 				donors.add(donor);
 			} catch (IOException except) {
 				System.out.println("File not found: " + child.getAbsolutePath());
 			}
-
+			// increment fileIndex to go from donor1 to donor2, etc.
+			fileIndex++;
 		}
 
 		return donors;
@@ -413,7 +415,6 @@ public class BackendSystem {
 	// TODO: finish updating this for donors
 	public void updateDonorProfileFile(DonorProfile donor) throws IOException {
 		String folderPath = "donors/donor" + String.valueOf(donor.getFileIndex());
-		ArrayList<String> awardNames = new ArrayList<String>();
 
 		// for details.txt
 		File detailsFile = new File(folderPath + "/details.txt");
@@ -531,71 +532,99 @@ public class BackendSystem {
 	}
 
 	// creates donor object from file
-	public DonorProfile readDonor(String filePath) throws IOException {
-		BufferedReader br = new BufferedReader(new FileReader(filePath));
-		ArrayList<String> values = new ArrayList<String>();
+	public DonorProfile readDonor(int fileIndex) throws IOException {
+		String folderPath = "donors/donor" + String.valueOf(fileIndex);
+		// for details.txt
+		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath + "/details.txt"));
+		ArrayList<String> detailsValues = new ArrayList<String>();
+
+		// for scholarships.txt
+		BufferedReader scholsBr = new BufferedReader(new FileReader(folderPath + "/scholarships.txt"));
+		ArrayList<String> scholsValues = new ArrayList<String>();
 		String str;
 
 		// read details file and store in variables
-		while ((str = br.readLine()) != null) {
-			values.add(str);
+		while ((str = detailsBr.readLine()) != null) {
+			detailsValues.add(str);
 		}
 
-		String firstName = values.get(0);
-		String lastName = values.get(1);
-		String username = values.get(2);
-		String password = values.get(3);
-		String securityQAnswer1 = values.get(4); 
-		String securityQAnswer2 = values.get(5); 
-		String securityQAnswer3 = values.get(6);
+		String firstName = detailsValues.get(0);
+		String lastName = detailsValues.get(1);
+		String username = detailsValues.get(2);
+		String password = detailsValues.get(3);
+		String securityQAnswer1 = detailsValues.get(4); 
+		String securityQAnswer2 = detailsValues.get(5); 
+		String securityQAnswer3 = detailsValues.get(6);
+		// the list of actual scholarship objects that we find based on the scholarship names
+		ArrayList<Scholarship> scholarshipsDonated = new ArrayList<Scholarship>();
+		detailsBr.close();
 
-		br.close();
+		// read scholarships file and store in variables
+		while ((str = scholsBr.readLine()) != null) {
+			scholsValues.add(str);
+		}
 
-		return new DonorProfile(firstName, lastName, username, password, securityQAnswer1, securityQAnswer2, securityQAnswer3);
+		// loop through scholsValues, the list of String names of scholarships that we just read from donorX/scholarships.txt
+		for (int scholsValuesI = 0; scholsValuesI < scholsValues.size(); scholsValuesI++) {
+			String donorScholName = scholsValues.get(scholsValuesI);
+			
+			// find the scholarship object with that name in the list of all scholarships, and connect this new donor with that actual object
+			for (int allScholsI = 0; allScholsI < allScholarships.size(); allScholsI++) {
+				String allScholName = this.allScholarships.get(allScholsI).getName();
+
+				if (donorScholName.compareTo(allScholName) == 0) {
+					scholarshipsDonated.add(allScholarships.get(allScholsI));
+					// break out of the inner loop, looping through the scholarships because we found the scholarship
+					break;
+				}
+			}
+		}
+
+		return new DonorProfile(firstName, lastName, username, password, securityQAnswer1, securityQAnswer2, securityQAnswer3, scholarshipsDonated);
 	}
 
 	// search donors by name
 	// Maybe not needed
-	public DonorProfile SearchForDonor(String donorName) throws IOException, Exception {
-		File dir = new File("donors");
-		File[] directoryListing = dir.listFiles();
-		String correctDonorPath = "";
+	// public DonorProfile SearchForDonor(String donorName) throws IOException, Exception {
+	// 	File dir = new File("donors");
+	// 	File[] directoryListing = dir.listFiles();
+	// 	String correctDonorPath = "";
 
-		try {
+	// 	try {
 
-			for (File child : directoryListing) {
-				BufferedReader br = new BufferedReader(new FileReader(child));
-				ArrayList<String> values = new ArrayList<String>();
-				String str;
+	// 		for (File child : directoryListing) {
+	// 			BufferedReader br = new BufferedReader(new FileReader(child));
+	// 			ArrayList<String> values = new ArrayList<String>();
+	// 			String str;
 
-				// read details file and store in variables
-				while ((str = br.readLine()) != null) {
-					values.add(str);
-				}
+	// 			// read details file and store in variables
+	// 			while ((str = br.readLine()) != null) {
+	// 				values.add(str);
+	// 			}
 
-				String firstName = values.get(0);
-				String lastName = values.get(1);
+	// 			String firstName = values.get(0);
+	// 			String lastName = values.get(1);
 
-				br.close();
+	// 			br.close();
 
-				String fullNameFound = firstName + " " + lastName;
+	// 			String fullNameFound = firstName + " " + lastName;
 
-				if (donorName.equals(fullNameFound)) {
-					correctDonorPath = child.getPath();
-				}
-			}
+	// 			if (donorName.equals(fullNameFound)) {
+	// 				correctDonorPath = child.getPath();
+	// 			}
+	// 		}
 
-			if (correctDonorPath == "") {
-				throw new Exception("Donor not found.");
-			}
+	// 		if (correctDonorPath == "") {
+	// 			throw new Exception("Donor not found.");
+	// 		}
 
-		} catch (FileNotFoundException except) {
-			System.out.println("No donors in system.");
-		}
+	// 	} catch (FileNotFoundException except) {
+	// 		System.out.println("No donors in system.");
+	// 	}
 
-		return readDonor(correctDonorPath);
+	// 	return readDonor(correctDonorPath);
 
-	}
+	// }
 
 	// searches a folder for a scholarship with inputted value
 	public ArrayList<Scholarship> searchScholarships(String inputCategory, String inputSearchValue) {
