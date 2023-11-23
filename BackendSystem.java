@@ -25,7 +25,7 @@ public class BackendSystem {
 	public BackendSystem() throws NumberFormatException, IOException {
 		this.allStudents = InstantiateAllStudents();
 		this.allScholarships = InstantiateAllScholarships();
-		//this.allDonors = InstantiateAllDonors();
+		this.allDonors = InstantiateAllDonors();
 		this.allMatchRelationships = InstantiateAllMatches();
 		// TODO: make the rest of the instantiate all methods
 	}
