@@ -14,7 +14,7 @@ public abstract class Profile {
 
 	// the questions and the answers for the 3 security questions
 	// setting the length to 3 because we know there will be 3 questions
-	protected String[] securityQuestions = new String[3];
+	protected String[] securityQuestions = {"Your mother's maiden name?", "You middle school's mascot?", "The city you were born in?"};
 	protected String[] securityQAnswers = new String[3];
 
 	// Clearance Level?
@@ -100,7 +100,7 @@ public abstract class Profile {
 	 *                    This should be 1, 2, or 3
 	 */
 	public void setOneSecurityQuestion(int questionNum, String questionText) {
-		this.securityQuestions[questionNum + 1] = questionText;
+		this.securityQuestions[questionNum - 1] = questionText;
 	}
 
 	public void setAllSecurityQAnswers(String[] securityQAnswers) {
@@ -112,6 +112,6 @@ public abstract class Profile {
 	 *                    This should be 1, 2, or 3
 	 */
 	public void setOneSecurityQAnswer(int questionNum, String answerText) {
-		this.securityQAnswers[questionNum + 1] = answerText;
+		this.securityQAnswers[questionNum - 1] = answerText;
 	}
 }
