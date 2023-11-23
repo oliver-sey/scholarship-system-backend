@@ -71,7 +71,6 @@ public class BackendSystem {
 		String sq2 = values.get(22);
 		String sq3 = values.get(23);
 
-
 		BufferedReader awardsBr = new BufferedReader(new FileReader(folderPath + "/awards.txt"));
 
 		values.clear();
@@ -82,9 +81,9 @@ public class BackendSystem {
 
 		awardsBr.close();
 
-		for(String name : values) {
+		for (String name : values) {
 			for (Scholarship scholarship : this.allScholarships) {
-				if(name.compareTo(scholarship.getName()) == 0) {
+				if (name.compareTo(scholarship.getName()) == 0) {
 					awardedScholarships.add(scholarship);
 				}
 			}
@@ -118,7 +117,7 @@ public class BackendSystem {
 		}
 
 		awardsW.write(String.join("\n", awardNames));
-		
+
 		awardsW.close();
 
 	}
@@ -147,9 +146,9 @@ public class BackendSystem {
 		}
 
 		awardsW.write(String.join("\n", awardNames));
-		
+
 		awardsW.close();
-		
+
 	}
 
 	// find next index available in folder to store new object
@@ -173,8 +172,7 @@ public class BackendSystem {
 			File dir = new File("matches");
 
 			fileIndex = dir.listFiles().length + 1;
-		}
-		else {
+		} else {
 			throw new IllegalArgumentException("Data type is not valid.");
 		}
 
@@ -237,7 +235,6 @@ public class BackendSystem {
 		while ((str = applicationBr.readLine()) != null) {
 			application.add(str);
 		}
-
 
 		applicationBr.close();
 
@@ -412,7 +409,6 @@ public class BackendSystem {
 		return donors;
 	}
 
-
 	public void storeNewDonorProfile(DonorProfile donor) throws Exception {
 		int nextFileIndex = findNextFileIndex("donor");
 		String folderPath = "donors/donor" + String.valueOf(nextFileIndex);
@@ -432,14 +428,12 @@ public class BackendSystem {
 		// FileWriter scholsW = new FileWriter(scholsF, false);
 
 		// for (Scholarship scholarship : donor.getAwardsReceived()) {
-		// 	awardNames.add(scholarship.getName());
+		// awardNames.add(scholarship.getName());
 		// }
 
 		// awardsW.write(String.join("\n", awardNames));
-		
+
 		// awardsW.close();
-
-
 
 		// ********* from the update donor method
 		String folderPath = "donors/donor" + String.valueOf(donor.getFileIndex());
@@ -447,22 +441,21 @@ public class BackendSystem {
 		// for details.txt
 		File detailsFile = new File(folderPath + "/details.txt");
 		FileWriter detailsWriter = new FileWriter(detailsFile, false);
-		
+
 		// get the text that should be written to the details.txt file, and write it
 		detailsWriter.write(donor.getDetailsFileText());
 		detailsWriter.close();
-
 
 		// for scholarships.txt
 		File scholsFile = new File(folderPath + "/scholarships.txt");
 		FileWriter scholsWriter = new FileWriter(scholsFile, false);
 
-		// get the text that should be written to the scholarships.txt file, and write it
+		// get the text that should be written to the scholarships.txt file, and write
+		// it
 		scholsWriter.write(donor.getScholarshipFileText());
 		scholsWriter.close();
-		
-	}
 
+	}
 
 	// writes donor profile data to file
 	// TODO: finish updating this for donors
@@ -472,21 +465,20 @@ public class BackendSystem {
 		// for details.txt
 		File detailsFile = new File(folderPath + "/details.txt");
 		FileWriter detailsWriter = new FileWriter(detailsFile, false);
-		
+
 		// get the text that should be written to the details.txt file, and write it
 		detailsWriter.write(donor.getDetailsFileText());
 		detailsWriter.close();
-
 
 		// for scholarships.txt
 		File scholsFile = new File(folderPath + "/scholarships.txt");
 		FileWriter scholsWriter = new FileWriter(scholsFile, false);
 
-		// get the text that should be written to the scholarships.txt file, and write it
+		// get the text that should be written to the scholarships.txt file, and write
+		// it
 		scholsWriter.write(donor.getScholarshipFileText());
 		scholsWriter.close();
 	}
-
 
 	// creates match object from student object, scholarship object, and file
 	public MatchRelationship readMatch(int ID)
@@ -568,7 +560,7 @@ public class BackendSystem {
 	}
 
 	public void updateMatchFile(MatchRelationship match) throws IOException {
-		
+
 		File folder = new File("matches/match" + String.valueOf(match.getID()));
 
 		File detailsFile = new File(folder, "details.txt");
@@ -605,10 +597,11 @@ public class BackendSystem {
 		String lastName = detailsValues.get(1);
 		String username = detailsValues.get(2);
 		String password = detailsValues.get(3);
-		String securityQAnswer1 = detailsValues.get(4); 
-		String securityQAnswer2 = detailsValues.get(5); 
+		String securityQAnswer1 = detailsValues.get(4);
+		String securityQAnswer2 = detailsValues.get(5);
 		String securityQAnswer3 = detailsValues.get(6);
-		// the list of actual scholarship objects that we find based on the scholarship names
+		// the list of actual scholarship objects that we find based on the scholarship
+		// names
 		ArrayList<Scholarship> scholarshipsDonated = new ArrayList<Scholarship>();
 		detailsBr.close();
 
@@ -617,51 +610,55 @@ public class BackendSystem {
 			scholsValues.add(str);
 		}
 
-		// loop through scholsValues, the list of String names of scholarships that we just read from donorX/scholarships.txt
+		// loop through scholsValues, the list of String names of scholarships that we
+		// just read from donorX/scholarships.txt
 		for (int scholsValuesI = 0; scholsValuesI < scholsValues.size(); scholsValuesI++) {
 			String donorScholName = scholsValues.get(scholsValuesI);
-			
-			// find the scholarship object with that name in the list of all scholarships, and connect this new donor with that actual object
+
+			// find the scholarship object with that name in the list of all scholarships,
+			// and connect this new donor with that actual object
 			for (int allScholsI = 0; allScholsI < allScholarships.size(); allScholsI++) {
 				String allScholName = this.allScholarships.get(allScholsI).getName();
 
 				if (donorScholName.compareTo(allScholName) == 0) {
 					scholarshipsDonated.add(allScholarships.get(allScholsI));
-					// break out of the inner loop, looping through the scholarships because we found the scholarship
+					// break out of the inner loop, looping through the scholarships because we
+					// found the scholarship
 					break;
 				}
 			}
 		}
 
-		return new DonorProfile(firstName, lastName, username, password, securityQAnswer1, securityQAnswer2, securityQAnswer3, scholarshipsDonated, fileIndex);
+		return new DonorProfile(firstName, lastName, username, password, securityQAnswer1, securityQAnswer2,
+				securityQAnswer3, scholarshipsDonated, fileIndex);
 	}
 
-	public AdminProfile readAdminProfile(int fileIndex) throws IOException{
+	public AdminProfile readAdminProfile(int fileIndex) throws IOException {
 		String folderPath = "administrators/admin" + String.valueOf(fileIndex);
-		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath ));
+		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath));
 
 		ArrayList<String> values = new ArrayList<String>();
 		String str;
 
 		while ((str = detailsBr.readLine()) != null) {
 			values.add(str);
-		  }
+		}
 
-		  detailsBr.close(); 
+		detailsBr.close();
 
-		  String firstName = values.get(0);
-  		  String lastName = values.get(1);
-		  String username = values.get(2);
-		  String password = values.get(3);
-		  String sq1 = values.get(4);
-  		  String sq2 = values.get(5);
-  		  String sq3 = values.get(6);
+		String firstName = values.get(0);
+		String lastName = values.get(1);
+		String username = values.get(2);
+		String password = values.get(3);
+		String sq1 = values.get(4);
+		String sq2 = values.get(5);
+		String sq3 = values.get(6);
 
-		  //Create and return new AdminProfile
-		  return new AdminProfile(firstName, lastName, username, password, sq1, sq2, sq3, fileIndex);
+		// Create and return new AdminProfile
+		return new AdminProfile(firstName, lastName, username, password, sq1, sq2, sq3, fileIndex);
 	}
 
-	public StaffProfile readStaffProfile(int fileIndex) throws IOException{
+	public StaffProfile readStaffProfile(int fileIndex) throws IOException {
 		String folderPath = "staff/staff" + String.valueOf(fileIndex);
 		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath));
 
@@ -670,62 +667,63 @@ public class BackendSystem {
 
 		while ((str = detailsBr.readLine()) != null) {
 			values.add(str);
-		  }
+		}
 
-		  detailsBr.close(); 
+		detailsBr.close();
 
-		  String firstName = values.get(0);
-  		  String lastName = values.get(1);
-		  String username = values.get(2);
-		  String password = values.get(3);
-		  String jobRole = values.get(4);
-		  String sq1 = values.get(5);
-  		  String sq2 = values.get(6);
-  		  String sq3 = values.get(7);
+		String firstName = values.get(0);
+		String lastName = values.get(1);
+		String username = values.get(2);
+		String password = values.get(3);
+		String jobRole = values.get(4);
+		String sq1 = values.get(5);
+		String sq2 = values.get(6);
+		String sq3 = values.get(7);
 
-		  return new StaffProfile(firstName, lastName, username, password, jobRole, sq1, sq2, sq3, fileIndex);
+		return new StaffProfile(firstName, lastName, username, password, jobRole, sq1, sq2, sq3, fileIndex);
 	}
 
 	// search donors by name
 	// Maybe not needed
-	// public DonorProfile SearchForDonor(String donorName) throws IOException, Exception {
-	// 	File dir = new File("donors");
-	// 	File[] directoryListing = dir.listFiles();
-	// 	String correctDonorPath = "";
+	// public DonorProfile SearchForDonor(String donorName) throws IOException,
+	// Exception {
+	// File dir = new File("donors");
+	// File[] directoryListing = dir.listFiles();
+	// String correctDonorPath = "";
 
-	// 	try {
+	// try {
 
-	// 		for (File child : directoryListing) {
-	// 			BufferedReader br = new BufferedReader(new FileReader(child));
-	// 			ArrayList<String> values = new ArrayList<String>();
-	// 			String str;
+	// for (File child : directoryListing) {
+	// BufferedReader br = new BufferedReader(new FileReader(child));
+	// ArrayList<String> values = new ArrayList<String>();
+	// String str;
 
-	// 			// read details file and store in variables
-	// 			while ((str = br.readLine()) != null) {
-	// 				values.add(str);
-	// 			}
+	// // read details file and store in variables
+	// while ((str = br.readLine()) != null) {
+	// values.add(str);
+	// }
 
-	// 			String firstName = values.get(0);
-	// 			String lastName = values.get(1);
+	// String firstName = values.get(0);
+	// String lastName = values.get(1);
 
-	// 			br.close();
+	// br.close();
 
-	// 			String fullNameFound = firstName + " " + lastName;
+	// String fullNameFound = firstName + " " + lastName;
 
-	// 			if (donorName.equals(fullNameFound)) {
-	// 				correctDonorPath = child.getPath();
-	// 			}
-	// 		}
+	// if (donorName.equals(fullNameFound)) {
+	// correctDonorPath = child.getPath();
+	// }
+	// }
 
-	// 		if (correctDonorPath == "") {
-	// 			throw new Exception("Donor not found.");
-	// 		}
+	// if (correctDonorPath == "") {
+	// throw new Exception("Donor not found.");
+	// }
 
-	// 	} catch (FileNotFoundException except) {
-	// 		System.out.println("No donors in system.");
-	// 	}
+	// } catch (FileNotFoundException except) {
+	// System.out.println("No donors in system.");
+	// }
 
-	// 	return readDonor(correctDonorPath);
+	// return readDonor(correctDonorPath);
 
 	// }
 
@@ -802,7 +800,7 @@ public class BackendSystem {
 				}
 			}
 
-		}  else if (inputCategory.compareTo("date posted") == 0) {
+		} else if (inputCategory.compareTo("date posted") == 0) {
 
 			for (Scholarship scholarship : this.allScholarships) {
 				inputDate = LocalDate.parse(inputSearchValue);
@@ -810,7 +808,7 @@ public class BackendSystem {
 					scholarshipsFound.add(scholarship);
 				}
 			}
-			
+
 		} else if (inputCategory.compareTo("award amount") == 0) {
 
 			for (Scholarship scholarship : this.allScholarships) {
@@ -818,8 +816,7 @@ public class BackendSystem {
 					scholarshipsFound.add(scholarship);
 				}
 			}
-		} 
-		else {
+		} else {
 			// assumes any search category will be a requirement
 			// retrieves requirement hashmap from scholarship and compares category and
 			// value
@@ -863,21 +860,21 @@ public class BackendSystem {
 		} else if (inputCategory.compareTo("major") == 0) {
 
 			for (StudentProfile student : this.allStudents) {
-				
+
 				if (student.getMajor().compareTo(inputSearchValue) == 0) {
 					studentsFound.add(student);
 				}
 			}
 
-		}  else if (inputCategory.compareTo("minor") == 0) {
+		} else if (inputCategory.compareTo("minor") == 0) {
 
 			for (StudentProfile student : this.allStudents) {
-				
+
 				if (student.getMinor().compareTo(inputSearchValue) == 0) {
 					studentsFound.add(student);
 				}
 			}
-			
+
 		} else if (inputCategory.compareTo("GPA") == 0) {
 
 			for (StudentProfile student : this.allStudents) {
@@ -886,25 +883,24 @@ public class BackendSystem {
 				}
 			}
 
-		} 
-
+		}
 
 		return studentsFound;
 	}
 
-	
-
 	/**
 	 * Prompts the user for their login details and then security questions
-	 * If this function ends, either the program should end or the user is fully successfully logged in
+	 * If this function ends, either the program should end or the user is fully
+	 * successfully logged in
 	 * 
 	 * from our discussion/from the elicitation:
 	 * get 3 max wrong password attempts then get a message to contact admin,
 	 * program stops
 	 * after 2 wrong passwords get to still do 3 security question attempts
 	 * 
-	 * @return returns true for a successful login, false if the login was unsuccessful 
-	// and the program should stop!!
+	 * @return returns true for a successful login, false if the login was
+	 *         unsuccessful
+	 *         // and the program should stop!!
 	 */
 	public boolean login() {
 		// TODO: implement me!!!
@@ -1135,7 +1131,8 @@ public class BackendSystem {
 
 	}
 
-	// A getter that I added so I could check some details of scholarships in a test method in Main
+	// A getter that I added so I could check some details of scholarships in a test
+	// method in Main
 	public ArrayList<Scholarship> getAllScholarships() {
 		return this.allScholarships;
 	}
@@ -1160,29 +1157,30 @@ public class BackendSystem {
 		return currentUser;
 	}
 
-
 	public void testStoringStudents() throws Exception {
-		StudentProfile newStudent = new StudentProfile("Jess", "Mess", 12345, "user", "pass", "IE", true, "SFWEE", true, 
-		3.6, true, true, "Freshman", 5, 2025, "Female", true, false, 12, false, "I love school!", "Smith", "The eagles", "New York");
+		StudentProfile newStudent = new StudentProfile("Jess", "Mess", 12345, "user", "pass", "IE", true, "SFWEE", true,
+				3.6, true, true, "Freshman", 5, 2025, "Female", true, false, 12, false, "I love school!", "Smith",
+				"The eagles", "New York");
 
 		storeNewStudentProfile(newStudent);
 
 		System.out.print(newStudent.toString());
 	}
 
-	public void AwardScholarship(StudentProfile recipient, Scholarship scholarship){
+	public void AwardScholarship(StudentProfile recipient, Scholarship scholarship) {
 		LocalDate today = LocalDate.now();
 		LocalDate due = scholarship.getDateDue();
 
-		// if the due date has passed, don't want to award a scholarship before it's due or on the due date
+		// if the due date has passed, don't want to award a scholarship before it's due
+		// or on the due date
 		if (today.isAfter(due)) {
-			   scholarship.setAwarded(true);
-			   scholarship.setRecipient(recipient);
-			//    because it's after the due date
-			   scholarship.setArchived(true);
-			   recipient.addScholarship(scholarship);
-			   scholarship.setDateAdded(LocalDate.now());
+			scholarship.setAwarded(true);
+			scholarship.setRecipient(recipient);
+			// because it's after the due date
+			scholarship.setArchived(true);
+			recipient.addScholarship(scholarship);
+			scholarship.setDateAdded(LocalDate.now());
 		}
-	  }
+	}
 
 }
