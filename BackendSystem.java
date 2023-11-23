@@ -412,6 +412,58 @@ public class BackendSystem {
 		return donors;
 	}
 
+
+	public void storeNewDonorProfile(DonorProfile donor) throws Exception {
+		int nextFileIndex = findNextFileIndex("donor");
+		String folderPath = "donors/donor" + String.valueOf(nextFileIndex);
+		File dir = new File(folderPath);
+		dir.mkdir();
+
+		// File detailsF = new File(folderPath + "/details.txt");
+		// detailsF.createNewFile();
+		// FileWriter detailsW = new FileWriter(detailsF);
+
+		// detailsW.write(donor.getDetailsFileText());
+
+		// detailsW.close();
+
+		// File scholsF = new File(folderPath + "/scholarships.txt");
+		// scholsF.createNewFile();
+		// FileWriter scholsW = new FileWriter(scholsF, false);
+
+		// for (Scholarship scholarship : donor.getAwardsReceived()) {
+		// 	awardNames.add(scholarship.getName());
+		// }
+
+		// awardsW.write(String.join("\n", awardNames));
+		
+		// awardsW.close();
+
+
+
+		// ********* from the update donor method
+		String folderPath = "donors/donor" + String.valueOf(donor.getFileIndex());
+
+		// for details.txt
+		File detailsFile = new File(folderPath + "/details.txt");
+		FileWriter detailsWriter = new FileWriter(detailsFile, false);
+		
+		// get the text that should be written to the details.txt file, and write it
+		detailsWriter.write(donor.getDetailsFileText());
+		detailsWriter.close();
+
+
+		// for scholarships.txt
+		File scholsFile = new File(folderPath + "/scholarships.txt");
+		FileWriter scholsWriter = new FileWriter(scholsFile, false);
+
+		// get the text that should be written to the scholarships.txt file, and write it
+		scholsWriter.write(donor.getScholarshipFileText());
+		scholsWriter.close();
+		
+	}
+
+
 	// writes donor profile data to file
 	// TODO: finish updating this for donors
 	public void updateDonorProfileFile(DonorProfile donor) throws IOException {
