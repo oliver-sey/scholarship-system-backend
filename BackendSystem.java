@@ -43,7 +43,7 @@ public class BackendSystem {
 		this.userType = type;
 	}
 
-	//curr user getters
+	// curr user getters
 	public StudentProfile getStudentUser() {
 		return studentUser;
 	}
@@ -59,8 +59,6 @@ public class BackendSystem {
 	public String getUserType() {
 		return this.userType;
 	}
-
-
 
 	// constructor
 	public BackendSystem() throws NumberFormatException, IOException {
@@ -546,14 +544,15 @@ public class BackendSystem {
 				applicationStatus);
 	}
 
-	public MatchRelationship produceNewMatch (StudentProfile student, Scholarship scholarship) throws IOException {
+	public MatchRelationship produceNewMatch(StudentProfile student, Scholarship scholarship) throws IOException {
 		Random rand = new Random();
-   
-        float matchIndex = (float) (rand.nextInt(10) + rand.nextInt(10) / 10.0);
+
+		float matchIndex = (float) (rand.nextInt(10) + rand.nextInt(10) / 10.0);
 		float matchPercentage = (float) rand.nextInt(101);
 		int fileIndex = findNextFileIndex("match");
 
-		MatchRelationship newMatch = new MatchRelationship(student, scholarship, matchPercentage, matchIndex, fileIndex);
+		MatchRelationship newMatch = new MatchRelationship(student, scholarship, matchPercentage, matchIndex,
+				fileIndex);
 
 		storeNewMatch(newMatch);
 		return newMatch;
@@ -676,7 +675,8 @@ public class BackendSystem {
 		AdminProfile admin;
 		int fileIndex = 1;
 
-		// loop through the list of files/folders that are in the 'administrators' folder
+		// loop through the list of files/folders that are in the 'administrators'
+		// folder
 		// each child is for one scholarship
 		for (File child : directoryListing) {
 
@@ -692,7 +692,6 @@ public class BackendSystem {
 
 		return scholarships;
 	}
-
 
 	public AdminProfile readAdminProfile(int fileIndex) throws IOException {
 		String filePath = "administrators/admin" + String.valueOf(fileIndex) + ".txt";
@@ -744,7 +743,7 @@ public class BackendSystem {
 		return new StaffProfile(firstName, lastName, username, password, jobRole, sq1, sq2, sq3, fileIndex);
 	}
 
-	public FundStewardProfile readFundStewardProfile(int fileIndex) throws IOException{
+	public FundStewardProfile readFundStewardProfile(int fileIndex) throws IOException {
 		String folderPath = "fundstewards/fundsteward" + String.valueOf(fileIndex);
 		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath));
 
@@ -753,21 +752,20 @@ public class BackendSystem {
 
 		while ((str = detailsBr.readLine()) != null) {
 			values.add(str);
-		  }
+		}
 
-		  detailsBr.close(); 
+		detailsBr.close();
 
-		  String firstName = values.get(0);
-  		  String lastName = values.get(1);
-		  String username = values.get(2);
-		  String password = values.get(3);
-		  String sq1 = values.get(4);
-  		  String sq2 = values.get(5);
-  		  String sq3 = values.get(6);
+		String firstName = values.get(0);
+		String lastName = values.get(1);
+		String username = values.get(2);
+		String password = values.get(3);
+		String sq1 = values.get(4);
+		String sq2 = values.get(5);
+		String sq3 = values.get(6);
 
-		  return new FundStewardProfile(firstName, lastName, username, password, sq1, sq2, sq3, fileIndex);
+		return new FundStewardProfile(firstName, lastName, username, password, sq1, sq2, sq3, fileIndex);
 	}
-
 
 	// searches a folder for a scholarship with inputted value
 	public ArrayList<Scholarship> searchScholarships(String inputCategory, String inputSearchValue) {
@@ -946,21 +944,43 @@ public class BackendSystem {
 	 */
 	public boolean login() {
 		// TODO: implement me!!!
-		
-		int returnVal;
+
+		int returnVal = -1;
 		// the number of times the user gets a wrong password
 		int failedPWAttempts = 0;
+
+		// these are up here so we can set the value in the if-statement within the loop below, and reference the variable outside 
+		// the if-statement. (If we declared them in the if, it wouldn't work).
+		// but also we don't want to reset the value to an empty string at the start of each iteration of the loop, only the first
+		String userType = "";
+		String username = "";
+		
 		do {
-			System.out.print("Please enter your user type (as one word, i.e. 'student', 'fundsteward'). ");
+			// only ask them for their user type and password if they're trying to log in the first time, after that just ask them
+			// for their password
+			if (failedPWAttempts == 0) {
+				System.out.print("Please enter your user type (as one word, i.e. 'student', 'admin', 'fundsteward'). ");
+				// Main.scnr.nextLine();
+				System.out.print("Please enter your user type: ");
+				// Main.scnr.nextLine();
+				userType = Main.scnr.nextLine();
 
-			
-			System.out.print("Please enter your user type: ");
-			Main.scnr.nextLine();
-			String userType = Main.scnr.nextLine();
+				// check for valid user type
+				// if it's not a valid user type, print a message and go to the next iteration
+				// of this do-while loop
+				if (!(userType.equalsIgnoreCase("student") || userType.equalsIgnoreCase("admin")
+						|| userType.equalsIgnoreCase("staff")
+						|| userType.equalsIgnoreCase("donor") || userType.equalsIgnoreCase("fundsteward"))) {
+					System.out.println(
+							"That user type was not recognized. Accepted user types are: "
+							+ "student, admin, staff, donor, and fundsteward (capitalization doesn't matter).\n");
+					continue;
+				}
 
-			System.out.print("Please enter your username: ");
+				System.out.print("Please enter your username: ");
 
-			String username = Main.scnr.nextLine();
+				username = Main.scnr.nextLine();
+			}
 
 			System.out.print("Please enter your password: ");
 
@@ -972,11 +992,9 @@ public class BackendSystem {
 			// 2 if a wrong value was entered but they dont loose an attempt
 			returnVal = checkLoginDetails(userType, username, password);
 
-
 			if (returnVal == 0) {
 				return true;
-			}
-			else if (returnVal == 1) {
+			} else if (returnVal == 1) {
 				failedPWAttempts++;
 
 				// if they have now gotten their password wrong 3 times, return false
@@ -986,8 +1004,7 @@ public class BackendSystem {
 				}
 
 				System.out.println("Trying again. " + String.valueOf(3 - failedPWAttempts) + " attempt/s left.");
-			}
-			else {
+			} else {
 				System.out.println("Trying again.");
 			}
 
@@ -1024,9 +1041,11 @@ public class BackendSystem {
 							String questionText = studentUser.getOneSecurityQuestion(questionNum);
 							String correctAnswer = studentUser.getOneSecurityQAnswer(questionNum);
 
-							System.out.println("Please answer this security question (capitalization doesn't matter): \n" + questionText);
+							System.out
+									.println("Please answer this security question (capitalization doesn't matter): \n"
+											+ questionText);
 
-							System.out.print("Your answer: ");						
+							System.out.print("Your answer: ");
 
 							String userAnswer = Main.scnr.nextLine();
 
@@ -1036,7 +1055,7 @@ public class BackendSystem {
 								return 0;
 							} else {
 								System.out.println("Incorrect answer");
-								
+
 							}
 
 						}
@@ -1055,16 +1074,18 @@ public class BackendSystem {
 			for (int i = 0; i < this.allDonors.size(); i++) {
 				if (allDonors.get(i).username.equalsIgnoreCase(enteredUsername)) {
 					if (allDonors.get(i).password.equals(enteredPassword)) {
-						
+
 						donorUser = allDonors.get(i);
 						for (int questionNum = 1; questionNum <= 3; questionNum++) {
 
 							String questionText = donorUser.getOneSecurityQuestion(questionNum);
 							String correctAnswer = donorUser.getOneSecurityQAnswer(questionNum);
 
-							System.out.println("Please answer this security question (capitalization doesn't matter): /n" + questionText);
+							System.out
+									.println("Please answer this security question (capitalization doesn't matter): /n"
+											+ questionText);
 
-							System.out.print("Your answer: ");						
+							System.out.print("Your answer: ");
 
 							String userAnswer = Main.scnr.nextLine();
 
@@ -1074,7 +1095,7 @@ public class BackendSystem {
 								return 0;
 							} else {
 								System.out.println("Incorrect answer");
-								
+
 							}
 						}
 
@@ -1096,9 +1117,11 @@ public class BackendSystem {
 							String questionText = adminUser.getOneSecurityQuestion(questionNum);
 							String correctAnswer = adminUser.getOneSecurityQAnswer(questionNum);
 
-							System.out.println("Please answer this security question (capitalization doesn't matter): /n" + questionText);
+							System.out
+									.println("Please answer this security question (capitalization doesn't matter): /n"
+											+ questionText);
 
-							System.out.print("Your answer: ");						
+							System.out.print("Your answer: ");
 
 							String userAnswer = Main.scnr.nextLine();
 
@@ -1108,14 +1131,14 @@ public class BackendSystem {
 								return 0;
 							} else {
 								System.out.println("Incorrect answer");
-								
+
 							}
 						}
 						// return 0 since we have a successful username/password match
-						//return 0;
+						// return 0;
 					} else {
 						// valid username but incorrect password
-						//return 2;
+						// return 2;
 						System.out.println("Incorrect password for the entered username and user type");
 						return 1;
 					}
@@ -1130,18 +1153,15 @@ public class BackendSystem {
 			typeValid = true;
 			System.out.println("checkLoginDetails has not yet been implemented for Staffs");
 		} else {
-			
+
 			System.out.println("Invalid user type in checkLoginDetails()");
 			return 2;
 		}
 
-		
 		System.out.println("The entered username could not be found in the system for the entered user type.");
 		return 2;
-		
+
 	}
-
-
 
 	public double stringSimilarity(String str1, String str2) {
 		String longer = str1, shorter = str2;
@@ -1214,7 +1234,7 @@ public class BackendSystem {
 		}
 
 		return outputScholarships;
-	} 
+	}
 
 	public ArrayList<StudentProfile> getAllStudents() {
 		return allStudents;
@@ -1231,7 +1251,6 @@ public class BackendSystem {
 	public ArrayList<AdminProfile> getAllAdmins() {
 		return allAdmins;
 	}
-
 
 	public void testStoringStudents() throws Exception {
 		StudentProfile newStudent = new StudentProfile("Jess", "Mess", 12345, "user", "pass", "IE", true, "SFWEE", true,
@@ -1259,12 +1278,12 @@ public class BackendSystem {
 		}
 	}
 
-	//TO DO: test
+	// TO DO: test
 	public void editStudentInfo(StudentProfile student) throws IOException {
 		int choice;
 		boolean end = false;
 
-		while (!end) {	
+		while (!end) {
 			System.out.println("1: First name: " + student.getFirstName());
 			System.out.println("2: Last name: " + student.getLastName());
 			System.out.println("3: Username: " + student.getUsername());
@@ -1295,48 +1314,48 @@ public class BackendSystem {
 			choice = scnr.nextInt();
 
 			if (choice == 1) {
-				scnr.nextLine(); 
+				scnr.nextLine();
 				System.out.print("Enter the new first name: ");
 				String newFirstName = scnr.nextLine();
 				student.setFirstName(newFirstName);
 			}
-			
+
 			// Choice 2: Last Name (String)
 			else if (choice == 2) {
-				scnr.nextLine(); 
+				scnr.nextLine();
 				System.out.print("Enter the new last name: ");
 				String newLastName = scnr.nextLine();
 				student.setLastName(newLastName);
 			}
-			
+
 			// Choice 3: Username (String)
 			else if (choice == 3) {
-				scnr.nextLine(); 
+				scnr.nextLine();
 				System.out.print("Enter the new username: ");
 				String newUsername = scnr.nextLine();
 				student.setUsername(newUsername);
 			}
-			
+
 			// Choice 4: Password (String)
 			else if (choice == 4) {
-				scnr.nextLine(); 
+				scnr.nextLine();
 				System.out.print("Enter the new password: ");
 				String newPassword = scnr.nextLine();
 				student.setPassword(newPassword);
 			}
-			
+
 			// Choice 5: Major (String)
 			else if (choice == 5) {
-				scnr.nextLine(); 
+				scnr.nextLine();
 				System.out.print("Enter the new major: ");
 				String newMajor = scnr.nextLine();
 				student.setMajor(newMajor);
 			}
-			
+
 			// Choice 6: Minor (String)
 			else if (choice == 6) {
 				if (student.getHasAMinor()) {
-					scnr.nextLine(); 
+					scnr.nextLine();
 					System.out.print("Enter the new minor: ");
 					String newMinor = scnr.nextLine();
 
@@ -1345,7 +1364,7 @@ public class BackendSystem {
 					System.out.println("The student does not have a minor to change.");
 				}
 			}
-			
+
 			// Choice 7: US Citizen (boolean)
 			else if (choice == 7) {
 				System.out.print("Enter the new value (true/false): ");
@@ -1358,56 +1377,57 @@ public class BackendSystem {
 				float newGPA = scnr.nextFloat();
 				student.setGPA(newGPA);
 			}
-			
+
 			// Choice 9: In Good Standing? (boolean)
 			else if (choice == 9) {
 				System.out.print("Enter the new value (true/false): ");
 				boolean newBooleanValue = scnr.nextBoolean();
 				student.setInGoodStanding(newBooleanValue);
 			}
-			
+
 			// Choice 10: Has Advanced Standing? (boolean)
 			else if (choice == 10) {
 				System.out.print("Enter the new value (true/false): ");
 				boolean newBooleanValue = scnr.nextBoolean();
 				student.setHasAdvStanding(newBooleanValue);
 			}
-			
+
 			// Choice 11: Year (String)
 			else if (choice == 11) {
-				scnr.nextLine(); 
+				scnr.nextLine();
 				System.out.print("Enter the new grade year: ");
 				String newYear = scnr.nextLine();
 				student.setGradeLevel(newYear);
 			}
-			
+
 			// Choice 12: Graduation Month (int)
 			else if (choice == 12) {
 				System.out.print("Enter the new graduation month: ");
 				int newMonth = scnr.nextInt();
 				student.setGradMonth(newMonth);
 			}
-			
+
 			// Choice 13: Graduation Year (int)
 			else if (choice == 13) {
 				System.out.print("Enter the new graduation year: ");
 				int newYear = scnr.nextInt();
 				student.setGradYear(newYear);
 			}
-			
+
 			// Choice 14: Gender (String)
 			else if (choice == 14) {
-				scnr.nextLine(); 
+				scnr.nextLine();
 				System.out.print("Enter the new gender: ");
 				String newGender = scnr.nextLine();
 				student.setGender(newGender);
 			}
-			
-			// Choices 15-17: Booleans (isFullTimeStudent, isTransferStudent, receivesFunding)
+
+			// Choices 15-17: Booleans (isFullTimeStudent, isTransferStudent,
+			// receivesFunding)
 			else if (choice >= 15 && choice <= 17) {
 				System.out.print("Enter the new value (true/false): ");
 				boolean newBooleanValue = scnr.nextBoolean();
-			
+
 				if (choice == 15) {
 
 					student.setIsFullTimeStudent(newBooleanValue);
@@ -1419,17 +1439,17 @@ public class BackendSystem {
 					student.setReceivesFunding(newBooleanValue);
 				}
 			}
-			
+
 			// Choice 18: Number of Credits (int)
 			else if (choice == 18) {
 				System.out.print("Enter the new number of credits: ");
 				int newCredits = scnr.nextInt();
 				student.setCurNumCredits(newCredits);
 			}
-			
+
 			// Choice 19: Personal Statement (String)
 			else if (choice == 19) {
-				scnr.nextLine(); 
+				scnr.nextLine();
 				System.out.print("Enter the new personal statement: ");
 				String newStatement = scnr.nextLine();
 				student.setPersonalStatement(newStatement);
@@ -1439,10 +1459,9 @@ public class BackendSystem {
 				System.out.print("Would you like to change anything else? (y/n)");
 				if (scnr.nextLine().compareTo("n") == 0) {
 					end = true;
-					//updateStudentProfileFile(student);
-				} 
-			}
-			else {
+					// updateStudentProfileFile(student);
+				}
+			} else {
 				System.out.print("Please enter the number of your choice.");
 			}
 		}
@@ -1454,7 +1473,7 @@ public class BackendSystem {
 		 * 2. allow student to select one or scroll or exit
 		 * 3. if selected, scholarship details displayed
 		 * 4. Return to list or exit if application opened
-		 * 5. Find a way to return with that scholorship 
+		 * 5. Find a way to return with that scholorship
 		 */
 	}
 
