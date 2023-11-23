@@ -28,6 +28,7 @@ public class StaffProfile extends Profile {
         this.securityQAnswers[0] = securityQAnswer1;
 		this.securityQAnswers[1] = securityQAnswer2;
 		this.securityQAnswers[2] = securityQAnswer3;
+        this.fileIndex = fileIndex;
     }
 
     public String getjobRole() {

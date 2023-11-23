@@ -50,6 +50,7 @@ public class StudentProfile extends Profile {
 		this.securityQAnswers[2] = securityQAnswer3;
 	}
 
+	//constructor for writing information in
 	public StudentProfile(String firstName, String lastName, int studentID, String username, String password,
 			String major, boolean hasAMinor, String minor, boolean isUSCitizen, double GPA,
 			boolean inGoodStanding, boolean hasAdvStanding, String gradeLevel, int gradMonth, int gradYear,
@@ -336,6 +337,10 @@ public class StudentProfile extends Profile {
 	// a setter for boolean isTransferStudent
 	public void setIsTransferStudent(boolean inputIsTransferStudent) {
 		this.isTransferStudent = inputIsTransferStudent;
+	}
+
+	public void setIsUSCitizen(boolean inputIsUSCitizen) {
+		this.isUSCitizen = inputIsUSCitizen;
 	}
 
 	// a setter for int curNumCredits
