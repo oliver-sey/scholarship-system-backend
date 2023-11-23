@@ -580,7 +580,7 @@ public class BackendSystem {
 			}
 		}
 
-		return new DonorProfile(firstName, lastName, username, password, securityQAnswer1, securityQAnswer2, securityQAnswer3, scholarshipsDonated);
+		return new DonorProfile(firstName, lastName, username, password, securityQAnswer1, securityQAnswer2, securityQAnswer3, scholarshipsDonated, fileIndex);
 	}
 
 	// search donors by name
