@@ -25,7 +25,7 @@ public class BackendSystem {
 	public BackendSystem() throws NumberFormatException, IOException {
 		this.allStudents = InstantiateAllStudents();
 		this.allScholarships = InstantiateAllScholarships();
-		this.allDonors = InstantiateAllDonors();
+		//this.allDonors = InstantiateAllDonors();
 		this.allMatchRelationships = InstantiateAllMatches();
 		// TODO: make the rest of the instantiate all methods
 	}
@@ -530,6 +530,56 @@ public class BackendSystem {
 		return new DonorProfile(firstName, lastName, username, password, securityQAnswer1, securityQAnswer2, securityQAnswer3);
 	}
 
+	public AdminProfile readAdminProfile(int fileIndex) throws IOException{
+		String folderPath = "administrators/admin" + String.valueOf(fileIndex);
+		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath ));
+
+		ArrayList<String> values = new ArrayList<String>();
+		String str;
+
+		while ((str = detailsBr.readLine()) != null) {
+			values.add(str);
+		  }
+
+		  detailsBr.close(); 
+
+		  String firstName = values.get(0);
+  		  String lastName = values.get(1);
+		  String username = values.get(2);
+		  String password = values.get(3);
+		  /*String sq1 = values.get(4);
+  		  String sq2 = values.get(5);
+  		  String sq3 = values.get(6);*/
+
+		  //Create and return new AdminProfile
+		  return new AdminProfile(firstName, lastName, username,password);
+	}
+
+	public StaffProfile readStaffProfile(int fileIndex) throws IOException{
+		String folderPath = "staff/staff" + String.valueOf(fileIndex);
+		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath));
+
+		ArrayList<String> values = new ArrayList<String>();
+		String str;
+
+		while ((str = detailsBr.readLine()) != null) {
+			values.add(str);
+		  }
+
+		  detailsBr.close(); 
+
+		  String firstName = values.get(0);
+  		  String lastName = values.get(1);
+		  String username = values.get(2);
+		  String password = values.get(3);
+		  String jobRole = values.get(4);
+		 /*  String sq1 = values.get(5);
+  		  String sq2 = values.get(6);
+  		  String sq3 = values.get(7);*/
+
+		  return new StaffProfile(firstName, lastName, username, password, jobRole);
+	}
+
 	// search donors by name
 	// Maybe not needed
 	public DonorProfile SearchForDonor(String donorName) throws IOException, Exception {
@@ -682,6 +732,74 @@ public class BackendSystem {
 		}
 
 		return scholarshipsFound;
+	}
+
+	public ArrayList<StudentProfile> searchStudents(String inputCategory, String inputSearchValue) {
+		ArrayList<StudentProfile> studentsFound = new ArrayList<StudentProfile>();
+		HashMap<String, String> requirements = new HashMap<String, String>();
+
+		if (inputCategory.compareTo("name") == 0) {
+
+			for (StudentProfile student : this.allStudents) {
+				if (student.getName().compareTo(inputSearchValue) == 0) {
+					studentsFound.add(student);
+				}
+			}
+
+		} else if (inputCategory.compareTo("year") == 0) {
+
+			for (StudentProfile student : this.allStudents) {
+				if (student.getGradeLevel().compareTo(inputSearchValue) == 0) {
+					studentsFound.add(student);
+				}
+			}
+
+		} else if (inputCategory.compareTo("major") == 0) {
+
+			for (StudentProfile student : this.allStudents) {
+				
+				if (student.getMajor().compareTo(inputSearchValue) == 0) {
+					studentsFound.add(student);
+				}
+			}
+
+		}  else if (inputCategory.compareTo("minor") == 0) {
+
+			for (StudentProfile student : this.allStudents) {
+				
+				if (student.getMinor().compareTo(inputSearchValue) == 0) {
+					studentsFound.add(student);
+				}
+			}
+			
+		} else if (inputCategory.compareTo("GPA") == 0) {
+
+			for (StudentProfile student : this.allStudents) {
+				if (Double.compare(student.getGPA(), Double.parseDouble(inputSearchValue)) >= 0) {
+					studentsFound.add(student);
+				}
+			}
+
+		} 
+		else {
+			// assumes any search category will be a requirement
+			// retrieves requirement hashmap from studentProfile and compares category and
+			// value
+			for (StudentProfile studentProfile : this.allStudents) {
+				
+
+				for (Map.Entry<String, String> entry : requirements.entrySet()) {
+					if (entry.getKey().compareTo(inputCategory) == 0) {
+						if (entry.getValue().compareTo(inputSearchValue) == 0) {
+							
+						}
+					}
+
+				}
+			}
+		}
+
+		return studentsFound;
 	}
 
 	
