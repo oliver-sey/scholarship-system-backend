@@ -27,6 +27,7 @@ public class BackendSystem {
 		this.allScholarships = InstantiateAllScholarships();
 		this.allDonors = InstantiateAllDonors();
 		this.allMatchRelationships = InstantiateAllMatches();
+		this.allAdmins = instantiateAllAdmins();
 		// TODO: make the rest of the instantiate all methods
 	}
 
@@ -611,9 +612,37 @@ public class BackendSystem {
 				securityQAnswer3, scholarshipsDonated, fileIndex);
 	}
 
+	// instantiate all admins
+	public ArrayList<AdminProfile> instantiateAllAdmins() {
+		ArrayList<AdminProfile> scholarships = new ArrayList<AdminProfile>();
+		// open the 'administrators' folder
+		File dir = new File("administrators");
+		// all the files/folders in the administrators folder
+		File[] directoryListing = dir.listFiles();
+		AdminProfile admin;
+		int fileIndex = 1;
+
+		// loop through the list of files/folders that are in the 'administrators' folder
+		// each child is for one scholarship
+		for (File child : directoryListing) {
+
+			try {
+				admin = readAdminProfile(fileIndex);
+				scholarships.add(admin);
+			} catch (IOException except) {
+				System.out.println("File not found in instantiateAllAdmins(): " + child.getAbsolutePath());
+			}
+
+			fileIndex++;
+		}
+
+		return scholarships;
+	}
+
+
 	public AdminProfile readAdminProfile(int fileIndex) throws IOException {
-		String folderPath = "administrators/admin" + String.valueOf(fileIndex);
-		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath));
+		String filePath = "administrators/admin" + String.valueOf(fileIndex) + ".txt";
+		BufferedReader detailsBr = new BufferedReader(new FileReader(filePath));
 
 		ArrayList<String> values = new ArrayList<String>();
 		String str;
@@ -1027,11 +1056,11 @@ public class BackendSystem {
 		System.out.println("Please answer this security question (capitalization doesn't matter): " + questionText);
 		// TODO: ******** do we need this??
 		// clear the scanner of any extra newlines or whatever
-		// scnr.next();
+		// scnr.nextLine();
 		System.out.print("Your answer: ");
-
+		
 		String userAnswer = scnr.nextLine();
-
+		
 		scnr.close();
 
 		if (userAnswer.equalsIgnoreCase(correctAnswer)) {
