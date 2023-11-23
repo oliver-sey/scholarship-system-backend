@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +25,7 @@ public class BackendSystem {
 	public BackendSystem() throws NumberFormatException, IOException {
 		this.allStudents = InstantiateAllStudents();
 		this.allScholarships = InstantiateAllScholarships();
-		this.allDonors = InstantiateAllDonors();
+		//this.allDonors = InstantiateAllDonors();
 		this.allMatchRelationships = InstantiateAllMatches();
 		// TODO: make the rest of the instantiate all methods
 	}
@@ -583,6 +584,56 @@ public class BackendSystem {
 		return new DonorProfile(firstName, lastName, username, password, securityQAnswer1, securityQAnswer2, securityQAnswer3, scholarshipsDonated, fileIndex);
 	}
 
+	public AdminProfile readAdminProfile(int fileIndex) throws IOException{
+		String folderPath = "administrators/admin" + String.valueOf(fileIndex);
+		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath ));
+
+		ArrayList<String> values = new ArrayList<String>();
+		String str;
+
+		while ((str = detailsBr.readLine()) != null) {
+			values.add(str);
+		  }
+
+		  detailsBr.close(); 
+
+		  String firstName = values.get(0);
+  		  String lastName = values.get(1);
+		  String username = values.get(2);
+		  String password = values.get(3);
+		  /*String sq1 = values.get(4);
+  		  String sq2 = values.get(5);
+  		  String sq3 = values.get(6);*/
+
+		  //Create and return new AdminProfile
+		  return new AdminProfile(firstName, lastName, username,password);
+	}
+
+	public StaffProfile readStaffProfile(int fileIndex) throws IOException{
+		String folderPath = "staff/staff" + String.valueOf(fileIndex);
+		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath));
+
+		ArrayList<String> values = new ArrayList<String>();
+		String str;
+
+		while ((str = detailsBr.readLine()) != null) {
+			values.add(str);
+		  }
+
+		  detailsBr.close(); 
+
+		  String firstName = values.get(0);
+  		  String lastName = values.get(1);
+		  String username = values.get(2);
+		  String password = values.get(3);
+		  String jobRole = values.get(4);
+		 /*  String sq1 = values.get(5);
+  		  String sq2 = values.get(6);
+  		  String sq3 = values.get(7);*/
+
+		  return new StaffProfile(firstName, lastName, username, password, jobRole);
+	}
+
 	// search donors by name
 	// Maybe not needed
 	// public DonorProfile SearchForDonor(String donorName) throws IOException, Exception {
@@ -630,6 +681,7 @@ public class BackendSystem {
 	public ArrayList<Scholarship> searchScholarships(String inputCategory, String inputSearchValue) {
 		ArrayList<Scholarship> scholarshipsFound = new ArrayList<Scholarship>();
 		HashMap<String, String> requirements = new HashMap<String, String>();
+		LocalDate inputDate;
 
 		if (inputCategory.compareTo("name") == 0) {
 
@@ -689,7 +741,33 @@ public class BackendSystem {
 				}
 				applicantNames.clear();
 			}
-		} else {
+		} else if (inputCategory.compareTo("due date") == 0) {
+
+			for (Scholarship scholarship : this.allScholarships) {
+				inputDate = LocalDate.parse(inputSearchValue);
+				if (scholarship.getDateDue().compareTo(inputDate) == 0) {
+					scholarshipsFound.add(scholarship);
+				}
+			}
+
+		}  else if (inputCategory.compareTo("date posted") == 0) {
+
+			for (Scholarship scholarship : this.allScholarships) {
+				inputDate = LocalDate.parse(inputSearchValue);
+				if (scholarship.getDateAdded().compareTo(inputDate) == 0) {
+					scholarshipsFound.add(scholarship);
+				}
+			}
+			
+		} else if (inputCategory.compareTo("award amount") == 0) {
+
+			for (Scholarship scholarship : this.allScholarships) {
+				if (Float.compare(scholarship.getAwardAmount(), Float.parseFloat(inputSearchValue)) >= 0) {
+					scholarshipsFound.add(scholarship);
+				}
+			}
+		} 
+		else {
 			// assumes any search category will be a requirement
 			// retrieves requirement hashmap from scholarship and compares category and
 			// value
@@ -708,6 +786,58 @@ public class BackendSystem {
 		}
 
 		return scholarshipsFound;
+	}
+
+	public ArrayList<StudentProfile> searchStudents(String inputCategory, String inputSearchValue) {
+		ArrayList<StudentProfile> studentsFound = new ArrayList<StudentProfile>();
+		HashMap<String, String> requirements = new HashMap<String, String>();
+
+		if (inputCategory.compareTo("name") == 0) {
+
+			for (StudentProfile student : this.allStudents) {
+				if (student.getName().compareTo(inputSearchValue) == 0) {
+					studentsFound.add(student);
+				}
+			}
+
+		} else if (inputCategory.compareTo("year") == 0) {
+
+			for (StudentProfile student : this.allStudents) {
+				if (student.getGradeLevel().compareTo(inputSearchValue) == 0) {
+					studentsFound.add(student);
+				}
+			}
+
+		} else if (inputCategory.compareTo("major") == 0) {
+
+			for (StudentProfile student : this.allStudents) {
+				
+				if (student.getMajor().compareTo(inputSearchValue) == 0) {
+					studentsFound.add(student);
+				}
+			}
+
+		}  else if (inputCategory.compareTo("minor") == 0) {
+
+			for (StudentProfile student : this.allStudents) {
+				
+				if (student.getMinor().compareTo(inputSearchValue) == 0) {
+					studentsFound.add(student);
+				}
+			}
+			
+		} else if (inputCategory.compareTo("GPA") == 0) {
+
+			for (StudentProfile student : this.allStudents) {
+				if (Double.compare(student.getGPA(), Double.parseDouble(inputSearchValue)) >= 0) {
+					studentsFound.add(student);
+				}
+			}
+
+		} 
+
+
+		return studentsFound;
 	}
 
 	
@@ -987,4 +1117,17 @@ public class BackendSystem {
 
 		System.out.print(newStudent.toString());
 	}
+
+	public void AwardMethod(StudentProfile recipient, Scholarship scholarship){
+		LocalDate today = LocalDate.now();
+		LocalDate due = scholarship.getDateDue();
+
+		if (due.isAfter(today)) {
+			   scholarship.setAwarded(true);
+			   scholarship.setRecipient(recipient);
+			   //recipient.addScholarship(scholarship);
+			   scholarship.setDateAdded(LocalDate.now());
+		}
+	  }
+
 }
