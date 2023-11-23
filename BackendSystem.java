@@ -946,14 +946,14 @@ public class BackendSystem {
 	 */
 	public boolean login() {
 		// TODO: implement me!!!
-		//Scanner scnr = new Scanner(System.in);
+		
 		int returnVal;
 		// the number of times the user gets a wrong password
 		int failedPWAttempts = 0;
 		do {
 			System.out.print("Please enter your user type (as one word, i.e. 'student', 'fundsteward'). ");
 
-			// TODO: what to do with scanning newlines '\n'?
+			
 			System.out.print("Please enter your user type: ");
 			Main.scnr.nextLine();
 			String userType = Main.scnr.nextLine();
@@ -968,24 +968,16 @@ public class BackendSystem {
 
 			// possible return values from checkLoginDetails():
 			// 0 if the username and password matched,
-			// 1 if the user could not be found/does not exist,
-			// 2 if the user was found but the password was wrong
-			// 3 if the user type was not accepted
+			// 1 if the password was wrong and they loose an attempt
+			// 2 if a wrong value was entered but they dont loose an attempt
 			returnVal = checkLoginDetails(userType, username, password);
 
 
-			// if the return value is 0, checkLoginDetails() will set the currentUser
-			// variable
 			if (returnVal == 0) {
-				// correct username and password, have to now make them do a security question
-				// TODO: get the Profile object here? need it for the call to checkOneSecurity
-				// question and will have to return it from this method
 				return true;
 			}
 			else if (returnVal == 1) {
 				failedPWAttempts++;
-
-				
 
 				// if they have now gotten their password wrong 3 times, return false
 				// for an unsuccessful login, and the program should quit
@@ -1033,9 +1025,7 @@ public class BackendSystem {
 							String correctAnswer = studentUser.getOneSecurityQAnswer(questionNum);
 
 							System.out.println("Please answer this security question (capitalization doesn't matter): \n" + questionText);
-							// TODO: ******** do we need this??
-							// clear the scanner of any extra newlines or whatever
-							// scnr.nextLine();
+
 							System.out.print("Your answer: ");						
 
 							String userAnswer = Main.scnr.nextLine();
@@ -1052,10 +1042,7 @@ public class BackendSystem {
 						}
 
 					} else {
-						// valid username but incorrect password
-						// usernames are unique so we know that we found the right user
-						// but the password was just wrong
-						//return 2;
+
 						System.out.println("Incorrect password for the entered username and user type");
 						return 1;
 					}
@@ -1068,7 +1055,7 @@ public class BackendSystem {
 			for (int i = 0; i < this.allDonors.size(); i++) {
 				if (allDonors.get(i).username.equalsIgnoreCase(enteredUsername)) {
 					if (allDonors.get(i).password.equals(enteredPassword)) {
-						// store this user in the currentUser variable
+						
 						donorUser = allDonors.get(i);
 						for (int questionNum = 1; questionNum <= 3; questionNum++) {
 
@@ -1076,9 +1063,7 @@ public class BackendSystem {
 							String correctAnswer = donorUser.getOneSecurityQAnswer(questionNum);
 
 							System.out.println("Please answer this security question (capitalization doesn't matter): /n" + questionText);
-							// TODO: ******** do we need this??
-							// clear the scanner of any extra newlines or whatever
-							// scnr.nextLine();
+
 							System.out.print("Your answer: ");						
 
 							String userAnswer = Main.scnr.nextLine();
@@ -1092,11 +1077,9 @@ public class BackendSystem {
 								
 							}
 						}
-						// return 0 since we have a successful username/password match
-						//return 0;
+
 					} else {
-						// valid username but incorrect password
-						//return 2;
+
 						System.out.println("Incorrect password for the entered username and user type");
 						return 1;
 					}
@@ -1114,9 +1097,7 @@ public class BackendSystem {
 							String correctAnswer = adminUser.getOneSecurityQAnswer(questionNum);
 
 							System.out.println("Please answer this security question (capitalization doesn't matter): /n" + questionText);
-							// TODO: ******** do we need this??
-							// clear the scanner of any extra newlines or whatever
-							// scnr.nextLine();
+
 							System.out.print("Your answer: ");						
 
 							String userAnswer = Main.scnr.nextLine();
@@ -1158,52 +1139,9 @@ public class BackendSystem {
 		System.out.println("The entered username could not be found in the system for the entered user type.");
 		return 2;
 		
-
-		// should only reach here if there was a valid userType and we entered
-		// one of the if or else-if statements (not the else because we would have
-		// returned early)
-
-		// had a valid userType but never found the username and thus didn't return
-		// early
-		// return 1 since the user was not found
-		//return 1;
-		
 	}
 
-	// security question answers are case **insensitive
-	/**
-	 * 
-	 * @param questionNum should be 1, 2, or 3 just like in
-	 *                    Profile.getOneSecurityQuestion()
-	 * @param user        the user object who is trying to log in
-	 * @return if the answer to the security question was correct or not
-	 *         (capitalization doesn't matter)
-	 */
-	public boolean checkOneSecurityQuestion(int questionNum, Profile user) {
-		//Scanner scnr = new Scanner(System.in);
 
-		String questionText = user.getOneSecurityQuestion(questionNum);
-		String correctAnswer = user.getOneSecurityQAnswer(questionNum);
-
-		System.out.println("Please answer this security question (capitalization doesn't matter): " + questionText);
-		// TODO: ******** do we need this??
-		// clear the scanner of any extra newlines or whatever
-		// scnr.nextLine();
-		System.out.print("Your answer: ");
-		
-
-		String userAnswer = Main.scnr.nextLine();
-
-
-
-		if (userAnswer.equalsIgnoreCase(correctAnswer)) {
-			System.out.println("Correct answer!");
-			return true;
-		} else {
-			System.out.println("Incorrect answer");
-			return false;
-		}
-	}
 
 	public double stringSimilarity(String str1, String str2) {
 		String longer = str1, shorter = str2;
