@@ -601,12 +601,12 @@ public class BackendSystem {
   		  String lastName = values.get(1);
 		  String username = values.get(2);
 		  String password = values.get(3);
-		  /*String sq1 = values.get(4);
+		  String sq1 = values.get(4);
   		  String sq2 = values.get(5);
-  		  String sq3 = values.get(6);*/
+  		  String sq3 = values.get(6);
 
 		  //Create and return new AdminProfile
-		  return new AdminProfile(firstName, lastName, username,password);
+		  return new AdminProfile(firstName, lastName, username, password, sq1, sq2, sq3, fileIndex);
 	}
 
 	public StaffProfile readStaffProfile(int fileIndex) throws IOException{
@@ -627,11 +627,11 @@ public class BackendSystem {
 		  String username = values.get(2);
 		  String password = values.get(3);
 		  String jobRole = values.get(4);
-		 /*  String sq1 = values.get(5);
+		  String sq1 = values.get(5);
   		  String sq2 = values.get(6);
-  		  String sq3 = values.get(7);*/
+  		  String sq3 = values.get(7);
 
-		  return new StaffProfile(firstName, lastName, username, password, jobRole);
+		  return new StaffProfile(firstName, lastName, username, password, jobRole, sq1, sq2, sq3, fileIndex);
 	}
 
 	// search donors by name
@@ -1125,7 +1125,7 @@ public class BackendSystem {
 		if (due.isAfter(today)) {
 			   scholarship.setAwarded(true);
 			   scholarship.setRecipient(recipient);
-			   //recipient.addScholarship(scholarship);
+			   recipient.addScholarship(scholarship);
 			   scholarship.setDateAdded(LocalDate.now());
 		}
 	  }
