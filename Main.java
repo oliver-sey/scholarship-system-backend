@@ -219,11 +219,31 @@ public class Main {
 
 			else if (userSelection == 5) {
 				BackendSystem backend = new BackendSystem();
+
+				// for admins
+				// System.out.println("all admin names: ");
+				// for (AdminProfile admin : backend.getAllAdmins()) {
+				// 	System.out.println("'" + admin.getName() + "'");
+				// }
+
+				// for donors
 				// System.out.println("all donors: " + backend.getAllDonors());
-				System.out.println("all admin names: ");
-				for (AdminProfile admin : backend.getAllAdmins()) {
-					System.out.println("'" + admin.getName() + "'");
+				System.out.println("all donor names: ");
+				for (DonorProfile donor : backend.getAllDonors()) {
+					System.out.println("'" + donor.getName() + "'");
 				}
+
+				// for students
+				// System.out.println("all student names: ");
+				// for (StudentProfile student : backend.getAllStudents()) {
+				// 	System.out.println("'" + student.getName() + "'");
+				// }
+
+				// for staff
+				// System.out.println("all staff names: ");
+				// for (StaffProfile staff : backend.getAllStaff()) {
+				// 	System.out.println("'" + staff.getName() + "'");
+				// }
 			}
 			
 			else if (userSelection == 6) {
