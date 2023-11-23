@@ -1449,7 +1449,13 @@ public class BackendSystem {
 	}
 
 	public void browseScholarships() {
-		
+		/*
+		 * 1. display 10 scholarship names
+		 * 2. allow student to select one or scroll or exit
+		 * 3. if selected, scholarship details displayed
+		 * 4. Return to list or exit if application opened
+		 * 5. Find a way to return with that scholorship 
+		 */
 	}
 
 }
