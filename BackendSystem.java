@@ -18,6 +18,7 @@ public class BackendSystem {
 	private ArrayList<MatchRelationship> allMatchRelationships = new ArrayList<MatchRelationship>();
 	private ArrayList<DonorProfile> allDonors = new ArrayList<DonorProfile>();
 	private ArrayList<AdminProfile> allAdmins = new ArrayList<AdminProfile>();
+	private ArrayList<StaffProfile> allStaff = new ArrayList<StaffProfile>();
 
 	// the user that is currently using the system
 	private StudentProfile studentUser;
@@ -1250,6 +1251,10 @@ public class BackendSystem {
 
 	public ArrayList<AdminProfile> getAllAdmins() {
 		return allAdmins;
+	}
+
+	public ArrayList<StaffProfile> getAllStaff() {
+		return allStaff;
 	}
 
 	public void testStoringStudents() throws Exception {
