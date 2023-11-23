@@ -1079,4 +1079,17 @@ public class BackendSystem {
 
 		System.out.print(newStudent.toString());
 	}
+
+	public void AwardMethod(StudentProfile recipient, Scholarship scholarship){
+		LocalDate today = LocalDate.now();
+		LocalDate due = scholarship.getDateDue();
+
+		if (due.isAfter(today)) {
+			   scholarship.setAwarded(true);
+			   scholarship.setRecipient(recipient);
+			   //recipient.addScholarship(scholarship);
+			   scholarship.setDateAdded(LocalDate.now());
+		}
+	  }
+
 }
