@@ -377,6 +377,11 @@ public class StudentProfile extends Profile {
 		this.fileIndex = fileIndex;
 	}
 
+
+	public void addScholarship(Scholarship newScholarship) {
+        awardsReceived.add(newScholarship);
+    }
+
 	public String getFileText() {
 		return this.firstName + "\n" +
 				this.lastName + "\n" +

@@ -10,7 +10,6 @@ import java.util.Scanner;
 public class Main {
 
 	public static void main(String[] args) throws Exception {
-		BackendSystem backend = new BackendSystem();
 		runDifferentTests();
 
 	}
@@ -30,6 +29,7 @@ public class Main {
 			System.out.println("2 - check if scholarship that were due 5+ years ago, are handled correctly");
 			System.out.println("3 - check login");
 			System.out.println("4 - test updateDonorProfileFile()");
+			System.out.println("5 - print all of one thing, can customize");
 			System.out.println("0 - EXIT");
 
 			System.out.print("\nYour choice: ");
@@ -102,6 +102,15 @@ public class Main {
 				backend.updateDonorProfileFile(donorToUpdate);
 
 				System.out.println("Wrote the original info back to the file");
+			}
+
+			else if (userSelection == 5) {
+				BackendSystem backend = new BackendSystem();
+				// System.out.println("all donors: " + backend.getAllDonors());
+				System.out.println("all scholarship names: ");
+				for (Scholarship scholarship : backend.getAllScholarships()) {
+					System.out.println("'" + scholarship.getName() + "'");
+				}
 			}
 			
 			else {
