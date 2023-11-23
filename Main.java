@@ -30,6 +30,7 @@ public class Main {
 			System.out.println("3 - check login");
 			System.out.println("4 - test updateDonorProfileFile()");
 			System.out.println("5 - print all of one thing, can customize");
+			System.out.println("6 - test storeNewDonorProfile()");
 			System.out.println("0 - EXIT");
 
 			System.out.print("\nYour choice: ");
@@ -113,6 +114,18 @@ public class Main {
 				}
 			}
 			
+			else if (userSelection == 6) {
+				BackendSystem backend = new BackendSystem();
+
+				// TODO: just using the first one for now, not exactly sure
+				// pick one donor and make a duplicate folder with the files for that donor to test this
+				DonorProfile donorToCopy = backend.getAllDonors().get(0);
+
+				backend.storeNewDonorProfile(donorToCopy);
+				System.out.println("Made new folder and files for that donor, the folder name should be /donors/donor" + (backend.findNextFileIndex("donor") - 1));
+				System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
+			}
+
 			else {
 				System.out.println("Invalid selection, please try again");
 			}

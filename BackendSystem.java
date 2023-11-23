@@ -415,28 +415,7 @@ public class BackendSystem {
 		File dir = new File(folderPath);
 		dir.mkdir();
 
-		// File detailsF = new File(folderPath + "/details.txt");
-		// detailsF.createNewFile();
-		// FileWriter detailsW = new FileWriter(detailsF);
-
-		// detailsW.write(donor.getDetailsFileText());
-
-		// detailsW.close();
-
-		// File scholsF = new File(folderPath + "/scholarships.txt");
-		// scholsF.createNewFile();
-		// FileWriter scholsW = new FileWriter(scholsF, false);
-
-		// for (Scholarship scholarship : donor.getAwardsReceived()) {
-		// awardNames.add(scholarship.getName());
-		// }
-
-		// awardsW.write(String.join("\n", awardNames));
-
-		// awardsW.close();
-
-		// ********* from the update donor method
-		String folderPath = "donors/donor" + String.valueOf(donor.getFileIndex());
+		// ********* copy-pasted from the update donor method
 
 		// for details.txt
 		File detailsFile = new File(folderPath + "/details.txt");
@@ -454,7 +433,6 @@ public class BackendSystem {
 		// it
 		scholsWriter.write(donor.getScholarshipFileText());
 		scholsWriter.close();
-
 	}
 
 	// writes donor profile data to file
