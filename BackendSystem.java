@@ -1025,6 +1025,9 @@ public class BackendSystem {
 		String correctAnswer = user.getOneSecurityQAnswer(questionNum);
 
 		System.out.println("Please answer this security question (capitalization doesn't matter): " + questionText);
+		// TODO: ******** do we need this??
+		// clear the scanner of any extra newlines or whatever
+		// scnr.next();
 		System.out.print("Your answer: ");
 
 		String userAnswer = scnr.nextLine();
