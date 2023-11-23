@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 
 public class BackendSystem {
@@ -503,6 +504,19 @@ public class BackendSystem {
 
 		return new MatchRelationship(student, scholarship, ID, matchPercentage, matchIndex, application,
 				applicationStatus);
+	}
+
+	public MatchRelationship produceNewMatch (StudentProfile student, Scholarship scholarship) throws IOException {
+		Random rand = new Random();
+   
+        float matchIndex = (float) (rand.nextInt(10) + rand.nextInt(10) / 10.0);
+		float matchPercentage = (float) rand.nextInt(101);
+		int fileIndex = findNextFileIndex("match");
+
+		MatchRelationship newMatch = new MatchRelationship(student, scholarship, matchPercentage, matchIndex, fileIndex);
+
+		storeNewMatch(newMatch);
+		return newMatch;
 	}
 
 	public ArrayList<MatchRelationship> InstantiateAllMatches() throws NumberFormatException, IOException {
@@ -1378,7 +1392,10 @@ public class BackendSystem {
 				System.out.print("Please enter the number of your choice.");
 			}
 		}
+	}
 
+	public void browseScholarships() {
+		
 	}
 
 }
