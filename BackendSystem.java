@@ -530,6 +530,56 @@ public class BackendSystem {
 		return new DonorProfile(firstName, lastName, username, password, securityQAnswer1, securityQAnswer2, securityQAnswer3);
 	}
 
+	public AdminProfile readAdminProfile(int fileIndex) throws IOException{
+		String folderPath = "administrators/admin" + String.valueOf(fileIndex);
+		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath ));
+
+		ArrayList<String> values = new ArrayList<String>();
+		String str;
+
+		while ((str = detailsBr.readLine()) != null) {
+			values.add(str);
+		  }
+
+		  detailsBr.close(); 
+
+		  String firstName = values.get(0);
+  		  String lastName = values.get(1);
+		  String username = values.get(2);
+		  String password = values.get(3);
+		  /*String sq1 = values.get(4);
+  		  String sq2 = values.get(5);
+  		  String sq3 = values.get(6);*/
+
+		  //Create and return new AdminProfile
+		  return new AdminProfile(firstName, lastName, username,password);
+	}
+
+	public StaffProfile readStaffProfile(int fileIndex) throws IOException{
+		String folderPath = "staff/staff" + String.valueOf(fileIndex);
+		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath));
+
+		ArrayList<String> values = new ArrayList<String>();
+		String str;
+
+		while ((str = detailsBr.readLine()) != null) {
+			values.add(str);
+		  }
+
+		  detailsBr.close(); 
+
+		  String firstName = values.get(0);
+  		  String lastName = values.get(1);
+		  String username = values.get(2);
+		  String password = values.get(3);
+		  String jobRole = values.get(4);
+		 /*  String sq1 = values.get(5);
+  		  String sq2 = values.get(6);
+  		  String sq3 = values.get(7);*/
+
+		  return new StaffProfile(firstName, lastName, username, password, jobRole);
+	}
+
 	// search donors by name
 	// Maybe not needed
 	public DonorProfile SearchForDonor(String donorName) throws IOException, Exception {
