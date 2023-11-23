@@ -634,6 +634,30 @@ public class BackendSystem {
 		  return new StaffProfile(firstName, lastName, username, password, jobRole, sq1, sq2, sq3, fileIndex);
 	}
 
+	public FundStewardProfile readFundStewardProfile(int fileIndex) throws IOException{
+		String folderPath = "fundstewards/fundsteward" + String.valueOf(fileIndex);
+		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath));
+
+		ArrayList<String> values = new ArrayList<String>();
+		String str;
+
+		while ((str = detailsBr.readLine()) != null) {
+			values.add(str);
+		  }
+
+		  detailsBr.close(); 
+
+		  String firstName = values.get(0);
+  		  String lastName = values.get(1);
+		  String username = values.get(2);
+		  String password = values.get(3);
+		  String sq1 = values.get(4);
+  		  String sq2 = values.get(5);
+  		  String sq3 = values.get(6);
+
+		  return new FundStewardProfile(firstName, lastName, username, password, sq1, sq2, sq3, fileIndex);
+	}
+
 	// search donors by name
 	// Maybe not needed
 	// public DonorProfile SearchForDonor(String donorName) throws IOException, Exception {
