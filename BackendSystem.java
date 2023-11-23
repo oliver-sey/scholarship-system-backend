@@ -1125,7 +1125,7 @@ public class BackendSystem {
 		if (due.isAfter(today)) {
 			   scholarship.setAwarded(true);
 			   scholarship.setRecipient(recipient);
-			   //recipient.addScholarship(scholarship);
+			   recipient.addScholarship(scholarship);
 			   scholarship.setDateAdded(LocalDate.now());
 		}
 	  }
