@@ -69,7 +69,8 @@ public abstract class Profile {
 	 * @return the String text of the answer that's at index (questionNum + 1)
 	 */
 	public String getOneSecurityQAnswer(int questionNum) {
-		return this.securityQAnswers[questionNum + 1];
+		// same as in getOneSecurityQuestion() above, subtract 1 because for inputs 1, 2, 3 we want the elements at index 0, 1, 2
+		return this.securityQAnswers[questionNum - 1];
 	}
 
 	// remember that there might be restrictions on what values we want to allow the
