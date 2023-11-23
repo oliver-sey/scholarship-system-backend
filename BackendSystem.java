@@ -939,7 +939,7 @@ public class BackendSystem {
 	 *         3 if the user type was not accepted
 	 */
 	public int checkLoginDetails(String userType, String enteredUsername, String enteredPassword) {
-		if (userType.equals("Student")) {
+		if (userType.equalsIgnoreCase("Student")) {
 			for (int i = 0; i < allStudents.size(); i++) {
 				if (allStudents.get(i).username.equalsIgnoreCase(enteredUsername)) {
 					if (allStudents.get(i).password.equals(enteredPassword)) {
@@ -958,7 +958,7 @@ public class BackendSystem {
 			}
 		}
 
-		else if (userType.equals("Donor")) {
+		else if (userType.equalsIgnoreCase("Donor")) {
 			for (int i = 0; i < this.allDonors.size(); i++) {
 				if (allDonors.get(i).username.equalsIgnoreCase(enteredUsername)) {
 					if (allDonors.get(i).password.equals(enteredPassword)) {
@@ -973,7 +973,7 @@ public class BackendSystem {
 					}
 				}
 			}
-		} else if (userType.equals("Admin")) {
+		} else if (userType.equalsIgnoreCase("Admin")) {
 			for (int i = 0; i < this.allAdmins.size(); i++) {
 				if (allAdmins.get(i).username.equalsIgnoreCase(enteredUsername)) {
 					if (allAdmins.get(i).password.equals(enteredPassword)) {
@@ -988,10 +988,10 @@ public class BackendSystem {
 					}
 				}
 			}
-		} else if (userType.equals("FundSteward")) {
+		} else if (userType.equalsIgnoreCase("FundSteward")) {
 			// TODO: implement this method for FundStewards!!
 			System.out.println("checkLoginDetails has not yet been implemented for FundStewards");
-		} else if (userType.equals("Staff")) {
+		} else if (userType.equalsIgnoreCase("Staff")) {
 			// TODO: implement this method for Staffs!!
 			System.out.println("checkLoginDetails has not yet been implemented for Staffs");
 		} else {
@@ -1095,6 +1095,23 @@ public class BackendSystem {
 	public ArrayList<Scholarship> getAllScholarships() {
 		return this.allScholarships;
 	}
+
+	/**
+	 * 
+	 * @return all scholarship objects where isApproved is false
+	 */
+	public ArrayList<Scholarship> getAllUnapprovedScholarships() {
+		ArrayList<Scholarship> outputScholarships = new ArrayList<Scholarship>();
+
+		// add the scholarship to the output ArrayList if it is not approved
+		for (Scholarship scholarship : getAllScholarships()) {
+			if (!scholarship.getIsApproved()) {
+				outputScholarships.add(scholarship);
+			}
+		}
+
+		return outputScholarships;
+	} 
 
 	public ArrayList<StudentProfile> getAllStudents() {
 		return allStudents;
