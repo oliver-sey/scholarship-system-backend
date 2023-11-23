@@ -1449,7 +1449,7 @@ public class BackendSystem {
 	}
 
 	public void browseScholarships() {
-
+		
 	}
 
 }

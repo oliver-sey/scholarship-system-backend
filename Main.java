@@ -49,11 +49,20 @@ public class Main {
 		int userSelection = -1;
 		// TODO: should we use clearance level?
 		if (backend.getUserType().compareTo("student") == 0) {
-			// TODO: implement this!!
+			/*
+			- edit profile
+			- see all scholarships
+			- see in-progress applications/ update application
+			- see submitted applications
+			- search scholarships
+			*/
 			System.out.println("Have to still implement oneUserAction() for StudentProfile.");
 		}
 		else if (backend.getUserType().compareTo("donor") == 0) {
-			// TODO: implement this!!
+			/*
+			- create and submit scholarship for review
+
+			*/
 			System.out.println("Have to still implement oneUserAction() for DonorProfile.");
 		}
 		else if (backend.getUserType().compareTo("staff") == 0) {
@@ -66,6 +75,10 @@ public class Main {
 		}
 		else if (backend.getUserType().compareTo("admin") == 0) {
 			// TODO: implement this!!
+			/*
+			 * - approve scholarships
+			 * - search students
+			 */
 			System.out.println("Options: ");
 			System.out.println("0 - view unapproved scholarships to approve them");
 
