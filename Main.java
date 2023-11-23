@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 public class Main {
 
+	public static Scanner scnr = new Scanner(System.in);
 	public static void main(String[] args) throws Exception {
 		BackendSystem backend = new BackendSystem();
 		// userRunSystem will prompt them to log in
@@ -44,26 +45,26 @@ public class Main {
 	 * prompts the user for which action they want to perform based on their profile type
 	 */
 	public static void oneUserAction(BackendSystem backend) {
-		Scanner scnr = new Scanner(System.in);
+		//Scanner scnr = new Scanner(System.in);
 		int userSelection = -1;
 		// TODO: should we use clearance level?
-		if (backend.getCurrentUser() instanceof StudentProfile) {
+		if (backend.getUserType().compareTo("student") == 0) {
 			// TODO: implement this!!
 			System.out.println("Have to still implement oneUserAction() for StudentProfile.");
 		}
-		else if (backend.getCurrentUser() instanceof DonorProfile) {
+		else if (backend.getUserType().compareTo("donor") == 0) {
 			// TODO: implement this!!
 			System.out.println("Have to still implement oneUserAction() for DonorProfile.");
 		}
-		else if (backend.getCurrentUser() instanceof StaffProfile) {
+		else if (backend.getUserType().compareTo("staff") == 0) {
 			// TODO: implement this!!
 			System.out.println("Have to still implement oneUserAction() for StaffProfile.");
 		}
-		else if (backend.getCurrentUser() instanceof FundStewardProfile) {
+		else if (backend.getUserType().compareTo("fund steward") == 0) {
 			// TODO: implement this!!
 			System.out.println("Have to still implement oneUserAction() for FundStewardProfile.");
 		}
-		else if (backend.getCurrentUser() instanceof AdminProfile) {
+		else if (backend.getUserType().compareTo("admin") == 0) {
 			// TODO: implement this!!
 			System.out.println("Options: ");
 			System.out.println("0 - view unapproved scholarships to approve them");
@@ -112,7 +113,7 @@ public class Main {
 	}
 
 	public static void runDifferentTests() throws Exception {
-		Scanner scnr = new Scanner(System.in);
+		//Scanner scnr = new Scanner(System.in);
 		System.out.println("Hello! Welcome to the backend for our Scholarship Management System.");
 
 		// the number the user enters
@@ -225,7 +226,13 @@ public class Main {
 			}
 
 			else if (userSelection == 7) {
-				// TODO: fill this out
+				BackendSystem backend = new BackendSystem();
+
+				StudentProfile newStudent = new StudentProfile("Jess", "Mess", 12345, "user", "pass", "IE", true, "SFWEE", true,
+				3.6, true, true, "Freshman", 5, 2025, "Female", true, false, 12, false, "I love school!", "Smith",
+				"The eagles", "New York");
+
+				
 			}
 
 			else if (userSelection == 8) {
