@@ -781,23 +781,7 @@ public class BackendSystem {
 			}
 
 		} 
-		else {
-			// assumes any search category will be a requirement
-			// retrieves requirement hashmap from studentProfile and compares category and
-			// value
-			for (StudentProfile studentProfile : this.allStudents) {
-				
 
-				for (Map.Entry<String, String> entry : requirements.entrySet()) {
-					if (entry.getKey().compareTo(inputCategory) == 0) {
-						if (entry.getValue().compareTo(inputSearchValue) == 0) {
-							
-						}
-					}
-
-				}
-			}
-		}
 
 		return studentsFound;
 	}
