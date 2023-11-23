@@ -1163,179 +1163,192 @@ public class BackendSystem {
 	}
 
 	//TO DO: test
-	public void editStudentInfo(StudentProfile student) {
+	public void editStudentInfo(StudentProfile student) throws IOException {
 		int choice;
+		boolean end = false;
 
-		System.out.println("1: First name: " + student.getFirstName());
-		System.out.println("2: Last name: " + student.getLastName());
-		System.out.println("3: Username: " + student.getUsername());
-		System.out.println("4: Password: " + student.getPassword());
-		System.out.println("5: Major: " + student.getMajor());
-		if (student.getHasAMinor()) {
-			System.out.println("6: Minor: " + student.getMinor());
-		} else {
-			System.out.println("6: Minor: none");
-		}
-		System.out.println("7: US Citizen: " + student.getIsUSCitizen());
-		System.out.println("8: GPA: " + student.getGPA());
-		System.out.println("9: In good standing?: " + student.getInGoodStanding());
-		System.out.println("10: Has advanced standing?: " + student.getHasAdvStanding());
-		System.out.println("11: Year: " + student.getGradeLevel());
-		System.out.println("12: Graduation month: " + student.getGradMonth());
-		System.out.println("13: Graduation year: " + student.getGradYear());
-		System.out.println("14: Gender: " + student.getGender());
-		System.out.println("15: Is a full-time student?: " + student.getIsFullTimeStudent());
-		System.out.println("16: Is a transfer student?: " + student.getIsTransferStudent());
-		System.out.println("17: Number of credits: " + student.getCurNumCredits());
-		System.out.println("18: Receives credit?: " + student.getReceivesFunding());
-		System.out.println("19: Personal statement: " + student.getPersonalStatement());
-
-		Scanner scnr = new Scanner(System.in);
-
-		System.out.print("Enter the number of the profile attribute you would like to change: ");
-		choice = scnr.nextInt();
-
-		if (choice == 1) {
-			scnr.nextLine(); 
-			System.out.print("Enter the new first name: ");
-			String newFirstName = scnr.nextLine();
-			student.setFirstName(newFirstName);
-		}
-		
-		// Choice 2: Last Name (String)
-		else if (choice == 2) {
-			scnr.nextLine(); 
-			System.out.print("Enter the new last name: ");
-			String newLastName = scnr.nextLine();
-			student.setLastName(newLastName);
-		}
-		
-		// Choice 3: Username (String)
-		else if (choice == 3) {
-			scnr.nextLine(); 
-			System.out.print("Enter the new username: ");
-			String newUsername = scnr.nextLine();
-			student.setUsername(newUsername);
-		}
-		
-		// Choice 4: Password (String)
-		else if (choice == 4) {
-			scnr.nextLine(); 
-			System.out.print("Enter the new password: ");
-			String newPassword = scnr.nextLine();
-			student.setPassword(newPassword);
-		}
-		
-		// Choice 5: Major (String)
-		else if (choice == 5) {
-			scnr.nextLine(); 
-			System.out.print("Enter the new major: ");
-			String newMajor = scnr.nextLine();
-			student.setMajor(newMajor);
-		}
-		
-		// Choice 6: Minor (String)
-		else if (choice == 6) {
+		while (!end) {	
+			System.out.println("1: First name: " + student.getFirstName());
+			System.out.println("2: Last name: " + student.getLastName());
+			System.out.println("3: Username: " + student.getUsername());
+			System.out.println("4: Password: " + student.getPassword());
+			System.out.println("5: Major: " + student.getMajor());
 			if (student.getHasAMinor()) {
+				System.out.println("6: Minor: " + student.getMinor());
+			} else {
+				System.out.println("6: Minor: none");
+			}
+			System.out.println("7: US Citizen: " + student.getIsUSCitizen());
+			System.out.println("8: GPA: " + student.getGPA());
+			System.out.println("9: In good standing?: " + student.getInGoodStanding());
+			System.out.println("10: Has advanced standing?: " + student.getHasAdvStanding());
+			System.out.println("11: Year: " + student.getGradeLevel());
+			System.out.println("12: Graduation month: " + student.getGradMonth());
+			System.out.println("13: Graduation year: " + student.getGradYear());
+			System.out.println("14: Gender: " + student.getGender());
+			System.out.println("15: Is a full-time student?: " + student.getIsFullTimeStudent());
+			System.out.println("16: Is a transfer student?: " + student.getIsTransferStudent());
+			System.out.println("17: Number of credits: " + student.getCurNumCredits());
+			System.out.println("18: Receives credit?: " + student.getReceivesFunding());
+			System.out.println("19: Personal statement: " + student.getPersonalStatement());
+
+			Scanner scnr = new Scanner(System.in);
+
+			System.out.print("Enter the number of the profile attribute you would like to change: ");
+			choice = scnr.nextInt();
+
+			if (choice == 1) {
 				scnr.nextLine(); 
-				System.out.print("Enter the new minor: ");
-				String newMinor = scnr.nextLine();
+				System.out.print("Enter the new first name: ");
+				String newFirstName = scnr.nextLine();
+				student.setFirstName(newFirstName);
+			}
+			
+			// Choice 2: Last Name (String)
+			else if (choice == 2) {
+				scnr.nextLine(); 
+				System.out.print("Enter the new last name: ");
+				String newLastName = scnr.nextLine();
+				student.setLastName(newLastName);
+			}
+			
+			// Choice 3: Username (String)
+			else if (choice == 3) {
+				scnr.nextLine(); 
+				System.out.print("Enter the new username: ");
+				String newUsername = scnr.nextLine();
+				student.setUsername(newUsername);
+			}
+			
+			// Choice 4: Password (String)
+			else if (choice == 4) {
+				scnr.nextLine(); 
+				System.out.print("Enter the new password: ");
+				String newPassword = scnr.nextLine();
+				student.setPassword(newPassword);
+			}
+			
+			// Choice 5: Major (String)
+			else if (choice == 5) {
+				scnr.nextLine(); 
+				System.out.print("Enter the new major: ");
+				String newMajor = scnr.nextLine();
+				student.setMajor(newMajor);
+			}
+			
+			// Choice 6: Minor (String)
+			else if (choice == 6) {
+				if (student.getHasAMinor()) {
+					scnr.nextLine(); 
+					System.out.print("Enter the new minor: ");
+					String newMinor = scnr.nextLine();
 
-				student.setMinor(newMinor);
-			} else {
-				System.out.println("The student does not have a minor to change.");
+					student.setMinor(newMinor);
+				} else {
+					System.out.println("The student does not have a minor to change.");
+				}
+			}
+			
+			// Choice 7: US Citizen (boolean)
+			else if (choice == 7) {
+				System.out.print("Enter the new value (true/false): ");
+				boolean newBooleanValue = scnr.nextBoolean();
+				student.setIsUSCitizen(newBooleanValue);
+			}
+
+			else if (choice == 8) {
+				System.out.print("Enter the new GPA: ");
+				float newGPA = scnr.nextFloat();
+				student.setGPA(newGPA);
+			}
+			
+			// Choice 9: In Good Standing? (boolean)
+			else if (choice == 9) {
+				System.out.print("Enter the new value (true/false): ");
+				boolean newBooleanValue = scnr.nextBoolean();
+				student.setInGoodStanding(newBooleanValue);
+			}
+			
+			// Choice 10: Has Advanced Standing? (boolean)
+			else if (choice == 10) {
+				System.out.print("Enter the new value (true/false): ");
+				boolean newBooleanValue = scnr.nextBoolean();
+				student.setHasAdvStanding(newBooleanValue);
+			}
+			
+			// Choice 11: Year (String)
+			else if (choice == 11) {
+				scnr.nextLine(); 
+				System.out.print("Enter the new grade year: ");
+				String newYear = scnr.nextLine();
+				student.setGradeLevel(newYear);
+			}
+			
+			// Choice 12: Graduation Month (int)
+			else if (choice == 12) {
+				System.out.print("Enter the new graduation month: ");
+				int newMonth = scnr.nextInt();
+				student.setGradMonth(newMonth);
+			}
+			
+			// Choice 13: Graduation Year (int)
+			else if (choice == 13) {
+				System.out.print("Enter the new graduation year: ");
+				int newYear = scnr.nextInt();
+				student.setGradYear(newYear);
+			}
+			
+			// Choice 14: Gender (String)
+			else if (choice == 14) {
+				scnr.nextLine(); 
+				System.out.print("Enter the new gender: ");
+				String newGender = scnr.nextLine();
+				student.setGender(newGender);
+			}
+			
+			// Choices 15-17: Booleans (isFullTimeStudent, isTransferStudent, receivesFunding)
+			else if (choice >= 15 && choice <= 17) {
+				System.out.print("Enter the new value (true/false): ");
+				boolean newBooleanValue = scnr.nextBoolean();
+			
+				if (choice == 15) {
+
+					student.setIsFullTimeStudent(newBooleanValue);
+				} else if (choice == 16) {
+
+					student.setIsTransferStudent(newBooleanValue);
+				} else {
+
+					student.setReceivesFunding(newBooleanValue);
+				}
+			}
+			
+			// Choice 18: Number of Credits (int)
+			else if (choice == 18) {
+				System.out.print("Enter the new number of credits: ");
+				int newCredits = scnr.nextInt();
+				student.setCurNumCredits(newCredits);
+			}
+			
+			// Choice 19: Personal Statement (String)
+			else if (choice == 19) {
+				scnr.nextLine(); 
+				System.out.print("Enter the new personal statement: ");
+				String newStatement = scnr.nextLine();
+				student.setPersonalStatement(newStatement);
+			}
+
+			if (choice <= 19 && choice >= 1) {
+				System.out.print("Would you like to change anything else? (y/n)");
+				if (scnr.nextLine().compareTo("n") == 0) {
+					end = true;
+					//updateStudentProfileFile(student);
+				} 
+			}
+			else {
+				System.out.print("Please enter the number of your choice.");
 			}
 		}
-		
-		// Choice 7: US Citizen (boolean)
-		else if (choice == 7) {
-			System.out.print("Enter the new value (true/false): ");
-			boolean newBooleanValue = scnr.nextBoolean();
-			student.setIsUSCitizen(newBooleanValue);
-		}
-
-		else if (choice == 8) {
-			System.out.print("Enter the new GPA: ");
-			float newGPA = scnr.nextFloat();
-			student.setGPA(newGPA);
-		}
-		
-		// Choice 9: In Good Standing? (boolean)
-		else if (choice == 9) {
-			System.out.print("Enter the new value (true/false): ");
-			boolean newBooleanValue = scnr.nextBoolean();
-			student.setInGoodStanding(newBooleanValue);
-		}
-		
-		// Choice 10: Has Advanced Standing? (boolean)
-		else if (choice == 10) {
-			System.out.print("Enter the new value (true/false): ");
-			boolean newBooleanValue = scnr.nextBoolean();
-			student.setHasAdvStanding(newBooleanValue);
-		}
-		
-		// Choice 11: Year (String)
-		else if (choice == 11) {
-			scnr.nextLine(); 
-			System.out.print("Enter the new grade year: ");
-			String newYear = scnr.nextLine();
-			student.setGradeLevel(newYear);
-		}
-		
-		// Choice 12: Graduation Month (int)
-		else if (choice == 12) {
-			System.out.print("Enter the new graduation month: ");
-			int newMonth = scnr.nextInt();
-			student.setGradMonth(newMonth);
-		}
-		
-		// Choice 13: Graduation Year (int)
-		else if (choice == 13) {
-			System.out.print("Enter the new graduation year: ");
-			int newYear = scnr.nextInt();
-			student.setGradYear(newYear);
-		}
-		
-		// Choice 14: Gender (String)
-		else if (choice == 14) {
-			scnr.nextLine(); 
-			System.out.print("Enter the new gender: ");
-			String newGender = scnr.nextLine();
-			student.setGender(newGender);
-		}
-		
-		// Choices 15-17: Booleans (isFullTimeStudent, isTransferStudent, receivesFunding)
-		else if (choice >= 15 && choice <= 17) {
-			System.out.print("Enter the new value (true/false): ");
-			boolean newBooleanValue = scnr.nextBoolean();
-		
-			if (choice == 15) {
-
-				student.setIsFullTimeStudent(newBooleanValue);
-			} else if (choice == 16) {
-
-				student.setIsTransferStudent(newBooleanValue);
-			} else {
-
-				student.setReceivesFunding(newBooleanValue);
-			}
-		}
-		
-		// Choice 18: Number of Credits (int)
-		else if (choice == 18) {
-			System.out.print("Enter the new number of credits: ");
-			int newCredits = scnr.nextInt();
-			student.setCurNumCredits(newCredits);
-		}
-		
-		// Choice 19: Personal Statement (String)
-		else if (choice == 19) {
-			scnr.nextLine(); 
-			System.out.print("Enter the new personal statement: ");
-			String newStatement = scnr.nextLine();
-			student.setPersonalStatement(newStatement);
-		}
-
 
 	}
 

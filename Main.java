@@ -128,6 +128,7 @@ public class Main {
 			System.out.println("5 - print all of one thing, can customize");
 			System.out.println("6 - test storeNewDonorProfile()");
 			System.out.println("7 - login as an admin and then approve scholarships");
+			System.out.println("8 - Edit student profile manually");
 			System.out.println("0 - EXIT");
 
 			System.out.print("\nYour choice: ");
@@ -225,6 +226,17 @@ public class Main {
 
 			else if (userSelection == 7) {
 				// TODO: fill this out
+			}
+
+			else if (userSelection == 8) {
+				BackendSystem backend = new BackendSystem();
+
+				StudentProfile newStudent = new StudentProfile("Jess", "Mess", 12345, "user", "pass", "IE", true, "SFWEE", true,
+				3.6, true, true, "Freshman", 5, 2025, "Female", true, false, 12, false, "I love school!", "Smith",
+				"The eagles", "New York");
+
+				backend.editStudentInfo(newStudent);
+				System.out.println(newStudent.toString());
 			}
 
 			else {
