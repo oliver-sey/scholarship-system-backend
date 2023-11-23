@@ -17,7 +17,7 @@ public class DonorProfile extends Profile {
     }
 
      //TO DO: add for fileIndex?
-    public DonorProfile(String firstName, String lastName, String username, String password, String securityQAnswer1, String securityQAnswer2, String securityQAnswer3) {
+    public DonorProfile(String firstName, String lastName, String username, String password, String securityQAnswer1, String securityQAnswer2, String securityQAnswer3, ArrayList<Scholarship> scholarships) {
         clearanceLevel = 1;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -26,6 +26,8 @@ public class DonorProfile extends Profile {
         this.securityQAnswers[0] = securityQAnswer1;
 		this.securityQAnswers[1] = securityQAnswer2;
 		this.securityQAnswers[2] = securityQAnswer3;
+
+        this.scholarships = scholarships;
     }
 
     public void addScholarship(Scholarship newScholarship) {
