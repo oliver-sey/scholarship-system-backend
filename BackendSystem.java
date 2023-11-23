@@ -890,7 +890,7 @@ public class BackendSystem {
 		// the number of times the user gets a wrong password
 		int failedPWAttempts = 0;
 		do {
-			System.out.print("Please enter your user type (as one word, i.e. 'Student', 'FundSteward'): ");
+			System.out.print("Please enter your user type (as one word, i.e. 'student', 'fundsteward'): ");
 
 			// TODO: what to do with scanning newlines '\n'?
 			System.out.print("Please enter your user type: ");
