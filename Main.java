@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Main {
 
 	public static void main(String[] args) throws Exception {
-
+		runDifferentTests();
 
 	}
 
@@ -27,6 +27,7 @@ public class Main {
 			System.out.println("1 - Run the program normally, no specific test case");
 			System.out.println("2 - check if scholarship that were due 5+ years ago, are handled correctly");
 			System.out.println("3 - check login");
+			System.out.println("4 - test updateDonorProfileFile()");
 			System.out.println("0 - EXIT");
 
 			System.out.print("\nYour choice: ");
@@ -63,6 +64,42 @@ public class Main {
 				// prompt users for their login details
 				// this will call checkLoginDetails(), which will do the security questions
 				backend.login();
+			}
+
+			else if (userSelection == 4) {
+				// instantiate the backend and all the students, scholarships, etc.
+				BackendSystem backend = new BackendSystem();
+
+				// TODO: just using the first one for now, not exactly sure
+				DonorProfile donorToUpdate = backend.getAllDonors().get(0);
+
+				// store these so we can restore it again later
+				String origFirstName = donorToUpdate.getFirstName();
+				String origUsername = donorToUpdate.getUsername();
+				String origSeqQAnswer1 = donorToUpdate.getOneSecurityQAnswer(1);
+
+				// change the properties in the DonorProfile object
+				donorToUpdate.setFirstName("Changedname");
+				donorToUpdate.setUsername("changedusername");
+				donorToUpdate.setOneSecurityQAnswer(1, "changed security answer text for #1");
+
+				backend.updateDonorProfileFile(donorToUpdate);
+
+				System.out.println("Changed the details in the donor file, please check that it looks good and then enter anything in the console so we can restore the file to its original state.");
+				System.out.println("Waiting for you to type anything: ");
+				scnr.next();
+
+				System.out.println("Reverting the file back to its original state");
+				
+				// change the properties in the DonorProfile object, **back to what they were before
+				donorToUpdate.setFirstName(origFirstName);
+				donorToUpdate.setUsername(origUsername);
+				donorToUpdate.setOneSecurityQAnswer(1, origSeqQAnswer1);
+
+				// write the original values back to the file
+				backend.updateDonorProfileFile(donorToUpdate);
+
+				System.out.println("Wrote the original info back to the file");
 			}
 			
 			else {
