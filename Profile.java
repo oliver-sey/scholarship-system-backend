@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * An abstract class for a Profile, that will be the parent class for
  * StudentProfile and more
@@ -115,5 +117,12 @@ public abstract class Profile {
 	 */
 	public void setOneSecurityQAnswer(int questionNum, String answerText) {
 		this.securityQAnswers[questionNum - 1] = answerText;
+	}
+
+	@Override
+	public String toString() {
+		return "firstName=" + firstName + ", lastName=" + lastName + ", username=" + username + ", password="
+				+ password + ", clearanceLevel=" + clearanceLevel + ", fileIndex=" + fileIndex + ", securityQuestions="
+				+ Arrays.toString(securityQuestions) + ", securityQAnswers=" + Arrays.toString(securityQAnswers);
 	}
 }
