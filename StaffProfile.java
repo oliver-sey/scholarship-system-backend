@@ -25,6 +25,9 @@ public class StaffProfile extends Profile {
         this.username = username;
         this.password = password;
         this.jobRole = jobRole;
+        this.securityQAnswers[0] = securityQAnswer1;
+		this.securityQAnswers[1] = securityQAnswer2;
+		this.securityQAnswers[2] = securityQAnswer3;
     }
 
     public String getjobRole() {

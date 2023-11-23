@@ -9,6 +9,9 @@ public class AdminProfile extends Profile {
         lastName = "invalidLastName";
         username = "invalidUserName";
         password = "invalidPassword";
+        securityQAnswers[0] = "invalidSecurityQAnswer1";
+		securityQAnswers[1] = "invalidSecurityQAnswer2";
+		securityQAnswers[2] = "invalidSecurityQAnswer3";
     }
 
     //TO DO: add for fileIndex?
@@ -18,9 +21,9 @@ public class AdminProfile extends Profile {
         this.lastName = lastName;
         this.username = username;
         this.password = password;
-        securityQAnswers[0] = "invalidSecurityQAnswer1";
-		securityQAnswers[1] = "invalidSecurityQAnswer2";
-		securityQAnswers[2] = "invalidSecurityQAnswer3";
+        this.securityQAnswers[0] = securityQAnswer1;
+		this.securityQAnswers[1] = securityQAnswer2;
+		this.securityQAnswers[2] = securityQAnswer3;
     }  
 
 }
