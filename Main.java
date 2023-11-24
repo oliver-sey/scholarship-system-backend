@@ -13,7 +13,7 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		BackendSystem backend = new BackendSystem();
 		// userRunSystem will prompt them to log in
-		//userRunSystem(backend);
+		userRunSystem(backend);
 
 		runDifferentTests();
 

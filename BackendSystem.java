@@ -1107,7 +1107,7 @@ public class BackendSystem {
 							String correctAnswer = donorUser.getOneSecurityQAnswer(questionNum);
 
 							System.out
-									.println("Please answer this security question (capitalization doesn't matter): /n"
+									.println("Please answer this security question (capitalization doesn't matter): \n"
 											+ questionText);
 
 							System.out.print("Your answer: ");
@@ -1143,7 +1143,7 @@ public class BackendSystem {
 							String correctAnswer = adminUser.getOneSecurityQAnswer(questionNum);
 
 							System.out
-									.println("Please answer this security question (capitalization doesn't matter): /n"
+									.println("Please answer this security question (capitalization doesn't matter): \n"
 											+ questionText);
 
 							System.out.print("Your answer: ");
