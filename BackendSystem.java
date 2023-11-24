@@ -20,6 +20,27 @@ public class BackendSystem {
 	private ArrayList<AdminProfile> allAdmins = new ArrayList<AdminProfile>();
 	private ArrayList<StaffProfile> allStaff = new ArrayList<StaffProfile>();
 
+	// my (Oliver) suggestion is to replace the code below within the stars,
+	// with this code within the pluses
+
+	// +++++++++++++++++++
+
+	// private Profile currentUser;
+
+	// public Profile getCurrentUser() {
+	// 	return currentUser;
+	// }
+
+	// we should get what type of profile the current user is, with
+	// something like "if (getCurrentUser instance of StudentProfile) {}"
+
+	//  ++++++++++++++++++++
+
+
+	// TODO: I (Oliver) don't understand why we need all the code below
+	// within the stars **** and suggest we change it to the code above
+
+	// ********************************
 	// the user that is currently using the system
 	private StudentProfile studentUser;
 	private DonorProfile donorUser;
@@ -60,6 +81,9 @@ public class BackendSystem {
 	public String getUserType() {
 		return this.userType;
 	}
+
+	// ***************************************
+
 
 	// constructor
 	public BackendSystem() throws NumberFormatException, IOException {
