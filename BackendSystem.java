@@ -20,6 +20,7 @@ public class BackendSystem {
 	private ArrayList<DonorProfile> allDonors = new ArrayList<DonorProfile>();
 	private ArrayList<AdminProfile> allAdmins = new ArrayList<AdminProfile>();
 	private ArrayList<StaffProfile> allStaff = new ArrayList<StaffProfile>();
+	private ArrayList<FundStewardProfile> allFundStewards = new ArrayList<FundStewardProfile>();
 
 	// my (Oliver) suggestion is to replace the code below within the stars,
 	// with this code within the pluses
@@ -94,6 +95,7 @@ public class BackendSystem {
 		this.allMatchRelationships = InstantiateAllMatches();
 		this.allAdmins = instantiateAllAdmins();
 		this.allStaff = InstantiateAllStaff();
+		this.allFundStewards = InstantiateAllFundStewards();
 		// TODO: make the rest of the instantiate all methods
 	}
 
@@ -860,6 +862,29 @@ public class BackendSystem {
 		String sq3 = values.get(6);
 
 		return new FundStewardProfile(firstName, lastName, username, password, sq1, sq2, sq3, fileIndex);
+	}
+
+	//Instantiates all fund stewards
+	public ArrayList<FundStewardProfile> InstantiateAllFundStewards() {
+		ArrayList<FundStewardProfile> fundStewards = new ArrayList<FundStewardProfile>();
+		File dir = new File("fundstewards");
+		File[] directoryListing = dir.listFiles();
+		FundStewardProfile fundSteward;
+		int fileIndex = 1;
+
+		for (File child : directoryListing) {
+
+			try {
+				fundSteward = readFundStewardProfile(fileIndex);
+				fundStewards.add(fundSteward);
+			} catch (IOException except) {
+				System.out.println("File not found: " + child.getAbsolutePath());
+			}
+
+			fileIndex++;
+		}
+
+		return fundStewards;
 	}
 
 	// searches a folder for a scholarship with inputted value
