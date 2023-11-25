@@ -807,6 +807,18 @@ public class BackendSystem {
 		detailsWriter.close();
 	}
 
+	// writes student profile data to file
+	public void updateAdminProfileFile(AdminProfile admin) throws IOException {
+		String folderPath = "administrators/admin" + String.valueOf(admin.getFileIndex());
+
+		File detailsF = new File(folderPath + ".txt");
+		FileWriter detailsW = new FileWriter(detailsF, false);
+
+		detailsW.write(admin.getDetailsFileText());
+
+		detailsW.close();
+	}
+
 	public StaffProfile readStaffProfile(int fileIndex) throws IOException {
 		String folderPath = "staff/staff" + String.valueOf(fileIndex);
 		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath));
