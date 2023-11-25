@@ -927,6 +927,21 @@ public class BackendSystem {
 		return fundStewards;
 	}
 
+	public void storeNewFundStewardProfile(FundStewardProfile fundsteward) throws Exception {
+		int nextFileIndex = findNextFileIndex("fundsteward");
+		String folderPath = "fundstewards/fundsteward" + String.valueOf(nextFileIndex);
+		File dir = new File(folderPath);
+		dir.mkdir();
+
+		// for fundstewards.txt
+		File detailsFile = new File(folderPath + ".txt");
+		FileWriter detailsWriter = new FileWriter(detailsFile, false);
+
+		// get the text that should be written to the fundstewardX.txt file, and writes it
+		detailsWriter.write(fundsteward.getDetailsFileText());
+		detailsWriter.close();
+	}
+
 	// searches a folder for a scholarship with inputted value
 	public ArrayList<Scholarship> searchScholarships(String inputCategory, String inputSearchValue) {
 		ArrayList<Scholarship> scholarshipsFound = new ArrayList<Scholarship>();
