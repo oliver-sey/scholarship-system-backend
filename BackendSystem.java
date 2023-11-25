@@ -833,27 +833,32 @@ public class BackendSystem {
 	}
 
 	//Instantiates all staff
-	/*public ArrayList<StaffProfile> InstantiateAllStaff() {
+	public ArrayList<StaffProfile> instantiateAllStaff() {
 		ArrayList<StaffProfile> staffList = new ArrayList<StaffProfile>();
+		// open the 'staff' folder
 		File dir = new File("staff");
+		// all the files/folders in the staff folder
 		File[] directoryListing = dir.listFiles();
 		StaffProfile staff;
 		int fileIndex = 1;
 
+		// loop through the list of files/folders that are in the 'staff'
+		// folder
+		// each child is for one staff
 		for (File child : directoryListing) {
 
 			try {
 				staff = readStaffProfile(fileIndex);
 				staffList.add(staff);
 			} catch (IOException except) {
-				System.out.println("File not found in InstantiateAllStaff: " + child.getAbsolutePath());
+				System.out.println("File not found in instantiateAllStaff(): " + child.getAbsolutePath());
 			}
 
 			fileIndex++;
 		}
 
 		return staffList;
-	} */
+	}
 
 	public void storeNewStaffProfile(StaffProfile staff) throws Exception {
 		int nextFileIndex = findNextFileIndex("staff");
