@@ -133,6 +133,19 @@ public class Scholarship {
         return (timeSinceDue.getYears() >= 5);
     }
 
+    /**
+     * 
+     * @return if the dateDue on this scholarship has passed, i.e. it was yesterday or before that.
+     * Returns *false if the dateDue is today
+     */
+    public boolean isPastDue() {
+        LocalDate todaysDate = LocalDate.now();
+
+        // want to return true if the due date was yesterday or before that
+        // not if it's today, since it's due tonight at midnight
+        return dateDue.isBefore(todaysDate);
+    }
+
     // getters
 
     public String getName() {
