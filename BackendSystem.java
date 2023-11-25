@@ -93,6 +93,7 @@ public class BackendSystem {
 		this.allDonors = InstantiateAllDonors();
 		this.allMatchRelationships = InstantiateAllMatches();
 		this.allAdmins = instantiateAllAdmins();
+		this.allStaff = InstantiateAllStaff();
 		// TODO: make the rest of the instantiate all methods
 	}
 
@@ -812,6 +813,29 @@ public class BackendSystem {
 		String sq3 = values.get(7);
 
 		return new StaffProfile(firstName, lastName, username, password, jobRole, sq1, sq2, sq3, fileIndex);
+	}
+
+	//Instantiates all staff
+	public ArrayList<StaffProfile> InstantiateAllStaff() {
+		ArrayList<StaffProfile> staffList = new ArrayList<StaffProfile>();
+		File dir = new File("staff");
+		File[] directoryListing = dir.listFiles();
+		StaffProfile staff;
+		int fileIndex = 1;
+
+		for (File child : directoryListing) {
+
+			try {
+				staff = readStaffProfile(fileIndex);
+				staffList.add(staff);
+			} catch (IOException except) {
+				System.out.println("File not found in InstantiateAllStaff: " + child.getAbsolutePath());
+			}
+
+			fileIndex++;
+		}
+
+		return staffList;
 	}
 
 	public FundStewardProfile readFundStewardProfile(int fileIndex) throws IOException {
