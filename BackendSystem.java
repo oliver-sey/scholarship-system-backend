@@ -20,7 +20,7 @@ public class BackendSystem {
 	private ArrayList<DonorProfile> allDonors = new ArrayList<DonorProfile>();
 	private ArrayList<AdminProfile> allAdmins = new ArrayList<AdminProfile>();
 	private ArrayList<StaffProfile> allStaff = new ArrayList<StaffProfile>();
-	private ArrayList<FundStewardProfile> allFundStewards = new ArrayList<FundStewardProfile>();
+	//private ArrayList<FundStewardProfile> allFundStewards = new ArrayList<FundStewardProfile>();
 
 	// my (Oliver) suggestion is to replace the code below within the stars,
 	// with this code within the pluses
@@ -94,8 +94,8 @@ public class BackendSystem {
 		this.allDonors = InstantiateAllDonors();
 		this.allMatchRelationships = InstantiateAllMatches();
 		this.allAdmins = instantiateAllAdmins();
-		//this.allStaff = InstantiateAllStaff();
-		//this.allFundStewards = InstantiateAllFundStewards();
+		this.allStaff = InstantiateAllStaff();
+		//this.allFundStewards = instantiateAllFundStewards();
 		// TODO: make the rest of the instantiate all methods
 	}
 
@@ -833,7 +833,7 @@ public class BackendSystem {
 	}
 
 	//Instantiates all staff
-	public ArrayList<StaffProfile> instantiateAllStaff() {
+	public ArrayList<StaffProfile> InstantiateAllStaff() {
 		ArrayList<StaffProfile> staffList = new ArrayList<StaffProfile>();
 		// open the 'staff' folder
 		File dir = new File("staff");
@@ -900,20 +900,25 @@ public class BackendSystem {
 	}
 
 	//Instantiates all fund stewards
-	/*public ArrayList<FundStewardProfile> InstantiateAllFundStewards() {
+	/*public ArrayList<FundStewardProfile> instantiateAllFundStewards() {
 		ArrayList<FundStewardProfile> fundStewards = new ArrayList<FundStewardProfile>();
-		File dir = new File("fundstewards");
+		// open the 'staff' folder
+		File dir = new File("fundsteward");
+		// all the files/folders in the fundsteward folder
 		File[] directoryListing = dir.listFiles();
 		FundStewardProfile fundSteward;
 		int fileIndex = 1;
 
+		// loop through the list of files/folders that are in the 'fundSteward'
+		// folder
+		// each child is for one fund steward
 		for (File child : directoryListing) {
 
 			try {
 				fundSteward = readFundStewardProfile(fileIndex);
 				fundStewards.add(fundSteward);
 			} catch (IOException except) {
-				System.out.println("File not found: " + child.getAbsolutePath());
+				System.out.println("File not found in instantiateAllFundStewards(): " + child.getAbsolutePath());
 			}
 
 			fileIndex++;
