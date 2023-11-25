@@ -792,6 +792,21 @@ public class BackendSystem {
 		return new AdminProfile(firstName, lastName, username, password, sq1, sq2, sq3, fileIndex);
 	}
 
+	public void storeNewAdminProfile(AdminProfile admin) throws Exception {
+		int nextFileIndex = findNextFileIndex("admin");
+		String folderPath = "administrators/admin" + String.valueOf(nextFileIndex);
+		File dir = new File(folderPath);
+		dir.mkdir();
+
+		// for admin.txt
+		File detailsFile = new File(folderPath + ".txt");
+		FileWriter detailsWriter = new FileWriter(detailsFile, false);
+
+		// get the text that should be written to the adminx.txt file, and writes it
+		detailsWriter.write(admin.getDetailsFileText());
+		detailsWriter.close();
+	}
+
 	public StaffProfile readStaffProfile(int fileIndex) throws IOException {
 		String folderPath = "staff/staff" + String.valueOf(fileIndex);
 		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath));
