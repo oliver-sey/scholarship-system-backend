@@ -94,8 +94,8 @@ public class BackendSystem {
 		this.allDonors = InstantiateAllDonors();
 		this.allMatchRelationships = InstantiateAllMatches();
 		this.allAdmins = instantiateAllAdmins();
-		this.allStaff = InstantiateAllStaff();
-		this.allFundStewards = InstantiateAllFundStewards();
+		//this.allStaff = InstantiateAllStaff();
+		//this.allFundStewards = InstantiateAllFundStewards();
 		// TODO: make the rest of the instantiate all methods
 	}
 
@@ -833,7 +833,7 @@ public class BackendSystem {
 	}
 
 	//Instantiates all staff
-	public ArrayList<StaffProfile> InstantiateAllStaff() {
+	/*public ArrayList<StaffProfile> InstantiateAllStaff() {
 		ArrayList<StaffProfile> staffList = new ArrayList<StaffProfile>();
 		File dir = new File("staff");
 		File[] directoryListing = dir.listFiles();
@@ -853,7 +853,7 @@ public class BackendSystem {
 		}
 
 		return staffList;
-	}
+	} */
 
 	public void storeNewStaffProfile(StaffProfile staff) throws Exception {
 		int nextFileIndex = findNextFileIndex("staff");
@@ -895,7 +895,7 @@ public class BackendSystem {
 	}
 
 	//Instantiates all fund stewards
-	public ArrayList<FundStewardProfile> InstantiateAllFundStewards() {
+	/*public ArrayList<FundStewardProfile> InstantiateAllFundStewards() {
 		ArrayList<FundStewardProfile> fundStewards = new ArrayList<FundStewardProfile>();
 		File dir = new File("fundstewards");
 		File[] directoryListing = dir.listFiles();
@@ -915,7 +915,7 @@ public class BackendSystem {
 		}
 
 		return fundStewards;
-	}
+	}*/
 
 	// searches a folder for a scholarship with inputted value
 	public ArrayList<Scholarship> searchScholarships(String inputCategory, String inputSearchValue) {
