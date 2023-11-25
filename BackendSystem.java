@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
@@ -367,6 +368,51 @@ public class BackendSystem {
 		}
 
 		return scholarships;
+	}
+
+	/**
+	 * uses Scholarship.isPastDue() to check if scholarships were due yesterday or before (the due date has passed)
+	 * sets scholarships that were due in the past, to archived
+	 * @return - the number of scholarships that we set to archived. Don't have to do anything with this value,
+	 * I just decided to add it
+	 */
+	public int archivePastDueScholarships() {
+		int numSetToArchived = 0;
+		
+		for (int i = 0; i < allScholarships.size(); i++) {
+			// if the due date has passed, set it to archived
+			if (allScholarships.get(i).isPastDue()) {
+				allScholarships.get(i).setArchived(true);
+				numSetToArchived++;
+			}
+		}
+
+		return numSetToArchived;
+	}
+
+	// TODO: do we need this? just wanted to get something started - Oliver
+	/**
+	 * 
+	 * @return the number of scholarships deleted, not sure if we'll need this value
+	 * but it can't hurt to have
+	 */
+	public int deleteScholsDue5PlusYrsAgo() {
+		int numDeleted = 0;
+
+		// have to use an iterator because Java won't let you iterate through 
+		// and delete at the same time with a loop
+		Iterator<Scholarship> itr = allScholarships.iterator();
+
+		// loop through allScholarships
+		while (itr.hasNext()) {
+			// if the current scholarship's dateDue was 5 years ago or longer, delete it
+			if (itr.next().due5PlusYearsAgo()) {
+				itr.remove();
+				numDeleted++;
+			}
+		}
+
+		return numDeleted;
 	}
 
 	public void storeNewScholarship(Scholarship scholarship) throws IOException {
