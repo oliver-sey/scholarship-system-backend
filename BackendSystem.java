@@ -887,7 +887,7 @@ public class BackendSystem {
 		detailsWriter.close();
 	}
 
-		// writes student profile data to file
+	// writes staff profile data to file
 	public void updateStaffProfileFile(StaffProfile staff) throws IOException {
 		String folderPath = "staff/staff" + String.valueOf(staff.getFileIndex());
 
@@ -964,6 +964,18 @@ public class BackendSystem {
 		// get the text that should be written to the fundstewardX.txt file, and writes it
 		detailsWriter.write(fundsteward.getDetailsFileText());
 		detailsWriter.close();
+	}
+
+	// writes fund steward profile data to file
+	public void updateFundStewardProfileFile(FundStewardProfile fundsteward) throws IOException {
+		String folderPath = "fundstewards/fundsteward" + String.valueOf(fundsteward.getFileIndex());
+
+		File detailsF = new File(folderPath + ".txt");
+		FileWriter detailsW = new FileWriter(detailsF, false);
+
+		detailsW.write(fundsteward.getDetailsFileText());
+
+		detailsW.close();
 	}
 
 	// searches a folder for a scholarship with inputted value
