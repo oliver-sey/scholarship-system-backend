@@ -855,6 +855,21 @@ public class BackendSystem {
 		return staffList;
 	}
 
+	public void storeNewStaffProfile(StaffProfile staff) throws Exception {
+		int nextFileIndex = findNextFileIndex("staff");
+		String folderPath = "staff/staff" + String.valueOf(nextFileIndex);
+		File dir = new File(folderPath);
+		dir.mkdir();
+
+		// for staff.txt
+		File detailsFile = new File(folderPath + ".txt");
+		FileWriter detailsWriter = new FileWriter(detailsFile, false);
+
+		// get the text that should be written to the staffX.txt file, and writes it
+		detailsWriter.write(staff.getDetailsFileText());
+		detailsWriter.close();
+	}
+
 	public FundStewardProfile readFundStewardProfile(int fileIndex) throws IOException {
 		String folderPath = "fundstewards/fundsteward" + String.valueOf(fileIndex);
 		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath));
