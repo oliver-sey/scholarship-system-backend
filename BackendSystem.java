@@ -20,7 +20,7 @@ public class BackendSystem {
 	private ArrayList<DonorProfile> allDonors = new ArrayList<DonorProfile>();
 	private ArrayList<AdminProfile> allAdmins = new ArrayList<AdminProfile>();
 	private ArrayList<StaffProfile> allStaff = new ArrayList<StaffProfile>();
-	//private ArrayList<FundStewardProfile> allFundStewards = new ArrayList<FundStewardProfile>();
+	private ArrayList<FundStewardProfile> allFundStewards = new ArrayList<FundStewardProfile>();
 
 	// my (Oliver) suggestion is to replace the code below within the stars,
 	// with this code within the pluses
@@ -95,7 +95,7 @@ public class BackendSystem {
 		this.allMatchRelationships = InstantiateAllMatches();
 		this.allAdmins = instantiateAllAdmins();
 		this.allStaff = InstantiateAllStaff();
-		//this.allFundStewards = instantiateAllFundStewards();
+		this.allFundStewards = instantiateAllFundStewards();
 		// TODO: make the rest of the instantiate all methods
 	}
 
@@ -900,10 +900,10 @@ public class BackendSystem {
 	}
 
 	//Instantiates all fund stewards
-	/*public ArrayList<FundStewardProfile> instantiateAllFundStewards() {
+	public ArrayList<FundStewardProfile> instantiateAllFundStewards() {
 		ArrayList<FundStewardProfile> fundStewards = new ArrayList<FundStewardProfile>();
-		// open the 'staff' folder
-		File dir = new File("fundsteward");
+		// open the 'fundstewards' folder
+		File dir = new File("fundstewards");
 		// all the files/folders in the fundsteward folder
 		File[] directoryListing = dir.listFiles();
 		FundStewardProfile fundSteward;
@@ -925,7 +925,7 @@ public class BackendSystem {
 		}
 
 		return fundStewards;
-	}*/
+	}
 
 	// searches a folder for a scholarship with inputted value
 	public ArrayList<Scholarship> searchScholarships(String inputCategory, String inputSearchValue) {
