@@ -27,4 +27,15 @@ public class AdminProfile extends Profile {
         this.fileIndex = fileIndex;
     }  
 
+    //gets the details from the admin profile needed to enter on a file
+    public String getDetailsFileText() {
+        return this.firstName + "\n" +
+        this.lastName + "\n" +
+        this.username + "\n" +
+        this.password + "\n" +
+        this.securityQAnswers[0] + "\n" +
+		this.securityQAnswers[1] + "\n" +
+		this.securityQAnswers[2];
+    }
+
 }
