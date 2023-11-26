@@ -13,7 +13,7 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		BackendSystem backend = new BackendSystem();
 		// userRunSystem will prompt them to log in
-		// userRunSystem(backend);
+		userRunSystem(backend);
 
 		runDifferentTests();
 
@@ -115,28 +115,36 @@ public class Main {
 				// if they want to view unapproved scholarships to approve them
 				if (userSelection == 1) {
 					System.out.println("Unapproved scholarships:");
+					// TODO: clean this up!!!
+					// ****old code:
 					// get all the unapproved scholarships and print a number and the scholarship name and description
-					ArrayList<Scholarship> unapprovedSchols = new ArrayList<Scholarship>();
-					for (int i = 0; i < unapprovedSchols.size(); i++) {
-						System.out.println((i + 1) + ": " + unapprovedSchols.get(i).getName());
-						System.out.println(unapprovedSchols.get(i).getDescription());
-						System.out.println();
-					}
+					// ArrayList<Scholarship> unapprovedSchols = new ArrayList<Scholarship>();
+					// for (int i = 0; i < unapprovedSchols.size(); i++) {
+					// 	System.out.println((i + 1) + ": " + unapprovedSchols.get(i).getName());
+					// 	System.out.println(unapprovedSchols.get(i).getDescription());
+					// 	System.out.println();
+					// }
+
+					// call printAllScholarships, we want basic info and only unapproved scholarships
+					backend.printAllScholarships(false, false, false, true);
 
 					// prompt them to approve one scholarship
 
-					int scholNumToApprove = -1;
+					int scholFileIndexToApprove = -1;
 					do {
-						System.out.print("Please enter a scholarship number that you want to approve, or -1 if you are done: ");
-						scholNumToApprove = scnr.nextInt();
+						System.out.print("Please enter a scholarship file index that you want to approve, or -1 if you are done: ");
+						scholFileIndexToApprove = scnr.nextInt();
 
 						// if they want to approve a scholarship
-						if (scholNumToApprove != -1) {
+						if (scholFileIndexToApprove != -1) {
 							// TODO: will this go all the way through the chain of pointers and actually change the original scholarship object????
 							System.out.println("Setting the scholarship to approved");
-							unapprovedSchols.get(scholNumToApprove).setApproved(true);
+							// unapprovedSchols.get(scholFileIndexToApprove).setApproved(true);
+							backend.getOneScholarshipByFileIndex(scholFileIndexToApprove).setApproved(true);
+
+							System.out.println("Checking if the scholarship was actually successfully approved. isApproved: " + backend.getOneScholarshipByFileIndex(scholFileIndexToApprove).getIsApproved());
 						}
-					} while(scholNumToApprove != -1);
+					} while(scholFileIndexToApprove != -1);
 				}
 
 				else if (userSelection > 1) {
@@ -169,7 +177,7 @@ public class Main {
 			System.out.println("4 - test updateDonorProfileFile()");
 			System.out.println("5 - print all of one thing, can customize");
 			System.out.println("6 - test storeNewDonorProfile()");
-			System.out.println("7 - login as an admin and then approve scholarships");
+			System.out.println("7 - (**OUTDATED, use oneUserAction() method) login as an admin and then approve 1 preselected scholarship");
 			System.out.println("8 - Edit student profile manually");
 			System.out.println("9 - Test printOneScholarship and printAllScholarships");
 
@@ -288,6 +296,7 @@ public class Main {
 				System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
 			}
 
+			// replacing this with code in user actions method
 			else if (userSelection == 7) {
 				BackendSystem backend = new BackendSystem();
 
