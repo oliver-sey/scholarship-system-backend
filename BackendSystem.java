@@ -2006,4 +2006,45 @@ public class BackendSystem {
 		return StaffObj;
 	}
 
+	//Q&A with student, passing in obj to create student profile with appropriate associated information
+	//TODO: (MiLee) basic outline of same Q&A as other profiles, not sure if we need to expand with more values?
+	public StudentProfile getStudentFromInput(){
+
+		StudentProfile StudentObj = new StudentProfile();
+		String firstName, lastName, username, password, securityQuestion1, securityQuestion2, securityQuestion3; 
+		Scanner scnr = new Scanner(System.in);
+
+		System.out.println("Please enter in your first name.");
+		firstName = scnr.nextLine();
+		StudentObj.setFirstName(firstName);
+
+		System.out.println("Please enter in your last name.");
+		lastName = scnr.nextLine();
+		StudentObj.setLastName(lastName);
+
+		System.out.println("Please enter in your username.");
+		username = scnr.nextLine();
+		StudentObj.setUsername(username);
+
+		System.out.println("Please enter in your password.");
+		password = scnr.nextLine();
+		StudentObj.setPassword(password);
+
+		System.out.println("Please enter in your response for the first security question which is the following: What is your mother's maiden name?");
+		securityQuestion1 = scnr.nextLine();
+		StudentObj.setOneSecurityQAnswer(1, securityQuestion1);
+
+		System.out.println("Please enter in your response for the first security question which is the following: What is the mascot of your middle school?");
+		securityQuestion2 = scnr.nextLine();
+		StudentObj.setOneSecurityQAnswer(2, securityQuestion2);
+		
+		System.out.println("Please enter in your response for the first security question which is the following: What is the name of the city you were born in?");
+		securityQuestion3 = scnr.nextLine();
+		StudentObj.setOneSecurityQAnswer(3, securityQuestion3);
+
+		scnr.close();
+
+		return StudentObj;
+	}
+
 }
