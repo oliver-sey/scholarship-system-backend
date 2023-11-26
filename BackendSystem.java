@@ -1670,10 +1670,12 @@ public class BackendSystem {
 				student.setPersonalStatement(newStatement);
 			}
 
+			// if they entered a valid choice number, 1 through 19
 			if (choice <= 19 && choice >= 1) {
 				System.out.print("Would you like to change anything else? (y/n)");
 				if (scnr.nextLine().compareTo("n") == 0) {
 					end = true;
+					// TODO: when does the profile file get updated??
 					// updateStudentProfileFile(student);
 				}
 			} else {
