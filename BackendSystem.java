@@ -989,7 +989,7 @@ public class BackendSystem {
 	public void printOneScholarshipBasic(int fileIndex) {
 		Scholarship requestedSchol = getOneScholarshipByFileIndex(fileIndex);
 
-		System.out.println("Scholarship with ID #" + fileIndex + ": " + requestedSchol.getName() 
+		System.out.println("\nScholarship with ID #" + fileIndex + ": " + requestedSchol.getName() 
 		+ ", " + requestedSchol.getDescription());
 		
 		System.out.printf("Award amount: $%.2f, ", requestedSchol.getAwardAmount());
@@ -1005,7 +1005,7 @@ public class BackendSystem {
 		// first call the basic print method
 		printOneScholarshipBasic(fileIndex);
 
-		System.out.println("Requirements for this scholarship (if there are multiple values for e.g. major, all are accepted):");
+		System.out.println("\nRequirements for this scholarship (if there are multiple values for e.g. major, all are accepted):");
 		Scholarship requestedSchol = getOneScholarshipByFileIndex(fileIndex);
 		// TODO: print more here!!
 		// (for this scholarship), loop through the key-value pairs of a requirement and the accepted values, and print that
@@ -1622,7 +1622,8 @@ public class BackendSystem {
 				System.out.println("6: Minor: none");
 			}
 			System.out.println("7: US Citizen: " + student.getIsUSCitizen());
-			System.out.println("8: GPA: " + student.getGPA());
+			System.out.printf("8: GPA: %.3f", student.getGPA());
+			System.out.println();
 			System.out.println("9: In good standing?: " + student.getInGoodStanding());
 			System.out.println("10: Has advanced standing?: " + student.getHasAdvStanding());
 			System.out.println("11: Year: " + student.getGradeLevel());
@@ -1631,16 +1632,23 @@ public class BackendSystem {
 			System.out.println("14: Gender: " + student.getGender());
 			System.out.println("15: Is a full-time student?: " + student.getIsFullTimeStudent());
 			System.out.println("16: Is a transfer student?: " + student.getIsTransferStudent());
-			System.out.println("17: Number of credits: " + student.getCurNumCredits());
-			System.out.println("18: Receives credit?: " + student.getReceivesFunding());
+			System.out.println("17: Receives funding?: " + student.getReceivesFunding());
+			System.out.println("18: Number of credits: " + student.getCurNumCredits());
 			System.out.println("19: Personal statement: " + student.getPersonalStatement());
 
 			Scanner scnr = new Scanner(System.in);
 
-			System.out.print("Enter the number of the profile attribute you would like to change: ");
+			System.out.print("\nEnter the number of the profile attribute you would like to change, or -1 to exit: ");
 			choice = scnr.nextInt();
 
-			if (choice == 1) {
+			// -1, the user wants to exit
+			if (choice == -1) {
+				// just stop the loop
+				end = true;
+			}
+
+			// Choice 1: first name (String)
+			else if (choice == 1) {
 				scnr.nextLine();
 				System.out.print("Enter the new first name: ");
 				String newFirstName = scnr.nextLine();
@@ -1712,6 +1720,7 @@ public class BackendSystem {
 					String newMinor = scnr.nextLine();
 
 					student.setMinor(newMinor);
+					student.setHasAMinor(true);
 				}
 			}
 
@@ -1752,14 +1761,14 @@ public class BackendSystem {
 
 			// Choice 12: Graduation Month (int)
 			else if (choice == 12) {
-				System.out.print("Enter the new graduation month: ");
+				System.out.print("Enter the new graduation month (in number form with 2 digits): ");
 				int newMonth = scnr.nextInt();
 				student.setGradMonth(newMonth);
 			}
 
 			// Choice 13: Graduation Year (int)
 			else if (choice == 13) {
-				System.out.print("Enter the new graduation year: ");
+				System.out.print("Enter the new graduation year (with 4 digits): ");
 				int newYear = scnr.nextInt();
 				student.setGradYear(newYear);
 			}
@@ -1807,11 +1816,12 @@ public class BackendSystem {
 
 			// if they entered a valid choice number, 1 through 19
 			if (choice <= 19 && choice >= 1) {
-				System.out.print("Would you like to change anything else? (y/n)");
-				if (scnr.nextLine().compareTo("n") == 0) {
+				scnr.nextLine();
+				System.out.print("Would you like to change anything else? (y/n): ");
+				if (scnr.next().equals("n")) {
 					end = true;
-					// TODO: when does the profile file get updated??
-					// updateStudentProfileFile(student);
+					
+					//updateStudentProfileFile(student);
 				}
 			} else {
 				System.out.print("Please enter the number of your choice.");
@@ -1819,6 +1829,7 @@ public class BackendSystem {
 		}
 	}
 
+	// this could work with the printAllScholarships method
 	public void browseScholarships() {
 		/*
 		 * 1. display 10 scholarship names
