@@ -2,6 +2,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.script.ScriptEngine;
 
@@ -330,6 +331,38 @@ public class Scholarship {
 
     public void setDateDue(String dateDueString) {
         this.dateDue = LocalDate.parse(dateDueString);
+    }
+
+    public String getBasicInfoString() {
+        String info;
+
+        info = "Scholarship with ID #" + fileIndex + ": " + this.name + "\n";
+	
+        info += "Award amount: " + String.format("%.2f", this.awardAmount) + "\n";
+		
+		info += "Due at the end of the day on: " + this.getDateDueString() + ", (format is YYYY-MM-DD)";
+
+        return info;
+    }
+
+    public String getAllInfoString() {
+        String info;
+
+        info = "Scholarship with ID #" + fileIndex + ": " + this.name + "\nDescription: " + this.description + "\n";
+	
+        info += "Award amount: " + String.format("%.2f", this.awardAmount) + "\n";
+		
+		info += "Due at the end of the day on: " + this.getDateDueString() + ", (format is YYYY-MM-DD)\n";
+
+        info += "Requirements: {\n";
+
+        for (Map.Entry<String, String> reqValuePair : this.requirements.entrySet()) {
+			info += reqValuePair.getKey() + ": " + reqValuePair.getValue() + "\n";
+		}
+
+        info += "}\n" + "Donor: " + this.donor.getName() + "\n" + "Date posted: " + getDateAddedString();
+
+        return info;
     }
 
 

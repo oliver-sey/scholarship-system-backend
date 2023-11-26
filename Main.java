@@ -337,7 +337,7 @@ public class Main {
 				BackendSystem backend = new BackendSystem();
 
 				System.out.println("\nTesting the printOneScholarship method (for #1, aka index 0):");
-				backend.printOneScholarshipBasic(1);
+				System.out.print(backend.getAllScholarships().get(1).getBasicInfoString());
 
 				System.out.println("\n\nTesting the printAllScholarships method (basic info, include archived and include approved and unapproved):");
 				backend.printAllScholarships(false, true, true, true);

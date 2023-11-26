@@ -981,39 +981,6 @@ public class BackendSystem {
 		detailsW.close();
 	}
 
-	/**
-	 * This only prints some details of the scholarship, the printOneScholarshipDetailed() method calls this and then prints more
-	 * 
-	 * @param fileIndex the fileIndex of the scholarship, can get it with getFileIndex()
-	 */
-	public void printOneScholarshipBasic(int fileIndex) {
-		Scholarship requestedSchol = getOneScholarshipByFileIndex(fileIndex);
-
-		System.out.println("Scholarship with ID #" + fileIndex + ": " + requestedSchol.getName() 
-		+ ", " + requestedSchol.getDescription());
-		
-		System.out.printf("Award amount: $%.2f, ", requestedSchol.getAwardAmount());
-		
-		System.out.println("Due at the end of the day on: " + requestedSchol.getDateDueString() + ", (format is YYYY-MM-DD)");
-	}
-
-	/**
-	 * 
-	 * @param fileIndex the fileIndex of the scholarship, can get it with getFileIndex()
-	 */
-	public void printOneScholarshipDetailed(int fileIndex) {
-		// first call the basic print method
-		printOneScholarshipBasic(fileIndex);
-
-		System.out.println("Requirements for this scholarship (if there are multiple values for e.g. major, all are accepted):");
-		Scholarship requestedSchol = getOneScholarshipByFileIndex(fileIndex);
-		// TODO: print more here!!
-		// (for this scholarship), loop through the key-value pairs of a requirement and the accepted values, and print that
-		for (Map.Entry<String, String> reqValuePair : requestedSchol.getRequirements().entrySet()) {
-			System.out.println(reqValuePair.getKey() + ": " + reqValuePair.getValue());
-		}
-		System.out.println("***have to still implement more printing in printOneScholarshipDetailed");
-	}
 	
 	/**
 	 * 
@@ -1027,16 +994,16 @@ public class BackendSystem {
 	 */
 	public void printAllScholarships(boolean detailedInfo, boolean includeArchived, boolean includeApproved, boolean includeUnapproved) {
 		// starting at 0 just in case we make a Scholarship with fileIndex 0
-		for (int fileIndex = 0; fileIndex <= getMaxScholarshipFileIndex(); fileIndex++) {
+		for (int fileIndex = 0; fileIndex <= findNextFileIndex("scholarship") - 1; fileIndex++) {
 			Scholarship requestedSchol = getOneScholarshipByFileIndex(fileIndex);
 			// if the scholarship was found when searching by fileIndex, and it's either not archived or we want to include archived ones,
 			// and it's either approved and we want to include approved scholarships, or it's not approved and we want to include unapproved scholarships
 			if (requestedSchol != null && (!requestedSchol.getIsArchived() || includeArchived) && ((requestedSchol.getIsApproved() && includeApproved) || (!requestedSchol.getIsApproved() && includeUnapproved))) {
 				if (detailedInfo) {
-					printOneScholarshipDetailed(fileIndex);
+					System.out.print(requestedSchol.getAllInfoString());
 				} 
 				else {
-					printOneScholarshipBasic(fileIndex);
+					System.out.print(requestedSchol.getBasicInfoString());
 				}
 
 				System.out.println();
