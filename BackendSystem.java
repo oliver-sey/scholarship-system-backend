@@ -27,11 +27,11 @@ public class BackendSystem {
 
 	// +++++++++++++++++++
 
-	// private Profile currentUser;
+	private Profile currentUser;
 
-	// public Profile getCurrentUser() {
-	// 	return currentUser;
-	// }
+	public Profile getCurrentUser() {
+		return currentUser;
+	}
 
 	// we should get what type of profile the current user is, with
 	// something like "if (getCurrentUser instance of StudentProfile) {}"
@@ -44,45 +44,45 @@ public class BackendSystem {
 
 	// ********************************
 	// the user that is currently using the system
-	private StudentProfile studentUser;
-	private DonorProfile donorUser;
-	private AdminProfile adminUser;
+	// private StudentProfile studentUser;
+	// private DonorProfile donorUser;
+	// private AdminProfile adminUser;
 
-	private String userType;
+	// private String userType;
 
-	// curr user setters
-	public void setCurrentUser(StudentProfile student) {
-		this.studentUser = student;
-	}
+	// // curr user setters
+	// public void setCurrentUser(StudentProfile student) {
+	// 	this.studentUser = student;
+	// }
 
-	public void setCurrentUser(DonorProfile donor) {
-		this.donorUser = donor;
-	}
+	// public void setCurrentUser(DonorProfile donor) {
+	// 	this.donorUser = donor;
+	// }
 
-	public void setCurrentUser(AdminProfile admin) {
-		this.adminUser = admin;
-	}
+	// public void setCurrentUser(AdminProfile admin) {
+	// 	this.adminUser = admin;
+	// }
 
-	public void setUserType(String type) {
-		this.userType = type;
-	}
+	// public void setUserType(String type) {
+	// 	this.userType = type;
+	// }
 
-	// curr user getters
-	public StudentProfile getStudentUser() {
-		return studentUser;
-	}
+	// // curr user getters
+	// public StudentProfile getStudentUser() {
+	// 	return studentUser;
+	// }
 
-	public AdminProfile getAdminUser() {
-		return adminUser;
-	}
+	// public AdminProfile getAdminUser() {
+	// 	return adminUser;
+	// }
 
-	public DonorProfile getDonorUser() {
-		return donorUser;
-	}
+	// public DonorProfile getDonorUser() {
+	// 	return donorUser;
+	// }
 
-	public String getUserType() {
-		return this.userType;
-	}
+	// public String getUserType() {
+	// 	return this.userType;
+	// }
 
 	// ***************************************
 
@@ -1309,11 +1309,14 @@ public class BackendSystem {
 				if (allStudents.get(i).username.equalsIgnoreCase(enteredUsername)) {
 					if (allStudents.get(i).password.equals(enteredPassword)) {
 						// store this user in the currentUser variable
-						studentUser = allStudents.get(i);
+						// studentUser = allStudents.get(i);
+						currentUser = allStudents.get(i);
 						for (int questionNum = 1; questionNum <= 3; questionNum++) {
 
-							String questionText = studentUser.getOneSecurityQuestion(questionNum);
-							String correctAnswer = studentUser.getOneSecurityQAnswer(questionNum);
+							// String questionText = studentUser.getOneSecurityQuestion(questionNum);
+							// String correctAnswer = studentUser.getOneSecurityQAnswer(questionNum);
+							String questionText = currentUser.getOneSecurityQuestion(questionNum);
+							String correctAnswer = currentUser.getOneSecurityQAnswer(questionNum);
 
 							System.out
 									.println("Please answer this security question (capitalization doesn't matter): \n"
@@ -1349,11 +1352,14 @@ public class BackendSystem {
 				if (allDonors.get(i).username.equalsIgnoreCase(enteredUsername)) {
 					if (allDonors.get(i).password.equals(enteredPassword)) {
 
-						donorUser = allDonors.get(i);
+						// donorUser = allDonors.get(i);
+						currentUser = allDonors.get(i);
 						for (int questionNum = 1; questionNum <= 3; questionNum++) {
 
-							String questionText = donorUser.getOneSecurityQuestion(questionNum);
-							String correctAnswer = donorUser.getOneSecurityQAnswer(questionNum);
+							// String questionText = donorUser.getOneSecurityQuestion(questionNum);
+							// String correctAnswer = donorUser.getOneSecurityQAnswer(questionNum);
+							String questionText = currentUser.getOneSecurityQuestion(questionNum);
+							String correctAnswer = currentUser.getOneSecurityQAnswer(questionNum);
 
 							System.out
 									.println("Please answer this security question (capitalization doesn't matter): \n"
@@ -1386,11 +1392,14 @@ public class BackendSystem {
 				if (allAdmins.get(i).username.equalsIgnoreCase(enteredUsername)) {
 					if (allAdmins.get(i).password.equals(enteredPassword)) {
 						// store this user in the currentUser variable
-						adminUser = allAdmins.get(i);
+						// adminUser = allAdmins.get(i);
+						currentUser = allAdmins.get(i);
 						for (int questionNum = 1; questionNum <= 3; questionNum++) {
-							String questionText = adminUser.getOneSecurityQuestion(questionNum);
-							String correctAnswer = adminUser.getOneSecurityQAnswer(questionNum);
+							// String questionText = adminUser.getOneSecurityQuestion(questionNum);
+							// String correctAnswer = adminUser.getOneSecurityQAnswer(questionNum);
 
+							String questionText = currentUser.getOneSecurityQuestion(questionNum);
+							String correctAnswer = currentUser.getOneSecurityQAnswer(questionNum);
 							System.out
 									.println("Please answer this security question (capitalization doesn't matter): \n"
 											+ questionText);

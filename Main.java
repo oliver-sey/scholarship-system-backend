@@ -37,6 +37,7 @@ public class Main {
 			} while (userInput != "q");
 		}
 		// else just quit
+		scnr.close();
 	}
 
 
@@ -47,8 +48,9 @@ public class Main {
 	public static void oneUserAction(BackendSystem backend) throws IOException {
 		//Scanner scnr = new Scanner(System.in);
 		int userSelection = -1;
-		// TODO: should we use clearance level?
-		if (backend.getUserType().compareTo("student") == 0) {
+		
+		// if (backend.getUserType().compareTo("student") == 0) {
+		if (backend.getCurrentUser() instanceof StudentProfile) {
 			/*
 			- edit profile
 			- see all scholarships
@@ -68,7 +70,9 @@ public class Main {
 
 				// is it as simple as this???
 				if (userSelection == 1) {
-					backend.editStudentInfo(backend.getStudentUser());
+					// typecast it to a StudentProfile because it will be a profile object,
+					// but this is ok because we will only get here if currentUser is a student object
+					backend.editStudentInfo((StudentProfile)backend.getCurrentUser());
 				}
 				// TODO: ****implement selection #2
 				else if (userSelection == 2) {
@@ -83,22 +87,26 @@ public class Main {
 
 			} while(userSelection != 0);
 		}
-		else if (backend.getUserType().compareTo("donor") == 0) {
+		// else if (backend.getUserType().compareTo("donor") == 0) {
+		else if (backend.getCurrentUser() instanceof DonorProfile) {
 			/*
 			- create and submit scholarship for review
 
 			*/
 			System.out.println("Have to still implement oneUserAction() for DonorProfile.");
 		}
-		else if (backend.getUserType().compareTo("staff") == 0) {
+		// else if (backend.getUserType().compareTo("staff") == 0) {
+		else if (backend.getCurrentUser() instanceof StaffProfile) {
 			// TODO: implement this!!
 			System.out.println("Have to still implement oneUserAction() for StaffProfile.");
 		}
-		else if (backend.getUserType().compareTo("fund steward") == 0) {
+		// else if (backend.getUserType().compareTo("fund steward") == 0) {
+		else if (backend.getCurrentUser() instanceof FundStewardProfile) {
 			// TODO: implement this!!
 			System.out.println("Have to still implement oneUserAction() for FundStewardProfile.");
 		}
-		else if (backend.getUserType().compareTo("admin") == 0) {
+		// else if (backend.getUserType().compareTo("admin") == 0) {
+		else if (backend.getCurrentUser() instanceof AdminProfile) {
 			// TODO: implement this!!
 			/*
 			 * - approve scholarships
