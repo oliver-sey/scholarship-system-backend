@@ -1870,5 +1870,129 @@ public class BackendSystem {
 		return donorObj;
 	}
 
-}
+	//Q&A with admin, passing in obj to create admin profile with appropriate associated information
+	public AdminProfile getAdminFromInput(){
 
+		AdminProfile AdminObj = new AdminProfile();
+		String firstName, lastName, username, password, securityQuestion1, securityQuestion2, securityQuestion3; 
+		Scanner scnr = new Scanner(System.in);
+
+		System.out.println("Please enter in your first name.");
+		firstName = scnr.nextLine();
+		AdminObj.setFirstName(firstName);
+
+		System.out.println("Please enter in your last name.");
+		lastName = scnr.nextLine();
+		AdminObj.setLastName(lastName);
+
+		System.out.println("Please enter in your username.");
+		username = scnr.nextLine();
+		AdminObj.setUsername(username);
+
+		System.out.println("Please enter in your password.");
+		password = scnr.nextLine();
+		AdminObj.setPassword(password);
+
+		System.out.println("Please enter in your response for the first security question which is the following: What is your mother's maiden name?");
+		securityQuestion1 = scnr.nextLine();
+		AdminObj.setOneSecurityQAnswer(1, securityQuestion1);
+
+		System.out.println("Please enter in your response for the first security question which is the following: What is the mascot of your middle school?");
+		securityQuestion2 = scnr.nextLine();
+		AdminObj.setOneSecurityQAnswer(2, securityQuestion2);
+		
+		System.out.println("Please enter in your response for the first security question which is the following: What is the name of the city you were born in?");
+		securityQuestion3 = scnr.nextLine();
+		AdminObj.setOneSecurityQAnswer(3, securityQuestion3);
+
+		scnr.close();
+
+		return AdminObj;
+	}
+
+	//Q&A with fundSteward, passing in obj to create fundSteward profile with appropriate associated information
+	public FundStewardProfile getFundStewardFromInput(){ 
+
+		FundStewardProfile FundStewardObj = new FundStewardProfile();
+		String firstName, lastName, username, password, securityQuestion1, securityQuestion2, securityQuestion3; 
+		Scanner scnr = new Scanner(System.in);
+
+		System.out.println("Please enter in your first name.");
+		firstName = scnr.nextLine();
+		FundStewardObj.setFirstName(firstName);
+
+		System.out.println("Please enter in your last name.");
+		lastName = scnr.nextLine();
+		FundStewardObj.setLastName(lastName);
+
+		System.out.println("Please enter in your username.");
+		username = scnr.nextLine();
+		FundStewardObj.setUsername(username);
+
+		System.out.println("Please enter in your password.");
+		password = scnr.nextLine();
+		FundStewardObj.setPassword(password);
+
+		System.out.println("Please enter in your response for the first security question which is the following: What is your mother's maiden name?");
+		securityQuestion1 = scnr.nextLine();
+		FundStewardObj.setOneSecurityQAnswer(1, securityQuestion1);
+
+		System.out.println("Please enter in your response for the first security question which is the following: What is the mascot of your middle school?");
+		securityQuestion2 = scnr.nextLine();
+		FundStewardObj.setOneSecurityQAnswer(2, securityQuestion2);
+		
+		System.out.println("Please enter in your response for the first security question which is the following: What is the name of the city you were born in?");
+		securityQuestion3 = scnr.nextLine();
+		FundStewardObj.setOneSecurityQAnswer(3, securityQuestion3);
+
+		scnr.close();
+
+		return FundStewardObj;
+	}
+
+	//Q&A with staff, passing in obj to create staff profile with appropriate associated information
+	public StaffProfile getStaffFromInput(){ 
+
+		StaffProfile StaffObj = new StaffProfile();
+		String firstName, lastName, username, password, jobRole, securityQuestion1, securityQuestion2, securityQuestion3; 
+		Scanner scnr = new Scanner(System.in);
+
+		System.out.println("Please enter in your first name.");
+		firstName = scnr.nextLine();
+		StaffObj.setFirstName(firstName);
+
+		System.out.println("Please enter in your last name.");
+		lastName = scnr.nextLine();
+		StaffObj.setLastName(lastName);
+
+		System.out.println("Please enter in your username.");
+		username = scnr.nextLine();
+		StaffObj.setUsername(username);
+
+		System.out.println("Please enter in your password.");
+		password = scnr.nextLine();
+		StaffObj.setPassword(password);
+
+		System.out.println("Please enter in your job Role.");
+		jobRole = scnr.nextLine();
+		//getting errors for calling function setJobRole for some reason
+		//StaffObj.setJobRole(jobRole);
+
+		System.out.println("Please enter in your response for the first security question which is the following: What is your mother's maiden name?");
+		securityQuestion1 = scnr.nextLine();
+		StaffObj.setOneSecurityQAnswer(1, securityQuestion1);
+
+		System.out.println("Please enter in your response for the first security question which is the following: What is the mascot of your middle school?");
+		securityQuestion2 = scnr.nextLine();
+		StaffObj.setOneSecurityQAnswer(2, securityQuestion2);
+		
+		System.out.println("Please enter in your response for the first security question which is the following: What is the name of the city you were born in?");
+		securityQuestion3 = scnr.nextLine();
+		StaffObj.setOneSecurityQAnswer(3, securityQuestion3);
+
+		scnr.close();
+
+		return StaffObj;
+	}
+
+}
