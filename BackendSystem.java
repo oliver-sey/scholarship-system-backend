@@ -989,7 +989,7 @@ public class BackendSystem {
 	public void printOneScholarshipBasic(int fileIndex) {
 		Scholarship requestedSchol = getOneScholarshipByFileIndex(fileIndex);
 
-		System.out.println("Scholarship with ID #" + fileIndex + ": " + requestedSchol.getName() 
+		System.out.println("\nScholarship with ID #" + fileIndex + ": " + requestedSchol.getName() 
 		+ ", " + requestedSchol.getDescription());
 		
 		System.out.printf("Award amount: $%.2f, ", requestedSchol.getAwardAmount());
@@ -1005,7 +1005,7 @@ public class BackendSystem {
 		// first call the basic print method
 		printOneScholarshipBasic(fileIndex);
 
-		System.out.println("Requirements for this scholarship (if there are multiple values for e.g. major, all are accepted):");
+		System.out.println("\nRequirements for this scholarship (if there are multiple values for e.g. major, all are accepted):");
 		Scholarship requestedSchol = getOneScholarshipByFileIndex(fileIndex);
 		// TODO: print more here!!
 		// (for this scholarship), loop through the key-value pairs of a requirement and the accepted values, and print that
