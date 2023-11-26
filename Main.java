@@ -11,9 +11,9 @@ public class Main {
 
 	public static Scanner scnr = new Scanner(System.in);
 	public static void main(String[] args) throws Exception {
-		BackendSystem backend = new BackendSystem();
+		//BackendSystem backend = new BackendSystem();
 		// userRunSystem will prompt them to log in
-		userRunSystem(backend);
+		//userRunSystem(backend);
 
 		runDifferentTests();
 
@@ -312,6 +312,9 @@ public class Main {
 				3.6, true, true, "Freshman", 5, 2025, "Female", true, false, 12, false, "I love school!", "Smith",
 				"The eagles", "New York");
 
+				backend.setCurrentUser(newStudent);
+
+				System.out.println(backend.getCurrentUser().toString());
 				
 			}
 

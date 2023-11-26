@@ -33,6 +33,9 @@ public class BackendSystem {
 		return currentUser;
 	}
 
+	public void setCurrentUser(Profile newUser) {
+		this.currentUser = newUser;
+	}
 	// we should get what type of profile the current user is, with
 	// something like "if (getCurrentUser instance of StudentProfile) {}"
 
@@ -820,7 +823,7 @@ public class BackendSystem {
 	}
 
 	public StaffProfile readStaffProfile(int fileIndex) throws IOException {
-		String folderPath = "staff/staff" + String.valueOf(fileIndex);
+		String folderPath = "staff/staff" + String.valueOf(fileIndex) + ".txt";
 		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath));
 
 		ArrayList<String> values = new ArrayList<String>();
@@ -900,7 +903,7 @@ public class BackendSystem {
 	}
 
 	public FundStewardProfile readFundStewardProfile(int fileIndex) throws IOException {
-		String folderPath = "fundstewards/fundsteward" + String.valueOf(fileIndex);
+		String folderPath = "fundstewards/fundsteward" + String.valueOf(fileIndex) + ".txt";
 		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath));
 
 		ArrayList<String> values = new ArrayList<String>();
