@@ -1830,4 +1830,46 @@ public class BackendSystem {
 		 */
 	}
 
+
+	//Q&A with donor, passing in obj to create donor profile with appropriate associated information
+	public DonorProfile getDonorFromInput(){
+
+		DonorProfile donorObj = new DonorProfile();
+		String firstName, lastName, username, password, securityQuestion1, securityQuestion2, securityQuestion3; 
+		Scanner scnr = new Scanner(System.in);
+
+		System.out.println("Please enter in your first name.");
+		firstName = scnr.nextLine();
+		donorObj.setFirstName(firstName);
+
+		System.out.println("Please enter in your last name.");
+		lastName = scnr.nextLine();
+		donorObj.setLastName(lastName);
+
+		System.out.println("Please enter in your username.");
+		username = scnr.nextLine();
+		donorObj.setUsername(username);
+
+		System.out.println("Please enter in your password.");
+		password = scnr.nextLine();
+		donorObj.setPassword(password);
+
+		System.out.println("Please enter in your response for the first security question which is the following: What is your mother's maiden name?");
+		securityQuestion1 = scnr.nextLine();
+		donorObj.setOneSecurityQAnswer(1, securityQuestion1);
+
+		System.out.println("Please enter in your response for the first security question which is the following: What is the mascot of your middle school?");
+		securityQuestion2 = scnr.nextLine();
+		donorObj.setOneSecurityQAnswer(2, securityQuestion2);
+		
+		System.out.println("Please enter in your response for the first security question which is the following: What is the name of the city you were born in?");
+		securityQuestion3 = scnr.nextLine();
+		donorObj.setOneSecurityQAnswer(3, securityQuestion3);
+
+		scnr.close();
+
+		return donorObj;
+	}
+
 }
+
