@@ -19,8 +19,8 @@ public class Main {
 
 	}
 
-	// prompt the user to log in and get their 
-	public static void userRunSystem(BackendSystem backend) {
+	// prompt the user to log in and answer security questions, and then let them perform one action at a time, until they want to quit 
+	public static void userRunSystem(BackendSystem backend) throws IOException {
 		// prompt the user to log in, when this line of code is done they are successfully logged in or the system should stop
 		boolean successfulLogin = backend.login();
 
