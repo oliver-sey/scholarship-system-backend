@@ -50,6 +50,7 @@ public class StudentProfile extends Profile {
 		this.securityQAnswers[2] = securityQAnswer3;
 	}
 
+	//constructor for writing information in
 	public StudentProfile(String firstName, String lastName, int studentID, String username, String password,
 			String major, boolean hasAMinor, String minor, boolean isUSCitizen, double GPA,
 			boolean inGoodStanding, boolean hasAdvStanding, String gradeLevel, int gradMonth, int gradYear,
@@ -338,6 +339,10 @@ public class StudentProfile extends Profile {
 		this.isTransferStudent = inputIsTransferStudent;
 	}
 
+	public void setIsUSCitizen(boolean inputIsUSCitizen) {
+		this.isUSCitizen = inputIsUSCitizen;
+	}
+
 	// a setter for int curNumCredits
 	public void setCurNumCredits(int inputCurNumCredits) {
 		// TODO: what is a reasonable lower and upper limit for a number of credits?
@@ -371,6 +376,11 @@ public class StudentProfile extends Profile {
 	public void setFileIndex(int fileIndex) {
 		this.fileIndex = fileIndex;
 	}
+
+
+	public void addScholarship(Scholarship newScholarship) {
+        awardsReceived.add(newScholarship);
+    }
 
 	public String getFileText() {
 		return this.firstName + "\n" +

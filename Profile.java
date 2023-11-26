@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * An abstract class for a Profile, that will be the parent class for
  * StudentProfile and more
@@ -14,7 +16,7 @@ public abstract class Profile {
 
 	// the questions and the answers for the 3 security questions
 	// setting the length to 3 because we know there will be 3 questions
-	protected String[] securityQuestions = new String[3];
+	protected String[] securityQuestions = {"Your mother's maiden name?", "You middle school's mascot?", "The city you were born in?"};
 	protected String[] securityQAnswers = new String[3];
 
 	// Clearance Level?
@@ -55,7 +57,8 @@ public abstract class Profile {
 	 * @return the String text of the question that's at index (questionNum + 1)
 	 */
 	public String getOneSecurityQuestion(int questionNum) {
-		return this.securityQuestions[questionNum + 1];
+		// subtract 1 because for inputs 1, 2, 3 we want the elements at index 0, 1, 2
+		return this.securityQuestions[questionNum - 1];
 	}
 
 	public String[] getAllSecurityQAnswers() {
@@ -68,7 +71,8 @@ public abstract class Profile {
 	 * @return the String text of the answer that's at index (questionNum + 1)
 	 */
 	public String getOneSecurityQAnswer(int questionNum) {
-		return this.securityQAnswers[questionNum + 1];
+		// same as in getOneSecurityQuestion() above, subtract 1 because for inputs 1, 2, 3 we want the elements at index 0, 1, 2
+		return this.securityQAnswers[questionNum - 1];
 	}
 
 	// remember that there might be restrictions on what values we want to allow the
@@ -100,7 +104,7 @@ public abstract class Profile {
 	 *                    This should be 1, 2, or 3
 	 */
 	public void setOneSecurityQuestion(int questionNum, String questionText) {
-		this.securityQuestions[questionNum + 1] = questionText;
+		this.securityQuestions[questionNum - 1] = questionText;
 	}
 
 	public void setAllSecurityQAnswers(String[] securityQAnswers) {
@@ -112,6 +116,13 @@ public abstract class Profile {
 	 *                    This should be 1, 2, or 3
 	 */
 	public void setOneSecurityQAnswer(int questionNum, String answerText) {
-		this.securityQAnswers[questionNum + 1] = answerText;
+		this.securityQAnswers[questionNum - 1] = answerText;
+	}
+
+	@Override
+	public String toString() {
+		return "firstName=" + firstName + ", lastName=" + lastName + ", username=" + username + ", password="
+				+ password + ", clearanceLevel=" + clearanceLevel + ", fileIndex=" + fileIndex + ", securityQuestions="
+				+ Arrays.toString(securityQuestions) + ", securityQAnswers=" + Arrays.toString(securityQAnswers);
 	}
 }

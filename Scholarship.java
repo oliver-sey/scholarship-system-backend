@@ -125,12 +125,28 @@ public class Scholarship {
     public boolean due5PlusYearsAgo() {
         LocalDate todaysDate = LocalDate.now();
         
+        // *****very important note: if you use Period to get the difference between dates 
+        // that are e.g. 3 months and 2 days apart, and do getDays(), it will be 2 days
+
         // the time from the due date to today's date, can be either positive or negative
         Period timeSinceDue = Period.between(this.getDateDue(), todaysDate);
 
         // return true if it was due 5 years ago or longer than that
         // if it's 4 years and 364 days it's still ok, but after 5 years it should be archived
         return (timeSinceDue.getYears() >= 5);
+    }
+
+    /**
+     * 
+     * @return if the dateDue on this scholarship has passed, i.e. it was yesterday or before that.
+     * Returns *false if the dateDue is today
+     */
+    public boolean isPastDue() {
+        LocalDate todaysDate = LocalDate.now();
+
+        // want to return true if the due date was yesterday or before that
+        // not if it's today, since it's due tonight at midnight
+        return dateDue.isBefore(todaysDate);
     }
 
     // getters

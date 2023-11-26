@@ -17,7 +17,7 @@ public class DonorProfile extends Profile {
     }
 
      //TO DO: add for fileIndex?
-    public DonorProfile(String firstName, String lastName, String username, String password, String securityQAnswer1, String securityQAnswer2, String securityQAnswer3) {
+    public DonorProfile(String firstName, String lastName, String username, String password, String securityQAnswer1, String securityQAnswer2, String securityQAnswer3, ArrayList<Scholarship> scholarships, int fileIndex) {
         clearanceLevel = 1;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -26,6 +26,9 @@ public class DonorProfile extends Profile {
         this.securityQAnswers[0] = securityQAnswer1;
 		this.securityQAnswers[1] = securityQAnswer2;
 		this.securityQAnswers[2] = securityQAnswer3;
+
+        this.scholarships = scholarships;
+        this.fileIndex = fileIndex;
     }
 
     public void addScholarship(Scholarship newScholarship) {
@@ -54,6 +57,15 @@ public class DonorProfile extends Profile {
         }
 
         return String.join("/n", scholarshipNames);
+    }
+
+    // TODO: is this right?
+    @Override
+    public String toString() {
+        String output = super.toString();
+        output += ", scholarships=" + scholarships + "\n\n";
+
+        return output;
     }
 
 }

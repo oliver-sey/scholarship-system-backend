@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 
 public class BackendSystem {
@@ -17,16 +19,86 @@ public class BackendSystem {
 	private ArrayList<MatchRelationship> allMatchRelationships = new ArrayList<MatchRelationship>();
 	private ArrayList<DonorProfile> allDonors = new ArrayList<DonorProfile>();
 	private ArrayList<AdminProfile> allAdmins = new ArrayList<AdminProfile>();
+	private ArrayList<StaffProfile> allStaff = new ArrayList<StaffProfile>();
+	private ArrayList<FundStewardProfile> allFundStewards = new ArrayList<FundStewardProfile>();
 
-	// the user that is currently using the system
+	// my (Oliver) suggestion is to replace the code below within the stars,
+	// with this code within the pluses
+
+	// +++++++++++++++++++
+
 	private Profile currentUser;
+
+	public Profile getCurrentUser() {
+		return currentUser;
+	}
+
+	public void setCurrentUser(Profile newUser) {
+		this.currentUser = newUser;
+	}
+	// we should get what type of profile the current user is, with
+	// something like "if (getCurrentUser instance of StudentProfile) {}"
+
+	//  ++++++++++++++++++++
+
+
+	// TODO: I (Oliver) don't understand why we need all the code below
+	// within the stars **** and suggest we change it to the code above
+
+	// ********************************
+	// the user that is currently using the system
+	// private StudentProfile studentUser;
+	// private DonorProfile donorUser;
+	// private AdminProfile adminUser;
+
+	// private String userType;
+
+	// // curr user setters
+	// public void setCurrentUser(StudentProfile student) {
+	// 	this.studentUser = student;
+	// }
+
+	// public void setCurrentUser(DonorProfile donor) {
+	// 	this.donorUser = donor;
+	// }
+
+	// public void setCurrentUser(AdminProfile admin) {
+	// 	this.adminUser = admin;
+	// }
+
+	// public void setUserType(String type) {
+	// 	this.userType = type;
+	// }
+
+	// // curr user getters
+	// public StudentProfile getStudentUser() {
+	// 	return studentUser;
+	// }
+
+	// public AdminProfile getAdminUser() {
+	// 	return adminUser;
+	// }
+
+	// public DonorProfile getDonorUser() {
+	// 	return donorUser;
+	// }
+
+	// public String getUserType() {
+	// 	return this.userType;
+	// }
+
+	// ***************************************
+
 
 	// constructor
 	public BackendSystem() throws NumberFormatException, IOException {
 		this.allStudents = InstantiateAllStudents();
 		this.allScholarships = InstantiateAllScholarships();
-		//this.allDonors = InstantiateAllDonors();
+		this.allDonors = InstantiateAllDonors();
 		this.allMatchRelationships = InstantiateAllMatches();
+		this.allAdmins = instantiateAllAdmins();
+		this.allStaff = InstantiateAllStaff();
+		this.allFundStewards = instantiateAllFundStewards();
 		// TODO: make the rest of the instantiate all methods
 	}
 
@@ -71,7 +143,6 @@ public class BackendSystem {
 		String sq2 = values.get(22);
 		String sq3 = values.get(23);
 
-
 		BufferedReader awardsBr = new BufferedReader(new FileReader(folderPath + "/awards.txt"));
 
 		values.clear();
@@ -82,9 +153,9 @@ public class BackendSystem {
 
 		awardsBr.close();
 
-		for(String name : values) {
+		for (String name : values) {
 			for (Scholarship scholarship : this.allScholarships) {
-				if(name.compareTo(scholarship.getName()) == 0) {
+				if (name.compareTo(scholarship.getName()) == 0) {
 					awardedScholarships.add(scholarship);
 				}
 			}
@@ -118,7 +189,7 @@ public class BackendSystem {
 		}
 
 		awardsW.write(String.join("\n", awardNames));
-		
+
 		awardsW.close();
 
 	}
@@ -147,9 +218,9 @@ public class BackendSystem {
 		}
 
 		awardsW.write(String.join("\n", awardNames));
-		
+
 		awardsW.close();
-		
+
 	}
 
 	// find next index available in folder to store new object
@@ -173,8 +244,7 @@ public class BackendSystem {
 			File dir = new File("matches");
 
 			fileIndex = dir.listFiles().length + 1;
-		}
-		else {
+		} else {
 			throw new IllegalArgumentException("Data type is not valid.");
 		}
 
@@ -237,7 +307,6 @@ public class BackendSystem {
 		while ((str = applicationBr.readLine()) != null) {
 			application.add(str);
 		}
-
 
 		applicationBr.close();
 
@@ -305,6 +374,51 @@ public class BackendSystem {
 		}
 
 		return scholarships;
+	}
+
+	/**
+	 * uses Scholarship.isPastDue() to check if scholarships were due yesterday or before (the due date has passed)
+	 * sets scholarships that were due in the past, to archived
+	 * @return - the number of scholarships that we set to archived. Don't have to do anything with this value,
+	 * I just decided to add it
+	 */
+	public int archivePastDueScholarships() {
+		int numSetToArchived = 0;
+		
+		for (int i = 0; i < allScholarships.size(); i++) {
+			// if the due date has passed, set it to archived
+			if (allScholarships.get(i).isPastDue()) {
+				allScholarships.get(i).setArchived(true);
+				numSetToArchived++;
+			}
+		}
+
+		return numSetToArchived;
+	}
+
+	// TODO: do we need this? just wanted to get something started - Oliver
+	/**
+	 * 
+	 * @return the number of scholarships deleted, not sure if we'll need this value
+	 * but it can't hurt to have
+	 */
+	public int deleteScholsDue5PlusYrsAgo() {
+		int numDeleted = 0;
+
+		// have to use an iterator because Java won't let you iterate through 
+		// and delete at the same time with a loop
+		Iterator<Scholarship> itr = allScholarships.iterator();
+
+		// loop through allScholarships
+		while (itr.hasNext()) {
+			// if the current scholarship's dateDue was 5 years ago or longer, delete it
+			if (itr.next().due5PlusYearsAgo()) {
+				itr.remove();
+				numDeleted++;
+			}
+		}
+
+		return numDeleted;
 	}
 
 	public void storeNewScholarship(Scholarship scholarship) throws IOException {
@@ -395,19 +509,70 @@ public class BackendSystem {
 		File dir = new File("donors");
 		File[] directoryListing = dir.listFiles();
 		DonorProfile donor;
-
+		// starting value is 1
+		int fileIndex = 1;
 		for (File child : directoryListing) {
 
 			try {
-				donor = readDonor(child.getCanonicalPath());
+				donor = readDonor(fileIndex);
 				donors.add(donor);
 			} catch (IOException except) {
 				System.out.println("File not found: " + child.getAbsolutePath());
 			}
-
+			// increment fileIndex to go from donor1 to donor2, etc.
+			fileIndex++;
 		}
 
 		return donors;
+	}
+
+	public void storeNewDonorProfile(DonorProfile donor) throws Exception {
+		int nextFileIndex = findNextFileIndex("donor");
+		String folderPath = "donors/donor" + String.valueOf(nextFileIndex);
+		File dir = new File(folderPath);
+		dir.mkdir();
+
+		// ********* copy-pasted from the update donor method
+
+		// for details.txt
+		File detailsFile = new File(folderPath + "/details.txt");
+		FileWriter detailsWriter = new FileWriter(detailsFile, false);
+
+		// get the text that should be written to the details.txt file, and write it
+		detailsWriter.write(donor.getDetailsFileText());
+		detailsWriter.close();
+
+		// for scholarships.txt
+		File scholsFile = new File(folderPath + "/scholarships.txt");
+		FileWriter scholsWriter = new FileWriter(scholsFile, false);
+
+		// get the text that should be written to the scholarships.txt file, and write
+		// it
+		scholsWriter.write(donor.getScholarshipFileText());
+		scholsWriter.close();
+	}
+
+	// writes donor profile data to file
+	// TODO: finish updating this for donors
+	public void updateDonorProfileFile(DonorProfile donor) throws IOException {
+		String folderPath = "donors/donor" + String.valueOf(donor.getFileIndex());
+
+		// for details.txt
+		File detailsFile = new File(folderPath + "/details.txt");
+		FileWriter detailsWriter = new FileWriter(detailsFile, false);
+
+		// get the text that should be written to the details.txt file, and write it
+		detailsWriter.write(donor.getDetailsFileText());
+		detailsWriter.close();
+
+		// for scholarships.txt
+		File scholsFile = new File(folderPath + "/scholarships.txt");
+		FileWriter scholsWriter = new FileWriter(scholsFile, false);
+
+		// get the text that should be written to the scholarships.txt file, and write
+		// it
+		scholsWriter.write(donor.getScholarshipFileText());
+		scholsWriter.close();
 	}
 
 	// creates match object from student object, scholarship object, and file
@@ -456,6 +621,20 @@ public class BackendSystem {
 				applicationStatus);
 	}
 
+	public MatchRelationship produceNewMatch(StudentProfile student, Scholarship scholarship) throws IOException {
+		Random rand = new Random();
+
+		float matchIndex = (float) (rand.nextInt(10) + rand.nextInt(10) / 10.0);
+		float matchPercentage = (float) rand.nextInt(101);
+		int fileIndex = findNextFileIndex("match");
+
+		MatchRelationship newMatch = new MatchRelationship(student, scholarship, matchPercentage, matchIndex,
+				fileIndex);
+
+		storeNewMatch(newMatch);
+		return newMatch;
+	}
+
 	public ArrayList<MatchRelationship> InstantiateAllMatches() throws NumberFormatException, IOException {
 
 		ArrayList<MatchRelationship> matches = new ArrayList<MatchRelationship>();
@@ -490,7 +669,7 @@ public class BackendSystem {
 	}
 
 	public void updateMatchFile(MatchRelationship match) throws IOException {
-		
+
 		File folder = new File("matches/match" + String.valueOf(match.getID()));
 
 		File detailsFile = new File(folder, "details.txt");
@@ -507,56 +686,144 @@ public class BackendSystem {
 	}
 
 	// creates donor object from file
-	public DonorProfile readDonor(String filePath) throws IOException {
-		BufferedReader br = new BufferedReader(new FileReader(filePath));
-		ArrayList<String> values = new ArrayList<String>();
+	public DonorProfile readDonor(int fileIndex) throws IOException {
+		String folderPath = "donors/donor" + String.valueOf(fileIndex);
+		// for details.txt
+		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath + "/details.txt"));
+		ArrayList<String> detailsValues = new ArrayList<String>();
+
+		// for scholarships.txt
+		BufferedReader scholsBr = new BufferedReader(new FileReader(folderPath + "/scholarships.txt"));
+		ArrayList<String> scholsValues = new ArrayList<String>();
 		String str;
 
 		// read details file and store in variables
-		while ((str = br.readLine()) != null) {
-			values.add(str);
+		while ((str = detailsBr.readLine()) != null) {
+			detailsValues.add(str);
 		}
 
-		String firstName = values.get(0);
-		String lastName = values.get(1);
-		String username = values.get(2);
-		String password = values.get(3);
-		String securityQAnswer1 = values.get(4); 
-		String securityQAnswer2 = values.get(5); 
-		String securityQAnswer3 = values.get(6);
+		String firstName = detailsValues.get(0);
+		String lastName = detailsValues.get(1);
+		String username = detailsValues.get(2);
+		String password = detailsValues.get(3);
+		String securityQAnswer1 = detailsValues.get(4);
+		String securityQAnswer2 = detailsValues.get(5);
+		String securityQAnswer3 = detailsValues.get(6);
+		// the list of actual scholarship objects that we find based on the scholarship
+		// names
+		ArrayList<Scholarship> scholarshipsDonated = new ArrayList<Scholarship>();
+		detailsBr.close();
 
-		br.close();
+		// read scholarships file and store in variables
+		while ((str = scholsBr.readLine()) != null) {
+			scholsValues.add(str);
+		}
 
-		return new DonorProfile(firstName, lastName, username, password, securityQAnswer1, securityQAnswer2, securityQAnswer3);
+		// loop through scholsValues, the list of String names of scholarships that we
+		// just read from donorX/scholarships.txt
+		for (int scholsValuesI = 0; scholsValuesI < scholsValues.size(); scholsValuesI++) {
+			String donorScholName = scholsValues.get(scholsValuesI);
+
+			// find the scholarship object with that name in the list of all scholarships,
+			// and connect this new donor with that actual object
+			for (int allScholsI = 0; allScholsI < allScholarships.size(); allScholsI++) {
+				String allScholName = this.allScholarships.get(allScholsI).getName();
+
+				if (donorScholName.compareTo(allScholName) == 0) {
+					scholarshipsDonated.add(allScholarships.get(allScholsI));
+					// break out of the inner loop, looping through the scholarships because we
+					// found the scholarship
+					break;
+				}
+			}
+		}
+
+		return new DonorProfile(firstName, lastName, username, password, securityQAnswer1, securityQAnswer2,
+				securityQAnswer3, scholarshipsDonated, fileIndex);
 	}
 
-	public AdminProfile readAdminProfile(int fileIndex) throws IOException{
-		String folderPath = "administrators/admin" + String.valueOf(fileIndex);
-		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath ));
+	// instantiate all admins
+	public ArrayList<AdminProfile> instantiateAllAdmins() {
+		ArrayList<AdminProfile> scholarships = new ArrayList<AdminProfile>();
+		// open the 'administrators' folder
+		File dir = new File("administrators");
+		// all the files/folders in the administrators folder
+		File[] directoryListing = dir.listFiles();
+		AdminProfile admin;
+		int fileIndex = 1;
+
+		// loop through the list of files/folders that are in the 'administrators'
+		// folder
+		// each child is for one scholarship
+		for (File child : directoryListing) {
+
+			try {
+				admin = readAdminProfile(fileIndex);
+				scholarships.add(admin);
+			} catch (IOException except) {
+				System.out.println("File not found in instantiateAllAdmins(): " + child.getAbsolutePath());
+			}
+
+			fileIndex++;
+		}
+
+		return scholarships;
+	}
+
+	public AdminProfile readAdminProfile(int fileIndex) throws IOException {
+		String filePath = "administrators/admin" + String.valueOf(fileIndex) + ".txt";
+		BufferedReader detailsBr = new BufferedReader(new FileReader(filePath));
 
 		ArrayList<String> values = new ArrayList<String>();
 		String str;
 
 		while ((str = detailsBr.readLine()) != null) {
 			values.add(str);
-		  }
+		}
 
-		  detailsBr.close(); 
+		detailsBr.close();
 
-		  String firstName = values.get(0);
-  		  String lastName = values.get(1);
-		  String username = values.get(2);
-		  String password = values.get(3);
-		  /*String sq1 = values.get(4);
-  		  String sq2 = values.get(5);
-  		  String sq3 = values.get(6);*/
+		String firstName = values.get(0);
+		String lastName = values.get(1);
+		String username = values.get(2);
+		String password = values.get(3);
+		String sq1 = values.get(4);
+		String sq2 = values.get(5);
+		String sq3 = values.get(6);
 
-		  //Create and return new AdminProfile
-		  return new AdminProfile(firstName, lastName, username,password);
+		// Create and return new AdminProfile
+		return new AdminProfile(firstName, lastName, username, password, sq1, sq2, sq3, fileIndex);
 	}
 
-	public StaffProfile readStaffProfile(int fileIndex) throws IOException{
-		String folderPath = "staff/staff" + String.valueOf(fileIndex);
+	public void storeNewAdminProfile(AdminProfile admin) throws Exception {
+		int nextFileIndex = findNextFileIndex("admin");
+		String folderPath = "administrators/admin" + String.valueOf(nextFileIndex);
+		File dir = new File(folderPath);
+		dir.mkdir();
+
+		// for admin.txt
+		File detailsFile = new File(folderPath + ".txt");
+		FileWriter detailsWriter = new FileWriter(detailsFile, false);
+
+		// get the text that should be written to the adminx.txt file, and writes it
+		detailsWriter.write(admin.getDetailsFileText());
+		detailsWriter.close();
+	}
+
+	// writes admin profile data to file
+	public void updateAdminProfileFile(AdminProfile admin) throws IOException {
+		String folderPath = "administrators/admin" + String.valueOf(admin.getFileIndex());
+
+		File detailsF = new File(folderPath + ".txt");
+		FileWriter detailsW = new FileWriter(detailsF, false);
+
+		detailsW.write(admin.getDetailsFileText());
+
+		detailsW.close();
+	}
+
+	public StaffProfile readStaffProfile(int fileIndex) throws IOException {
+		String folderPath = "staff/staff" + String.valueOf(fileIndex) + ".txt";
 		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath));
 
 		ArrayList<String> values = new ArrayList<String>();
@@ -564,63 +831,217 @@ public class BackendSystem {
 
 		while ((str = detailsBr.readLine()) != null) {
 			values.add(str);
-		  }
-
-		  detailsBr.close(); 
-
-		  String firstName = values.get(0);
-  		  String lastName = values.get(1);
-		  String username = values.get(2);
-		  String password = values.get(3);
-		  String jobRole = values.get(4);
-		 /*  String sq1 = values.get(5);
-  		  String sq2 = values.get(6);
-  		  String sq3 = values.get(7);*/
-
-		  return new StaffProfile(firstName, lastName, username, password, jobRole);
-	}
-
-	// search donors by name
-	// Maybe not needed
-	public DonorProfile SearchForDonor(String donorName) throws IOException, Exception {
-		File dir = new File("donors");
-		File[] directoryListing = dir.listFiles();
-		String correctDonorPath = "";
-
-		try {
-
-			for (File child : directoryListing) {
-				BufferedReader br = new BufferedReader(new FileReader(child));
-				ArrayList<String> values = new ArrayList<String>();
-				String str;
-
-				// read details file and store in variables
-				while ((str = br.readLine()) != null) {
-					values.add(str);
-				}
-
-				String firstName = values.get(0);
-				String lastName = values.get(1);
-
-				br.close();
-
-				String fullNameFound = firstName + " " + lastName;
-
-				if (donorName.equals(fullNameFound)) {
-					correctDonorPath = child.getPath();
-				}
-			}
-
-			if (correctDonorPath == "") {
-				throw new Exception("Donor not found.");
-			}
-
-		} catch (FileNotFoundException except) {
-			System.out.println("No donors in system.");
 		}
 
-		return readDonor(correctDonorPath);
+		detailsBr.close();
 
+		String firstName = values.get(0);
+		String lastName = values.get(1);
+		String username = values.get(2);
+		String password = values.get(3);
+		String jobRole = values.get(4);
+		String sq1 = values.get(5);
+		String sq2 = values.get(6);
+		String sq3 = values.get(7);
+
+		return new StaffProfile(firstName, lastName, username, password, jobRole, sq1, sq2, sq3, fileIndex);
+	}
+
+	//Instantiates all staff
+	public ArrayList<StaffProfile> InstantiateAllStaff() {
+		ArrayList<StaffProfile> staffList = new ArrayList<StaffProfile>();
+		// open the 'staff' folder
+		File dir = new File("staff");
+		// all the files/folders in the staff folder
+		File[] directoryListing = dir.listFiles();
+		StaffProfile staff;
+		int fileIndex = 1;
+
+		// loop through the list of files/folders that are in the 'staff'
+		// folder
+		// each child is for one staff
+		for (File child : directoryListing) {
+
+			try {
+				staff = readStaffProfile(fileIndex);
+				staffList.add(staff);
+			} catch (IOException except) {
+				System.out.println("File not found in instantiateAllStaff(): " + child.getAbsolutePath());
+			}
+
+			fileIndex++;
+		}
+
+		return staffList;
+	}
+
+	public void storeNewStaffProfile(StaffProfile staff) throws Exception {
+		int nextFileIndex = findNextFileIndex("staff");
+		String folderPath = "staff/staff" + String.valueOf(nextFileIndex);
+		File dir = new File(folderPath);
+		dir.mkdir();
+
+		// for staff.txt
+		File detailsFile = new File(folderPath + ".txt");
+		FileWriter detailsWriter = new FileWriter(detailsFile, false);
+
+		// get the text that should be written to the staffX.txt file, and writes it
+		detailsWriter.write(staff.getDetailsFileText());
+		detailsWriter.close();
+	}
+
+	// writes staff profile data to file
+	public void updateStaffProfileFile(StaffProfile staff) throws IOException {
+		String folderPath = "staff/staff" + String.valueOf(staff.getFileIndex());
+
+		File detailsF = new File(folderPath + ".txt");
+		FileWriter detailsW = new FileWriter(detailsF, false);
+
+		detailsW.write(staff.getDetailsFileText());
+
+		detailsW.close();
+	}
+
+	public FundStewardProfile readFundStewardProfile(int fileIndex) throws IOException {
+		String folderPath = "fundstewards/fundsteward" + String.valueOf(fileIndex) + ".txt";
+		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath));
+
+		ArrayList<String> values = new ArrayList<String>();
+		String str;
+
+		while ((str = detailsBr.readLine()) != null) {
+			values.add(str);
+		}
+
+		detailsBr.close();
+
+		String firstName = values.get(0);
+		String lastName = values.get(1);
+		String username = values.get(2);
+		String password = values.get(3);
+		String sq1 = values.get(4);
+		String sq2 = values.get(5);
+		String sq3 = values.get(6);
+
+		return new FundStewardProfile(firstName, lastName, username, password, sq1, sq2, sq3, fileIndex);
+	}
+
+	//Instantiates all fund stewards
+	public ArrayList<FundStewardProfile> instantiateAllFundStewards() {
+		ArrayList<FundStewardProfile> fundStewards = new ArrayList<FundStewardProfile>();
+		// open the 'fundstewards' folder
+		File dir = new File("fundstewards");
+		// all the files/folders in the fundsteward folder
+		File[] directoryListing = dir.listFiles();
+		FundStewardProfile fundSteward;
+		int fileIndex = 1;
+
+		// loop through the list of files/folders that are in the 'fundSteward'
+		// folder
+		// each child is for one fund steward
+		for (File child : directoryListing) {
+
+			try {
+				fundSteward = readFundStewardProfile(fileIndex);
+				fundStewards.add(fundSteward);
+			} catch (IOException except) {
+				System.out.println("File not found in instantiateAllFundStewards(): " + child.getAbsolutePath());
+			}
+
+			fileIndex++;
+		}
+
+		return fundStewards;
+	}
+
+	public void storeNewFundStewardProfile(FundStewardProfile fundsteward) throws Exception {
+		int nextFileIndex = findNextFileIndex("fundsteward");
+		String folderPath = "fundstewards/fundsteward" + String.valueOf(nextFileIndex);
+		File dir = new File(folderPath);
+		dir.mkdir();
+
+		// for fundstewards.txt
+		File detailsFile = new File(folderPath + ".txt");
+		FileWriter detailsWriter = new FileWriter(detailsFile, false);
+
+		// get the text that should be written to the fundstewardX.txt file, and writes it
+		detailsWriter.write(fundsteward.getDetailsFileText());
+		detailsWriter.close();
+	}
+
+	// writes fund steward profile data to file
+	public void updateFundStewardProfileFile(FundStewardProfile fundsteward) throws IOException {
+		String folderPath = "fundstewards/fundsteward" + String.valueOf(fundsteward.getFileIndex());
+
+		File detailsF = new File(folderPath + ".txt");
+		FileWriter detailsW = new FileWriter(detailsF, false);
+
+		detailsW.write(fundsteward.getDetailsFileText());
+
+		detailsW.close();
+	}
+
+	/**
+	 * This only prints some details of the scholarship, the printOneScholarshipDetailed() method calls this and then prints more
+	 * 
+	 * @param fileIndex the fileIndex of the scholarship, can get it with getFileIndex()
+	 */
+	public void printOneScholarshipBasic(int fileIndex) {
+		Scholarship requestedSchol = getOneScholarshipByFileIndex(fileIndex);
+
+		System.out.println("Scholarship with ID #" + fileIndex + ": " + requestedSchol.getName() 
+		+ ", " + requestedSchol.getDescription());
+		
+		System.out.printf("Award amount: $%.2f, ", requestedSchol.getAwardAmount());
+		
+		System.out.println("Due at the end of the day on: " + requestedSchol.getDateDueString() + ", (format is YYYY-MM-DD)");
+	}
+
+	/**
+	 * 
+	 * @param fileIndex the fileIndex of the scholarship, can get it with getFileIndex()
+	 */
+	public void printOneScholarshipDetailed(int fileIndex) {
+		// first call the basic print method
+		printOneScholarshipBasic(fileIndex);
+
+		System.out.println("Requirements for this scholarship (if there are multiple values for e.g. major, all are accepted):");
+		Scholarship requestedSchol = getOneScholarshipByFileIndex(fileIndex);
+		// TODO: print more here!!
+		// (for this scholarship), loop through the key-value pairs of a requirement and the accepted values, and print that
+		for (Map.Entry<String, String> reqValuePair : requestedSchol.getRequirements().entrySet()) {
+			System.out.println(reqValuePair.getKey() + ": " + reqValuePair.getValue());
+		}
+		System.out.println("***have to still implement more printing in printOneScholarshipDetailed");
+	}
+	
+	/**
+	 * 
+	 * @param detailedInfo whether or not you want to print detailed information about the scholarship, or something more basic
+	 * Either calls printOneScholarshipBasic() or printOneScholarshipDetailed depending on your choice
+	 * 
+	 * @param includeArchived whether or not to print scholarships that are marked as isArchived = true
+	 * @param includeApproved whether or not to  print scholarships that are marked as isApproved = **true
+	 * @param includeUnapproved whether or not to print scholarships that are marked as isApproved = **false
+	 * This param is so we can print only unapproved scholarships for an admin to approve
+	 */
+	public void printAllScholarships(boolean detailedInfo, boolean includeArchived, boolean includeApproved, boolean includeUnapproved) {
+		// starting at 0 just in case we make a Scholarship with fileIndex 0
+		for (int fileIndex = 0; fileIndex <= getMaxScholarshipFileIndex(); fileIndex++) {
+			Scholarship requestedSchol = getOneScholarshipByFileIndex(fileIndex);
+			// if the scholarship was found when searching by fileIndex, and it's either not archived or we want to include archived ones,
+			// and it's either approved and we want to include approved scholarships, or it's not approved and we want to include unapproved scholarships
+			if (requestedSchol != null && (!requestedSchol.getIsArchived() || includeArchived) && ((requestedSchol.getIsApproved() && includeApproved) || (!requestedSchol.getIsApproved() && includeUnapproved))) {
+				if (detailedInfo) {
+					printOneScholarshipDetailed(fileIndex);
+				} 
+				else {
+					printOneScholarshipBasic(fileIndex);
+				}
+
+				System.out.println();
+			}
+		}
 	}
 
 	// searches a folder for a scholarship with inputted value
@@ -696,7 +1117,7 @@ public class BackendSystem {
 				}
 			}
 
-		}  else if (inputCategory.compareTo("date posted") == 0) {
+		} else if (inputCategory.compareTo("date posted") == 0) {
 
 			for (Scholarship scholarship : this.allScholarships) {
 				inputDate = LocalDate.parse(inputSearchValue);
@@ -704,7 +1125,7 @@ public class BackendSystem {
 					scholarshipsFound.add(scholarship);
 				}
 			}
-			
+
 		} else if (inputCategory.compareTo("award amount") == 0) {
 
 			for (Scholarship scholarship : this.allScholarships) {
@@ -712,8 +1133,7 @@ public class BackendSystem {
 					scholarshipsFound.add(scholarship);
 				}
 			}
-		} 
-		else {
+		} else {
 			// assumes any search category will be a requirement
 			// retrieves requirement hashmap from scholarship and compares category and
 			// value
@@ -757,21 +1177,21 @@ public class BackendSystem {
 		} else if (inputCategory.compareTo("major") == 0) {
 
 			for (StudentProfile student : this.allStudents) {
-				
+
 				if (student.getMajor().compareTo(inputSearchValue) == 0) {
 					studentsFound.add(student);
 				}
 			}
 
-		}  else if (inputCategory.compareTo("minor") == 0) {
+		} else if (inputCategory.compareTo("minor") == 0) {
 
 			for (StudentProfile student : this.allStudents) {
-				
+
 				if (student.getMinor().compareTo(inputSearchValue) == 0) {
 					studentsFound.add(student);
 				}
 			}
-			
+
 		} else if (inputCategory.compareTo("GPA") == 0) {
 
 			for (StudentProfile student : this.allStudents) {
@@ -780,90 +1200,78 @@ public class BackendSystem {
 				}
 			}
 
-		} 
-		else {
-			// assumes any search category will be a requirement
-			// retrieves requirement hashmap from studentProfile and compares category and
-			// value
-			for (StudentProfile studentProfile : this.allStudents) {
-				
-
-				for (Map.Entry<String, String> entry : requirements.entrySet()) {
-					if (entry.getKey().compareTo(inputCategory) == 0) {
-						if (entry.getValue().compareTo(inputSearchValue) == 0) {
-							
-						}
-					}
-
-				}
-			}
 		}
 
 		return studentsFound;
 	}
 
-	
-
 	/**
 	 * Prompts the user for their login details and then security questions
-	 * If this function ends, either the program should end or the user is fully successfully logged in
+	 * If this function ends, either the program should end or the user is fully
+	 * successfully logged in
 	 * 
 	 * from our discussion/from the elicitation:
 	 * get 3 max wrong password attempts then get a message to contact admin,
 	 * program stops
 	 * after 2 wrong passwords get to still do 3 security question attempts
 	 * 
-	 * @return returns true for a successful login, false if the login was unsuccessful 
-	// and the program should stop!!
+	 * @return returns true for a successful login, false if the login was
+	 *         unsuccessful
+	 *         // and the program should stop!!
 	 */
 	public boolean login() {
 		// TODO: implement me!!!
-		Scanner scnr = new Scanner(System.in);
-		int returnVal;
+
+		int returnVal = -1;
 		// the number of times the user gets a wrong password
 		int failedPWAttempts = 0;
+
+		// these are up here so we can set the value in the if-statement within the loop below, and reference the variable outside 
+		// the if-statement. (If we declared them in the if, it wouldn't work).
+		// but also we don't want to reset the value to an empty string at the start of each iteration of the loop, only the first
+		String userType = "";
+		String username = "";
+		
 		do {
-			System.out.print("Please enter your user type (as one word, i.e. 'Student', 'FundSteward'): ");
+			// only ask them for their user type and password if they're trying to log in the first time, after that just ask them
+			// for their password
+			if (failedPWAttempts == 0) {
+				System.out.print("Please enter your user type (as one word, i.e. 'student', 'admin', 'fundsteward'). ");
+				// Main.scnr.nextLine();
+				System.out.print("Please enter your user type: ");
+				// Main.scnr.nextLine();
+				userType = Main.scnr.nextLine();
 
-			// TODO: what to do with scanning newlines '\n'?
-			System.out.print("Please enter your user type: ");
-			String userType = scnr.nextLine();
+				// check for valid user type
+				// if it's not a valid user type, print a message and go to the next iteration
+				// of this do-while loop
+				if (!(userType.equalsIgnoreCase("student") || userType.equalsIgnoreCase("admin")
+						|| userType.equalsIgnoreCase("staff")
+						|| userType.equalsIgnoreCase("donor") || userType.equalsIgnoreCase("fundsteward"))) {
+					System.out.println(
+							"That user type was not recognized. Accepted user types are: "
+							+ "student, admin, staff, donor, and fundsteward (capitalization doesn't matter).\n");
+					continue;
+				}
 
-			System.out.print("Please enter your username: ");
-			String username = scnr.nextLine();
+				System.out.print("Please enter your username: ");
+
+				username = Main.scnr.nextLine();
+			}
 
 			System.out.print("Please enter your password: ");
-			String password = scnr.nextLine();
+
+			String password = Main.scnr.nextLine();
 
 			// possible return values from checkLoginDetails():
 			// 0 if the username and password matched,
-			// 1 if the user could not be found/does not exist,
-			// 2 if the user was found but the password was wrong
-			// 3 if the user type was not accepted
+			// 1 if the password was wrong and they loose an attempt
+			// 2 if a wrong value was entered but they dont loose an attempt
 			returnVal = checkLoginDetails(userType, username, password);
 
-			scnr.close();
-			// if the return value is 0, checkLoginDetails() will set the currentUser
-			// variable
 			if (returnVal == 0) {
-				// correct username and password, have to now make them do a security question
-				// TODO: get the Profile object here? need it for the call to checkOneSecurity
-				// question and will have to return it from this method
-				for (int questionNum = 1; questionNum <= 3; questionNum++) {
-					// if the security question answer was correct
-					if (checkOneSecurityQuestion(questionNum, currentUser)) {
-						// return and exit the loop early, don't ask them the later security questions
-						return true;
-					}
-				}
-				// if we get here they went through the 3 questions and didn't get any right
-				// so we return false for an unsuccessful login
-				return false;
-			}
-			if (returnVal == 1) {
-				System.out.println("The entered username could not be found in the system for the entered user type.");
-			} else if (returnVal == 2) {
-				System.out.println("Incorrect password for the entered username and user type");
+				return true;
+			} else if (returnVal == 1) {
 				failedPWAttempts++;
 
 				// if they have now gotten their password wrong 3 times, return false
@@ -871,10 +1279,12 @@ public class BackendSystem {
 				if (failedPWAttempts == 3) {
 					return false;
 				}
-			} else if (returnVal == 3) {
-				System.out.println("Invalid user type");
-				// don't return false, we want to let them try more logins
+
+				System.out.println("Trying again. " + String.valueOf(3 - failedPWAttempts) + " attempt/s left.");
+			} else {
+				System.out.println("Trying again.");
 			}
+
 		} while (returnVal != 0);
 
 		// will never get here but have to return something to make the compiler happy
@@ -894,105 +1304,149 @@ public class BackendSystem {
 	 *         3 if the user type was not accepted
 	 */
 	public int checkLoginDetails(String userType, String enteredUsername, String enteredPassword) {
-		if (userType.equals("Student")) {
+		boolean typeValid = false;
+
+		if (userType.equalsIgnoreCase("Student")) {
+			typeValid = true;
 			for (int i = 0; i < allStudents.size(); i++) {
 				if (allStudents.get(i).username.equalsIgnoreCase(enteredUsername)) {
 					if (allStudents.get(i).password.equals(enteredPassword)) {
 						// store this user in the currentUser variable
+						// studentUser = allStudents.get(i);
 						currentUser = allStudents.get(i);
+						for (int questionNum = 1; questionNum <= 3; questionNum++) {
 
-						// return 0 since we have a successful username/password match
-						return 0;
+							// String questionText = studentUser.getOneSecurityQuestion(questionNum);
+							// String correctAnswer = studentUser.getOneSecurityQAnswer(questionNum);
+							String questionText = currentUser.getOneSecurityQuestion(questionNum);
+							String correctAnswer = currentUser.getOneSecurityQAnswer(questionNum);
+
+							System.out
+									.println("Please answer this security question (capitalization doesn't matter): \n"
+											+ questionText);
+
+							System.out.print("Your answer: ");
+
+							String userAnswer = Main.scnr.nextLine();
+
+							if (userAnswer.equalsIgnoreCase(correctAnswer)) {
+								System.out.println("Correct answer!");
+								userType = "student";
+								return 0;
+							} else {
+								System.out.println("Incorrect answer");
+
+							}
+
+						}
+
 					} else {
-						// valid username but incorrect password
-						// usernames are unique so we know that we found the right user
-						// but the password was just wrong
-						return 2;
+
+						System.out.println("Incorrect password for the entered username and user type");
+						return 1;
 					}
 				}
 			}
 		}
 
-		else if (userType.equals("Donor")) {
+		else if (userType.equalsIgnoreCase("Donor")) {
+			typeValid = true;
 			for (int i = 0; i < this.allDonors.size(); i++) {
 				if (allDonors.get(i).username.equalsIgnoreCase(enteredUsername)) {
 					if (allDonors.get(i).password.equals(enteredPassword)) {
-						// store this user in the currentUser variable
-						currentUser = allDonors.get(i);
 
-						// return 0 since we have a successful username/password match
-						return 0;
+						// donorUser = allDonors.get(i);
+						currentUser = allDonors.get(i);
+						for (int questionNum = 1; questionNum <= 3; questionNum++) {
+
+							// String questionText = donorUser.getOneSecurityQuestion(questionNum);
+							// String correctAnswer = donorUser.getOneSecurityQAnswer(questionNum);
+							String questionText = currentUser.getOneSecurityQuestion(questionNum);
+							String correctAnswer = currentUser.getOneSecurityQAnswer(questionNum);
+
+							System.out
+									.println("Please answer this security question (capitalization doesn't matter): \n"
+											+ questionText);
+
+							System.out.print("Your answer: ");
+
+							String userAnswer = Main.scnr.nextLine();
+
+							if (userAnswer.equalsIgnoreCase(correctAnswer)) {
+								System.out.println("Correct answer!");
+								userType = "donor";
+								return 0;
+							} else {
+								System.out.println("Incorrect answer");
+
+							}
+						}
+
 					} else {
-						// valid username but incorrect password
-						return 2;
+
+						System.out.println("Incorrect password for the entered username and user type");
+						return 1;
 					}
 				}
 			}
-		} else if (userType.equals("Admin")) {
+		} else if (userType.equalsIgnoreCase("Admin")) {
+			typeValid = true;
 			for (int i = 0; i < this.allAdmins.size(); i++) {
 				if (allAdmins.get(i).username.equalsIgnoreCase(enteredUsername)) {
 					if (allAdmins.get(i).password.equals(enteredPassword)) {
 						// store this user in the currentUser variable
+						// adminUser = allAdmins.get(i);
 						currentUser = allAdmins.get(i);
+						for (int questionNum = 1; questionNum <= 3; questionNum++) {
+							// String questionText = adminUser.getOneSecurityQuestion(questionNum);
+							// String correctAnswer = adminUser.getOneSecurityQAnswer(questionNum);
 
+							String questionText = currentUser.getOneSecurityQuestion(questionNum);
+							String correctAnswer = currentUser.getOneSecurityQAnswer(questionNum);
+							System.out
+									.println("Please answer this security question (capitalization doesn't matter): \n"
+											+ questionText);
+
+							System.out.print("Your answer: ");
+
+							String userAnswer = Main.scnr.nextLine();
+
+							if (userAnswer.equalsIgnoreCase(correctAnswer)) {
+								System.out.println("Correct answer!");
+								userType = "admin";
+								return 0;
+							} else {
+								System.out.println("Incorrect answer");
+
+							}
+						}
 						// return 0 since we have a successful username/password match
-						return 0;
+						// return 0;
 					} else {
 						// valid username but incorrect password
-						return 2;
+						// return 2;
+						System.out.println("Incorrect password for the entered username and user type");
+						return 1;
 					}
 				}
 			}
-		} else if (userType.equals("FundSteward")) {
+		} else if (userType.equalsIgnoreCase("FundSteward")) {
 			// TODO: implement this method for FundStewards!!
+			typeValid = true;
 			System.out.println("checkLoginDetails has not yet been implemented for FundStewards");
-		} else if (userType.equals("Staff")) {
+		} else if (userType.equalsIgnoreCase("Staff")) {
 			// TODO: implement this method for Staffs!!
+			typeValid = true;
 			System.out.println("checkLoginDetails has not yet been implemented for Staffs");
 		} else {
-			System.out.println("Invalid user type in checkLoginDetails() - returning 3.");
-			return 3;
+
+			System.out.println("Invalid user type in checkLoginDetails()");
+			return 2;
 		}
 
-		// should only reach here if there was a valid userType and we entered
-		// one of the if or else-if statements (not the else because we would have
-		// returned early)
+		System.out.println("The entered username could not be found in the system for the entered user type.");
+		return 2;
 
-		// had a valid userType but never found the username and thus didn't return
-		// early
-		// return 1 since the user was not found
-		return 1;
-	}
-
-	// security question answers are case **insensitive
-	/**
-	 * 
-	 * @param questionNum should be 1, 2, or 3 just like in
-	 *                    Profile.getOneSecurityQuestion()
-	 * @param user        the user object who is trying to log in
-	 * @return if the answer to the security question was correct or not
-	 *         (capitalization doesn't matter)
-	 */
-	public boolean checkOneSecurityQuestion(int questionNum, Profile user) {
-		Scanner scnr = new Scanner(System.in);
-
-		String questionText = user.getOneSecurityQuestion(questionNum);
-		String correctAnswer = user.getOneSecurityQAnswer(questionNum);
-
-		System.out.println("Please answer this security question (capitalization doesn't matter): " + questionText);
-		System.out.print("Your answer: ");
-
-		String userAnswer = scnr.nextLine();
-
-		scnr.close();
-
-		if (userAnswer.equalsIgnoreCase(correctAnswer)) {
-			System.out.println("Correct answer!");
-			return true;
-		} else {
-			System.out.println("Incorrect answer");
-			return false;
-		}
 	}
 
 	public double stringSimilarity(String str1, String str2) {
@@ -1045,9 +1499,64 @@ public class BackendSystem {
 
 	}
 
-	// A getter that I added so I could check some details of scholarships in a test method in Main
+	// A getter that I added so I could check some details of scholarships in a test
+	// method in Main
 	public ArrayList<Scholarship> getAllScholarships() {
 		return this.allScholarships;
+	}
+
+	/**
+	 * Returns one Scholarship object based on the fileIndex value. This assumes that the fileIndex is unique, 
+	 * which it should have to be, because you can't have e.g. two folders called 'Scholarship1' (fileIndex 1) in the same Scholarships folder.
+	 * 
+	 * @param fileIndex the fileIndex of the scholarship object you want, i.e. 3 if you want the scholarship whose details
+	 * are stored in the 'schoalrship3' folder
+	 * 
+	 * @return the Scholarship object, or null if nothing was found
+	 */
+	public Scholarship getOneScholarshipByFileIndex(int fileIndex) {
+		for (int i = 0; i < allScholarships.size(); i++) {
+			if (allScholarships.get(i).getFileIndex() == fileIndex) {
+				return allScholarships.get(i);
+			}
+		}
+
+		// if we didn't find anything, return null
+		return null;
+	}
+
+	/**
+	 * Needed this for certain things, like figuring out the end value for a loop through fileIndex values in printAllScholarships, and maybe more
+	 * **This will not always be the size of the allScholarships ArrayList, because we remove scholarships that are 5+ years past due, etc. 
+	 * but the fileIndex values don't get shifted
+	 * 
+	 * @return the highest fileIndex for a scholarship, ***that is currently in the allScholarships ArrayList
+	 */
+	public int getMaxScholarshipFileIndex() {
+		int maxIndex = 0;
+		for (Scholarship scholarship : allScholarships) {
+			if (scholarship.getFileIndex() > maxIndex) {
+				maxIndex = scholarship.getFileIndex();
+			}
+		}
+
+		return maxIndex;
+	}
+	
+	/**
+	 * @return all scholarship objects where isApproved is false
+	 */
+	public ArrayList<Scholarship> getAllUnapprovedScholarships() {
+		ArrayList<Scholarship> outputScholarships = new ArrayList<Scholarship>();
+
+		// add the scholarship to the output ArrayList if it is not approved
+		for (Scholarship scholarship : getAllScholarships()) {
+			if (!scholarship.getIsApproved()) {
+				outputScholarships.add(scholarship);
+			}
+		}
+
+		return outputScholarships;
 	}
 
 	public ArrayList<StudentProfile> getAllStudents() {
@@ -1066,19 +1575,237 @@ public class BackendSystem {
 		return allAdmins;
 	}
 
-	public Profile getCurrentUser() {
-		return currentUser;
+	public ArrayList<StaffProfile> getAllStaff() {
+		return allStaff;
 	}
 
-
 	public void testStoringStudents() throws Exception {
-		StudentProfile newStudent = new StudentProfile("Jess", "Mess", 12345, "user", "pass", "IE", true, "SFWEE", true, 
-		3.6, true, true, "Freshman", 5, 2025, "Female", true, false, 12, false, "I love school!", "Smith", "The eagles", "New York");
+		StudentProfile newStudent = new StudentProfile("Jess", "Mess", 12345, "user", "pass", "IE", true, "SFWEE", true,
+				3.6, true, true, "Freshman", 5, 2025, "Female", true, false, 12, false, "I love school!", "Smith",
+				"The eagles", "New York");
 
 		storeNewStudentProfile(newStudent);
 
 		System.out.print(newStudent.toString());
 	}
+
+	public void AwardScholarship(StudentProfile recipient, Scholarship scholarship) {
+		LocalDate today = LocalDate.now();
+		LocalDate due = scholarship.getDateDue();
+
+		// if the due date has passed, don't want to award a scholarship before it's due
+		// or on the due date
+		if (today.isAfter(due)) {
+			scholarship.setAwarded(true);
+			scholarship.setRecipient(recipient);
+			// because it's after the due date
+			scholarship.setArchived(true);
+			recipient.addScholarship(scholarship);
+			scholarship.setDateAdded(LocalDate.now());
+		}
+	}
+
+	// TO DO: test
+	public void editStudentInfo(StudentProfile student) throws IOException {
+		int choice;
+		boolean end = false;
+
+		while (!end) {
+			System.out.println("1: First name: " + student.getFirstName());
+			System.out.println("2: Last name: " + student.getLastName());
+			System.out.println("3: Username: " + student.getUsername());
+			System.out.println("4: Password: " + student.getPassword());
+			System.out.println("5: Major: " + student.getMajor());
+			if (student.getHasAMinor()) {
+				System.out.println("6: Minor: " + student.getMinor());
+			} else {
+				System.out.println("6: Minor: none");
+			}
+			System.out.println("7: US Citizen: " + student.getIsUSCitizen());
+			System.out.println("8: GPA: " + student.getGPA());
+			System.out.println("9: In good standing?: " + student.getInGoodStanding());
+			System.out.println("10: Has advanced standing?: " + student.getHasAdvStanding());
+			System.out.println("11: Year: " + student.getGradeLevel());
+			System.out.println("12: Graduation month: " + student.getGradMonth());
+			System.out.println("13: Graduation year: " + student.getGradYear());
+			System.out.println("14: Gender: " + student.getGender());
+			System.out.println("15: Is a full-time student?: " + student.getIsFullTimeStudent());
+			System.out.println("16: Is a transfer student?: " + student.getIsTransferStudent());
+			System.out.println("17: Number of credits: " + student.getCurNumCredits());
+			System.out.println("18: Receives credit?: " + student.getReceivesFunding());
+			System.out.println("19: Personal statement: " + student.getPersonalStatement());
+
+			Scanner scnr = new Scanner(System.in);
+
+			System.out.print("Enter the number of the profile attribute you would like to change: ");
+			choice = scnr.nextInt();
+
+			if (choice == 1) {
+				scnr.nextLine();
+				System.out.print("Enter the new first name: ");
+				String newFirstName = scnr.nextLine();
+				student.setFirstName(newFirstName);
+			}
+
+			// Choice 2: Last Name (String)
+			else if (choice == 2) {
+				scnr.nextLine();
+				System.out.print("Enter the new last name: ");
+				String newLastName = scnr.nextLine();
+				student.setLastName(newLastName);
+			}
+
+			// Choice 3: Username (String)
+			else if (choice == 3) {
+				scnr.nextLine();
+				System.out.print("Enter the new username: ");
+				String newUsername = scnr.nextLine();
+				student.setUsername(newUsername);
+			}
+
+			// Choice 4: Password (String)
+			else if (choice == 4) {
+				scnr.nextLine();
+				System.out.print("Enter the new password: ");
+				String newPassword = scnr.nextLine();
+				student.setPassword(newPassword);
+			}
+
+			// Choice 5: Major (String)
+			else if (choice == 5) {
+				scnr.nextLine();
+				System.out.print("Enter the new major: ");
+				String newMajor = scnr.nextLine();
+				student.setMajor(newMajor);
+			}
+
+			// Choice 6: Minor (String)
+			else if (choice == 6) {
+				if (student.getHasAMinor()) {
+					scnr.nextLine();
+					System.out.print("Enter the new minor: ");
+					String newMinor = scnr.nextLine();
+
+					student.setMinor(newMinor);
+				} else {
+					System.out.println("The student does not have a minor to change.");
+				}
+			}
+
+			// Choice 7: US Citizen (boolean)
+			else if (choice == 7) {
+				System.out.print("Enter the new value (true/false): ");
+				boolean newBooleanValue = scnr.nextBoolean();
+				student.setIsUSCitizen(newBooleanValue);
+			}
+
+			else if (choice == 8) {
+				System.out.print("Enter the new GPA: ");
+				float newGPA = scnr.nextFloat();
+				student.setGPA(newGPA);
+			}
+
+			// Choice 9: In Good Standing? (boolean)
+			else if (choice == 9) {
+				System.out.print("Enter the new value (true/false): ");
+				boolean newBooleanValue = scnr.nextBoolean();
+				student.setInGoodStanding(newBooleanValue);
+			}
+
+			// Choice 10: Has Advanced Standing? (boolean)
+			else if (choice == 10) {
+				System.out.print("Enter the new value (true/false): ");
+				boolean newBooleanValue = scnr.nextBoolean();
+				student.setHasAdvStanding(newBooleanValue);
+			}
+
+			// Choice 11: Year (String)
+			else if (choice == 11) {
+				scnr.nextLine();
+				System.out.print("Enter the new grade year: ");
+				String newYear = scnr.nextLine();
+				student.setGradeLevel(newYear);
+			}
+
+			// Choice 12: Graduation Month (int)
+			else if (choice == 12) {
+				System.out.print("Enter the new graduation month: ");
+				int newMonth = scnr.nextInt();
+				student.setGradMonth(newMonth);
+			}
+
+			// Choice 13: Graduation Year (int)
+			else if (choice == 13) {
+				System.out.print("Enter the new graduation year: ");
+				int newYear = scnr.nextInt();
+				student.setGradYear(newYear);
+			}
+
+			// Choice 14: Gender (String)
+			else if (choice == 14) {
+				scnr.nextLine();
+				System.out.print("Enter the new gender: ");
+				String newGender = scnr.nextLine();
+				student.setGender(newGender);
+			}
+
+			// Choices 15-17: Booleans (isFullTimeStudent, isTransferStudent,
+			// receivesFunding)
+			else if (choice >= 15 && choice <= 17) {
+				System.out.print("Enter the new value (true/false): ");
+				boolean newBooleanValue = scnr.nextBoolean();
+
+				if (choice == 15) {
+
+					student.setIsFullTimeStudent(newBooleanValue);
+				} else if (choice == 16) {
+
+					student.setIsTransferStudent(newBooleanValue);
+				} else {
+
+					student.setReceivesFunding(newBooleanValue);
+				}
+			}
+
+			// Choice 18: Number of Credits (int)
+			else if (choice == 18) {
+				System.out.print("Enter the new number of credits: ");
+				int newCredits = scnr.nextInt();
+				student.setCurNumCredits(newCredits);
+			}
+
+			// Choice 19: Personal Statement (String)
+			else if (choice == 19) {
+				scnr.nextLine();
+				System.out.print("Enter the new personal statement: ");
+				String newStatement = scnr.nextLine();
+				student.setPersonalStatement(newStatement);
+			}
+
+			// if they entered a valid choice number, 1 through 19
+			if (choice <= 19 && choice >= 1) {
+				System.out.print("Would you like to change anything else? (y/n)");
+				if (scnr.nextLine().compareTo("n") == 0) {
+					end = true;
+					// TODO: when does the profile file get updated??
+					// updateStudentProfileFile(student);
+				}
+			} else {
+				System.out.print("Please enter the number of your choice.");
+			}
+		}
+	}
+
+	public void browseScholarships() {
+		/*
+		 * 1. display 10 scholarship names
+		 * 2. allow student to select one or scroll or exit
+		 * 3. if selected, scholarship details displayed
+		 * 4. Return to list or exit if application opened
+		 * 5. Find a way to return with that scholorship
+		 */
+	}
+
 
 	//Q&A with donor, passing in obj to create donor profile with appropriate associated information
 	public DonorProfile getDonorFromInput(){
