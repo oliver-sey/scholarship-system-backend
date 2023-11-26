@@ -978,6 +978,69 @@ public class BackendSystem {
 		detailsW.close();
 	}
 
+	/**
+	 * This only prints some details of the scholarship, the printOneScholarshipDetailed() method calls this and then prints more
+	 * 
+	 * @param fileIndex the fileIndex of the scholarship, can get it with getFileIndex()
+	 */
+	public void printOneScholarshipBasic(int fileIndex) {
+		Scholarship requestedSchol = getOneScholarshipByFileIndex(fileIndex);
+
+		System.out.println("Scholarship with ID #" + fileIndex + ": " + requestedSchol.getName() 
+		+ ", " + requestedSchol.getDescription());
+		
+		System.out.printf("Award amount: $%.2f, ", requestedSchol.getAwardAmount());
+		
+		System.out.println("Due at the end of the day on: " + requestedSchol.getDateDueString() + ", (format is YYYY-MM-DD)");
+	}
+
+	/**
+	 * 
+	 * @param fileIndex the fileIndex of the scholarship, can get it with getFileIndex()
+	 */
+	public void printOneScholarshipDetailed(int fileIndex) {
+		// first call the basic print method
+		printOneScholarshipBasic(fileIndex);
+
+		System.out.println("Requirements for this scholarship (if there are multiple values for e.g. major, all are accepted):");
+		Scholarship requestedSchol = getOneScholarshipByFileIndex(fileIndex);
+		// TODO: print more here!!
+		// (for this scholarship), loop through the key-value pairs of a requirement and the accepted values, and print that
+		for (Map.Entry<String, String> reqValuePair : requestedSchol.getRequirements().entrySet()) {
+			System.out.println(reqValuePair.getKey() + ": " + reqValuePair.getValue());
+		}
+		System.out.println("***have to still implement more printing in printOneScholarshipDetailed");
+	}
+	
+	/**
+	 * 
+	 * @param detailedInfo whether or not you want to print detailed information about the scholarship, or something more basic
+	 * Either calls printOneScholarshipBasic() or printOneScholarshipDetailed depending on your choice
+	 * 
+	 * @param includeArchived whether or not to print scholarships that are marked as isArchived = true
+	 * @param includeApproved whether or not to  print scholarships that are marked as isApproved = **true
+	 * @param includeUnapproved whether or not to print scholarships that are marked as isApproved = **false
+	 * This param is so we can print only unapproved scholarships for an admin to approve
+	 */
+	public void printAllScholarships(boolean detailedInfo, boolean includeArchived, boolean includeApproved, boolean includeUnapproved) {
+		// starting at 0 just in case we make a Scholarship with fileIndex 0
+		for (int fileIndex = 0; fileIndex <= getMaxScholarshipFileIndex(); fileIndex++) {
+			Scholarship requestedSchol = getOneScholarshipByFileIndex(fileIndex);
+			// if the scholarship was found when searching by fileIndex, and it's either not archived or we want to include archived ones,
+			// and it's either approved and we want to include approved scholarships, or it's not approved and we want to include unapproved scholarships
+			if (requestedSchol != null && (!requestedSchol.getIsArchived() || includeArchived) && ((requestedSchol.getIsApproved() && includeApproved) || (!requestedSchol.getIsApproved() && includeUnapproved))) {
+				if (detailedInfo) {
+					printOneScholarshipDetailed(fileIndex);
+				} 
+				else {
+					printOneScholarshipBasic(fileIndex);
+				}
+
+				System.out.println();
+			}
+		}
+	}
+
 	// searches a folder for a scholarship with inputted value
 	public ArrayList<Scholarship> searchScholarships(String inputCategory, String inputSearchValue) {
 		ArrayList<Scholarship> scholarshipsFound = new ArrayList<Scholarship>();
@@ -1431,7 +1494,44 @@ public class BackendSystem {
 	}
 
 	/**
+	 * Returns one Scholarship object based on the fileIndex value. This assumes that the fileIndex is unique, 
+	 * which it should have to be, because you can't have e.g. two folders called 'Scholarship1' (fileIndex 1) in the same Scholarships folder.
 	 * 
+	 * @param fileIndex the fileIndex of the scholarship object you want, i.e. 3 if you want the scholarship whose details
+	 * are stored in the 'schoalrship3' folder
+	 * 
+	 * @return the Scholarship object, or null if nothing was found
+	 */
+	public Scholarship getOneScholarshipByFileIndex(int fileIndex) {
+		for (int i = 0; i < allScholarships.size(); i++) {
+			if (allScholarships.get(i).getFileIndex() == fileIndex) {
+				return allScholarships.get(i);
+			}
+		}
+
+		// if we didn't find anything, return null
+		return null;
+	}
+
+	/**
+	 * Needed this for certain things, like figuring out the end value for a loop through fileIndex values in printAllScholarships, and maybe more
+	 * **This will not always be the size of the allScholarships ArrayList, because we remove scholarships that are 5+ years past due, etc. 
+	 * but the fileIndex values don't get shifted
+	 * 
+	 * @return the highest fileIndex for a scholarship, ***that is currently in the allScholarships ArrayList
+	 */
+	public int getMaxScholarshipFileIndex() {
+		int maxIndex = 0;
+		for (Scholarship scholarship : allScholarships) {
+			if (scholarship.getFileIndex() > maxIndex) {
+				maxIndex = scholarship.getFileIndex();
+			}
+		}
+
+		return maxIndex;
+	}
+	
+	/**
 	 * @return all scholarship objects where isApproved is false
 	 */
 	public ArrayList<Scholarship> getAllUnapprovedScholarships() {
