@@ -2,7 +2,7 @@ Oliver
 Seymour
 65432
 oseyMan
-helpHelphelp
+hello1234
 Software Engineering
 False
 
@@ -19,6 +19,6 @@ False
 18
 False
 Hi, my name is Oliver. I love love LOVE when I have learning opportunities. One of my favorite things to do is to appreciate the outdoors. 
-Lehmann
+Von Redacted
 Eagles
 Laguna Hills
