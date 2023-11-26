@@ -1691,12 +1691,35 @@ public class BackendSystem {
 			else if (choice == 6) {
 				if (student.getHasAMinor()) {
 					scnr.nextLine();
+					Boolean changeMinor = false;
+
+					while (!changeMinor) {
+						System.out.print("Would you like to change or remove your minor? (c/r): ");
+						String changeMinorChoice = scnr.nextLine();
+						if (changeMinorChoice.compareTo("c") == 0) {
+							changeMinor = true;
+							System.out.print("Enter the new minor: ");
+							String newMinor = scnr.nextLine();
+
+							student.setMinor(newMinor);
+						}
+						else if (changeMinorChoice.compareTo("r") == 0) {
+							changeMinor = true;
+							student.setHasAMinor(false);
+							student.setMinor("");
+						}
+						else {
+							System.out.println("Please enter 'r' or 'c'.");
+						}
+					}
+					
+					
+				} else {
+					scnr.nextLine();
 					System.out.print("Enter the new minor: ");
 					String newMinor = scnr.nextLine();
 
 					student.setMinor(newMinor);
-				} else {
-					System.out.println("The student does not have a minor to change.");
 				}
 			}
 
@@ -1816,4 +1839,46 @@ public class BackendSystem {
 		 */
 	}
 
+
+	//Q&A with donor, passing in obj to create donor profile with appropriate associated information
+	public DonorProfile getDonorFromInput(){
+
+		DonorProfile donorObj = new DonorProfile();
+		String firstName, lastName, username, password, securityQuestion1, securityQuestion2, securityQuestion3; 
+		Scanner scnr = new Scanner(System.in);
+
+		System.out.println("Please enter in your first name.");
+		firstName = scnr.nextLine();
+		donorObj.setFirstName(firstName);
+
+		System.out.println("Please enter in your last name.");
+		lastName = scnr.nextLine();
+		donorObj.setLastName(lastName);
+
+		System.out.println("Please enter in your username.");
+		username = scnr.nextLine();
+		donorObj.setUsername(username);
+
+		System.out.println("Please enter in your password.");
+		password = scnr.nextLine();
+		donorObj.setPassword(password);
+
+		System.out.println("Please enter in your response for the first security question which is the following: What is your mother's maiden name?");
+		securityQuestion1 = scnr.nextLine();
+		donorObj.setOneSecurityQAnswer(1, securityQuestion1);
+
+		System.out.println("Please enter in your response for the first security question which is the following: What is the mascot of your middle school?");
+		securityQuestion2 = scnr.nextLine();
+		donorObj.setOneSecurityQAnswer(2, securityQuestion2);
+		
+		System.out.println("Please enter in your response for the first security question which is the following: What is the name of the city you were born in?");
+		securityQuestion3 = scnr.nextLine();
+		donorObj.setOneSecurityQAnswer(3, securityQuestion3);
+
+		scnr.close();
+
+		return donorObj;
+	}
+
 }
+
