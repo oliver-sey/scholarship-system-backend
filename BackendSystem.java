@@ -1683,12 +1683,35 @@ public class BackendSystem {
 			else if (choice == 6) {
 				if (student.getHasAMinor()) {
 					scnr.nextLine();
+					Boolean changeMinor = false;
+
+					while (!changeMinor) {
+						System.out.print("Would you like to change or remove your minor? (c/r): ");
+						String changeMinorChoice = scnr.nextLine();
+						if (changeMinorChoice.compareTo("c") == 0) {
+							changeMinor = true;
+							System.out.print("Enter the new minor: ");
+							String newMinor = scnr.nextLine();
+
+							student.setMinor(newMinor);
+						}
+						else if (changeMinorChoice.compareTo("r") == 0) {
+							changeMinor = true;
+							student.setHasAMinor(false);
+							student.setMinor("");
+						}
+						else {
+							System.out.println("Please enter 'r' or 'c'.");
+						}
+					}
+					
+					
+				} else {
+					scnr.nextLine();
 					System.out.print("Enter the new minor: ");
 					String newMinor = scnr.nextLine();
 
 					student.setMinor(newMinor);
-				} else {
-					System.out.println("The student does not have a minor to change.");
 				}
 			}
 
