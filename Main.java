@@ -34,7 +34,7 @@ public class Main {
 				Scanner scnr = new Scanner(System.in);
 				System.out.print("Enter 'q' to quit, or type anything else to keep going: ");
 				userInput = scnr.next();
-			} while (userInput != "q");
+			} while (!userInput.equals("q"));
 		}
 		// else just quit
 		scnr.close();
