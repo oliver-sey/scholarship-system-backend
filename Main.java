@@ -44,7 +44,7 @@ public class Main {
 	 * You should get the user to log in before calling this!
 	 * prompts the user for which action they want to perform based on their profile type
 	 */
-	public static void oneUserAction(BackendSystem backend) {
+	public static void oneUserAction(BackendSystem backend) throws IOException {
 		//Scanner scnr = new Scanner(System.in);
 		int userSelection = -1;
 		// TODO: should we use clearance level?
@@ -56,7 +56,27 @@ public class Main {
 			- see submitted applications
 			- search scholarships
 			*/
-			System.out.println("Have to still implement oneUserAction() for StudentProfile.");
+			do {
+				System.out.println("\nPlease enter a number to select which action you want to do:");
+
+				System.out.println("1 - Edit your profile");
+				System.out.println("2 - See all scholarships (can apply to them also)");
+				System.out.println("0 - EXIT");
+				
+				System.out.print("Your selection: ");
+				userSelection = scnr.nextInt();
+
+				// is it as simple as this???
+				if (userSelection == 1) {
+					backend.editStudentInfo(backend.getStudentUser());
+				}
+				// TODO: ****implement selection #2
+				else if (userSelection == 2) {
+					System.out.println("have to still implement this!!");
+				}
+
+
+			} while(userSelection != 0);
 		}
 		else if (backend.getUserType().compareTo("donor") == 0) {
 			/*
@@ -79,42 +99,45 @@ public class Main {
 			 * - approve scholarships
 			 * - search students
 			 */
-			System.out.println("Options: ");
-			System.out.println("0 - view unapproved scholarships to approve them");
+			do {
+				System.out.println("Options: ");
+				System.out.println("1 - view unapproved scholarships to approve them");
+				System.out.println("0 - EXIT");
 
-			System.out.print("Your selection: ");
-			userSelection = scnr.nextInt();
+				System.out.print("Your selection: ");
+				userSelection = scnr.nextInt();
 
-			// if they want to view unapproved scholarships to approve them
-			if (userSelection == 0) {
-				System.out.println("Unapproved scholarships:");
-				// get all the unapproved scholarships and print a number and the scholarship name and description
-				ArrayList<Scholarship> unapprovedSchols = new ArrayList<Scholarship>();
-				for (int i = 0; i < unapprovedSchols.size(); i++) {
-					System.out.println((i + 1) + ": " + unapprovedSchols.get(i).getName());
-					System.out.println(unapprovedSchols.get(i).getDescription());
-					System.out.println();
+				// if they want to view unapproved scholarships to approve them
+				if (userSelection == 1) {
+					System.out.println("Unapproved scholarships:");
+					// get all the unapproved scholarships and print a number and the scholarship name and description
+					ArrayList<Scholarship> unapprovedSchols = new ArrayList<Scholarship>();
+					for (int i = 0; i < unapprovedSchols.size(); i++) {
+						System.out.println((i + 1) + ": " + unapprovedSchols.get(i).getName());
+						System.out.println(unapprovedSchols.get(i).getDescription());
+						System.out.println();
+					}
+
+					// prompt them to approve one scholarship
+
+					int scholNumToApprove = -1;
+					do {
+						System.out.print("Please enter a scholarship number that you want to approve, or -1 if you are done: ");
+						scholNumToApprove = scnr.nextInt();
+
+						// if they want to approve a scholarship
+						if (scholNumToApprove != -1) {
+							// TODO: will this go all the way through the chain of pointers and actually change the original scholarship object????
+							System.out.println("Setting the scholarship to approved");
+							unapprovedSchols.get(scholNumToApprove).setApproved(true);
+						}
+					} while(scholNumToApprove != -1);
 				}
 
-				// prompt them to approve one scholarship
-
-				int scholNumToApprove = -1;
-				do {
-					System.out.print("Please enter a scholarship number that you want to approve, or -1 if you are done: ");
-					scholNumToApprove = scnr.nextInt();
-
-					// if they want to approve a scholarship
-					if (scholNumToApprove != -1) {
-						// TODO: will this go all the way through the chain of pointers and actually change the original scholarship object????
-						System.out.println("Setting the scholarship to approved");
-						unapprovedSchols.get(scholNumToApprove).setApproved(true);
-					}
-				} while(scholNumToApprove != -1);
-			}
-
-			else if (userSelection == 1) {
-				System.out.println("Have to still write code for userSelection == 1 for AdminProfile in oneUserAction()");
-			}
+				else if (userSelection > 1) {
+					System.out.println("Have to still write code for userSelection values > 1 for AdminProfile in oneUserAction()");
+				}
+			} while(userSelection != 0);
 		}
 		else {
 			// should never get here
