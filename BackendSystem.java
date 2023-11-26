@@ -1712,6 +1712,7 @@ public class BackendSystem {
 					String newMinor = scnr.nextLine();
 
 					student.setMinor(newMinor);
+					student.setHasAMinor(true);
 				}
 			}
 
@@ -1752,14 +1753,14 @@ public class BackendSystem {
 
 			// Choice 12: Graduation Month (int)
 			else if (choice == 12) {
-				System.out.print("Enter the new graduation month: ");
+				System.out.print("Enter the new graduation month (in number form with 2 digits): ");
 				int newMonth = scnr.nextInt();
 				student.setGradMonth(newMonth);
 			}
 
 			// Choice 13: Graduation Year (int)
 			else if (choice == 13) {
-				System.out.print("Enter the new graduation year: ");
+				System.out.print("Enter the new graduation year (with 4 digits): ");
 				int newYear = scnr.nextInt();
 				student.setGradYear(newYear);
 			}
@@ -1810,8 +1811,8 @@ public class BackendSystem {
 				System.out.print("Would you like to change anything else? (y/n)");
 				if (scnr.nextLine().compareTo("n") == 0) {
 					end = true;
-					// TODO: when does the profile file get updated??
-					// updateStudentProfileFile(student);
+					
+					//updateStudentProfileFile(student);
 				}
 			} else {
 				System.out.print("Please enter the number of your choice.");

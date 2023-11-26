@@ -97,7 +97,9 @@ public class Main {
 		}
 		// else if (backend.getUserType().compareTo("staff") == 0) {
 		else if (backend.getCurrentUser() instanceof StaffProfile) {
-			// TODO: implement this!!
+			/* 
+			 * 
+			 */
 			System.out.println("Have to still implement oneUserAction() for StaffProfile.");
 		}
 		// else if (backend.getUserType().compareTo("fund steward") == 0) {
@@ -324,6 +326,7 @@ public class Main {
 				StudentProfile newStudent = new StudentProfile("Jess", "Mess", 12345, "user", "pass", "IE", true, "SFWEE", true,
 				3.6, true, true, "Freshman", 5, 2025, "Female", true, false, 12, false, "I love school!", "Smith",
 				"The eagles", "New York");
+				
 
 				backend.editStudentInfo(newStudent);
 				System.out.println(newStudent.toString());
