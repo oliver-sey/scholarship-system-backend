@@ -35,8 +35,8 @@ public class StaffProfile extends Profile {
         return this.jobRole;
     }
 
-    public void setjobRole(String inputJobRole) {
-		this.jobRole = inputJobRole;
+    public void setjobRole(String jobRole) {
+		this.jobRole = jobRole;
 	}
 
         //gets the details from the staff profile needed to enter on a file

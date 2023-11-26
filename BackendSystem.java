@@ -1589,7 +1589,8 @@ public class BackendSystem {
 				System.out.println("6: Minor: none");
 			}
 			System.out.println("7: US Citizen: " + student.getIsUSCitizen());
-			System.out.println("8: GPA: " + student.getGPA());
+			System.out.printf("8: GPA: %.3f", student.getGPA());
+			System.out.println();
 			System.out.println("9: In good standing?: " + student.getInGoodStanding());
 			System.out.println("10: Has advanced standing?: " + student.getHasAdvStanding());
 			System.out.println("11: Year: " + student.getGradeLevel());
@@ -1598,16 +1599,23 @@ public class BackendSystem {
 			System.out.println("14: Gender: " + student.getGender());
 			System.out.println("15: Is a full-time student?: " + student.getIsFullTimeStudent());
 			System.out.println("16: Is a transfer student?: " + student.getIsTransferStudent());
-			System.out.println("17: Number of credits: " + student.getCurNumCredits());
-			System.out.println("18: Receives credit?: " + student.getReceivesFunding());
+			System.out.println("17: Receives funding?: " + student.getReceivesFunding());
+			System.out.println("18: Number of credits: " + student.getCurNumCredits());
 			System.out.println("19: Personal statement: " + student.getPersonalStatement());
 
 			Scanner scnr = new Scanner(System.in);
 
-			System.out.print("Enter the number of the profile attribute you would like to change: ");
+			System.out.print("\nEnter the number of the profile attribute you would like to change, or -1 to exit: ");
 			choice = scnr.nextInt();
 
-			if (choice == 1) {
+			// -1, the user wants to exit
+			if (choice == -1) {
+				// just stop the loop
+				end = true;
+			}
+
+			// Choice 1: first name (String)
+			else if (choice == 1) {
 				scnr.nextLine();
 				System.out.print("Enter the new first name: ");
 				String newFirstName = scnr.nextLine();
@@ -1775,8 +1783,9 @@ public class BackendSystem {
 
 			// if they entered a valid choice number, 1 through 19
 			if (choice <= 19 && choice >= 1) {
-				System.out.print("Would you like to change anything else? (y/n)");
-				if (scnr.nextLine().compareTo("n") == 0) {
+				scnr.nextLine();
+				System.out.print("Would you like to change anything else? (y/n): ");
+				if (scnr.next().equals("n")) {
 					end = true;
 					
 					//updateStudentProfileFile(student);
@@ -1787,6 +1796,7 @@ public class BackendSystem {
 		}
 	}
 
+	// this could work with the printAllScholarships method
 	public void browseScholarships() {
 		/*
 		 * 1. display 10 scholarship names
@@ -1838,5 +1848,170 @@ public class BackendSystem {
 		return donorObj;
 	}
 
-}
+	//Q&A with admin, passing in obj to create admin profile with appropriate associated information
+	public AdminProfile getAdminFromInput(){
 
+		AdminProfile AdminObj = new AdminProfile();
+		String firstName, lastName, username, password, securityQuestion1, securityQuestion2, securityQuestion3; 
+		Scanner scnr = new Scanner(System.in);
+
+		System.out.println("Please enter in your first name.");
+		firstName = scnr.nextLine();
+		AdminObj.setFirstName(firstName);
+
+		System.out.println("Please enter in your last name.");
+		lastName = scnr.nextLine();
+		AdminObj.setLastName(lastName);
+
+		System.out.println("Please enter in your username.");
+		username = scnr.nextLine();
+		AdminObj.setUsername(username);
+
+		System.out.println("Please enter in your password.");
+		password = scnr.nextLine();
+		AdminObj.setPassword(password);
+
+		System.out.println("Please enter in your response for the first security question which is the following: What is your mother's maiden name?");
+		securityQuestion1 = scnr.nextLine();
+		AdminObj.setOneSecurityQAnswer(1, securityQuestion1);
+
+		System.out.println("Please enter in your response for the first security question which is the following: What is the mascot of your middle school?");
+		securityQuestion2 = scnr.nextLine();
+		AdminObj.setOneSecurityQAnswer(2, securityQuestion2);
+		
+		System.out.println("Please enter in your response for the first security question which is the following: What is the name of the city you were born in?");
+		securityQuestion3 = scnr.nextLine();
+		AdminObj.setOneSecurityQAnswer(3, securityQuestion3);
+
+		scnr.close();
+
+		return AdminObj;
+	}
+
+	//Q&A with fundSteward, passing in obj to create fundSteward profile with appropriate associated information
+	public FundStewardProfile getFundStewardFromInput(){ 
+
+		FundStewardProfile FundStewardObj = new FundStewardProfile();
+		String firstName, lastName, username, password, securityQuestion1, securityQuestion2, securityQuestion3; 
+		Scanner scnr = new Scanner(System.in);
+
+		System.out.println("Please enter in your first name.");
+		firstName = scnr.nextLine();
+		FundStewardObj.setFirstName(firstName);
+
+		System.out.println("Please enter in your last name.");
+		lastName = scnr.nextLine();
+		FundStewardObj.setLastName(lastName);
+
+		System.out.println("Please enter in your username.");
+		username = scnr.nextLine();
+		FundStewardObj.setUsername(username);
+
+		System.out.println("Please enter in your password.");
+		password = scnr.nextLine();
+		FundStewardObj.setPassword(password);
+
+		System.out.println("Please enter in your response for the first security question which is the following: What is your mother's maiden name?");
+		securityQuestion1 = scnr.nextLine();
+		FundStewardObj.setOneSecurityQAnswer(1, securityQuestion1);
+
+		System.out.println("Please enter in your response for the first security question which is the following: What is the mascot of your middle school?");
+		securityQuestion2 = scnr.nextLine();
+		FundStewardObj.setOneSecurityQAnswer(2, securityQuestion2);
+		
+		System.out.println("Please enter in your response for the first security question which is the following: What is the name of the city you were born in?");
+		securityQuestion3 = scnr.nextLine();
+		FundStewardObj.setOneSecurityQAnswer(3, securityQuestion3);
+
+		scnr.close();
+
+		return FundStewardObj;
+	}
+
+	//Q&A with staff, passing in obj to create staff profile with appropriate associated information
+	public StaffProfile getStaffFromInput(){ 
+
+		StaffProfile StaffObj = new StaffProfile();
+		String firstName, lastName, username, password, jobRole, securityQuestion1, securityQuestion2, securityQuestion3; 
+		Scanner scnr = new Scanner(System.in);
+
+		System.out.println("Please enter in your first name.");
+		firstName = scnr.nextLine();
+		StaffObj.setFirstName(firstName);
+
+		System.out.println("Please enter in your last name.");
+		lastName = scnr.nextLine();
+		StaffObj.setLastName(lastName);
+
+		System.out.println("Please enter in your username.");
+		username = scnr.nextLine();
+		StaffObj.setUsername(username);
+
+		System.out.println("Please enter in your password.");
+		password = scnr.nextLine();
+		StaffObj.setPassword(password);
+
+		System.out.println("Please enter in your job Role.");
+		jobRole = scnr.nextLine();
+		//getting errors for calling function setJobRole for some reason
+		//StaffObj.setJobRole(jobRole);
+
+		System.out.println("Please enter in your response for the first security question which is the following: What is your mother's maiden name?");
+		securityQuestion1 = scnr.nextLine();
+		StaffObj.setOneSecurityQAnswer(1, securityQuestion1);
+
+		System.out.println("Please enter in your response for the first security question which is the following: What is the mascot of your middle school?");
+		securityQuestion2 = scnr.nextLine();
+		StaffObj.setOneSecurityQAnswer(2, securityQuestion2);
+		
+		System.out.println("Please enter in your response for the first security question which is the following: What is the name of the city you were born in?");
+		securityQuestion3 = scnr.nextLine();
+		StaffObj.setOneSecurityQAnswer(3, securityQuestion3);
+
+		scnr.close();
+
+		return StaffObj;
+	}
+
+	//Q&A with student, passing in obj to create student profile with appropriate associated information
+	//TODO: (MiLee) basic outline of same Q&A as other profiles, not sure if we need to expand with more values?
+	public StudentProfile getStudentFromInput(){
+
+		StudentProfile StudentObj = new StudentProfile();
+		String firstName, lastName, username, password, securityQuestion1, securityQuestion2, securityQuestion3; 
+		Scanner scnr = new Scanner(System.in);
+
+		System.out.println("Please enter in your first name.");
+		firstName = scnr.nextLine();
+		StudentObj.setFirstName(firstName);
+
+		System.out.println("Please enter in your last name.");
+		lastName = scnr.nextLine();
+		StudentObj.setLastName(lastName);
+
+		System.out.println("Please enter in your username.");
+		username = scnr.nextLine();
+		StudentObj.setUsername(username);
+
+		System.out.println("Please enter in your password.");
+		password = scnr.nextLine();
+		StudentObj.setPassword(password);
+
+		System.out.println("Please enter in your response for the first security question which is the following: What is your mother's maiden name?");
+		securityQuestion1 = scnr.nextLine();
+		StudentObj.setOneSecurityQAnswer(1, securityQuestion1);
+
+		System.out.println("Please enter in your response for the first security question which is the following: What is the mascot of your middle school?");
+		securityQuestion2 = scnr.nextLine();
+		StudentObj.setOneSecurityQAnswer(2, securityQuestion2);
+		
+		System.out.println("Please enter in your response for the first security question which is the following: What is the name of the city you were born in?");
+		securityQuestion3 = scnr.nextLine();
+		StudentObj.setOneSecurityQAnswer(3, securityQuestion3);
+
+		scnr.close();
+
+		return StudentObj;
+	}
+
+}
