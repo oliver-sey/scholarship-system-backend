@@ -11,9 +11,9 @@ public class Main {
 
 	public static Scanner scnr = new Scanner(System.in);
 	public static void main(String[] args) throws Exception {
-		//BackendSystem backend = new BackendSystem();
+		// BackendSystem backend = new BackendSystem();
 		// userRunSystem will prompt them to log in
-		//userRunSystem(backend);
+		// userRunSystem(backend);
 
 		runDifferentTests();
 
@@ -32,9 +32,10 @@ public class Main {
 
 				// see if they want to quit
 				Scanner scnr = new Scanner(System.in);
-				System.out.print("Enter 'q' to quit, or type anything else to keep going: ");
+				System.out.print("Do you want to fully quit the program? (type y/n): ");
 				userInput = scnr.next();
-			} while (!userInput.equals("q"));
+			// while the first letter of the user's input is either y or Y, keep going
+			} while (userInput.toLowerCase().charAt(0) == 'y');
 		}
 		// else just quit
 		scnr.close();
@@ -61,8 +62,8 @@ public class Main {
 			do {
 				System.out.println("\nPlease enter a number to select which action you want to do:");
 
-				System.out.println("1 - Edit your profile");
-				System.out.println("2 - See all scholarships (can apply to them also)");
+				System.out.println("1 - View and edit your profile");
+				System.out.println("2 - See all active scholarships (can apply to them also)");
 				System.out.println("0 - EXIT");
 				
 				System.out.print("Your selection: ");
@@ -74,14 +75,57 @@ public class Main {
 					// but this is ok because we will only get here if currentUser is a student object
 					backend.editStudentInfo((StudentProfile)backend.getCurrentUser());
 				}
-				// TODO: ****implement selection #2
+				
+				// see all scholarships and maybe apply
 				else if (userSelection == 2) {
 					// call printAllScholarships, we want basic info and no archived scholarships, yes approved scholarships, no unapproved scholarships
 					backend.printAllScholarships(false, false, true, false);
 
 					System.out.println("What would you like to do:");
 					System.out.println("1 - Go back");
-					System.out.println("2 - ");
+					System.out.println("2 - view one scholarship in more detail (can also apply to it)");
+
+					System.out.print("Your choice: ");
+
+					// want to keep this separate from userSelection, so we don't accidentally exit the outer do-while loop or something
+					int userAction = scnr.nextInt();
+
+					if (userAction == 1) {
+						// do nothing?
+					}
+					else if (userAction == 2) {
+						scnr.nextLine();
+
+						int fileIndex;
+						do {
+							System.out.print("Please enter the file index of the scholarship you want to view, or -1 to quit: ");
+							fileIndex = scnr.nextInt();
+
+							if (fileIndex != -1) {
+								if (backend.getOneScholarshipByFileIndex(fileIndex) == null) {
+									System.out.println("The scholarship with file index " + fileIndex + " could not be found.");
+								}
+								else {
+									// print the scholarship's information, in more detail than before
+									backend.printOneScholarshipDetailed(fileIndex);
+
+									System.out.println("\nPlease select an option:");
+									System.out.println("1 - go back");
+									System.out.println("2 - apply");
+
+									System.out.print("Your choice: ");
+									userAction = scnr.nextInt();
+									if (userAction == 1) {
+										// do nothing?
+									}
+									else if (userAction == 2) {
+										System.out.println("***Have to still implement applying!!!");
+										// TODO: implement applying from the terminal and add it here
+									}
+								}
+							}
+						} while (fileIndex != -1);
+					}
 				}
 
 
