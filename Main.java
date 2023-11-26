@@ -13,7 +13,7 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		BackendSystem backend = new BackendSystem();
 		// userRunSystem will prompt them to log in
-		userRunSystem(backend);
+		// userRunSystem(backend);
 
 		runDifferentTests();
 
@@ -72,7 +72,12 @@ public class Main {
 				}
 				// TODO: ****implement selection #2
 				else if (userSelection == 2) {
-					System.out.println("have to still implement this!!");
+					// call printAllScholarships, we want basic info and no archived scholarships, yes approved scholarships, no unapproved scholarships
+					backend.printAllScholarships(false, false, true, false);
+
+					System.out.println("What would you like to do:");
+					System.out.println("1 - Go back");
+					System.out.println("2 - ");
 				}
 
 
@@ -166,6 +171,8 @@ public class Main {
 			System.out.println("6 - test storeNewDonorProfile()");
 			System.out.println("7 - login as an admin and then approve scholarships");
 			System.out.println("8 - Edit student profile manually");
+			System.out.println("9 - Test printOneScholarship and printAllScholarships");
+
 			System.out.println("0 - EXIT");
 
 			System.out.print("\nYour choice: ");
@@ -300,6 +307,23 @@ public class Main {
 
 				backend.editStudentInfo(newStudent);
 				System.out.println(newStudent.toString());
+			}
+
+			// test print scholarships
+			else if (userSelection == 9) {
+				BackendSystem backend = new BackendSystem();
+
+				System.out.println("\nTesting the printOneScholarship method (for #1, aka index 0):");
+				backend.printOneScholarshipBasic(1);
+
+				System.out.println("\n\nTesting the printAllScholarships method (basic info, include archived and include approved and unapproved):");
+				backend.printAllScholarships(false, true, true, true);
+
+				System.out.println("\n\nTesting the printAllScholarships method (basic info, do not include archived, include only unapproved):");
+				backend.printAllScholarships(false, false, false, true);
+
+				System.out.println("\n\nTesting the printAllScholarships method (**detailed info, do not include archived or unapproved, but include approved):");
+				backend.printAllScholarships(true, false, true, false);
 			}
 
 			else {
