@@ -125,6 +125,9 @@ public class Scholarship {
     public boolean due5PlusYearsAgo() {
         LocalDate todaysDate = LocalDate.now();
         
+        // *****very important note: if you use Period to get the difference between dates 
+        // that are e.g. 3 months and 2 days apart, and do getDays(), it will be 2 days
+
         // the time from the due date to today's date, can be either positive or negative
         Period timeSinceDue = Period.between(this.getDateDue(), todaysDate);
 
