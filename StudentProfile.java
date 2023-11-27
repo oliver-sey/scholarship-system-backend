@@ -421,13 +421,16 @@ public class StudentProfile extends Profile {
 		return output;
 	}
 
+	/**
+	 * 
+	 * @return all the properties of this student, **except the personal statement since that makes it too long
+	 */
 	public String getAllDetailsString() {
 		return "StudentProfile [studentID=" + studentID + ", major=" + major + ", minor=" + minor + ", hasAMinor="
 				+ hasAMinor + ", isUSCitizen=" + isUSCitizen + ", GPA=" + GPA + ", inGoodStanding=" + inGoodStanding
 				+ ", hasAdvStanding=" + hasAdvStanding + ", gradeLevel=" + gradeLevel + ", gradMonth=" + gradMonth
 				+ ", gradYear=" + gradYear + ", gender=" + gender + ", extraDemographics=" + extraDemographics
 				+ ", isFullTimeStudent=" + isFullTimeStudent + ", isTransferStudent=" + isTransferStudent
-				+ ", curNumCredits=" + curNumCredits + ", receivesFunding=" + receivesFunding + ", personalStatement="
-				+ personalStatement + "]";
+				+ ", curNumCredits=" + curNumCredits + ", receivesFunding=" + receivesFunding + "]";
 	}
 }
