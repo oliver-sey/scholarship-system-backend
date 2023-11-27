@@ -1421,14 +1421,19 @@ public class BackendSystem {
 		String userType = "";
 		String username = "";
 
+		int dowhileIterations = 0;
 		do {
 			// only ask them for their user type and password if they're trying to log in
 			// the first time, after that just ask them
 			// for their password
 			if (failedPWAttempts == 0) {
-				// Main.scnr.nextLine();
+				if (dowhileIterations == 0) {
+					Main.scnr.nextLine();
+				}
+				dowhileIterations++;
+				
 				System.out.print("Please enter your user type (as one word, i.e. 'student', 'admin', 'fundsteward'): ");
-				Main.scnr.nextLine();
+				// Main.scnr.nextLine();
 				userType = Main.scnr.nextLine();
 
 				// check for valid user type
