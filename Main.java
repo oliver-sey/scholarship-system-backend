@@ -328,7 +328,11 @@ public class Main {
 			 */
 			do {
 				System.out.println("Options: ");
-				System.out.println("1 - view unapproved scholarships to approve them");
+				System.out.println("1 - view unapproved scholarships to approve or delete them");
+				System.out.println("2 - view all students");
+				// TODO: implement this!!
+				System.out.println("3 - view all scholarships (that are not archived)");
+				
 				System.out.println("0 - EXIT");
 
 				System.out.print("Your selection: ");
@@ -343,25 +347,56 @@ public class Main {
 
 					// prompt them to approve one scholarship
 
-					int scholFileIndexToApprove = -1;
+					int adminAction = -1;
 					do {
-						System.out.print("Please enter a scholarship file index that you want to approve, or -1 if you are done: ");
-						scholFileIndexToApprove = scnr.nextInt();
+						System.out.println("Which actions would you like to perform on these archived scholarships: ");
+						System.out.println("1 - approve a scholarship");
+						System.out.println("2 - delete a scholarship");
+						System.out.println("0 - EXIT");
+						adminAction = scnr.nextInt();
+						scnr.nextLine();
 
-						// if they want to approve a scholarship
-						if (scholFileIndexToApprove != -1) {
-							// TODO: will this go all the way through the chain of pointers and actually change the original scholarship object????
-							System.out.println("Setting the scholarship to approved");
-							// unapprovedSchols.get(scholFileIndexToApprove).setApproved(true);
-							backend.getOneScholarshipByFileIndex(scholFileIndexToApprove).setApproved(true);
+						// approve a scholarship
+						if (adminAction == 1) {
+							System.out.print("Please enter a scholarship ID that you want to approve, or -1 if you want to go back: ");
+							int scholFileIndexToApprove = scnr.nextInt();
 
-							System.out.println("Checking if the scholarship was actually successfully approved. isApproved: " + backend.getOneScholarshipByFileIndex(scholFileIndexToApprove).getIsApproved());
+							// if they want to approve a scholarship
+							if (scholFileIndexToApprove != -1) {
+								// TODO: will this go all the way through the chain of pointers and actually change the original scholarship object????
+								System.out.println("Setting the scholarship to approved");
+								// unapprovedSchols.get(scholFileIndexToApprove).setApproved(true);
+								Scholarship scholToApprove = backend.getOneScholarshipByFileIndex(scholFileIndexToApprove);
+								scholToApprove.setApproved(true);
+
+								System.out.println("Checking if the scholarship was actually successfully approved. isApproved: " + backend.getOneScholarshipByFileIndex(scholFileIndexToApprove).getIsApproved());
+								// update the file
+								backend.updateScholarshipFile(scholToApprove);
+							}
 						}
-					} while(scholFileIndexToApprove != -1);
+						// delete a scholarship
+						else if (adminAction == 2) {
+							System.out.print("Please enter a scholarship ID that you want to delete: ");
+							int deleteFileIndex = scnr.nextInt();
+							scnr.nextLine();
+
+							// try to remove the scholarship, but catch the exception if they enter an out of bounds value
+							// couldn't figure out how to implement this with if-statements
+							try {
+								backend.getAllScholarships().remove(deleteFileIndex);
+							} catch (IndexOutOfBoundsException e) {
+								// TODO: handle exception
+								System.out.println("That scholarship ID value was invalid.");
+							}
+						}
+					} while(adminAction != 0);
 				}
 
-				else if (userSelection > 1) {
-					System.out.println("Have to still write code for userSelection values > 1 for AdminProfile in oneUserAction()");
+				// view all scholarships
+				else if (userSelection == 2) {
+					for (StudentProfile student : backend.getAllStudents()) {
+						System.out.println(student.getAllDetailsString() + "\n");
+					}
 				}
 			} while(userSelection != 0);
 		}
