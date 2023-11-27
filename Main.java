@@ -765,17 +765,12 @@ public class Main {
 									System.out.println("Please enter a valid index.");
 								}
 								else {
+									validSelection = true;
 									// print the scholarship's information, in more detail
 									System.out.println(backend.getOneScholarshipByFileIndex(fileIndex).getAllInfoString());
 
-									System.out.println("\nEnter 1 to go back: ");
-									userAction = scnr.nextInt();
+									System.out.println("\nPress enter to go back");
 									scnr.nextLine();
-
-									if (userAction == 1) {
-										//if the answer is valid it is true and restarts outer loop
-										validSelection = true;
-									}
 								}
 								
 							} while (!validSelection);
@@ -784,18 +779,62 @@ public class Main {
 					} while (keepGoing);
 
 				}
-
+				//view all archived scholarships
 				else if (userSelection == 5) {
-					for (StudentProfile student : backend.getAllStudents()) {
-						System.out.println(student.getAllDetailsString() + "\n");
-					}
+					backend.printAllScholarships(false, true, false, true, false);						
+					boolean keepGoing = true;
+
+					do {
+						//gives the option to view a scholarship more indepth
+						System.out.println("What would you like to do:");
+						System.out.println("1 - Go back");
+						System.out.println("2 - view one scholarship in more detail");
+
+						System.out.print("Your choice: ");
+
+						//need new variable for new loop
+						int userAction = scnr.nextInt();
+						scnr.nextLine();
+
+						//If the user wants to quit, keepGoing needs to be false
+						if (userAction == 1) {
+							keepGoing = false;
+						}
+						else if (userAction == 2) {
+							
+							int fileIndex;
+							Boolean validSelection = false;
+							do {
+								//Grabs the index so that that scholarship can be printed
+								System.out.print("Please enter the file index of the scholarship you want to view: ");
+								fileIndex = scnr.nextInt();
+								scnr.nextLine();
+								//if the user does not select a valid scholarship reinquires user
+								if (backend.getOneScholarshipByFileIndex(fileIndex) == null) {
+									System.out.println("The scholarship with file index " + fileIndex + " could not be found.");
+									System.out.println("Please enter a valid index.");
+								}
+								else {
+									validSelection = true;
+									// print the scholarship's information, in more detail
+									System.out.println(backend.getOneScholarshipByFileIndex(fileIndex).getAllInfoString());
+
+									System.out.println("\nPress enter to go back");
+									scnr.nextLine();
+								}
+								
+							} while (!validSelection);
+						}
+
+					} while (keepGoing);
 				}
 
 				//award scholarship
 				else if(userSelection == 6){
 					boolean quitBrowse = true;
 					int fileIndex;
-					while(quitBrowse){
+
+					while(quitBrowse) {
 						// we want only not-archived and yes approved scholarships for this
 						backend.printAllScholarships(false, false, true, true, false);			
 						//Grabs the index so that that scholarship can be printed
