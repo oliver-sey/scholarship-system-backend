@@ -57,28 +57,11 @@ public class BackendSystem {
 		// and donors), and connect it with actual student and donor objects
 		setScholarshipObjects();
 
-		// TODO: make the rest of the instantiate all methods
-
-
-		// TODO: **** get rid of this print debugging
 		// now that we have the full list of scholarships, archive past ones that are
 		// past due, and delete 5+ year old ones
-		// System.out.println("Scholarships (without archived) before archiving past due: ");
-		// this.printAllScholarships(false, false, true, true, true);
 
-		this.archivePastDueScholarships();
-
-		// System.out.println("\nScholarships (without archived) after archiving past due:");
-		// this.printAllScholarships(false, false, true, true, true);
-
-		// System.out.println("\nScholarships (without archived) after archiving past
-		// due:");
-		// this.printAllScholarships(true, false, true, true);
-		this.deleteScholsDue5PlusYrsAgo();
-		// System.out.println("\nScholarships (**with archived) after deleting 5+ year
-		// old ones:");
-		// this.printAllScholarships(true, true, true, true);
-
+		archivePastDueScholarships();
+		deleteScholsDue5PlusYrsAgo();
 	}
 
 	/**
@@ -134,7 +117,7 @@ public class BackendSystem {
 				// add this new profile to the list here in backend
 				allAdmins.add(newAdmin);
 				// store this new profile in a file
-				storeNewAdminProfile(newAdmin);
+				storeNewAdminProfileFile(newAdmin);
 				// System.out.println("Made new folder and files for that administrator, the
 				// folder name should be /administrators/admin" +
 				// (findNextFileIndex("admin") - 1));
@@ -197,6 +180,7 @@ public class BackendSystem {
 		} while (!success);
 	}
 
+	// reads a StudentProfile from text files, makes and returns a StudentProfile object
 	public StudentProfile readStudentProfile(int fileIndex) throws IOException {
 		String folderPath = "students/student" + String.valueOf(fileIndex);
 		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath + "/details.txt"));
@@ -289,6 +273,11 @@ public class BackendSystem {
 
 	}
 
+	/**
+	 * 
+	 * @param student the newly created StudentProfile object to store to a new set of files
+	 * @throws Exception
+	 */
 	public void storeNewStudentProfile(StudentProfile student) throws Exception {
 		int nextFileIndex = findNextFileIndex("student");
 		String folderPath = "students/student" + String.valueOf(nextFileIndex);
@@ -371,6 +360,8 @@ public class BackendSystem {
 		ArrayList<String> requirements = new ArrayList<String>();
 		ArrayList<String> applicantNames = new ArrayList<String>();
 		ArrayList<StudentProfile> applicants = new ArrayList<StudentProfile>();
+		// this is an empty donor object, this will get overwritten by the
+		// actual correct Donor object after we create the DonorProfile objects
 		DonorProfile correctDonor = new DonorProfile();
 
 		ArrayList<String> values = new ArrayList<String>();
@@ -436,7 +427,7 @@ public class BackendSystem {
 			// find student objects
 			for (String applicantName : schol.getApplicantNames()) {
 				for (StudentProfile student : this.allStudents) {
-					if (applicantName.compareTo(student.getName()) == 0) {
+					if (applicantName.equals(student.getName())) {
 						applicants.add(student);
 					}
 				}
@@ -444,7 +435,7 @@ public class BackendSystem {
 
 			// find donor object
 			for (DonorProfile donor : this.allDonors) {
-				if (schol.getDonorName().compareTo(donor.getName()) == 0) {
+				if (schol.getDonorName().equals(donor.getName())) {
 					correctDonor = donor;
 				}
 			}
@@ -498,7 +489,7 @@ public class BackendSystem {
 
 		for (int i = 0; i < allScholarships.size(); i++) {
 			// if the due date has passed, set it to archived
-			if (allScholarships.get(i).isPastDue()) {
+			if (allScholarships.get(i).isPastDue() && !allScholarships.get(i).getIsArchived()) {
 				allScholarships.get(i).setArchived(true);
 				numSetToArchived++;
 				updateScholarshipFile(allScholarships.get(i));
@@ -508,8 +499,11 @@ public class BackendSystem {
 		return numSetToArchived;
 	}
 
-	// TODO: do we need this? just wanted to get something started - Oliver
+	// TODO: should this delete the files for the old scholarships??
 	/**
+	 * Deletes the objects for scholarships in allScholarships
+	 * that were due yesterday 5 years ago, or longer
+	 * **Does not delete the files!
 	 * 
 	 * @return the number of scholarships deleted, not sure if we'll need this value
 	 *         but it can't hurt to have
@@ -533,6 +527,12 @@ public class BackendSystem {
 		return numDeleted;
 	}
 
+	/**
+	 * Stores a newly created Scholarship object to a new set of text files
+	 * 
+	 * @param scholarship the newly created scholarship object
+	 * @throws IOException
+	 */
 	public void storeNewScholarship(Scholarship scholarship) throws IOException {
 		int nextFileIndex = findNextFileIndex("scholarship");
 		File folder = new File("scholarships/scholarship" + String.valueOf(nextFileIndex));
@@ -564,6 +564,12 @@ public class BackendSystem {
 
 	}
 
+	/**
+	 * update the files for an existing Scholarship object
+	 * 
+	 * @param scholarship
+	 * @throws IOException
+	 */
 	public void updateScholarshipFile(Scholarship scholarship) throws IOException {
 		int fileIndex = scholarship.getFileIndex();
 		File folder = new File("scholarships/scholarship" + String.valueOf(fileIndex));
@@ -909,7 +915,7 @@ public class BackendSystem {
 		return new AdminProfile(firstName, lastName, username, password, sq1, sq2, sq3, fileIndex);
 	}
 
-	public void storeNewAdminProfile(AdminProfile admin) throws Exception {
+	public void storeNewAdminProfileFile(AdminProfile admin) throws Exception {
 		int nextFileIndex = findNextFileIndex("admin");
 		String folderPath = "administrators/admin" + String.valueOf(nextFileIndex);
 		File dir = new File(folderPath);
@@ -1423,6 +1429,7 @@ public class BackendSystem {
 			if (failedPWAttempts == 0) {
 				// Main.scnr.nextLine();
 				System.out.print("Please enter your user type (as one word, i.e. 'student', 'admin', 'fundsteward'): ");
+				Main.scnr.nextLine();
 				userType = Main.scnr.nextLine();
 
 				// check for valid user type
@@ -2557,11 +2564,17 @@ public class BackendSystem {
 		String userConfirm = Main.scnr.nextLine();
 
 		if (userConfirm.equals("y")) {
+			// add the scholarship to the all scholarships list
 			allScholarships.add(scholarship);
 
 			// print it to a new file
 			storeNewScholarship(scholarship);
 
+			// add the scholarship to the donor's list of scholarships
+			((DonorProfile) getCurrentUser()).addScholarship(scholarship);
+
+			System.out.println("Here are all your scholarships (approved or not, but ignoring archived): ");
+			System.out.println(((DonorProfile) getCurrentUser()).getScholarshipFileText());
 			return scholarship;
 		}
 		// else do nothing??
