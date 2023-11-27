@@ -1002,7 +1002,7 @@ public class Main {
 	public static void createNewProfile(BackendSystem backend) throws Exception{
 		//BackendSystem backend = new BackendSystem();
 		String userType;
-		boolean keepGoing = false;
+		boolean success = false;
 		do {
 			scnr.nextLine();
 			System.out.println("Please enter your usertype. (Enter as one word, i.e. student, fundsteward, etc.)");
@@ -1019,7 +1019,7 @@ public class Main {
 					}*/
 
 			if(userType.equalsIgnoreCase("student")){
-				keepGoing = false;
+				success = true;
 				StudentProfile newStudent = new StudentProfile();
 				newStudent = backend.getStudentFromInput();
 				backend.setCurrentUser(newStudent);
@@ -1029,7 +1029,7 @@ public class Main {
 						//System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
 			}
 			else if(userType.equalsIgnoreCase("admin")){
-				keepGoing = false;
+				success = true;
 				AdminProfile newAdmin = new AdminProfile();
 				newAdmin = backend.getAdminFromInput();
 				backend.setCurrentUser(newAdmin);
@@ -1039,7 +1039,7 @@ public class Main {
 						//System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
 			}
 			else if(userType.equalsIgnoreCase("staff")){
-				keepGoing = false;
+				success = true;
 				StaffProfile newStaff = new StaffProfile();
 				newStaff = backend.getStaffFromInput();
 				backend.setCurrentUser(newStaff);
@@ -1049,7 +1049,7 @@ public class Main {
 						//System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
 			}
 			else if(userType.equalsIgnoreCase("fundsteward")){
-				keepGoing = false;
+				success = true;
 				FundStewardProfile newFundsteward = new FundStewardProfile();
 				newFundsteward = backend.getFundStewardFromInput();
 				backend.setCurrentUser(newFundsteward);
@@ -1059,7 +1059,7 @@ public class Main {
 						//System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
 			}
 			else if(userType.equalsIgnoreCase("donor")){
-				keepGoing = false;
+				success = true;
 				DonorProfile newDonor = new DonorProfile();
 				newDonor = backend.getDonorFromInput();
 				backend.setCurrentUser(newDonor);
@@ -1070,15 +1070,14 @@ public class Main {
 			}
 			else {
 				System.out.println("That user type was not recognized, please try again.");
-				keepGoing = true;
 			}
 
 			// if the user successfully created an account, print this success message
-			if (!keepGoing) {
+			if (success) {
 				System.out.println("New user profile created! Now please login using this account.");
 			}
-		// keepGoing is false by default, but is set to true if the user type is invalid
-		} while (keepGoing);
+		// success is false by default, but is set to true if the user type is **valid
+		} while (!success);
 	}
 
 }
