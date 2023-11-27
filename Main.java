@@ -638,11 +638,14 @@ public class Main {
 									System.out.println(backend.getOneScholarshipByFileIndex(fileIndex).getApplication());
 								}
 								else if(userAction == 2){
-									//As of now prints out list of names and then student profiles? 
-									//need to add new lines 
+									//As of now prints out list of names and then student profiles 
+									//maybe take out names and just print profiles?
 									//TODO check over this pls
-									System.out.println(backend.getOneScholarshipByFileIndex(fileIndex).getApplicantNames());
-									System.out.println(backend.getOneScholarshipByFileIndex(fileIndex).getApplicants());
+									for (StudentProfile student : backend.getOneScholarshipByFileIndex(fileIndex).getApplicants()) {
+										//if names should not be printed delete the following line
+										System.out.println(student.getName() + ": ");
+										System.out.println(student.getAllDetailsString() + "\n");
+									}
 								}
 								else if(userAction == 3){
 									//not sure how to implement
@@ -654,6 +657,9 @@ public class Main {
 									while(recipient == null){
 										System.out.println("Enter recipient name (First Last): ");
 										String searchValue = scnr.nextLine();
+										//if we remove the names then we should set recipent by ID
+										//Integer searchValue = scnr.nextInt();
+										//if(student.getID() == searchValue)
 										//searches for students name that was inputed
 										for (StudentProfile student : backend.getAllStudents()) {
 											if (student.getName().compareTo(searchValue)==0) {
