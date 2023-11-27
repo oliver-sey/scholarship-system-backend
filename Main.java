@@ -243,7 +243,8 @@ public class Main {
 			System.out.println("7 - (**OUTDATED, use oneUserAction() method) login as an admin and then approve 1 preselected scholarship");
 			System.out.println("8 - Edit student profile manually");
 			System.out.println("9 - Test printOneScholarship and printAllScholarships");
-			System.out.println("10 - test getScholarshipFromInput");			System.out.println("10 - Add new user to the system");
+			System.out.println("10 - test getScholarshipFromInput");			
+			System.out.println("11 - Add new user to the system");
 
 			System.out.println("0 - EXIT");
 
@@ -437,7 +438,7 @@ public class Main {
 				System.out.println(infoString);
 			}
 
-			else if (userSelection == 10){
+			else if (userSelection == 11){
 				BackendSystem backend = new BackendSystem();
 				String userType;
 
