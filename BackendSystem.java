@@ -2056,7 +2056,7 @@ public class BackendSystem {
 		System.out.println("Please enter in your job Role.");
 		jobRole = scnr.nextLine();
 		//getting errors for calling function setJobRole for some reason
-		//StaffObj.setJobRole(jobRole);
+		StaffObj.setJobRole(jobRole);
 
 		System.out.println("Please enter in your response for the first security question which is the following: What is your mother's maiden name?");
 		securityQuestion1 = scnr.nextLine();
