@@ -432,7 +432,7 @@ public class Main {
 
 				backend.login();
 
-				String infoString = backend.getScholarshipFromInput().getAllInfoString();
+				String infoString = backend.createScholarshipFromInput().getAllInfoString();
 
 				System.out.println("The new scholarship:");
 				System.out.println(infoString);
