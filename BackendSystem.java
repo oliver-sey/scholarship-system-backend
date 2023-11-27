@@ -2802,4 +2802,42 @@ public class BackendSystem {
 		
 	}
 
+	/**
+	 * A recursive method to delete a folder and all the files in it
+	 * Or just to delete a file
+	 * 
+	 * @param file
+	 */
+	public void deleteFileOrFolder(File file) {
+		// get the files that are within this, if there are any
+		File[] contents = file.listFiles();
+		if (contents != null) {
+			// loop through the contents, recursively call this method to delete each 
+			// element in contents' children, and then the element itself
+			for (File f : contents) {
+				deleteFileOrFolder(f);
+			}
+		}
+		// delete the parent file that got passed as a parameter
+		file.delete();
+	}
+
+	/**
+	 * Deletes a StudentProfile object and the associated files
+	 * This method has to be here in BackendSystem, and not in StudentProfile,
+	 * so we can remove the object from allStudents
+	 * 
+	 * @param student the student object you want to delete
+	 */
+	public void deleteStudentProfile(StudentProfile student) {
+		// delete the folder and files associated with the object
+		int fileIndex = student.getFileIndex();
+
+		// make a File object for the folder associated with this student
+		// TODO: is this right?
+		File studentFolder = new File("students/student" + fileIndex);
+		deleteFileOrFolder(studentFolder);
+
+		allStudents.remove(student);
+	}
 }
