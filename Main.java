@@ -154,6 +154,16 @@ public class Main {
 			
 			System.out.print("Your selection: ");
 			userSelection = scnr.nextInt();
+
+			if (userSelection == 1) {
+				for (Scholarship scholarship : ((DonorProfile)backend.getCurrentUser()).getScholarships()) {
+					System.out.println(scholarship.getBasicInfoString());
+				}
+			}
+			// TODO: is there more to do for this?
+			else if (userSelection == 2) {
+				backend.createScholarshipFromInput();
+			}
 		}
 		// else if (backend.getUserType().compareTo("staff") == 0) {
 		else if (backend.getCurrentUser() instanceof StaffProfile) {
