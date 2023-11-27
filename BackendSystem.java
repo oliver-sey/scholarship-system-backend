@@ -98,26 +98,28 @@ public class BackendSystem {
 		this.allStudents = InstantiateAllStudents();
 		// donors relies on scholarships already existing
 		this.allDonors = InstantiateAllDonors();
-		// TODO: have to write code to connect scholarships (which has just strings for
-		// students
-		// and donors), and connect it with actual student and donor objects!!!
-
+		
 		// match relies on students and scholarships
 		this.allMatchRelationships = InstantiateAllMatches();
 		this.allAdmins = instantiateAllAdmins();
 		this.allStaff = InstantiateAllStaff();
 		this.allFundStewards = instantiateAllFundStewards();
 
+		// connect scholarships (which has just strings for students
+		// and donors), and connect it with actual student and donor objects
 		setScholarshipObjects();
+
 		// TODO: make the rest of the instantiate all methods
 
+
+		// TODO: **** get rid of this print debugging
 		// now that we have the full list of scholarships, archive past ones that are
 		// past due, and delete 5+ year old ones
 		// System.out.println("Scholarships (without archived) before archiving past
 		// due: ");
 		// this.printAllScholarships(false, false, true, true);
 
-		// this.archivePastDueScholarships();
+		this.archivePastDueScholarships();
 
 		// System.out.println("\nScholarships (without archived) after archiving past
 		// due:");
@@ -126,7 +128,7 @@ public class BackendSystem {
 		// System.out.println("\nScholarships (without archived) after archiving past
 		// due:");
 		// this.printAllScholarships(true, false, true, true);
-		// this.deleteScholsDue5PlusYrsAgo();
+		this.deleteScholsDue5PlusYrsAgo();
 		// System.out.println("\nScholarships (**with archived) after deleting 5+ year
 		// old ones:");
 		// this.printAllScholarships(true, true, true, true);
@@ -1084,12 +1086,12 @@ public class BackendSystem {
 	}
 
 	// searches a folder for a scholarship with inputted value
-	public ArrayList<Scholarship> searchScholarships(String inputCategory, String inputSearchValue) {
+	public ArrayList<Scholarship> searchScholarships(int inputCategory, String inputSearchValue) {
 		ArrayList<Scholarship> scholarshipsFound = new ArrayList<Scholarship>();
 		HashMap<String, ArrayList<String>> requirements = new HashMap<String, ArrayList<String>>();
 		LocalDate inputDate;
 
-		if (inputCategory.compareTo("name") == 0) {
+		if (inputCategory == 1) {
 
 			double percentage;
 			double max1 = 0.0;
@@ -1125,14 +1127,14 @@ public class BackendSystem {
 			scholarshipsFound.add(schol2);
 			scholarshipsFound.add(schol3);
 
-		} else if (inputCategory.compareTo("donor") == 0) {
+		} else if (inputCategory == 2) {
 			// retrieves donor name from each scholarship
 			for (Scholarship scholarship : this.allScholarships) {
 				if (inputSearchValue.compareTo(scholarship.getDonorName()) == 0) {
 					scholarshipsFound.add(scholarship);
 				}
 			}
-		} else if (inputCategory.compareTo("applicant") == 0) {
+		} else if (inputCategory == 19) {
 			// retrieves array of applicant names from each scholarship and iterates through
 			// them
 			ArrayList<String> applicantNames = new ArrayList<String>();
@@ -1147,7 +1149,7 @@ public class BackendSystem {
 				}
 				applicantNames.clear();
 			}
-		} else if (inputCategory.compareTo("due date") == 0) {
+		} else if (inputCategory == 3) {
 
 			for (Scholarship scholarship : this.allScholarships) {
 				inputDate = LocalDate.parse(inputSearchValue);
@@ -1156,7 +1158,7 @@ public class BackendSystem {
 				}
 			}
 
-		} else if (inputCategory.compareTo("date posted") == 0) {
+		} else if (inputCategory == 4) {
 
 			for (Scholarship scholarship : this.allScholarships) {
 				inputDate = LocalDate.parse(inputSearchValue);
@@ -1165,7 +1167,7 @@ public class BackendSystem {
 				}
 			}
 
-		} else if (inputCategory.compareTo("award amount") == 0) {
+		} else if (inputCategory == 5) {
 
 			for (Scholarship scholarship : this.allScholarships) {
 				if (Float.compare(scholarship.getAwardAmount(), Float.parseFloat(inputSearchValue)) >= 0) {
@@ -1176,13 +1178,64 @@ public class BackendSystem {
 			// assumes any search category will be a requirement
 			// retrieves requirement hashmap from scholarship and compares category and
 			// value
+
+
+			String inputCategoryName;
+
+			switch (inputCategory) {
+				case 6:
+					inputCategoryName = "major";
+					break;
+				case 7:
+					inputCategoryName = "minor";
+					break;
+				case 8:
+					inputCategoryName = "US Citizen";
+					break;
+				case 9:
+					inputCategoryName = "GPA";
+					break;
+				case 10:
+					inputCategoryName = "Good Standing";
+					break;
+				case 11:
+					inputCategoryName = "hasAdvStanding";
+					break;
+				case 12:
+					inputCategoryName = "grade Level";
+					break;
+				case 13:
+					inputCategoryName = "graduation Year";
+					break;
+				case 14:
+					inputCategoryName = "gender";
+					break;
+				case 15:
+					inputCategoryName = "Full Time Student";
+					break;
+				case 16:
+					inputCategoryName = "Transfer Student";
+					break;
+				case 17:
+					inputCategoryName = "curNumCredits";
+					break;
+				case 18:
+					inputCategoryName = "currently receives Funding";
+					break;
+				default:
+					inputCategoryName = "";
+					break;
+			}
+
+
+			
 			for (Scholarship scholarship : this.allScholarships) {
 				requirements = scholarship.getRequirements();
 
 				for (Map.Entry<String, ArrayList<String>> entry : requirements.entrySet()) {
-					if (entry.getKey().compareTo(inputCategory) == 0) {
+					if (entry.getKey().equalsIgnoreCase(inputCategoryName)) {
 						for (int i = 0; i < entry.getValue().size(); i++) {
-							if (entry.getValue().get(i).compareTo(inputSearchValue) == 0) {
+							if (entry.getValue().get(i).equalsIgnoreCase(inputSearchValue)) {
 								scholarshipsFound.add(scholarship);
 							}
 						}
@@ -1499,7 +1552,7 @@ public class BackendSystem {
 
 							if (userAnswer.equalsIgnoreCase(correctAnswer)) {
 								System.out.println("Correct answer!");
-								userType = "donor";
+								userType = "fund steward";
 								return 0;
 							} else {
 								System.out.println("Incorrect answer");
@@ -1542,7 +1595,7 @@ public class BackendSystem {
 
 							if (userAnswer.equalsIgnoreCase(correctAnswer)) {
 								System.out.println("Correct answer!");
-								userType = "donor";
+								userType = "staff";
 								return 0;
 							} else {
 								System.out.println("Incorrect answer");
@@ -2577,6 +2630,32 @@ public class BackendSystem {
 			}
 
 			updateMatchFile(match);
+			this.allMatchRelationships.add(match);
+		}
+	}
+
+	public void getSubmittedApplications (StudentProfile student) {
+		ArrayList<MatchRelationship> matchesFound = new ArrayList<MatchRelationship>();
+
+		for (MatchRelationship match : this.allMatchRelationships) {
+			if(match.getStudentName().equals(student.getName()) && match.getApplicationStatus().equals("submitted")) {
+				matchesFound.add(match);
+			}
+		}
+
+		if (matchesFound.size() == 0) {
+			System.out.println("You have not submitted any applications!");
+		}
+		else {
+			for (MatchRelationship matchFound: matchesFound) {
+				System.out.println("Scholarship: " + matchFound.getScholarshipName());
+				System.out.println("Submitted application: ");
+				for (Map.Entry<String, String> pair : matchFound.getApplication().entrySet()) {
+					System.out.println(pair.getKey());
+					System.out.println(pair.getValue());
+					System.out.println();
+				}
+			}
 		}
 	}
 
