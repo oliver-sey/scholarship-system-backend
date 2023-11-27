@@ -1786,6 +1786,20 @@ public class BackendSystem {
 
 		// if the due date has passed, don't want to award a scholarship before it's due
 		// or on the due date
+			scholarship.setAwarded(true);
+			scholarship.setRecipient(recipient);
+			// because it's after the due date
+			scholarship.setArchived(true);
+			recipient.addScholarship(scholarship);
+			scholarship.setDateAdded(LocalDate.now());
+	}
+
+	public void AwardScholarshipPastDue(StudentProfile recipient, Scholarship scholarship) {
+		LocalDate today = LocalDate.now();
+		LocalDate due = scholarship.getDateDue();
+
+		// if the due date has passed, don't want to award a scholarship before it's due
+		// or on the due date
 		if (today.isAfter(due)) {
 			scholarship.setAwarded(true);
 			scholarship.setRecipient(recipient);
