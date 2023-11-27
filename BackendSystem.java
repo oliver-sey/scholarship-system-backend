@@ -1052,12 +1052,12 @@ public class BackendSystem {
 	}
 
 	// searches a folder for a scholarship with inputted value
-	public ArrayList<Scholarship> searchScholarships(String inputCategory, String inputSearchValue) {
+	public ArrayList<Scholarship> searchScholarships(int inputCategory, String inputSearchValue) {
 		ArrayList<Scholarship> scholarshipsFound = new ArrayList<Scholarship>();
 		HashMap<String, ArrayList<String>> requirements = new HashMap<String, ArrayList<String>>();
 		LocalDate inputDate;
 
-		if (inputCategory.compareTo("name") == 0) {
+		if (inputCategory == 1) {
 
 			double percentage;
 			double max1 = 0.0;
@@ -1093,14 +1093,14 @@ public class BackendSystem {
 			scholarshipsFound.add(schol2);
 			scholarshipsFound.add(schol3);
 
-		} else if (inputCategory.compareTo("donor") == 0) {
+		} else if (inputCategory == 2) {
 			// retrieves donor name from each scholarship
 			for (Scholarship scholarship : this.allScholarships) {
 				if (inputSearchValue.compareTo(scholarship.getDonorName()) == 0) {
 					scholarshipsFound.add(scholarship);
 				}
 			}
-		} else if (inputCategory.compareTo("applicant") == 0) {
+		} else if (inputCategory == 19) {
 			// retrieves array of applicant names from each scholarship and iterates through
 			// them
 			ArrayList<String> applicantNames = new ArrayList<String>();
@@ -1115,7 +1115,7 @@ public class BackendSystem {
 				}
 				applicantNames.clear();
 			}
-		} else if (inputCategory.compareTo("due date") == 0) {
+		} else if (inputCategory == 3) {
 
 			for (Scholarship scholarship : this.allScholarships) {
 				inputDate = LocalDate.parse(inputSearchValue);
@@ -1124,7 +1124,7 @@ public class BackendSystem {
 				}
 			}
 
-		} else if (inputCategory.compareTo("date posted") == 0) {
+		} else if (inputCategory == 4) {
 
 			for (Scholarship scholarship : this.allScholarships) {
 				inputDate = LocalDate.parse(inputSearchValue);
@@ -1133,7 +1133,7 @@ public class BackendSystem {
 				}
 			}
 
-		} else if (inputCategory.compareTo("award amount") == 0) {
+		} else if (inputCategory == 5) {
 
 			for (Scholarship scholarship : this.allScholarships) {
 				if (Float.compare(scholarship.getAwardAmount(), Float.parseFloat(inputSearchValue)) >= 0) {
@@ -1144,13 +1144,64 @@ public class BackendSystem {
 			// assumes any search category will be a requirement
 			// retrieves requirement hashmap from scholarship and compares category and
 			// value
+
+
+			String inputCategoryName;
+
+			switch (inputCategory) {
+				case 6:
+					inputCategoryName = "major";
+					break;
+				case 7:
+					inputCategoryName = "minor";
+					break;
+				case 8:
+					inputCategoryName = "US Citizen";
+					break;
+				case 9:
+					inputCategoryName = "GPA";
+					break;
+				case 10:
+					inputCategoryName = "Good Standing";
+					break;
+				case 11:
+					inputCategoryName = "hasAdvStanding";
+					break;
+				case 12:
+					inputCategoryName = "grade Level";
+					break;
+				case 13:
+					inputCategoryName = "graduation Year";
+					break;
+				case 14:
+					inputCategoryName = "gender";
+					break;
+				case 15:
+					inputCategoryName = "Full Time Student";
+					break;
+				case 16:
+					inputCategoryName = "Transfer Student";
+					break;
+				case 17:
+					inputCategoryName = "curNumCredits";
+					break;
+				case 18:
+					inputCategoryName = "currently receives Funding";
+					break;
+				default:
+					inputCategoryName = "";
+					break;
+			}
+
+
+			
 			for (Scholarship scholarship : this.allScholarships) {
 				requirements = scholarship.getRequirements();
 
 				for (Map.Entry<String, ArrayList<String>> entry : requirements.entrySet()) {
-					if (entry.getKey().compareTo(inputCategory) == 0) {
+					if (entry.getKey().equalsIgnoreCase(inputCategoryName)) {
 						for (int i = 0; i < entry.getValue().size(); i++) {
-							if (entry.getValue().get(i).compareTo(inputSearchValue) == 0) {
+							if (entry.getValue().get(i).equalsIgnoreCase(inputSearchValue)) {
 								scholarshipsFound.add(scholarship);
 							}
 						}
@@ -2533,6 +2584,7 @@ public class BackendSystem {
 			}
 
 			updateMatchFile(match);
+			this.allMatchRelationships.add(match);
 		}
 	}
 
