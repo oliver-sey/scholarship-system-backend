@@ -503,8 +503,8 @@ public class BackendSystem {
 	}
 
 	public void updateScholarshipFile(Scholarship scholarship) throws IOException {
-		int nextFileIndex = findNextFileIndex("scholarship");
-		File folder = new File("scholarships/scholarship" + String.valueOf(nextFileIndex));
+		int fileIndex = scholarship.getFileIndex();
+		File folder = new File("scholarships/scholarship" + String.valueOf(fileIndex));
 
 		File detailsFile = new File(folder, "details.txt");
 		FileWriter detailsWriter = new FileWriter(detailsFile, false);
@@ -1179,7 +1179,23 @@ public class BackendSystem {
 					scholarshipsFound.add(scholarship);
 				}
 			}
-		} else {
+		} else if (inputCategory == 9) {
+			for (Scholarship scholarship : scholarshipsToSearch) {
+				
+				requirements = scholarship.getRequirements();
+
+				for (Map.Entry<String, ArrayList<String>> entry : requirements.entrySet()) {
+					if (entry.getKey().equalsIgnoreCase("GPA")) {
+						if (Float.valueOf(entry.getValue().get(1)).compareTo(Float.valueOf(inputSearchValue)) <= 0){
+							scholarshipsFound.add(scholarship);
+						}
+
+					}
+
+				}
+			}
+
+		}else {
 			// assumes any search category will be a requirement
 			// retrieves requirement hashmap from scholarship and compares category and
 			// value
@@ -1195,9 +1211,6 @@ public class BackendSystem {
 					break;
 				case 8:
 					inputCategoryName = "US Citizen";
-					break;
-				case 9:
-					inputCategoryName = "GPA";
 					break;
 				case 10:
 					inputCategoryName = "Good Standing";
