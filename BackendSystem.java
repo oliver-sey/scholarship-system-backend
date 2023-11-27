@@ -1035,6 +1035,13 @@ public class BackendSystem {
 	}
 
 	/**
+	 * IMPORTANT: at least one parameter for archived and one for approved need to be true, otherwise you will get nothing!
+	 * 
+	 * Ex: to get only scholarships that are archived (approved or not), do includeArchived = true,
+	 * includeNotArchived = false, and the other 2 true
+	 * 
+	 * to get only scholarships that are not archived and are approved, do includeArchived = false, includeNotArchived=true
+	 * includeApproved = true, includeNotApproved = false
 	 * 
 	 * @param detailedInfo      whether or not you want to print detailed
 	 *                          information about the scholarship, or something more
@@ -1044,22 +1051,25 @@ public class BackendSystem {
 	 * 
 	 * @param includeArchived   whether or not to print scholarships that are marked
 	 *                          as isArchived = true
+	 * @param includeNotArchived   whether or not to print scholarships that are marked
+	 *                          as isArchived = **false
+	 * 
 	 * @param includeApproved   whether or not to print scholarships that are marked
 	 *                          as isApproved = **true
-	 * @param includeUnapproved whether or not to print scholarships that are marked
+	 * @param includeNotApproved whether or not to print scholarships that are marked
 	 *                          as isApproved = **false
 	 *                          This param is so we can print only unapproved
 	 *                          scholarships for an admin to approve
 	 */
-	public void printAllScholarships(boolean detailedInfo, boolean includeArchived, boolean includeApproved,
-			boolean includeUnapproved) {
+	public void printAllScholarships(boolean detailedInfo, boolean includeArchived, boolean includeNotArchived, boolean includeApproved,
+			boolean includeNotApproved) {
 		for (Scholarship scholarship : allScholarships) {
 			// if the scholarship is either not archived or we want to include archived
 			// ones,
 			// and it's either approved and we want to include approved scholarships, or
 			// it's not approved and we want to include unapproved scholarships
-			if ((!scholarship.getIsArchived() || includeArchived) && ((scholarship.getIsApproved() && includeApproved)
-					|| (!scholarship.getIsApproved() && includeUnapproved))) {
+			if ((scholarship.getIsArchived() && includeArchived) || (!scholarship.getIsArchived() && includeNotArchived)
+			|| (scholarship.getIsApproved() && includeApproved) || (!scholarship.getIsApproved() && includeNotApproved)) {
 				if (detailedInfo) {
 					System.out.print(scholarship.getAllInfoString());
 				} else {
@@ -2470,12 +2480,12 @@ public class BackendSystem {
 			requirements.add(value);
 		} while (userSelection != -1);
 
-		System.out.println("Enter the application details (line-separated):");
+		System.out.println("Enter the application questions (line-separated):");
 		ArrayList<String> application = new ArrayList<>();
 		String applicationDetail;
 
 		while (true) {
-			System.out.println("Enter the application detail (or 'done' to finish):");
+			System.out.println("Enter the application question (or 'done' to finish):");
 			applicationDetail = Main.scnr.nextLine();
 			if (applicationDetail.equals("done")) {
 				break;
