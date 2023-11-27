@@ -18,6 +18,7 @@ public class Scholarship {
     private boolean isApproved;
     private boolean isAwarded;
     private StudentProfile recipient;
+    private String recipientName;
     private String donorName;
     private ArrayList<String> applicantNames = new ArrayList<String>();
 
@@ -71,7 +72,7 @@ public class Scholarship {
     public Scholarship(String name, String description, String donorName, float awardAmount,
             ArrayList<String> requirements,
             ArrayList<String> application, ArrayList<String> applicants, boolean isApproved,
-            boolean isArchived, int fileIndex, String dateAddedString, String dateDueString) {
+            boolean isArchived, boolean isAwarded, int fileIndex, String dateAddedString, String dateDueString) {
         this.name = name;
         this.description = description;
         this.donorName = donorName;
@@ -93,6 +94,16 @@ public class Scholarship {
         this.isApproved = isApproved;
         this.isArchived = isArchived;
         this.fileIndex = fileIndex;
+        this.isAwarded = isAwarded;
+
+        if (isAwarded) {
+            for (String applicantName : applicantNames) {
+                if(Character.compare(applicantName.charAt(applicantName.length() - 1), '*') == 0){
+                    applicantName = applicantName.substring(0, applicantName.length() - 1);
+                    recipientName = applicantName;
+                }
+            }
+        }
 
         // the dateAdded and dateDue are stored as LocalDate objects in the
         // Scholarship, but we parse them (and get them as a parameter into this constructor)
@@ -237,6 +248,12 @@ public class Scholarship {
         return this.donorName;
     }
 
+    public String getRecipientName() {
+        return this.recipientName;
+    }
+
+
+
 
     // setters
 
@@ -288,6 +305,10 @@ public class Scholarship {
         this.recipient = recipient;
     }
 
+    public void setRecipientName(String name) {
+        this.recipientName = name;
+    }
+
     public String getDetailsFileText() {
         return this.name + "\n"
         + this.description + "\n"
@@ -295,6 +316,7 @@ public class Scholarship {
         + this.awardAmount + "\n"
         + this.isApproved + "\n"
         + this.isArchived + "\n"
+        + this.isAwarded + "\n"
         + this.getDateAddedString() + "\n"
         + this.getDateDueString();
     }
@@ -306,7 +328,22 @@ public class Scholarship {
     }
 
     public String getApplicantsFileText() {
-        String fileText = String.join("\n", getApplicantNames());
+        String fileText;
+
+        if (this.isAwarded) {
+            ArrayList<String> applicantNames = new ArrayList<String>(this.applicantNames);
+
+            for (String name : applicantNames) {
+                if (name.equals(this.recipientName)) {
+                    name = name + "*";
+                }
+            }
+
+            fileText = String.join("\n", applicantNames);
+        }
+        else {
+            fileText = String.join("\n", getApplicantNames());
+        }
 
         return fileText;
     }
@@ -347,7 +384,7 @@ public class Scholarship {
     public String getBasicInfoString() {
         String info;
 
-        info = "Scholarship with ID #" + fileIndex + ": " + this.name + "\n";
+        info = "Scholarship with index: " + fileIndex + "\n" + this.name + "\n";
 	
         info += "Award amount: " + String.format("%.2f", this.awardAmount) + "\n";
 		

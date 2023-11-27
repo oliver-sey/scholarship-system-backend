@@ -378,12 +378,13 @@ public class BackendSystem {
 		float awardAmount = Float.parseFloat(values.get(3));
 		boolean isApproved = Boolean.parseBoolean(values.get(4));
 		boolean isArchived = Boolean.parseBoolean(values.get(5));
+		boolean isAwarded = Boolean.parseBoolean(values.get(6));
 
 		// just using the Strings here because that's what we read from the file,
 		// and that's what the constructor takes as a parameter
 		// The constructor will then convert it to a LocalDate object
-		String dateAddedString = values.get(6);
-		String dateDueString = values.get(7);
+		String dateAddedString = values.get(7);
+		String dateDueString = values.get(8);
 
 		detailsBr.close();
 
@@ -415,13 +416,14 @@ public class BackendSystem {
 		applicantsBr.close();
 
 		return new Scholarship(name, description, donorName, awardAmount, requirements, application, applicantNames,
-				isApproved, isArchived, fileIndex, dateAddedString, dateDueString);
+				isApproved, isArchived, isAwarded, fileIndex, dateAddedString, dateDueString);
 
 	}
 
 	public void setScholarshipObjects() {
 		ArrayList<StudentProfile> applicants = new ArrayList<StudentProfile>();
 		DonorProfile correctDonor = new DonorProfile();
+		StudentProfile recipient = new StudentProfile();
 
 		for (Scholarship schol : this.allScholarships) {
 			// find student objects
@@ -440,9 +442,18 @@ public class BackendSystem {
 				}
 			}
 
+			if (schol.getIsAwarded()) {
+				for (StudentProfile student : this.allStudents) {
+					if (schol.getRecipientName().equals(student.getName())) {
+						recipient = student;
+					}
+				}
+			}
+
 			// setting the objects in each scholarship object
 			schol.setApplicants(applicants);
 			schol.setDonor(correctDonor);
+			schol.setRecipient(recipient);
 		}
 
 	}
