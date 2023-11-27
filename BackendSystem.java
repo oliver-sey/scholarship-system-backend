@@ -1243,9 +1243,8 @@ public class BackendSystem {
 			// only ask them for their user type and password if they're trying to log in the first time, after that just ask them
 			// for their password
 			if (failedPWAttempts == 0) {
-				System.out.print("Please enter your user type (as one word, i.e. 'student', 'admin', 'fundsteward'). ");
-				System.out.print("Please enter your user type: ");
-				Main.scnr.nextLine();
+				// Main.scnr.nextLine();
+				System.out.print("Please enter your user type (as one word, i.e. 'student', 'admin', 'fundsteward', 'donor'): ");
 				userType = Main.scnr.nextLine();
 
 				// check for valid user type
