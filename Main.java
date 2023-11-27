@@ -15,7 +15,7 @@ public class Main {
 		// userRunSystem will prompt them to log in
 		userRunSystem(backend);
 
-		runDifferentTests();
+		//runDifferentTests();
 
 	}
 
@@ -146,7 +146,14 @@ public class Main {
 			- create and submit scholarship for review
 
 			*/
-			System.out.println("Have to still implement oneUserAction() for DonorProfile.");
+			System.out.println("\nPlease enter a number to select which action you want to do:");
+
+			System.out.println("1 - See your posted scholarships");
+			System.out.println("2 - Enter a new scholarship");
+			System.out.println("0 - EXIT");
+			
+			System.out.print("Your selection: ");
+			userSelection = scnr.nextInt();
 		}
 		// else if (backend.getUserType().compareTo("staff") == 0) {
 		else if (backend.getCurrentUser() instanceof StaffProfile) {
@@ -404,8 +411,7 @@ public class Main {
 				
 				backend.login();
 
-				backend.editStudentInfo((StudentProfile) backend.getCurrentUser());
-				System.out.println(((StudentProfile) backend.getCurrentUser()).toString());
+				
 			}
 
 			// test print scholarships

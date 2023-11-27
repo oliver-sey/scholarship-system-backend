@@ -143,11 +143,10 @@ public class MatchRelationship {
     }
 
     public String getDetailsFileText() {
-        return this.student + "\n"
-        + this.scholarship + "\n"
+        return this.student.getName() + "\n"
+        + this.scholarship.getName() + "\n"
         + this.matchPercentage + "\n"
         + this.matchIndex + "\n"
-        + this.application + "\n"
         + this.applicationStatus;
     }
 
