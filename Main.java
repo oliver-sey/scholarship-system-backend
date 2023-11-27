@@ -766,6 +766,7 @@ public class Main {
 			System.out.println("9 - Test printOneScholarship and printAllScholarships");
 			System.out.println("10 - test getScholarshipFromInput");			
 			System.out.println("11 - Add new user to the system");
+			System.out.println("12 - testing a student deleting themselves");
 
 			System.out.println("0 - EXIT");
 
@@ -864,10 +865,10 @@ public class Main {
 				// }
 
 				// for students
-				// System.out.println("all student names: ");
-				// for (StudentProfile student : backend.getAllStudents()) {
-				// 	System.out.println("'" + student.getName() + "'");
-				// }
+				System.out.println("all student names: ");
+				for (StudentProfile student : backend.getAllStudents()) {
+					System.out.println("'" + student.getName() + "'");
+				}
 
 				// for staff
 				// System.out.println("all staff names: ");
@@ -882,11 +883,11 @@ public class Main {
 				// }
 
 				// for scholarships
-				System.out.println("all scholarships (detailed): ");
-				for (Scholarship scholarship : backend.getAllScholarships()) {
-					System.out.println(scholarship.getAllInfoString());
-					System.out.println();
-				}
+				// System.out.println("all scholarships (detailed): ");
+				// for (Scholarship scholarship : backend.getAllScholarships()) {
+				// 	System.out.println(scholarship.getAllInfoString());
+				// 	System.out.println();
+				// }
 			}
 			
 			else if (userSelection == 6) {
@@ -1021,6 +1022,17 @@ public class Main {
 					System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
 				}
 
+			}
+
+			// testing a student deleting themselves
+			else if (userSelection == 12) {
+				BackendSystem backend = new BackendSystem();	
+				System.out.println("Testing a student deleting themselves");
+				System.out.println("Please login as a student:");
+				backend.login();
+				
+				backend.deleteStudentProfile((StudentProfile) backend.getCurrentUser());
+				System.out.println("done");
 			}
 
 			else {
