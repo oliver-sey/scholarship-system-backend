@@ -996,7 +996,7 @@ public class BackendSystem {
 		for (Scholarship scholarship : allScholarships) {
 			// if the scholarship is either not archived or we want to include archived ones,
 			// and it's either approved and we want to include approved scholarships, or it's not approved and we want to include unapproved scholarships
-			if (scholarship != null && (!scholarship.getIsArchived() || includeArchived) && ((scholarship.getIsApproved() && includeApproved) || (!scholarship.getIsApproved() && includeUnapproved))) {
+			if ((!scholarship.getIsArchived() || includeArchived) && ((scholarship.getIsApproved() && includeApproved) || (!scholarship.getIsApproved() && includeUnapproved))) {
 				if (detailedInfo) {
 					System.out.print(scholarship.getAllInfoString());
 				} 
