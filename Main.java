@@ -242,7 +242,7 @@ public class Main {
 			System.out.println("7 - (**OUTDATED, use oneUserAction() method) login as an admin and then approve 1 preselected scholarship");
 			System.out.println("8 - Edit student profile manually");
 			System.out.println("9 - Test printOneScholarship and printAllScholarships");
-
+			System.out.println("10 - test getScholarshipFromInput");
 			System.out.println("0 - EXIT");
 
 			System.out.print("\nYour choice: ");
@@ -327,10 +327,10 @@ public class Main {
 				BackendSystem backend = new BackendSystem();
 
 				// for admins
-				System.out.println("all admin names: ");
-				for (AdminProfile admin : backend.getAllAdmins()) {
-					System.out.println("'" + admin.getName() + "'");
-				}
+				// System.out.println("all admin names: ");
+				// for (AdminProfile admin : backend.getAllAdmins()) {
+				// 	System.out.println("'" + admin.getName() + "'");
+				// }
 
 				// for donors
 				// System.out.println("all donors: " + backend.getAllDonors());
@@ -356,6 +356,13 @@ public class Main {
 				// for (FundStewardProfile fundsteward : backend.getAllFundstewards()) {
 				//	System.out.println("'" + fundsteward.getName() + "'");
 				// }
+
+				// for scholarships
+				System.out.println("all scholarships (detailed): ");
+				for (Scholarship scholarship : backend.getAllScholarships()) {
+					System.out.println(scholarship.getAllInfoString());
+					System.out.println();
+				}
 			}
 			
 			else if (userSelection == 6) {
@@ -412,6 +419,18 @@ public class Main {
 
 				System.out.println("\n\nTesting the printAllScholarships method (**detailed info, do not include archived or unapproved, but include approved):");
 				backend.printAllScholarships(true, false, true, false);
+			}
+
+			else if (userSelection == 10) {
+				BackendSystem backend = new BackendSystem();
+				System.out.println("To make this use case work, please log in as a donor");
+
+				backend.login();
+
+				String infoString = backend.getScholarshipFromInput().getAllInfoString();
+
+				System.out.println("The new scholarship:");
+				System.out.println(infoString);
 			}
 
 			else {
