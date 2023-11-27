@@ -1,6 +1,5 @@
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -993,19 +992,18 @@ public class BackendSystem {
 	 * This param is so we can print only unapproved scholarships for an admin to approve
 	 */
 	public void printAllScholarships(boolean detailedInfo, boolean includeArchived, boolean includeApproved, boolean includeUnapproved) {
-		// starting at 0 just in case we make a Scholarship with fileIndex 0
-		for (int fileIndex = 0; fileIndex <= findNextFileIndex("scholarship") - 1; fileIndex++) {
-			Scholarship requestedSchol = getOneScholarshipByFileIndex(fileIndex);
-			// if the scholarship was found when searching by fileIndex, and it's either not archived or we want to include archived ones,
+		for (Scholarship scholarship : allScholarships) {
+			// if the scholarship is either not archived or we want to include archived ones,
 			// and it's either approved and we want to include approved scholarships, or it's not approved and we want to include unapproved scholarships
-			if (requestedSchol != null && (!requestedSchol.getIsArchived() || includeArchived) && ((requestedSchol.getIsApproved() && includeApproved) || (!requestedSchol.getIsApproved() && includeUnapproved))) {
+			if ((!scholarship.getIsArchived() || includeArchived) && ((scholarship.getIsApproved() && includeApproved) || (!scholarship.getIsApproved() && includeUnapproved))) {
 				if (detailedInfo) {
-					System.out.print(requestedSchol.getAllInfoString());
+					System.out.print(scholarship.getAllInfoString());
 				} 
 				else {
-					System.out.print(requestedSchol.getBasicInfoString());
+					System.out.print(scholarship.getBasicInfoString());
 				}
 
+				System.out.println();
 				System.out.println();
 			}
 		}
