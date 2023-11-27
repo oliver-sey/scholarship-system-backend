@@ -75,7 +75,7 @@ public class BackendSystem {
 		String userType;
 		boolean success = false;
 		do {
-			Main.scnr.nextLine();
+			// Main.scnr.nextLine();
 			System.out.println("Please enter your user type. (Enter as one word, i.e. student, fundsteward, etc.)");
 			userType = Main.scnr.nextLine();
 
@@ -2552,10 +2552,13 @@ public class BackendSystem {
 		System.out.println("Enter the due date (in the format YYYY-MM-DD):");
 		String dateDueString = Main.scnr.nextLine();
 
+		// get the next available Scholarship file index
+		int fileIndex = findNextFileIndex("scholarship");
+
 		// Create a new Scholarship object
 		// have to have this up here so we can print the details
 		Scholarship scholarship = new Scholarship(name, description, donor, awardAmount, requirements, application,
-				dateDueString);
+				dateDueString, fileIndex);
 
 		System.out.println("Here is the scholarship you have created:");
 		System.out.println(scholarship.getAllInfoString());

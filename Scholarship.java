@@ -33,7 +33,7 @@ public class Scholarship {
 
     // constructor for donor typing details in
     public Scholarship(String name, String description, DonorProfile donor, float awardAmount,
-            ArrayList<String> requirements, ArrayList<String> application, String dateDueString) {
+            ArrayList<String> requirements, ArrayList<String> application, String dateDueString, int fileIndex) {
         this.name = name;
         this.description = description;
         this.donor = donor;
@@ -62,7 +62,10 @@ public class Scholarship {
         // the dateAdded for this constructor (adding from the terminal), should just be today
         this.dateAdded = LocalDate.now();
         this.dateDue = LocalDate.parse(dateDueString);
+
+        this.fileIndex = fileIndex;
     }
+
 
     // constructor for loading data from files into program
     public Scholarship(String name, String description, String donorName, float awardAmount,
