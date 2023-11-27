@@ -31,7 +31,7 @@ public class Scholarship {
 
     // constructor for donor typing details in
     public Scholarship(String name, String description, DonorProfile donor, float awardAmount,
-            ArrayList<String> requirements, ArrayList<String> application, String dateAddedString, String dateDueString) {
+            ArrayList<String> requirements, ArrayList<String> application, String dateDueString) {
         this.name = name;
         this.description = description;
         this.donor = donor;
@@ -56,7 +56,9 @@ public class Scholarship {
         // the dateAdded and dateDue are stored as LocalDate objects in the
         // Scholarship, but we parse them (and get them as a parameter into this constructor)
         // as a String, so we have to parse the dates from the Strings
-        this.dateAdded = LocalDate.parse(dateAddedString);
+
+        // the dateAdded for this constructor (adding from the terminal), should just be today
+        this.dateAdded = LocalDate.now();
         this.dateDue = LocalDate.parse(dateDueString);
     }
 
