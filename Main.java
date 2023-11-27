@@ -63,8 +63,9 @@ public class Main {
 
 				System.out.println("1 - View and edit your profile");
 				System.out.println("2 - See all active scholarships (can apply to them also)");
-				System.out.println("3 - See submitted applications");
-				System.out.println("4 - Search scholarships");
+				System.out.println("3 - See applications in progress");
+				System.out.println("4 - See submitted applications");
+				System.out.println("5 - Search scholarships");
 				System.out.println("0 - EXIT");
 				
 				System.out.print("Your selection: ");
@@ -139,9 +140,16 @@ public class Main {
 					
 				}
 				else if (userSelection == 3) {
+					Boolean quit = false;
 
+					while (!quit) {
+						
+					}
 				}
 				else if (userSelection == 4) {
+					backend.getSubmittedApplications((StudentProfile) backend.getCurrentUser());
+				}
+				else if (userSelection == 5) {
 					Boolean quitSearch = false;
 					Boolean exitResults;
 
@@ -178,20 +186,32 @@ public class Main {
 						exitResults = false;
 
 						while (!exitResults) {
-							for (Scholarship schol : scholarshipsFound) {
-								System.out.println(schol.getBasicInfoString());
+
+							if (scholarshipsFound.size() == 0) {
+								System.out.println("No scholarships found!");
+
+								System.out.println("What would you like to do:");
+								System.out.println("2 - Enter new search criteria");
+								System.out.println("3 - Exit search");
+								
+							}
+							else {
+								for (Scholarship schol : scholarshipsFound) {
+									System.out.println(schol.getBasicInfoString());
+								}
+
+								System.out.println("What would you like to do:");
+								System.out.println("1 - Expand a scholarship");
+								System.out.println("2 - Enter new search criteria");
+								System.out.println("3 - Exit search");
 							}
 
-							System.out.println("What would you like to do:");
-							System.out.println("1 - Expand a scholarship");
-							System.out.println("2 - Enter new search criteria");
-							System.out.println("3 - Exit search");
+								System.out.print("Your choice: ");
 
-							System.out.print("Your choice: ");
-
-							// want to keep this separate from userSelection, so we don't accidentally exit the outer do-while loop or something
-							int userAction = scnr.nextInt();
-							scnr.nextLine();
+								// want to keep this separate from userSelection, so we don't accidentally exit the outer do-while loop or something
+								int userAction = scnr.nextInt();
+								scnr.nextLine();
+							
 
 							if (userAction == 3) {
 								exitResults = true;

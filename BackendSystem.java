@@ -1533,7 +1533,7 @@ public class BackendSystem {
 
 							if (userAnswer.equalsIgnoreCase(correctAnswer)) {
 								System.out.println("Correct answer!");
-								userType = "donor";
+								userType = "fund steward";
 								return 0;
 							} else {
 								System.out.println("Incorrect answer");
@@ -1576,7 +1576,7 @@ public class BackendSystem {
 
 							if (userAnswer.equalsIgnoreCase(correctAnswer)) {
 								System.out.println("Correct answer!");
-								userType = "donor";
+								userType = "staff";
 								return 0;
 							} else {
 								System.out.println("Incorrect answer");
@@ -2612,6 +2612,31 @@ public class BackendSystem {
 
 			updateMatchFile(match);
 			this.allMatchRelationships.add(match);
+		}
+	}
+
+	public void getSubmittedApplications (StudentProfile student) {
+		ArrayList<MatchRelationship> matchesFound = new ArrayList<MatchRelationship>();
+
+		for (MatchRelationship match : this.allMatchRelationships) {
+			if(match.getStudentName().equals(student.getName()) && match.getApplicationStatus().equals("submitted")) {
+				matchesFound.add(match);
+			}
+		}
+
+		if (matchesFound.size() == 0) {
+			System.out.println("You have not submitted any applications!");
+		}
+		else {
+			for (MatchRelationship matchFound: matchesFound) {
+				System.out.println("Scholarship: " + matchFound.getScholarshipName());
+				System.out.println("Submitted application: ");
+				for (Map.Entry<String, String> pair : matchFound.getApplication().entrySet()) {
+					System.out.println(pair.getKey());
+					System.out.println(pair.getValue());
+					System.out.println();
+				}
+			}
 		}
 	}
 
