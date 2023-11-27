@@ -313,7 +313,8 @@ public class Main {
 			/*
 			 * -view archived/awarded scholarships
 			 */
-			/* 
+			do{
+				//querys user about what they would like to do
 				System.out.println("\nPlease enter a number to select which action you want to do:");
 
 				System.out.println("1 - View awarded scholarships");
@@ -322,9 +323,63 @@ public class Main {
 				System.out.print("Your selection: ");
 				userSelection = scnr.nextInt();
 
+				//runs through viewing an awarded scholarship
 				if(userSelection == 1){
-					backend.printAllScholarships(true, true, false, false);
-				}*/
+					//print out a list of all awarded scholarships that have been awarded
+					backend.printArchivedScholarships(false, true, true, false);						
+					boolean quitBrowse = true;
+					while(quitBrowse){
+						//gives the option to view a scholarship more indepth
+						System.out.println("What would you like to do:");
+						System.out.println("1 - Go back");
+						System.out.println("2 - view one scholarship in more detail");
+
+						System.out.print("Your choice: ");
+
+						//need new variable for new loop
+						int userAction = scnr.nextInt();
+						scnr.nextLine();
+
+						//If the user wants to quir quitBrowse needs to be false
+						if(userAction == 1){
+							quitBrowse = false;
+						}
+						else if (userAction == 2) {
+							
+							int fileIndex;
+							Boolean validSelection = false;
+							do {
+								//Grabs the index so that that scholarship can be printed
+								System.out.print("Please enter the file index of the scholarship you want to view: ");
+								fileIndex = scnr.nextInt();
+								scnr.nextLine();
+								//if the user does not select a valid scholarship reinquires user
+								if (backend.getOneScholarshipByFileIndex(fileIndex) == null) {
+									System.out.println("The scholarship with file index " + fileIndex + " could not be found.");
+									System.out.println("Please enter a valid index.");
+								}
+								else {
+									// print the scholarship's information, in more detail
+									System.out.println(backend.getOneScholarshipByFileIndex(fileIndex).getAllInfoString());
+
+									System.out.println("\nEnter 1 to go back: ");
+									userAction = scnr.nextInt();
+									scnr.nextLine();
+
+									if (userAction == 1) {
+										//if the answer is valid it is true and restarts outer loop
+										validSelection = true;
+									}
+								}
+								
+							} while (!validSelection);
+						}
+
+					}
+				}
+
+			}while(userSelection != 0);
+
 			System.out.println("Have to still implement oneUserAction() for FundStewardProfile.");
 		}
 		// else if (backend.getUserType().compareTo("admin") == 0) {

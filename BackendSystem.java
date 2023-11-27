@@ -1068,6 +1068,23 @@ public class BackendSystem {
 		}
 	}
 
+	public void printArchivedScholarships(boolean detailedInfo, boolean includeArchived, boolean includeApproved,
+			boolean includeUnapproved) {
+		for (Scholarship scholarship : allScholarships) {
+			if((scholarship.getIsArchived() && includeArchived)){
+				if (detailedInfo) {
+					System.out.print(scholarship.getAllInfoString());
+					System.out.println();
+					System.out.print(scholarship.getRecipient());
+				} else {
+					System.out.print(scholarship.getBasicInfoString());
+				}
+				System.out.println();
+				System.out.println();
+			}
+		}
+	}
+
 	// searches a folder for a scholarship with inputted value
 	public ArrayList<Scholarship> searchScholarships(int inputCategory, String inputSearchValue) {
 		ArrayList<Scholarship> scholarshipsFound = new ArrayList<Scholarship>();
