@@ -79,6 +79,10 @@ public class MatchRelationship {
         this.applicationStatus = applicationStatus;
     }
 
+    public MatchRelationship() {
+        
+    }
+
     // getters
 
     public float getMatchPercentage() {
@@ -107,6 +111,10 @@ public class MatchRelationship {
 
     public int getID() {
         return this.ID;
+    }
+
+    public Scholarship getScholarship() {
+        return this.scholarship;
     }
 
     // setters
