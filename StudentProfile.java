@@ -409,15 +409,66 @@ public class StudentProfile extends Profile {
 				this.securityQAnswers[2] + "\n";
 	}
 
-	@Override
-	public String toString() {
-		// moved the string that this used to return, to getAllDetailsString
-		return this.getAllDetailsString();
-	}
 
 	public String getBasicDetailsString() {
-		String output = firstName + " " + lastName + ", " + gradeLevel + ", " + major;
+		String output = firstName + " " + lastName + ", " + gradeLevel + ", " + major + "\n";
+		output += "Index: " + fileIndex;
 
+		return output;
+	}
+
+	public String getAllDetailsString() {
+		String output = firstName + " " + lastName + "\n";
+		output += "Year: " + gradeLevel + "\n";
+		output += "Major: " + major + "\n";
+		if (this.hasAMinor) {
+			output += "Minor: " + minor + "\n";
+		}
+		else {
+			output += "Minor: none" + "\n";
+		}
+		output += "Student ID: " + studentID + "\n";
+		output += "GPA: " + String.format("%.2f", GPA) + "\n";
+		output += "Expected to graduate in " + gradMonth + "/" + gradYear + "\n";
+		if (this.inGoodStanding) {
+			output += "In good standing, ";
+		}
+		else {
+			output += "Not in good standing, ";
+		}
+		if (this.hasAdvStanding) {
+			output += "Has advanced standing\n";
+		}
+		else {
+			output += "Does not have advanced standing\n";
+		}
+		if (this.isTransferStudent) {
+			output += "Transfer student, ";
+		}
+		else {
+			output += "Not a transfer student, ";
+		}
+		if (this.isUSCitizen) {
+			output += "US citizen\n";
+		}
+		else {
+			output += "Not a US citizen\n";
+		}
+		if (this.isFullTimeStudent) {
+			output += "Full time student ";
+		}
+		else {
+			output += "Part time student ";
+		}
+		output += "with " + curNumCredits + " credits\n";
+		output += "Gender: " + gender + "\n";
+		if (this.receivesFunding) {
+			output += "Receives funding" + "\n";
+		}
+		else {
+			output += "Does not receive funding" + "\n";
+		}
+		
 		return output;
 	}
 
@@ -425,7 +476,8 @@ public class StudentProfile extends Profile {
 	 * 
 	 * @return all the properties of this student, **except the personal statement since that makes it too long
 	 */
-	public String getAllDetailsString() {
+	@Override
+	public String toString() {
 		return "StudentProfile [studentID=" + studentID + ", major=" + major + ", minor=" + minor + ", hasAMinor="
 				+ hasAMinor + ", isUSCitizen=" + isUSCitizen + ", GPA=" + GPA + ", inGoodStanding=" + inGoodStanding
 				+ ", hasAdvStanding=" + hasAdvStanding + ", gradeLevel=" + gradeLevel + ", gradMonth=" + gradMonth
