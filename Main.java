@@ -92,19 +92,19 @@ public class Main {
 
 						// want to keep this separate from userSelection, so we don't accidentally exit the outer do-while loop or something
 						int userAction = scnr.nextInt();
+						scnr.nextLine();
 
 						if (userAction == 1) {
 							quitBrowse = true;
 						}
 						else if (userAction == 2) {
-							scnr.nextLine();
-
+							
 							int fileIndex;
 							Boolean validSelection = false;
 							do {
 								System.out.print("Please enter the file index of the scholarship you want to view: ");
 								fileIndex = scnr.nextInt();
-
+								scnr.nextLine();
 								
 								if (backend.getOneScholarshipByFileIndex(fileIndex) == null) {
 									System.out.println("The scholarship with file index " + fileIndex + " could not be found.");
@@ -113,7 +113,7 @@ public class Main {
 								else {
 									// print the scholarship's information, in more detail than before
 									validSelection = true;
-									System.out.println(backend.getAllScholarships().get(fileIndex).getAllInfoString());
+									System.out.println(backend.getOneScholarshipByFileIndex(fileIndex).getAllInfoString());
 
 									System.out.println("\nPlease select an option:");
 									System.out.println("1 - go back");
@@ -121,12 +121,13 @@ public class Main {
 
 									System.out.print("Your choice: ");
 									userAction = scnr.nextInt();
+									scnr.nextLine();
+
 									if (userAction == 1) {
 										// do nothing?
 									}
 									else if (userAction == 2) {
-										
-										
+										backend.applyToScholarship(fileIndex);
 									}
 								}
 								
@@ -242,7 +243,8 @@ public class Main {
 			System.out.println("7 - (**OUTDATED, use oneUserAction() method) login as an admin and then approve 1 preselected scholarship");
 			System.out.println("8 - Edit student profile manually");
 			System.out.println("9 - Test printOneScholarship and printAllScholarships");
-			System.out.println("10 - test getScholarshipFromInput");
+			System.out.println("10 - test getScholarshipFromInput");			System.out.println("10 - Add new user to the system");
+
 			System.out.println("0 - EXIT");
 
 			System.out.print("\nYour choice: ");
@@ -370,9 +372,11 @@ public class Main {
 
 				// TODO: just using the first one for now, not exactly sure
 				// pick one donor and make a duplicate folder with the files for that donor to test this
-				DonorProfile donorToCopy = backend.getAllDonors().get(0);
+				//DonorProfile donorToCopy = backend.getAllDonors().get(0);
+				DonorProfile newDonor = backend.getDonorFromInput();
 
-				backend.storeNewDonorProfile(donorToCopy);
+				//backend.storeNewDonorProfile(donorToCopy);
+				backend.storeNewDonorProfile(newDonor);
 				System.out.println("Made new folder and files for that donor, the folder name should be /donors/donor" + (backend.findNextFileIndex("donor") - 1));
 				System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
 			}
@@ -431,6 +435,71 @@ public class Main {
 
 				System.out.println("The new scholarship:");
 				System.out.println(infoString);
+			}
+
+			else if (userSelection == 10){
+				BackendSystem backend = new BackendSystem();
+				String userType;
+
+				System.out.println("Please enter your usertype. (Enter as one word, i.e. student, fundsteward, etc.)");
+				scnr.nextLine();
+				userType = scnr.nextLine();
+
+				/*if (!(userType.equalsIgnoreCase("student") || userType.equalsIgnoreCase("admin")
+						|| userType.equalsIgnoreCase("staff")
+						|| userType.equalsIgnoreCase("donor") || userType.equalsIgnoreCase("fundsteward"))) {
+					System.out.println(
+							"That user type was not recognized. Accepted user types are: "
+							+ "student, admin, staff, donor, and fundsteward (capitalization doesn't matter).\n");
+					continue;
+				}*/
+
+				if(userType.equalsIgnoreCase("student")){
+					StudentProfile newStudent = new StudentProfile();
+					newStudent = backend.getStudentFromInput();
+					backend.setCurrentUser(newStudent);
+					System.out.println(((StudentProfile) backend.getCurrentUser()).toString());
+					backend.storeNewStudentProfile(newStudent);
+					System.out.println("Made new folder and files for that student, the folder name should be /students/student" + (backend.findNextFileIndex("student") - 1));
+					System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
+				}
+				else if(userType.equalsIgnoreCase("admin")){
+					AdminProfile newAdmin = new AdminProfile();
+					newAdmin = backend.getAdminFromInput();
+					backend.setCurrentUser(newAdmin);
+					System.out.println(((AdminProfile) backend.getCurrentUser()).toString());
+					backend.storeNewAdminProfile(newAdmin);
+					System.out.println("Made new folder and files for that administrator, the folder name should be /administrators/admin" + (backend.findNextFileIndex("admin") - 1));
+					System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
+				}
+				else if(userType.equalsIgnoreCase("staff")){
+					StaffProfile newStaff = new StaffProfile();
+					newStaff = backend.getStaffFromInput();
+					backend.setCurrentUser(newStaff);
+					System.out.println(((StaffProfile) backend.getCurrentUser()).toString());
+					backend.storeNewStaffProfile(newStaff);
+					System.out.println("Made new folder and files for that staff, the folder name should be /engr staff/staff" + (backend.findNextFileIndex("staff") - 1));
+					System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
+				}
+				else if(userType.equalsIgnoreCase("fundsteward")){
+					FundStewardProfile newFundsteward = new FundStewardProfile();
+					newFundsteward = backend.getFundStewardFromInput();
+					backend.setCurrentUser(newFundsteward);
+					System.out.println(((FundStewardProfile) backend.getCurrentUser()).toString());
+					backend.storeNewFundStewardProfile(newFundsteward);
+					System.out.println("Made new folder and files for that fundsteward, the folder name should be /fundstewards/fundsteward" + (backend.findNextFileIndex("fundsteward") - 1));
+					System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
+				}
+				else if(userType.equalsIgnoreCase("donor")){
+					DonorProfile newDonor = new DonorProfile();
+					newDonor = backend.getDonorFromInput();
+					backend.setCurrentUser(newDonor);
+					System.out.println(((DonorProfile) backend.getCurrentUser()).toString());
+					backend.storeNewDonorProfile(newDonor);
+					System.out.println("Made new folder and files for that donor, the folder name should be /donors/donor" + (backend.findNextFileIndex("donor") - 1));
+					System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
+				}
+
 			}
 
 			else {

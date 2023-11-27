@@ -18,6 +18,8 @@ public class Scholarship {
     private boolean isApproved;
     private boolean isAwarded;
     private StudentProfile recipient;
+    private String donorName;
+    private ArrayList<String> applicantNames = new ArrayList<String>();
 
     // a LocalDate object (has a date but no time) for when this scholarship was added
     private LocalDate dateAdded;
@@ -63,13 +65,13 @@ public class Scholarship {
     }
 
     // constructor for loading data from files into program
-    public Scholarship(String name, String description, DonorProfile donor, float awardAmount,
+    public Scholarship(String name, String description, String donorName, float awardAmount,
             ArrayList<String> requirements,
-            ArrayList<String> application, ArrayList<StudentProfile> applicants, boolean isApproved,
+            ArrayList<String> application, ArrayList<String> applicants, boolean isApproved,
             boolean isArchived, int fileIndex, String dateAddedString, String dateDueString) {
         this.name = name;
         this.description = description;
-        this.donor = donor;
+        this.donorName = donorName;
         this.awardAmount = awardAmount;
 
         try {
@@ -84,7 +86,7 @@ public class Scholarship {
         }
 
         this.application = application;
-        this.applicants = applicants;
+        this.applicantNames = applicants;
         this.isApproved = isApproved;
         this.isArchived = isArchived;
         this.fileIndex = fileIndex;
@@ -173,16 +175,6 @@ public class Scholarship {
         return this.applicants;
     }
 
-    public ArrayList<String> getApplicantNames() {
-        ArrayList<String> applicantNames = new ArrayList<String>();
-
-        for (StudentProfile student : this.applicants) {
-            applicantNames.add(student.getName());
-        }
-        
-        return applicantNames;
-    }
-
     public ArrayList<String> getApplication() {
         return this.application;
     }
@@ -197,10 +189,6 @@ public class Scholarship {
 
     public boolean getIsArchived() {
         return this.isArchived;
-    }
-
-    public String getDonorName() {
-        return this.donor.getName();
     }
 
     public int getFileIndex() {
@@ -229,6 +217,14 @@ public class Scholarship {
 
     public String getDateDueString() {
         return this.dateDue.toString();
+    }
+
+    public ArrayList<String> getApplicantNames() {
+        return this.applicantNames;
+    }
+
+    public String getDonorName() {
+        return this.donorName;
     }
 
 
@@ -365,6 +361,7 @@ public class Scholarship {
 
         return info;
     }
+    
 
 
     @Override

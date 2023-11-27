@@ -107,6 +107,8 @@ public class BackendSystem {
 		this.allAdmins = instantiateAllAdmins();
 		this.allStaff = InstantiateAllStaff();
 		this.allFundStewards = instantiateAllFundStewards();
+
+		setScholarshipObjects();
 		// TODO: make the rest of the instantiate all methods
 
 		
@@ -353,24 +355,38 @@ public class BackendSystem {
 
 		applicantsBr.close();
 
-		// find student objects
-		for (String applicantName : applicantNames) {
-			for (StudentProfile student : this.allStudents) {
-				if (applicantName.compareTo(student.getName()) == 0) {
-					applicants.add(student);
+		
+		return new Scholarship(name, description, donorName, awardAmount, requirements, application, applicantNames,
+				isApproved, isArchived, fileIndex, dateAddedString, dateDueString);
+
+	}
+
+	public void setScholarshipObjects() {
+		ArrayList<StudentProfile> applicants = new ArrayList<StudentProfile>();
+		DonorProfile correctDonor = new DonorProfile();
+
+		for (Scholarship schol : this.allScholarships) {
+			// find student objects
+			for (String applicantName : schol.getApplicantNames()) {
+				for (StudentProfile student : this.allStudents) {
+					if (applicantName.compareTo(student.getName()) == 0) {
+						applicants.add(student);
+					}
 				}
 			}
-		}
 
-		// find donor object
-		for (DonorProfile donor : this.allDonors) {
-			if (donorName.compareTo(donor.getName()) == 0) {
-				correctDonor = donor;
+			// find donor object
+			for (DonorProfile donor : this.allDonors) {
+				if (schol.getDonorName().compareTo(donor.getName()) == 0) {
+					correctDonor = donor;
+				}
 			}
-		}
 
-		return new Scholarship(name, description, correctDonor, awardAmount, requirements, application, applicants,
-				isApproved, isArchived, fileIndex, dateAddedString, dateDueString);
+			//setting the objects in each scholarship object
+			schol.setApplicants(applicants);
+			schol.setDonor(correctDonor);
+		}
+		
 
 	}
 
@@ -2081,7 +2097,10 @@ public class BackendSystem {
 	public StudentProfile getStudentFromInput(){
 
 		StudentProfile StudentObj = new StudentProfile();
-		String firstName, lastName, username, password, securityQuestion1, securityQuestion2, securityQuestion3; 
+		String firstName, lastName, username, password, major, minor, gradeLevel, gender, personalStatement, securityQuestion1, securityQuestion2, securityQuestion3; 
+		int studentID, gradMonth, gradYear, numCredits;
+		float gpa;
+		char boolAnswer1, boolAnswer2, boolAnswer3, boolAnswer4, boolAnswer5, boolAnswer6, boolAnswer7;
 		Scanner scnr = new Scanner(System.in);
 
 		System.out.println("Please enter in your first name.");
@@ -2092,6 +2111,12 @@ public class BackendSystem {
 		lastName = scnr.nextLine();
 		StudentObj.setLastName(lastName);
 
+		System.out.println("Please enter your student ID");
+		studentID = scnr.nextInt();
+		StudentObj.setStudentID(studentID);
+
+		scnr.nextLine();
+
 		System.out.println("Please enter in your username.");
 		username = scnr.nextLine();
 		StudentObj.setUsername(username);
@@ -2099,6 +2124,98 @@ public class BackendSystem {
 		System.out.println("Please enter in your password.");
 		password = scnr.nextLine();
 		StudentObj.setPassword(password);
+
+		System.out.println("Please enter in your major.");
+		major = scnr.nextLine();
+		StudentObj.setMajor(major);
+
+		System.out.println("Do you have a minor? (y/n)");
+		boolAnswer1 = scnr.next().charAt(0);
+		scnr.nextLine();
+		if(boolAnswer1 == 'y' || boolAnswer1 == 'Y'){
+			StudentObj.setHasAMinor(true);
+			System.out.println("Please enter in your minor.");
+			minor = scnr.nextLine();
+			StudentObj.setMinor(minor);
+		}
+
+		System.out.println("Are you a US Citizen? (y/n)");
+		boolAnswer2 = scnr.next().charAt(0);
+		scnr.nextLine();
+		if(boolAnswer2 == 'y' || boolAnswer2 == 'Y'){
+			StudentObj.setIsUSCitizen(true);
+		}
+
+		System.out.println("Please enter in your GPA.");
+		gpa = scnr.nextFloat();
+		StudentObj.setGPA(gpa);
+
+		scnr.nextLine();
+
+		System.out.println("Are you in Good Standing? (y/n)");
+		boolAnswer3 = scnr.next().charAt(0);
+		scnr.nextLine();
+		if(boolAnswer3 == 'y' || boolAnswer3 == 'Y'){
+			StudentObj.setInGoodStanding(true);
+		}
+
+		System.out.println("Do you have Advanced Standing? (y/n)");
+		boolAnswer4 = scnr.next().charAt(0);
+		scnr.nextLine();
+		if(boolAnswer4 == 'y' || boolAnswer4 == 'Y'){
+			StudentObj.setHasAdvStanding(true);
+		}
+
+		System.out.println("Please enter in your grade level (freshman, sophomore...).");
+		gradeLevel = scnr.nextLine();
+		StudentObj.setGradeLevel(gradeLevel);
+
+		System.out.println("Please enter your graduation Month (ex: 01)");
+		gradMonth = scnr.nextInt();
+		StudentObj.setGradMonth(gradMonth);
+
+		scnr.nextLine();
+
+		System.out.println("Please enter your graduation Year (ex: 2024)");
+		gradYear = scnr.nextInt();
+		StudentObj.setGradYear(gradYear);
+
+		scnr.nextLine();
+
+		System.out.println("Please enter in your gender");
+		gender = scnr.nextLine();
+		StudentObj.setGender(gender);
+
+		System.out.println("Are you a Full Time Student? (y/n)");
+		boolAnswer5 = scnr.next().charAt(0);
+		scnr.nextLine();
+		if(boolAnswer5 == 'y' || boolAnswer5 == 'Y'){
+			StudentObj.setIsFullTimeStudent(true);
+		}
+
+		System.out.println("Are you a Transfer Student? (y/n)");
+		boolAnswer6 = scnr.next().charAt(0);
+		scnr.nextLine();
+		if(boolAnswer6 == 'y' || boolAnswer6 == 'Y'){
+			StudentObj.setIsTransferStudent(true);
+		}
+
+		System.out.println("Please enter the number of credits you are currently enrolled in.");
+		numCredits = scnr.nextInt();
+		StudentObj.setCurNumCredits(numCredits);
+
+		scnr.nextLine();
+
+		System.out.println("Please enter in your personal statement (max 500 words)");
+		personalStatement = scnr.nextLine();
+		StudentObj.setPersonalStatement(personalStatement);
+
+		System.out.println("Do you already recieve funding? (y/n)");
+		boolAnswer7 = scnr.next().charAt(0);
+		scnr.nextLine();
+		if(boolAnswer7 == 'y' || boolAnswer7 == 'Y'){
+			StudentObj.setReceivesFunding(true);
+		}
 
 		System.out.println("Please enter in your response for the first security question which is the following: What is your mother's maiden name?");
 		securityQuestion1 = scnr.nextLine();
@@ -2244,6 +2361,154 @@ public class BackendSystem {
         Scholarship scholarship = new Scholarship(name, description, donor, awardAmount, requirements, application, dateDueString);
 
 		return scholarship;
+	}
+
+	/*
+	 * - look for match object
+	 * - if exists, have student continue
+	 * - if does not exist, have student start
+	 * - ask if student wants to save or submit or discard
+	 * - store changes
+	 */
+	public void applyToScholarship(int fileIndex) throws IOException {
+		Boolean matchExists = false;
+		Scholarship scholarship = getOneScholarshipByFileIndex(fileIndex);
+
+		for (MatchRelationship match : this.allMatchRelationships) {
+			if (scholarship.getName().equals(match.getScholarshipName()) && currentUser.getName().equals(match.getStudentName())) {
+				matchExists = true;
+				if (match.getApplicationStatus().equals("in progress")) {
+					int qIndex = 1;
+					System.out.println("Looks like you've started your application. This is what you have currently:");
+					System.out.println();
+
+					for (Map.Entry<String, String> pair : match.getApplication().entrySet()) {
+						System.out.println("Question " + qIndex + ":");
+						System.out.println(pair.getKey());
+						System.out.println(pair.getValue());
+						qIndex++;
+					}
+
+					editApplication(match);
+				}
+				else if (match.getApplicationStatus().equals("submitted")) {
+					System.out.println("You've already applied!");
+				}
+				else {
+					int qIndex = 1;
+					System.out.println("Heres the application questions: ");
+					System.out.println();
+
+					for (Map.Entry<String, String> pair : match.getApplication().entrySet()) {
+						System.out.println("Question " + qIndex + ":");
+						System.out.println(pair.getKey());
+						qIndex++;
+					}
+
+					editApplication(match);
+				}
+			}
+
+		}
+
+		if (!matchExists) {
+			MatchRelationship newMatch = produceNewMatch((StudentProfile) currentUser, scholarship);
+
+			int qIndex = 1;
+			System.out.println("Heres the application questions: ");
+			System.out.println();
+
+			for (Map.Entry<String, String> pair : newMatch.getApplication().entrySet()) {
+				System.out.println("Question " + qIndex + ":");
+				System.out.println(pair.getKey());
+				qIndex++;
+			}
+
+			editApplication(newMatch);
+		}
+
+
+	}
+
+	public void editApplication(MatchRelationship match) throws IOException {
+		Boolean quit = false;
+		Boolean save = false;
+		int questionIndex;
+		int currIndex;
+		String answer;
+		String saveChoice;
+		String continueChoice;
+		
+
+		while (!quit) {
+			System.out.print("Enter the number of the question you'd like to answer or change: ");
+			questionIndex = Main.scnr.nextInt();
+			Main.scnr.nextLine();
+			currIndex = 1;
+
+			if (questionIndex < 1 || questionIndex > match.getApplication().size()) {
+				System.out.println("Not valid input. Please enter the number of a question.");
+			}
+			else {
+				System.out.println("Type your answer: ");
+				answer = Main.scnr.nextLine();
+
+				System.out.println("Your answer to question " + questionIndex + " is now:");
+				System.out.println(answer);
+				System.out.println("Would you like to save it? (y/n)");
+				saveChoice = Main.scnr.nextLine();
+
+				if (saveChoice.equals("y")) {
+					for (Map.Entry<String, String> pair : match.getApplication().entrySet()) {
+						if (currIndex == questionIndex) {
+							pair.setValue(answer);
+						}
+						currIndex++;
+					}
+
+					System.out.println("Change saved. Would you like to continue editing? (y/n)");
+					continueChoice = Main.scnr.nextLine();
+					if (!continueChoice.equals("y")) {
+						quit = true;
+					}
+
+					updateMatchFile(match);
+				}
+				else {
+					System.out.println("Changes discarded. Would you like to continue editing? (y/n)");
+					continueChoice = Main.scnr.nextLine();
+					if (!continueChoice.equals("y")) {
+						quit = true;
+					}
+				}
+				
+			}
+
+		}
+
+		int saveOrSubmit;
+		Boolean validInput = false;
+
+		while (!validInput) {
+			System.out.println("Would you like to submit this application or save it to continue later?");
+			System.out.println("1 - Save");
+			System.out.println("2 - Submit");
+
+			saveOrSubmit = Main.scnr.nextInt();
+			Main.scnr.nextLine();
+
+			if (saveOrSubmit == 1) {
+				validInput = true;
+				match.setApplicationToInProgress();
+			}
+			else if (saveOrSubmit == 2) {
+				validInput = true;
+				match.setApplicationToSubmitted();
+			}
+			else {
+				System.out.println("Invalid input. Please enter 1 or 2.");
+			}
+		}
 	}
 
 }
