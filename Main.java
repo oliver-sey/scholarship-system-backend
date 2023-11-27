@@ -364,9 +364,11 @@ public class Main {
 
 				// TODO: just using the first one for now, not exactly sure
 				// pick one donor and make a duplicate folder with the files for that donor to test this
-				DonorProfile donorToCopy = backend.getAllDonors().get(0);
+				//DonorProfile donorToCopy = backend.getAllDonors().get(0);
+				DonorProfile newDonor = backend.getDonorFromInput();
 
-				backend.storeNewDonorProfile(donorToCopy);
+				//backend.storeNewDonorProfile(donorToCopy);
+				backend.storeNewDonorProfile(newDonor);
 				System.out.println("Made new folder and files for that donor, the folder name should be /donors/donor" + (backend.findNextFileIndex("donor") - 1));
 				System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
 			}
