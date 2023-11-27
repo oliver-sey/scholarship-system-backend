@@ -26,7 +26,7 @@ public class Main {
 	// prompt the user to log in and answer security questions, and then let them perform one action at a time, until they want to quit 
 	public static void userRunSystem(BackendSystem backend) throws Exception {  //used to be IOException FYI
 		int userChoice;
-		System.out.println("Welcome ot the UASAMS backend subsystem! Please select an option: \n1- Returning User\n2- New User");
+		System.out.println("Welcome to the UASAMS backend subsystem! Please select an option: \n1- Returning User\n2- New User");
 		userChoice = scnr.nextInt();
 
 		if(userChoice == 2) {
