@@ -336,6 +336,12 @@ public class Main {
 				// for (StaffProfile staff : backend.getAllStaff()) {
 				// 	System.out.println("'" + staff.getName() + "'");
 				// }
+
+				// for fund stewards
+				// System.out.println("all fund steward names: ");
+				// for (FundStewardProfile fundsteward : backend.getAllFundstewards()) {
+				//	System.out.println("'" + fundsteward.getName() + "'");
+				// }
 			}
 			
 			else if (userSelection == 6) {
