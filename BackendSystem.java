@@ -38,8 +38,7 @@ public class BackendSystem {
 	// we should get what type of profile the current user is, with
 	// something like "if (getCurrentUser instance of StudentProfile) {}"
 
-	//  ++++++++++++++++++++
-
+	// ++++++++++++++++++++
 
 	// TODO: I (Oliver) don't understand why we need all the code below
 	// within the stars **** and suggest we change it to the code above
@@ -54,44 +53,44 @@ public class BackendSystem {
 
 	// // curr user setters
 	// public void setCurrentUser(StudentProfile student) {
-	// 	this.studentUser = student;
+	// this.studentUser = student;
 	// }
 
 	// public void setCurrentUser(DonorProfile donor) {
-	// 	this.donorUser = donor;
+	// this.donorUser = donor;
 	// }
 
 	// public void setCurrentUser(AdminProfile admin) {
-	// 	this.adminUser = admin;
+	// this.adminUser = admin;
 	// }
 
 	// public void setUserType(String type) {
-	// 	this.userType = type;
+	// this.userType = type;
 	// }
 
 	// // curr user getters
 	// public StudentProfile getStudentUser() {
-	// 	return studentUser;
+	// return studentUser;
 	// }
 
 	// public AdminProfile getAdminUser() {
-	// 	return adminUser;
+	// return adminUser;
 	// }
 
 	// public DonorProfile getDonorUser() {
-	// 	return donorUser;
+	// return donorUser;
 	// }
 
 	// public String getUserType() {
-	// 	return this.userType;
+	// return this.userType;
 	// }
 
 	// ***************************************
 
-
 	// constructor
 	public BackendSystem() throws NumberFormatException, IOException {
-		// have to be careful about the order of these, because they rely on each other existing already
+		// have to be careful about the order of these, because they rely on each other
+		// existing already
 		// scholarships relies on students and donors already existing
 		this.allScholarships = InstantiateAllScholarships();
 
@@ -99,7 +98,8 @@ public class BackendSystem {
 		this.allStudents = InstantiateAllStudents();
 		// donors relies on scholarships already existing
 		this.allDonors = InstantiateAllDonors();
-		// TODO: have to write code to connect scholarships (which has just strings for students
+		// TODO: have to write code to connect scholarships (which has just strings for
+		// students
 		// and donors), and connect it with actual student and donor objects!!!
 
 		// match relies on students and scholarships
@@ -111,20 +111,24 @@ public class BackendSystem {
 		setScholarshipObjects();
 		// TODO: make the rest of the instantiate all methods
 
-		
-		// now that we have the full list of scholarships, archive past ones that are past due, and delete 5+ year old ones
-		// System.out.println("Scholarships (without archived) before archiving past due: ");
+		// now that we have the full list of scholarships, archive past ones that are
+		// past due, and delete 5+ year old ones
+		// System.out.println("Scholarships (without archived) before archiving past
+		// due: ");
 		// this.printAllScholarships(false, false, true, true);
 
 		// this.archivePastDueScholarships();
 
-		// System.out.println("\nScholarships (without archived) after archiving past due:");
+		// System.out.println("\nScholarships (without archived) after archiving past
+		// due:");
 		// this.printAllScholarships(false, false, true, true);
 
-		// System.out.println("\nScholarships (without archived) after archiving past due:");
+		// System.out.println("\nScholarships (without archived) after archiving past
+		// due:");
 		// this.printAllScholarships(true, false, true, true);
 		// this.deleteScholsDue5PlusYrsAgo();
-		// System.out.println("\nScholarships (**with archived) after deleting 5+ year old ones:");
+		// System.out.println("\nScholarships (**with archived) after deleting 5+ year
+		// old ones:");
 		// this.printAllScholarships(true, true, true, true);
 
 	}
@@ -355,7 +359,6 @@ public class BackendSystem {
 
 		applicantsBr.close();
 
-		
 		return new Scholarship(name, description, donorName, awardAmount, requirements, application, applicantNames,
 				isApproved, isArchived, fileIndex, dateAddedString, dateDueString);
 
@@ -382,11 +385,10 @@ public class BackendSystem {
 				}
 			}
 
-			//setting the objects in each scholarship object
+			// setting the objects in each scholarship object
 			schol.setApplicants(applicants);
 			schol.setDonor(correctDonor);
 		}
-		
 
 	}
 
@@ -418,14 +420,17 @@ public class BackendSystem {
 	}
 
 	/**
-	 * uses Scholarship.isPastDue() to check if scholarships were due yesterday or before (the due date has passed)
+	 * uses Scholarship.isPastDue() to check if scholarships were due yesterday or
+	 * before (the due date has passed)
 	 * sets scholarships that were due in the past, to archived
-	 * @return - the number of scholarships that we set to archived. Don't have to do anything with this value,
-	 * I just decided to add it
+	 * 
+	 * @return - the number of scholarships that we set to archived. Don't have to
+	 *         do anything with this value,
+	 *         I just decided to add it
 	 */
 	public int archivePastDueScholarships() {
 		int numSetToArchived = 0;
-		
+
 		for (int i = 0; i < allScholarships.size(); i++) {
 			// if the due date has passed, set it to archived
 			if (allScholarships.get(i).isPastDue()) {
@@ -441,12 +446,12 @@ public class BackendSystem {
 	/**
 	 * 
 	 * @return the number of scholarships deleted, not sure if we'll need this value
-	 * but it can't hurt to have
+	 *         but it can't hurt to have
 	 */
 	public int deleteScholsDue5PlusYrsAgo() {
 		int numDeleted = 0;
 
-		// have to use an iterator because Java won't let you iterate through 
+		// have to use an iterator because Java won't let you iterate through
 		// and delete at the same time with a loop
 		Iterator<Scholarship> itr = allScholarships.iterator();
 
@@ -888,7 +893,7 @@ public class BackendSystem {
 		return new StaffProfile(firstName, lastName, username, password, jobRole, sq1, sq2, sq3, fileIndex);
 	}
 
-	//Instantiates all staff
+	// Instantiates all staff
 	public ArrayList<StaffProfile> InstantiateAllStaff() {
 		ArrayList<StaffProfile> staffList = new ArrayList<StaffProfile>();
 		// open the 'staff' folder
@@ -967,7 +972,7 @@ public class BackendSystem {
 		return new FundStewardProfile(firstName, lastName, username, password, sq1, sq2, sq3, fileIndex);
 	}
 
-	//Instantiates all fund stewards
+	// Instantiates all fund stewards
 	public ArrayList<FundStewardProfile> instantiateAllFundStewards() {
 		ArrayList<FundStewardProfile> fundStewards = new ArrayList<FundStewardProfile>();
 		// open the 'fundstewards' folder
@@ -1005,7 +1010,8 @@ public class BackendSystem {
 		File detailsFile = new File(folderPath + ".txt");
 		FileWriter detailsWriter = new FileWriter(detailsFile, false);
 
-		// get the text that should be written to the fundstewardX.txt file, and writes it
+		// get the text that should be written to the fundstewardX.txt file, and writes
+		// it
 		detailsWriter.write(fundsteward.getDetailsFileText());
 		detailsWriter.close();
 	}
@@ -1022,26 +1028,35 @@ public class BackendSystem {
 		detailsW.close();
 	}
 
-	
 	/**
 	 * 
-	 * @param detailedInfo whether or not you want to print detailed information about the scholarship, or something more basic
-	 * Either calls printOneScholarshipBasic() or printOneScholarshipDetailed depending on your choice
+	 * @param detailedInfo      whether or not you want to print detailed
+	 *                          information about the scholarship, or something more
+	 *                          basic
+	 *                          Either calls printOneScholarshipBasic() or
+	 *                          printOneScholarshipDetailed depending on your choice
 	 * 
-	 * @param includeArchived whether or not to print scholarships that are marked as isArchived = true
-	 * @param includeApproved whether or not to  print scholarships that are marked as isApproved = **true
-	 * @param includeUnapproved whether or not to print scholarships that are marked as isApproved = **false
-	 * This param is so we can print only unapproved scholarships for an admin to approve
+	 * @param includeArchived   whether or not to print scholarships that are marked
+	 *                          as isArchived = true
+	 * @param includeApproved   whether or not to print scholarships that are marked
+	 *                          as isApproved = **true
+	 * @param includeUnapproved whether or not to print scholarships that are marked
+	 *                          as isApproved = **false
+	 *                          This param is so we can print only unapproved
+	 *                          scholarships for an admin to approve
 	 */
-	public void printAllScholarships(boolean detailedInfo, boolean includeArchived, boolean includeApproved, boolean includeUnapproved) {
+	public void printAllScholarships(boolean detailedInfo, boolean includeArchived, boolean includeApproved,
+			boolean includeUnapproved) {
 		for (Scholarship scholarship : allScholarships) {
-			// if the scholarship is either not archived or we want to include archived ones,
-			// and it's either approved and we want to include approved scholarships, or it's not approved and we want to include unapproved scholarships
-			if ((!scholarship.getIsArchived() || includeArchived) && ((scholarship.getIsApproved() && includeApproved) || (!scholarship.getIsApproved() && includeUnapproved))) {
+			// if the scholarship is either not archived or we want to include archived
+			// ones,
+			// and it's either approved and we want to include approved scholarships, or
+			// it's not approved and we want to include unapproved scholarships
+			if ((!scholarship.getIsArchived() || includeArchived) && ((scholarship.getIsApproved() && includeApproved)
+					|| (!scholarship.getIsApproved() && includeUnapproved))) {
 				if (detailedInfo) {
 					System.out.print(scholarship.getAllInfoString());
-				} 
-				else {
+				} else {
 					System.out.print(scholarship.getBasicInfoString());
 				}
 
@@ -1205,7 +1220,7 @@ public class BackendSystem {
 								scholarshipsFound.add(scholarship);
 							}
 						}
-						
+
 					}
 
 				}
@@ -1287,14 +1302,17 @@ public class BackendSystem {
 		// the number of times the user gets a wrong password
 		int failedPWAttempts = 0;
 
-		// these are up here so we can set the value in the if-statement within the loop below, and reference the variable outside 
+		// these are up here so we can set the value in the if-statement within the loop
+		// below, and reference the variable outside
 		// the if-statement. (If we declared them in the if, it wouldn't work).
-		// but also we don't want to reset the value to an empty string at the start of each iteration of the loop, only the first
+		// but also we don't want to reset the value to an empty string at the start of
+		// each iteration of the loop, only the first
 		String userType = "";
 		String username = "";
-		
+
 		do {
-			// only ask them for their user type and password if they're trying to log in the first time, after that just ask them
+			// only ask them for their user type and password if they're trying to log in
+			// the first time, after that just ask them
 			// for their password
 			if (failedPWAttempts == 0) {
 				System.out.print("Please enter your user type (as one word, i.e. 'student', 'admin', 'fundsteward'). ");
@@ -1309,7 +1327,7 @@ public class BackendSystem {
 						|| userType.equalsIgnoreCase("donor") || userType.equalsIgnoreCase("fundsteward"))) {
 					System.out.println(
 							"That user type was not recognized. Accepted user types are: "
-							+ "student, admin, staff, donor, and fundsteward (capitalization doesn't matter).\n");
+									+ "student, admin, staff, donor, and fundsteward (capitalization doesn't matter).\n");
 					continue;
 				}
 
@@ -1530,7 +1548,8 @@ public class BackendSystem {
 					}
 				}
 			}
-			//System.out.println("checkLoginDetails has not yet been implemented for FundStewards");
+			// System.out.println("checkLoginDetails has not yet been implemented for
+			// FundStewards");
 		} else if (userType.equalsIgnoreCase("Staff")) {
 			// TODO: implement this method for Staffs!!
 			typeValid = true;
@@ -1572,7 +1591,8 @@ public class BackendSystem {
 					}
 				}
 			}
-			//System.out.println("checkLoginDetails has not yet been implemented for Staffs");
+			// System.out.println("checkLoginDetails has not yet been implemented for
+			// Staffs");
 		} else {
 
 			System.out.println("Invalid user type in checkLoginDetails()");
@@ -1641,11 +1661,14 @@ public class BackendSystem {
 	}
 
 	/**
-	 * Returns one Scholarship object based on the fileIndex value. This assumes that the fileIndex is unique, 
-	 * which it should have to be, because you can't have e.g. two folders called 'Scholarship1' (fileIndex 1) in the same Scholarships folder.
+	 * Returns one Scholarship object based on the fileIndex value. This assumes
+	 * that the fileIndex is unique,
+	 * which it should have to be, because you can't have e.g. two folders called
+	 * 'Scholarship1' (fileIndex 1) in the same Scholarships folder.
 	 * 
-	 * @param fileIndex the fileIndex of the scholarship object you want, i.e. 3 if you want the scholarship whose details
-	 * are stored in the 'scholarship3' folder
+	 * @param fileIndex the fileIndex of the scholarship object you want, i.e. 3 if
+	 *                  you want the scholarship whose details
+	 *                  are stored in the 'scholarship3' folder
 	 * 
 	 * @return the Scholarship object, or null if nothing was found
 	 */
@@ -1661,11 +1684,14 @@ public class BackendSystem {
 	}
 
 	/**
-	 * Needed this for certain things, like figuring out the end value for a loop through fileIndex values in printAllScholarships, and maybe more
-	 * **This will not always be the size of the allScholarships ArrayList, because we remove scholarships that are 5+ years past due, etc. 
+	 * Needed this for certain things, like figuring out the end value for a loop
+	 * through fileIndex values in printAllScholarships, and maybe more
+	 * **This will not always be the size of the allScholarships ArrayList, because
+	 * we remove scholarships that are 5+ years past due, etc.
 	 * but the fileIndex values don't get shifted
 	 * 
-	 * @return the highest fileIndex for a scholarship, ***that is currently in the allScholarships ArrayList
+	 * @return the highest fileIndex for a scholarship, ***that is currently in the
+	 *         allScholarships ArrayList
 	 */
 	public int getMaxScholarshipFileIndex() {
 		int maxIndex = 0;
@@ -1677,7 +1703,7 @@ public class BackendSystem {
 
 		return maxIndex;
 	}
-	
+
 	/**
 	 * @return all scholarship objects where isApproved is false
 	 */
@@ -1714,10 +1740,9 @@ public class BackendSystem {
 		return allStaff;
 	}
 
-	public ArrayList<FundStewardProfile> getAllFundstewards(){
+	public ArrayList<FundStewardProfile> getAllFundstewards() {
 		return allFundStewards;
 	}
-
 
 	public void AwardScholarship(StudentProfile recipient, Scholarship scholarship) {
 		LocalDate today = LocalDate.now();
@@ -1832,18 +1857,15 @@ public class BackendSystem {
 							String newMinor = scnr.nextLine();
 
 							student.setMinor(newMinor);
-						}
-						else if (changeMinorChoice.compareTo("r") == 0) {
+						} else if (changeMinorChoice.compareTo("r") == 0) {
 							changeMinor = true;
 							student.setHasAMinor(false);
 							student.setMinor("");
-						}
-						else {
+						} else {
 							System.out.println("Please enter 'r' or 'c'.");
 						}
 					}
-					
-					
+
 				} else {
 					scnr.nextLine();
 					System.out.print("Enter the new minor: ");
@@ -1954,11 +1976,11 @@ public class BackendSystem {
 
 			// if they entered a valid choice number, 1 through 19
 			if (choice <= 19 && choice >= 1) {
-				
+
 				System.out.print("Would you like to change anything else? (y/n): ");
 				if (scnr.next().equals("n")) {
 					end = true;
-					
+
 					updateStudentProfileFile(student);
 				}
 			} else {
@@ -1980,11 +2002,12 @@ public class BackendSystem {
 
 	// TODO: ****** test these q+a methods!
 
-	//Q&A with donor, passing in obj to create donor profile with appropriate associated information
-	public DonorProfile getDonorFromInput(){
+	// Q&A with donor, passing in obj to create donor profile with appropriate
+	// associated information
+	public DonorProfile getDonorFromInput() {
 
 		DonorProfile donorObj = new DonorProfile();
-		String firstName, lastName, username, password, securityQuestion1, securityQuestion2, securityQuestion3; 
+		String firstName, lastName, username, password, securityQuestion1, securityQuestion2, securityQuestion3;
 		Scanner scnr = new Scanner(System.in);
 
 		System.out.println("Please enter in your first name.");
@@ -2003,15 +2026,18 @@ public class BackendSystem {
 		password = scnr.nextLine();
 		donorObj.setPassword(password);
 
-		System.out.println("Please enter in your response for the first security question which is the following: What is your mother's maiden name?");
+		System.out.println(
+				"Please enter in your response for the first security question which is the following: What is your mother's maiden name?");
 		securityQuestion1 = scnr.nextLine();
 		donorObj.setOneSecurityQAnswer(1, securityQuestion1);
 
-		System.out.println("Please enter in your response for the first security question which is the following: What is the mascot of your middle school?");
+		System.out.println(
+				"Please enter in your response for the first security question which is the following: What is the mascot of your middle school?");
 		securityQuestion2 = scnr.nextLine();
 		donorObj.setOneSecurityQAnswer(2, securityQuestion2);
-		
-		System.out.println("Please enter in your response for the first security question which is the following: What is the name of the city you were born in?");
+
+		System.out.println(
+				"Please enter in your response for the first security question which is the following: What is the name of the city you were born in?");
 		securityQuestion3 = scnr.nextLine();
 		donorObj.setOneSecurityQAnswer(3, securityQuestion3);
 
@@ -2020,11 +2046,12 @@ public class BackendSystem {
 		return donorObj;
 	}
 
-	//Q&A with admin, passing in obj to create admin profile with appropriate associated information
-	public AdminProfile getAdminFromInput(){
+	// Q&A with admin, passing in obj to create admin profile with appropriate
+	// associated information
+	public AdminProfile getAdminFromInput() {
 
 		AdminProfile AdminObj = new AdminProfile();
-		String firstName, lastName, username, password, securityQuestion1, securityQuestion2, securityQuestion3; 
+		String firstName, lastName, username, password, securityQuestion1, securityQuestion2, securityQuestion3;
 		Scanner scnr = new Scanner(System.in);
 
 		System.out.println("Please enter in your first name.");
@@ -2043,15 +2070,18 @@ public class BackendSystem {
 		password = scnr.nextLine();
 		AdminObj.setPassword(password);
 
-		System.out.println("Please enter in your response for the first security question which is the following: What is your mother's maiden name?");
+		System.out.println(
+				"Please enter in your response for the first security question which is the following: What is your mother's maiden name?");
 		securityQuestion1 = scnr.nextLine();
 		AdminObj.setOneSecurityQAnswer(1, securityQuestion1);
 
-		System.out.println("Please enter in your response for the first security question which is the following: What is the mascot of your middle school?");
+		System.out.println(
+				"Please enter in your response for the first security question which is the following: What is the mascot of your middle school?");
 		securityQuestion2 = scnr.nextLine();
 		AdminObj.setOneSecurityQAnswer(2, securityQuestion2);
-		
-		System.out.println("Please enter in your response for the first security question which is the following: What is the name of the city you were born in?");
+
+		System.out.println(
+				"Please enter in your response for the first security question which is the following: What is the name of the city you were born in?");
 		securityQuestion3 = scnr.nextLine();
 		AdminObj.setOneSecurityQAnswer(3, securityQuestion3);
 
@@ -2060,11 +2090,12 @@ public class BackendSystem {
 		return AdminObj;
 	}
 
-	//Q&A with fundSteward, passing in obj to create fundSteward profile with appropriate associated information
-	public FundStewardProfile getFundStewardFromInput(){ 
+	// Q&A with fundSteward, passing in obj to create fundSteward profile with
+	// appropriate associated information
+	public FundStewardProfile getFundStewardFromInput() {
 
 		FundStewardProfile FundStewardObj = new FundStewardProfile();
-		String firstName, lastName, username, password, securityQuestion1, securityQuestion2, securityQuestion3; 
+		String firstName, lastName, username, password, securityQuestion1, securityQuestion2, securityQuestion3;
 		Scanner scnr = new Scanner(System.in);
 
 		System.out.println("Please enter in your first name.");
@@ -2083,15 +2114,18 @@ public class BackendSystem {
 		password = scnr.nextLine();
 		FundStewardObj.setPassword(password);
 
-		System.out.println("Please enter in your response for the first security question which is the following: What is your mother's maiden name?");
+		System.out.println(
+				"Please enter in your response for the first security question which is the following: What is your mother's maiden name?");
 		securityQuestion1 = scnr.nextLine();
 		FundStewardObj.setOneSecurityQAnswer(1, securityQuestion1);
 
-		System.out.println("Please enter in your response for the first security question which is the following: What is the mascot of your middle school?");
+		System.out.println(
+				"Please enter in your response for the first security question which is the following: What is the mascot of your middle school?");
 		securityQuestion2 = scnr.nextLine();
 		FundStewardObj.setOneSecurityQAnswer(2, securityQuestion2);
-		
-		System.out.println("Please enter in your response for the first security question which is the following: What is the name of the city you were born in?");
+
+		System.out.println(
+				"Please enter in your response for the first security question which is the following: What is the name of the city you were born in?");
 		securityQuestion3 = scnr.nextLine();
 		FundStewardObj.setOneSecurityQAnswer(3, securityQuestion3);
 
@@ -2100,11 +2134,13 @@ public class BackendSystem {
 		return FundStewardObj;
 	}
 
-	//Q&A with staff, passing in obj to create staff profile with appropriate associated information
-	public StaffProfile getStaffFromInput(){ 
+	// Q&A with staff, passing in obj to create staff profile with appropriate
+	// associated information
+	public StaffProfile getStaffFromInput() {
 
 		StaffProfile StaffObj = new StaffProfile();
-		String firstName, lastName, username, password, jobRole, securityQuestion1, securityQuestion2, securityQuestion3; 
+		String firstName, lastName, username, password, jobRole, securityQuestion1, securityQuestion2,
+				securityQuestion3;
 		Scanner scnr = new Scanner(System.in);
 
 		System.out.println("Please enter in your first name.");
@@ -2125,18 +2161,21 @@ public class BackendSystem {
 
 		System.out.println("Please enter in your job Role.");
 		jobRole = scnr.nextLine();
-		//getting errors for calling function setJobRole for some reason
+		// getting errors for calling function setJobRole for some reason
 		StaffObj.setJobRole(jobRole);
 
-		System.out.println("Please enter in your response for the first security question which is the following: What is your mother's maiden name?");
+		System.out.println(
+				"Please enter in your response for the first security question which is the following: What is your mother's maiden name?");
 		securityQuestion1 = scnr.nextLine();
 		StaffObj.setOneSecurityQAnswer(1, securityQuestion1);
 
-		System.out.println("Please enter in your response for the first security question which is the following: What is the mascot of your middle school?");
+		System.out.println(
+				"Please enter in your response for the first security question which is the following: What is the mascot of your middle school?");
 		securityQuestion2 = scnr.nextLine();
 		StaffObj.setOneSecurityQAnswer(2, securityQuestion2);
-		
-		System.out.println("Please enter in your response for the first security question which is the following: What is the name of the city you were born in?");
+
+		System.out.println(
+				"Please enter in your response for the first security question which is the following: What is the name of the city you were born in?");
 		securityQuestion3 = scnr.nextLine();
 		StaffObj.setOneSecurityQAnswer(3, securityQuestion3);
 
@@ -2145,12 +2184,15 @@ public class BackendSystem {
 		return StaffObj;
 	}
 
-	//Q&A with student, passing in obj to create student profile with appropriate associated information
-	//TODO: (MiLee) basic outline of same Q&A as other profiles, not sure if we need to expand with more values?
-	public StudentProfile getStudentFromInput(){
+	// Q&A with student, passing in obj to create student profile with appropriate
+	// associated information
+	// TODO: (MiLee) basic outline of same Q&A as other profiles, not sure if we
+	// need to expand with more values?
+	public StudentProfile getStudentFromInput() {
 
 		StudentProfile StudentObj = new StudentProfile();
-		String firstName, lastName, username, password, major, minor, gradeLevel, gender, personalStatement, securityQuestion1, securityQuestion2, securityQuestion3; 
+		String firstName, lastName, username, password, major, minor, gradeLevel, gender, personalStatement,
+				securityQuestion1, securityQuestion2, securityQuestion3;
 		int studentID, gradMonth, gradYear, numCredits;
 		float gpa;
 		char boolAnswer1, boolAnswer2, boolAnswer3, boolAnswer4, boolAnswer5, boolAnswer6, boolAnswer7;
@@ -2185,7 +2227,7 @@ public class BackendSystem {
 		System.out.println("Do you have a minor? (y/n)");
 		boolAnswer1 = scnr.next().charAt(0);
 		scnr.nextLine();
-		if(boolAnswer1 == 'y' || boolAnswer1 == 'Y'){
+		if (boolAnswer1 == 'y' || boolAnswer1 == 'Y') {
 			StudentObj.setHasAMinor(true);
 			System.out.println("Please enter in your minor.");
 			minor = scnr.nextLine();
@@ -2195,7 +2237,7 @@ public class BackendSystem {
 		System.out.println("Are you a US Citizen? (y/n)");
 		boolAnswer2 = scnr.next().charAt(0);
 		scnr.nextLine();
-		if(boolAnswer2 == 'y' || boolAnswer2 == 'Y'){
+		if (boolAnswer2 == 'y' || boolAnswer2 == 'Y') {
 			StudentObj.setIsUSCitizen(true);
 		}
 
@@ -2208,14 +2250,14 @@ public class BackendSystem {
 		System.out.println("Are you in Good Standing? (y/n)");
 		boolAnswer3 = scnr.next().charAt(0);
 		scnr.nextLine();
-		if(boolAnswer3 == 'y' || boolAnswer3 == 'Y'){
+		if (boolAnswer3 == 'y' || boolAnswer3 == 'Y') {
 			StudentObj.setInGoodStanding(true);
 		}
 
 		System.out.println("Do you have Advanced Standing? (y/n)");
 		boolAnswer4 = scnr.next().charAt(0);
 		scnr.nextLine();
-		if(boolAnswer4 == 'y' || boolAnswer4 == 'Y'){
+		if (boolAnswer4 == 'y' || boolAnswer4 == 'Y') {
 			StudentObj.setHasAdvStanding(true);
 		}
 
@@ -2242,14 +2284,14 @@ public class BackendSystem {
 		System.out.println("Are you a Full Time Student? (y/n)");
 		boolAnswer5 = scnr.next().charAt(0);
 		scnr.nextLine();
-		if(boolAnswer5 == 'y' || boolAnswer5 == 'Y'){
+		if (boolAnswer5 == 'y' || boolAnswer5 == 'Y') {
 			StudentObj.setIsFullTimeStudent(true);
 		}
 
 		System.out.println("Are you a Transfer Student? (y/n)");
 		boolAnswer6 = scnr.next().charAt(0);
 		scnr.nextLine();
-		if(boolAnswer6 == 'y' || boolAnswer6 == 'Y'){
+		if (boolAnswer6 == 'y' || boolAnswer6 == 'Y') {
 			StudentObj.setIsTransferStudent(true);
 		}
 
@@ -2266,19 +2308,22 @@ public class BackendSystem {
 		System.out.println("Do you already recieve funding? (y/n)");
 		boolAnswer7 = scnr.next().charAt(0);
 		scnr.nextLine();
-		if(boolAnswer7 == 'y' || boolAnswer7 == 'Y'){
+		if (boolAnswer7 == 'y' || boolAnswer7 == 'Y') {
 			StudentObj.setReceivesFunding(true);
 		}
 
-		System.out.println("Please enter in your response for the first security question which is the following: What is your mother's maiden name?");
+		System.out.println(
+				"Please enter in your response for the first security question which is the following: What is your mother's maiden name?");
 		securityQuestion1 = scnr.nextLine();
 		StudentObj.setOneSecurityQAnswer(1, securityQuestion1);
 
-		System.out.println("Please enter in your response for the first security question which is the following: What is the mascot of your middle school?");
+		System.out.println(
+				"Please enter in your response for the first security question which is the following: What is the mascot of your middle school?");
 		securityQuestion2 = scnr.nextLine();
 		StudentObj.setOneSecurityQAnswer(2, securityQuestion2);
-		
-		System.out.println("Please enter in your response for the first security question which is the following: What is the name of the city you were born in?");
+
+		System.out.println(
+				"Please enter in your response for the first security question which is the following: What is the name of the city you were born in?");
 		securityQuestion3 = scnr.nextLine();
 		StudentObj.setOneSecurityQAnswer(3, securityQuestion3);
 
@@ -2288,37 +2333,42 @@ public class BackendSystem {
 	}
 
 	/**
-	 * this is for a donor who is creating a new scholarship and typing in the details. If they confirm it,
+	 * this is for a donor who is creating a new scholarship and typing in the
+	 * details. If they confirm it,
 	 * the scholarship gets added to allScholarships and printed to a new file
 	 * 
-	 * NOTE: this assumes that the currentUser is a Donor, who is also the only donor to this new scholarship
+	 * NOTE: this assumes that the currentUser is a Donor, who is also the only
+	 * donor to this new scholarship
 	 * 
-	 * @return a scholarship object containing the info that was entered, don't know if we'll need this
+	 * @return a scholarship object containing the info that was entered, don't know
+	 *         if we'll need this
 	 */
 	public Scholarship createScholarshipFromInput() throws IOException {
 		Main.scnr.nextLine();
 		System.out.println("Enter the name of the scholarship:");
-        String name = Main.scnr.nextLine();
+		String name = Main.scnr.nextLine();
 
-        System.out.println("Enter the description of the scholarship:");
-        String description = Main.scnr.nextLine();
+		System.out.println("Enter the description of the scholarship:");
+		String description = Main.scnr.nextLine();
 
 		// the donor is the current logged in user
-		// we are assuming that this code will only run when it is a DonorProfile, so it is safe to typecast this
-        DonorProfile donor = (DonorProfile)getCurrentUser();
+		// we are assuming that this code will only run when it is a DonorProfile, so it
+		// is safe to typecast this
+		DonorProfile donor = (DonorProfile) getCurrentUser();
 
-        System.out.println("Enter the award amount:");
-        float awardAmount = Main.scnr.nextFloat();
-        Main.scnr.nextLine(); // consume the newline character
+		System.out.println("Enter the award amount:");
+		float awardAmount = Main.scnr.nextFloat();
+		Main.scnr.nextLine(); // consume the newline character
 
-        System.out.println("Enter the requirements (comma-separated):");
-        ArrayList<String> requirements = new ArrayList<>();
-        
+		System.out.println("Enter the requirements (comma-separated):");
+		ArrayList<String> requirements = new ArrayList<>();
+
 		int userSelection = 0;
-		// loop through until they're done, adding one category and then the allowed valued for it, at a time
-        do {
-			System.out.print("Please enter a number, to add it as a requirement, or type -1 to exit"
-			+ " (Remember that you can add a requirement multiple times if you want to allow multiple different values): ");
+		// loop through until they're done, adding one category and then the allowed
+		// valued for it, at a time
+		do {
+			System.out.println("Please enter a number, to add it as a requirement, or type -1 to exit"
+					+ " (Remember that you can add a requirement multiple times if you want to allow multiple different values): ");
 
 			System.out.println("1 - major");
 			System.out.println("2 - minor");
@@ -2336,86 +2386,70 @@ public class BackendSystem {
 			System.out.println("14 - curNumCredits");
 			System.out.println("15 - receivesFunding");
 
-
-			System.out.print("Your selection: ");
+			System.out.print("\nYour selection: ");
 			userSelection = Main.scnr.nextInt();
 			// consume the newline
 			Main.scnr.nextLine();
 
 			if (userSelection == -1) {
 				break;
-			}
-			else if (userSelection == 1) {
+			} else if (userSelection == 1) {
 				requirements.add("major");
-			}
-			else if (userSelection == 2) {
+			} else if (userSelection == 2) {
 				requirements.add("minor");
-			}
-			else if (userSelection == 3) {
+			} else if (userSelection == 3) {
 				requirements.add("hasAMinor");
-			}
-			else if (userSelection == 4) {
+			} else if (userSelection == 4) {
 				requirements.add("isUSCitizen");
-			}
-			else if (userSelection == 5) {
+			} else if (userSelection == 5) {
 				requirements.add("GPA");
-			}
-			else if (userSelection == 6) {
+			} else if (userSelection == 6) {
 				requirements.add("inGoodStanding");
-			}
-			else if (userSelection == 7) {
+			} else if (userSelection == 7) {
 				requirements.add("hasAdvStanding");
-			}
-			else if (userSelection == 8) {
+			} else if (userSelection == 8) {
 				requirements.add("gradeLevel");
-			}
-			else if (userSelection == 9) {
+			} else if (userSelection == 9) {
 				requirements.add("gradMonth");
-			}
-			else if (userSelection == 10) {
+			} else if (userSelection == 10) {
 				requirements.add("gradYear");
-			}
-			else if (userSelection == 11) {
+			} else if (userSelection == 11) {
 				requirements.add("gender");
-			}
-			else if (userSelection == 12) {
+			} else if (userSelection == 12) {
 				requirements.add("isFullTimeStudent");
-			}
-			else if (userSelection == 13) {
+			} else if (userSelection == 13) {
 				requirements.add("isTransferStudent");
-			}
-			else if (userSelection == 14) {
+			} else if (userSelection == 14) {
 				requirements.add("curNumCredits");
-			}
-			else if (userSelection == 15) {
+			} else if (userSelection == 15) {
 				requirements.add("receivesFunding");
 			}
 
-            System.out.println("Enter the allowed value:");
-            String value = Main.scnr.nextLine();
-            requirements.add(value);
-        } while (userSelection != -1);
+			System.out.println("Enter the allowed value:");
+			String value = Main.scnr.nextLine();
+			requirements.add(value);
+		} while (userSelection != -1);
 
-        System.out.println("Enter the application details (line-separated):");
-        ArrayList<String> application = new ArrayList<>();
-        String applicationDetail;
+		System.out.println("Enter the application details (line-separated):");
+		ArrayList<String> application = new ArrayList<>();
+		String applicationDetail;
 
-        while (true) {
-            System.out.println("Enter the application detail (or 'done' to finish):");
-            applicationDetail = Main.scnr.nextLine();
-            if (applicationDetail.equals("done")) {
-                break;
-            }
-            application.add(applicationDetail);
-        }
+		while (true) {
+			System.out.println("Enter the application detail (or 'done' to finish):");
+			applicationDetail = Main.scnr.nextLine();
+			if (applicationDetail.equals("done")) {
+				break;
+			}
+			application.add(applicationDetail);
+		}
 
-        System.out.println("Enter the due date (in the format YYYY-MM-DD):");
-        String dateDueString = Main.scnr.nextLine();
-
+		System.out.println("Enter the due date (in the format YYYY-MM-DD):");
+		String dateDueString = Main.scnr.nextLine();
 
 		// Create a new Scholarship object
 		// have to have this up here so we can print the details
-		Scholarship scholarship = new Scholarship(name, description, donor, awardAmount, requirements, application, dateDueString);
+		Scholarship scholarship = new Scholarship(name, description, donor, awardAmount, requirements, application,
+				dateDueString);
 
 		System.out.println("Here is the scholarship you have created:");
 		System.out.println(scholarship.getAllInfoString());
@@ -2425,14 +2459,14 @@ public class BackendSystem {
 
 		if (userConfirm.equals("y")) {
 			allScholarships.add(scholarship);
-			
+
 			// print it to a new file
 			storeNewScholarship(scholarship);
 
 			return scholarship;
 		}
 		// else do nothing??
-        
+
 		// we didn't actually add the scholarship to the system, so return null
 		return null;
 	}
@@ -2449,7 +2483,8 @@ public class BackendSystem {
 		Scholarship scholarship = getOneScholarshipByFileIndex(fileIndex);
 
 		for (MatchRelationship match : this.allMatchRelationships) {
-			if (scholarship.getName().equals(match.getScholarshipName()) && currentUser.getName().equals(match.getStudentName())) {
+			if (scholarship.getName().equals(match.getScholarshipName())
+					&& currentUser.getName().equals(match.getStudentName())) {
 				matchExists = true;
 				if (match.getApplicationStatus().equals("in progress")) {
 					int qIndex = 1;
@@ -2464,11 +2499,9 @@ public class BackendSystem {
 					}
 
 					editApplication(match);
-				}
-				else if (match.getApplicationStatus().equals("submitted")) {
+				} else if (match.getApplicationStatus().equals("submitted")) {
 					System.out.println("You've already applied!");
-				}
-				else {
+				} else {
 					int qIndex = 1;
 					System.out.println("Heres the application questions: ");
 					System.out.println();
@@ -2501,7 +2534,6 @@ public class BackendSystem {
 			editApplication(newMatch);
 		}
 
-
 	}
 
 	public void editApplication(MatchRelationship match) throws IOException {
@@ -2512,7 +2544,6 @@ public class BackendSystem {
 		String answer;
 		String saveChoice;
 		String continueChoice;
-		
 
 		while (!quit) {
 			System.out.print("Enter the number of the question you'd like to answer or change: ");
@@ -2522,8 +2553,7 @@ public class BackendSystem {
 
 			if (questionIndex < 1 || questionIndex > match.getApplication().size()) {
 				System.out.println("Not valid input. Please enter the number of a question.");
-			}
-			else {
+			} else {
 				System.out.println("Type your answer: ");
 				answer = Main.scnr.nextLine();
 
@@ -2547,15 +2577,14 @@ public class BackendSystem {
 					}
 
 					updateMatchFile(match);
-				}
-				else {
+				} else {
 					System.out.println("Changes discarded. Would you like to continue editing? (y/n)");
 					continueChoice = Main.scnr.nextLine();
 					if (!continueChoice.equals("y")) {
 						quit = true;
 					}
 				}
-				
+
 			}
 
 		}
@@ -2574,12 +2603,10 @@ public class BackendSystem {
 			if (saveOrSubmit == 1) {
 				validInput = true;
 				match.setApplicationToInProgress();
-			}
-			else if (saveOrSubmit == 2) {
+			} else if (saveOrSubmit == 2) {
 				validInput = true;
 				match.setApplicationToSubmitted();
-			}
-			else {
+			} else {
 				System.out.println("Invalid input. Please enter 1 or 2.");
 			}
 
