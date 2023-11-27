@@ -625,10 +625,9 @@ public class Main {
 							do{
 								//TODO Implement option 3 and fix 2 applicants printing
 							System.out.println("What would you like to do?");
-							System.out.println("1- list application");
+							System.out.println("1- view application");
 							System.out.println("2- list applicants");
-							System.out.println("3- list applications THIS HAS NOT BEEN DONE YET NEEDS TO BE IMPLEMENTED");
-							System.out.println("4- select recipient/archive scholarship");
+							//System.out.println("3- list applications THIS HAS NOT BEEN DONE YET NEEDS TO BE IMPLEMENTED");
 							System.out.println("0- EXIT");
 
 							
@@ -641,40 +640,51 @@ public class Main {
 									//As of now prints out list of names and then student profiles 
 									//maybe take out names and just print profiles?
 									//TODO check over this pls
-									for (StudentProfile student : backend.getOneScholarshipByFileIndex(fileIndex).getApplicants()) {
-										//if names should not be printed delete the following line
-										System.out.println(student.getName() + ": ");
-										System.out.println(student.getAllDetailsString() + "\n");
-									}
-								}
-								else if(userAction == 3){
-									//not sure how to implement
-									//TODO Implement this
-								}
-								else if(userAction == 4){
-									StudentProfile recipient = null;
-									//continues to ask until valid name is inputed
-									while(recipient == null){
-										System.out.println("Enter recipient name (First Last): ");
-										String searchValue = scnr.nextLine();
-										//if we remove the names then we should set recipent by ID
-										//Integer searchValue = scnr.nextInt();
-										//if(student.getID() == searchValue)
-										//searches for students name that was inputed
-										for (StudentProfile student : backend.getAllStudents()) {
-											if (student.getName().compareTo(searchValue)==0) {
-												recipient = student;
+									//MatchRelationship match = null;
+									Scholarship scholarship = backend.getOneScholarshipByFileIndex(fileIndex);
+									scholarship.printApplicants();
+									//TODO: print applications 
+									Integer selection =9; 
+
+									while(selection !=0 ){
+										System.out.println("What would you like to do?");
+										System.out.println("1- Select a recipient");
+										System.out.println("2- View recipient");
+										System.out.println("0- EXIT");
+
+										selection = scnr.nextInt();
+										scnr.nextLine();
+
+										if(selection ==1 ){
+											StudentProfile recipient = null;
+											//continues to ask until valid name is inputed
+											while(recipient == null){
+												System.out.println("Enter recipient name (First Last): ");
+												String searchValue = scnr.nextLine();
+												//if we remove the names then we should set recipent by ID
+												//Integer searchValue = scnr.nextInt();
+												//if(student.getID() == searchValue)
+												//searches for students name that was inputed
+												for (StudentProfile student : backend.getAllStudents()) {
+													if (student.getName().compareTo(searchValue)==0) {
+														recipient = student;
+													}
+												}
+												if(recipient != null){
+													backend.AwardScholarship(recipient,backend.getOneScholarshipByFileIndex(fileIndex));
+												}
+												else{
+													System.out.println("Student not found please enter another name");
+												}
 											}
 										}
-										if(recipient != null){
-											backend.AwardScholarship(recipient,backend.getOneScholarshipByFileIndex(fileIndex));
+										else if(selection == 2){
+											StudentProfile recipient = scholarship.getRecipient();
+											System.out.println(recipient.getName());
+											System.out.println(scholarship.getRecipient());
 										}
-										else{
-											System.out.println("Student not found please enter another name");
-										}
+
 									}
-									//backend.AwardScholarship(recipient,backend.getOneScholarshipByFileIndex(fileIndex));
-									//System.out.println(backend.getOneScholarshipByFileIndex(fileIndex).getRecipient());
 								}
 								else if(userAction == 0){
 									quitBrowse = false;
