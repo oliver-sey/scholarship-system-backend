@@ -268,7 +268,13 @@ public class Main {
 				// print the backend object to make sure everything worked ok
 				// System.out.println(backend.toString());
 				for (Scholarship scholarshipObj : backend.getAllScholarships()) {
-					System.out.println(scholarshipObj.getName() + ", due date: " + scholarshipObj.getDateDueString() + ", due 5+ years ago: " + scholarshipObj.due5PlusYearsAgo());
+					System.out.print(scholarshipObj.getName() + ", due date: " + scholarshipObj.getDateDueString());// + ", due 5+ years ago: " + scholarshipObj.due5PlusYearsAgo());    
+					if(scholarshipObj.due5PlusYearsAgo() == true){
+						System.out.println(" -> Archived");
+					}
+					else{
+						System.out.println(" -> Available");
+					}
 				}
 			}
 
@@ -343,6 +349,12 @@ public class Main {
 				// System.out.println("all staff names: ");
 				// for (StaffProfile staff : backend.getAllStaff()) {
 				// 	System.out.println("'" + staff.getName() + "'");
+				// }
+
+				// for fund stewards
+				// System.out.println("all fund steward names: ");
+				// for (FundStewardProfile fundsteward : backend.getAllFundstewards()) {
+				//	System.out.println("'" + fundsteward.getName() + "'");
 				// }
 			}
 			

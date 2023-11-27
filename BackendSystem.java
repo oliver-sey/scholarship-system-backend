@@ -1619,6 +1619,10 @@ public class BackendSystem {
 		return allStaff;
 	}
 
+	public ArrayList<FundStewardProfile> getAllFundstewards(){
+		return allFundStewards;
+	}
+
 	public void testStoringStudents() throws Exception {
 		StudentProfile newStudent = new StudentProfile("Jess", "Mess", 12345, "user", "pass", "IE", true, "SFWEE", true,
 				3.6, true, true, "Freshman", 5, 2025, "Female", true, false, 12, false, "I love school!", "Smith",
