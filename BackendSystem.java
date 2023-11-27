@@ -1400,11 +1400,87 @@ public class BackendSystem {
 		} else if (userType.equalsIgnoreCase("FundSteward")) {
 			// TODO: implement this method for FundStewards!!
 			typeValid = true;
-			System.out.println("checkLoginDetails has not yet been implemented for FundStewards");
+			for (int i = 0; i < this.allFundStewards.size(); i++) {
+				if (allFundStewards.get(i).username.equalsIgnoreCase(enteredUsername)) {
+					if (allFundStewards.get(i).password.equals(enteredPassword)) {
+
+						// donorUser = allDonors.get(i);
+						currentUser = allFundStewards.get(i);
+						for (int questionNum = 1; questionNum <= 3; questionNum++) {
+
+							// String questionText = donorUser.getOneSecurityQuestion(questionNum);
+							// String correctAnswer = donorUser.getOneSecurityQAnswer(questionNum);
+							String questionText = currentUser.getOneSecurityQuestion(questionNum);
+							String correctAnswer = currentUser.getOneSecurityQAnswer(questionNum);
+
+							System.out
+									.println("Please answer this security question (capitalization doesn't matter): \n"
+											+ questionText);
+
+							System.out.print("Your answer: ");
+
+							String userAnswer = Main.scnr.nextLine();
+
+							if (userAnswer.equalsIgnoreCase(correctAnswer)) {
+								System.out.println("Correct answer!");
+								userType = "donor";
+								return 0;
+							} else {
+								System.out.println("Incorrect answer");
+
+							}
+						}
+
+					} else {
+
+						System.out.println("Incorrect password for the entered username and user type");
+						return 1;
+					}
+				}
+			}
+			//System.out.println("checkLoginDetails has not yet been implemented for FundStewards");
 		} else if (userType.equalsIgnoreCase("Staff")) {
 			// TODO: implement this method for Staffs!!
 			typeValid = true;
-			System.out.println("checkLoginDetails has not yet been implemented for Staffs");
+			for (int i = 0; i < this.allStaff.size(); i++) {
+				if (allStaff.get(i).username.equalsIgnoreCase(enteredUsername)) {
+					if (allStaff.get(i).password.equals(enteredPassword)) {
+
+						// donorUser = allDonors.get(i);
+						currentUser = allStaff.get(i);
+						for (int questionNum = 1; questionNum <= 3; questionNum++) {
+
+							// String questionText = donorUser.getOneSecurityQuestion(questionNum);
+							// String correctAnswer = donorUser.getOneSecurityQAnswer(questionNum);
+							String questionText = currentUser.getOneSecurityQuestion(questionNum);
+							String correctAnswer = currentUser.getOneSecurityQAnswer(questionNum);
+
+							System.out
+									.println("Please answer this security question (capitalization doesn't matter): \n"
+											+ questionText);
+
+							System.out.print("Your answer: ");
+
+							String userAnswer = Main.scnr.nextLine();
+
+							if (userAnswer.equalsIgnoreCase(correctAnswer)) {
+								System.out.println("Correct answer!");
+								userType = "donor";
+								return 0;
+							} else {
+								System.out.println("Incorrect answer");
+
+							}
+						}
+
+					} else {
+
+						System.out.println("Incorrect password for the entered username and user type");
+						return 1;
+					}
+				}
+			}
+			//System.out.println("checkLoginDetails has not yet been implemented for Staffs");
 		} else {
 
 			System.out.println("Invalid user type in checkLoginDetails()");
