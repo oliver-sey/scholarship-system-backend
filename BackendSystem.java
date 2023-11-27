@@ -2114,6 +2114,8 @@ public class BackendSystem {
 		studentID = scnr.nextInt();
 		StudentObj.setStudentID(studentID);
 
+		scnr.nextLine();
+
 		System.out.println("Please enter in your username.");
 		username = scnr.nextLine();
 		StudentObj.setUsername(username);
@@ -2128,6 +2130,7 @@ public class BackendSystem {
 
 		System.out.println("Do you have a minor? (y/n)");
 		boolAnswer1 = scnr.next().charAt(0);
+		scnr.nextLine();
 		if(boolAnswer1 == 'y' || boolAnswer1 == 'Y'){
 			StudentObj.setHasAMinor(true);
 			System.out.println("Please enter in your minor.");
@@ -2137,6 +2140,7 @@ public class BackendSystem {
 
 		System.out.println("Are you a US Citizen? (y/n)");
 		boolAnswer2 = scnr.next().charAt(0);
+		scnr.nextLine();
 		if(boolAnswer2 == 'y' || boolAnswer2 == 'Y'){
 			StudentObj.setIsUSCitizen(true);
 		}
@@ -2145,14 +2149,18 @@ public class BackendSystem {
 		gpa = scnr.nextFloat();
 		StudentObj.setGPA(gpa);
 
+		scnr.nextLine();
+
 		System.out.println("Are you in Good Standing? (y/n)");
 		boolAnswer3 = scnr.next().charAt(0);
+		scnr.nextLine();
 		if(boolAnswer3 == 'y' || boolAnswer3 == 'Y'){
 			StudentObj.setInGoodStanding(true);
 		}
 
 		System.out.println("Do you have Advanced Standing? (y/n)");
 		boolAnswer4 = scnr.next().charAt(0);
+		scnr.nextLine();
 		if(boolAnswer4 == 'y' || boolAnswer4 == 'Y'){
 			StudentObj.setHasAdvStanding(true);
 		}
@@ -2165,9 +2173,13 @@ public class BackendSystem {
 		gradMonth = scnr.nextInt();
 		StudentObj.setGradMonth(gradMonth);
 
+		scnr.nextLine();
+
 		System.out.println("Please enter your graduation Year (ex: 2024)");
 		gradYear = scnr.nextInt();
 		StudentObj.setGradYear(gradYear);
+
+		scnr.nextLine();
 
 		System.out.println("Please enter in your gender");
 		gender = scnr.nextLine();
@@ -2175,12 +2187,14 @@ public class BackendSystem {
 
 		System.out.println("Are you a Full Time Student? (y/n)");
 		boolAnswer5 = scnr.next().charAt(0);
+		scnr.nextLine();
 		if(boolAnswer5 == 'y' || boolAnswer5 == 'Y'){
 			StudentObj.setIsFullTimeStudent(true);
 		}
 
 		System.out.println("Are you a Transfer Student? (y/n)");
 		boolAnswer6 = scnr.next().charAt(0);
+		scnr.nextLine();
 		if(boolAnswer6 == 'y' || boolAnswer6 == 'Y'){
 			StudentObj.setIsTransferStudent(true);
 		}
@@ -2189,12 +2203,15 @@ public class BackendSystem {
 		numCredits = scnr.nextInt();
 		StudentObj.setCurNumCredits(numCredits);
 
+		scnr.nextLine();
+
 		System.out.println("Please enter in your personal statement (max 500 words)");
 		personalStatement = scnr.nextLine();
 		StudentObj.setPersonalStatement(personalStatement);
 
 		System.out.println("Do you already recieve funding? (y/n)");
 		boolAnswer7 = scnr.next().charAt(0);
+		scnr.nextLine();
 		if(boolAnswer7 == 'y' || boolAnswer7 == 'Y'){
 			StudentObj.setReceivesFunding(true);
 		}

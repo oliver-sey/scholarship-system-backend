@@ -242,6 +242,7 @@ public class Main {
 			System.out.println("7 - (**OUTDATED, use oneUserAction() method) login as an admin and then approve 1 preselected scholarship");
 			System.out.println("8 - Edit student profile manually");
 			System.out.println("9 - Test printOneScholarship and printAllScholarships");
+			System.out.println("10 - Add new user to the system");
 
 			System.out.println("0 - EXIT");
 
@@ -412,6 +413,56 @@ public class Main {
 
 				System.out.println("\n\nTesting the printAllScholarships method (**detailed info, do not include archived or unapproved, but include approved):");
 				backend.printAllScholarships(true, false, true, false);
+			}
+
+			else if (userSelection == 10){
+				BackendSystem backend = new BackendSystem();
+				String userType;
+
+				System.out.println("Please enter your usertype. (Enter as one word, i.e. student, fundsteward, etc.)");
+				scnr.nextLine();
+				userType = scnr.nextLine();
+
+				/*if (!(userType.equalsIgnoreCase("student") || userType.equalsIgnoreCase("admin")
+						|| userType.equalsIgnoreCase("staff")
+						|| userType.equalsIgnoreCase("donor") || userType.equalsIgnoreCase("fundsteward"))) {
+					System.out.println(
+							"That user type was not recognized. Accepted user types are: "
+							+ "student, admin, staff, donor, and fundsteward (capitalization doesn't matter).\n");
+					continue;
+				}*/
+
+				if(userType.equalsIgnoreCase("student")){
+					StudentProfile newStudent = new StudentProfile();
+					newStudent = backend.getStudentFromInput();
+					backend.setCurrentUser(newStudent);
+					System.out.println(((StudentProfile) backend.getCurrentUser()).toString());
+				}
+				else if(userType.equalsIgnoreCase("admin")){
+					AdminProfile newAdmin = new AdminProfile();
+					newAdmin = backend.getAdminFromInput();
+					backend.setCurrentUser(newAdmin);
+					System.out.println(((AdminProfile) backend.getCurrentUser()).toString());
+				}
+				else if(userType.equalsIgnoreCase("staff")){
+					StaffProfile newStaff = new StaffProfile();
+					newStaff = backend.getStaffFromInput();
+					backend.setCurrentUser(newStaff);
+					System.out.println(((StaffProfile) backend.getCurrentUser()).toString());
+				}
+				else if(userType.equalsIgnoreCase("fundsteward")){
+					FundStewardProfile newFundsteward = new FundStewardProfile();
+					newFundsteward = backend.getFundStewardFromInput();
+					backend.setCurrentUser(newFundsteward);
+					System.out.println(((FundStewardProfile) backend.getCurrentUser()).toString());
+				}
+				else if(userType.equalsIgnoreCase("donor")){
+					DonorProfile newDonor = new DonorProfile();
+					newDonor = backend.getDonorFromInput();
+					backend.setCurrentUser(newDonor);
+					System.out.println(((DonorProfile) backend.getCurrentUser()).toString());
+				}
+
 			}
 
 			else {
