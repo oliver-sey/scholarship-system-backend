@@ -146,24 +146,26 @@ public class Main {
 			- create and submit scholarship for review
 
 			*/
-			System.out.println("\nPlease enter a number to select which action you want to do:");
+			do {
+				System.out.println("\nPlease enter a number to select which action you want to do:");
 
-			System.out.println("1 - See your posted scholarships");
-			System.out.println("2 - Enter a new scholarship");
-			System.out.println("0 - EXIT");
-			
-			System.out.print("Your selection: ");
-			userSelection = scnr.nextInt();
+				System.out.println("1 - See your posted scholarships");
+				System.out.println("2 - Enter a new scholarship");
+				System.out.println("0 - EXIT");
+				
+				System.out.print("Your selection: ");
+				userSelection = scnr.nextInt();
 
-			if (userSelection == 1) {
-				for (Scholarship scholarship : ((DonorProfile)backend.getCurrentUser()).getScholarships()) {
-					System.out.println(scholarship.getBasicInfoString());
+				if (userSelection == 1) {
+					for (Scholarship scholarship : ((DonorProfile)backend.getCurrentUser()).getScholarships()) {
+						System.out.println(scholarship.getBasicInfoString());
+					}
 				}
-			}
-			// TODO: is there more to do for this?
-			else if (userSelection == 2) {
-				backend.createScholarshipFromInput();
-			}
+				// TODO: is there more to do for this?
+				else if (userSelection == 2) {
+					backend.createScholarshipFromInput();
+				}
+			} while (userSelection != 0);
 		}
 		// else if (backend.getUserType().compareTo("staff") == 0) {
 		else if (backend.getCurrentUser() instanceof StaffProfile) {
