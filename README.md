@@ -1,5 +1,6 @@
 # scholarship-system-backend
-A Java backend for a hypothetical Scholarship Management System (creating scholarship funds, applying, selecting recipients, and more). We also wrote a complete set of software requirements for this backend and also 3 other subsystem, in Jama.
+A Java backend for a hypothetical Scholarship Management System (creating scholarship funds, applying, selecting recipients, and more). We also wrote a complete set of software requirements for this backend and also 3 other subsystems, in Jama. We also created a full set of test procedures
+to show we fulfilled all of our backend requirements, and presented in an acceptance test review.
 
 Fall 2023, by Anna Fravel, Katelyn McLean, Oliver Seymour, Juliette Nevarez, and MiLee Vogel.
 
@@ -7,11 +8,9 @@ Fall 2023, by Anna Fravel, Katelyn McLean, Oliver Seymour, Juliette Nevarez, and
 This code is just the backend for this hypothetical system, it is not meant to be a complete application. A complete system would also include the Frontend, Matching Engine (between a scholarship and applicants), and a Reports Generation Engine.
 
 Users can run the code from the Main file, which creates an instance of BackendSystem, which actually has all of our business logic.
-In Main you can also run various acceptance tests, which show that we successfully implemented all of the backend subsystem requirements 
-that we wrote and refined as part of this project.
+In Main you can also run various acceptance tests, which show that we successfully implemented all of the backend subsystem requirements that we wrote and refined as part of this project.
 
-&NewLine;
-&NewLine;
+
 To test our backend subsystem, we need test data, which gets imported from text files, in folders such as 'donors', 'matches' (between a student and a scholarship), 'scholarships', and 'students'. 
 
 Within these folders you have, for example, a folder called 'scholarship1', which contains multiple text files with different details about it.
@@ -19,7 +18,6 @@ Within these folders you have, for example, a folder called 'scholarship1', whic
 
 The files in these folders get imported and parsed, and the data gets put into various objects, of type Scholarship, StudentProfile, MatchRelationship, and more.
 
-# ***More background info here??**
 
 ### Student Applicants Qualifications
 We are not concerned with whether or not a student that applies to a scholarship actually qualifies for the scholarship, that is not relevant to back end subsystem functionalities. 
@@ -64,7 +62,7 @@ Currently Receives Funding
 ## In the Match folder:
 
 ### Scholarship Match Info File:
-Student name, scholarship name, Match percentage, match index, application status
+Student name, scholarship name, Match percentage, match index, application status, isActive
 
 ### Application File:
 Question 1, answer 1, question 2, answer2, etc.  
@@ -93,4 +91,4 @@ List scholarships by name, line by line (str)
 ### Security Questions:
 Mother’s Maiden Name
 Mascot of your middle school
-Name of city you were born in
+Name of the city where you were born
