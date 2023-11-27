@@ -146,9 +146,11 @@ public class Main {
 						
 					}
 				}
+				//get submitted applications
 				else if (userSelection == 4) {
 					backend.getSubmittedApplications((StudentProfile) backend.getCurrentUser());
 				}
+				//search for scholarships
 				else if (userSelection == 5) {
 					Boolean quitSearch = false;
 					Boolean exitResults;
@@ -181,12 +183,15 @@ public class Main {
 						System.out.print("Enter the value to search: ");
 						String searchValue = scnr.nextLine();
 
+						//uses search scholarship method to return search results
 						ArrayList<Scholarship> scholarshipsFound = backend.searchScholarships(searchIndex, searchValue);
 
 						exitResults = false;
 
+						//program will stay within search results until requested to exit or do new search
 						while (!exitResults) {
 
+							//if no scholarships are found
 							if (scholarshipsFound.size() == 0) {
 								System.out.println("No scholarships found!");
 
@@ -195,6 +200,7 @@ public class Main {
 								System.out.println("3 - Exit search");
 								
 							}
+							//offers all options if scholarships are found
 							else {
 								for (Scholarship schol : scholarshipsFound) {
 									System.out.println(schol.getBasicInfoString());
@@ -206,20 +212,21 @@ public class Main {
 								System.out.println("3 - Exit search");
 							}
 
-								System.out.print("Your choice: ");
+							System.out.print("Your choice: ");
 
-								// want to keep this separate from userSelection, so we don't accidentally exit the outer do-while loop or something
-								int userAction = scnr.nextInt();
-								scnr.nextLine();
+							int userAction = scnr.nextInt();
+							scnr.nextLine();
 							
-
+							//quit search
 							if (userAction == 3) {
 								exitResults = true;
 								quitSearch = true;
 							}
+							//start new search
 							else if (userAction == 2) {
 								exitResults = true;
 							}
+							//look at scholarship
 							else if (userAction == 1) {
 								
 								int fileIndex;
@@ -325,6 +332,8 @@ public class Main {
 			/*
 			 * - approve scholarships
 			 * - search students
+			 * - award scholarships
+			 * - delete student profile
 			 */
 			do {
 				System.out.println("Options: ");
