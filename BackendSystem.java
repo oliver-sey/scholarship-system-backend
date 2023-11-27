@@ -21,11 +21,11 @@ public class BackendSystem {
 	private ArrayList<StaffProfile> allStaff = new ArrayList<StaffProfile>();
 	private ArrayList<FundStewardProfile> allFundStewards = new ArrayList<FundStewardProfile>();
 
-	// my (Oliver) suggestion is to replace the code below within the stars,
-	// with this code within the pluses
-
-	// +++++++++++++++++++
-
+	// the currently logged-in user, there can only be one user logged in at a time
+	// with our current setup
+	// Profile is an abstract class but all the other types of profiles inherit from it
+	// so this can work nicely with some occasional typecasting, when we e.g. need
+	// currentUser to be of type StudentProfile for a method call
 	private Profile currentUser;
 
 	public Profile getCurrentUser() {
@@ -35,58 +35,7 @@ public class BackendSystem {
 	public void setCurrentUser(Profile newUser) {
 		this.currentUser = newUser;
 	}
-	// we should get what type of profile the current user is, with
-	// something like "if (getCurrentUser instance of StudentProfile) {}"
-
-	// ++++++++++++++++++++
-
-	// TODO: I (Oliver) don't understand why we need all the code below
-	// within the stars **** and suggest we change it to the code above
-
-	// ********************************
-	// the user that is currently using the system
-	// private StudentProfile studentUser;
-	// private DonorProfile donorUser;
-	// private AdminProfile adminUser;
-
-	// private String userType;
-
-	// // curr user setters
-	// public void setCurrentUser(StudentProfile student) {
-	// this.studentUser = student;
-	// }
-
-	// public void setCurrentUser(DonorProfile donor) {
-	// this.donorUser = donor;
-	// }
-
-	// public void setCurrentUser(AdminProfile admin) {
-	// this.adminUser = admin;
-	// }
-
-	// public void setUserType(String type) {
-	// this.userType = type;
-	// }
-
-	// // curr user getters
-	// public StudentProfile getStudentUser() {
-	// return studentUser;
-	// }
-
-	// public AdminProfile getAdminUser() {
-	// return adminUser;
-	// }
-
-	// public DonorProfile getDonorUser() {
-	// return donorUser;
-	// }
-
-	// public String getUserType() {
-	// return this.userType;
-	// }
-
-	// ***************************************
-
+	
 	// constructor
 	public BackendSystem() throws NumberFormatException, IOException {
 		// have to be careful about the order of these, because they rely on each other
@@ -115,15 +64,13 @@ public class BackendSystem {
 		// TODO: **** get rid of this print debugging
 		// now that we have the full list of scholarships, archive past ones that are
 		// past due, and delete 5+ year old ones
-		// System.out.println("Scholarships (without archived) before archiving past
-		// due: ");
-		// this.printAllScholarships(false, false, true, true);
+		System.out.println("Scholarships (without archived) before archiving past due: ");
+		this.printAllScholarships(false, false, true, true, true);
 
 		this.archivePastDueScholarships();
 
-		// System.out.println("\nScholarships (without archived) after archiving past
-		// due:");
-		// this.printAllScholarships(false, false, true, true);
+		System.out.println("\nScholarships (without archived) after archiving past due:");
+		this.printAllScholarships(false, false, true, true, true);
 
 		// System.out.println("\nScholarships (without archived) after archiving past
 		// due:");
@@ -1064,12 +1011,12 @@ public class BackendSystem {
 	public void printAllScholarships(boolean detailedInfo, boolean includeArchived, boolean includeNotArchived, boolean includeApproved,
 			boolean includeNotApproved) {
 		for (Scholarship scholarship : allScholarships) {
-			// if the scholarship is either not archived or we want to include archived
-			// ones,
-			// and it's either approved and we want to include approved scholarships, or
+			// if the scholarship is either archived and we want to include archived ones,
+			// or it's not archived and we want to include non-archived scholarships,
+			// *and it's either approved and we want to include approved scholarships, or
 			// it's not approved and we want to include unapproved scholarships
-			if ((scholarship.getIsArchived() && includeArchived) || (!scholarship.getIsArchived() && includeNotArchived)
-			|| (scholarship.getIsApproved() && includeApproved) || (!scholarship.getIsApproved() && includeNotApproved)) {
+			if ((scholarship.getIsArchived() && includeArchived || !scholarship.getIsArchived() && includeNotArchived) &&
+            (scholarship.getIsApproved() && includeApproved || !scholarship.getIsApproved() && includeNotApproved)) {
 				if (detailedInfo) {
 					System.out.print(scholarship.getAllInfoString());
 				} else {
