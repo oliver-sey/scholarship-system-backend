@@ -1162,7 +1162,6 @@ public class BackendSystem {
 			// retrieves requirement hashmap from scholarship and compares category and
 			// value
 
-
 			String inputCategoryName;
 
 			switch (inputCategory) {
@@ -1211,8 +1210,8 @@ public class BackendSystem {
 			}
 
 
-			
 			for (Scholarship scholarship : this.allScholarships) {
+				
 				requirements = scholarship.getRequirements();
 
 				for (Map.Entry<String, ArrayList<String>> entry : requirements.entrySet()) {
@@ -2640,6 +2639,18 @@ public class BackendSystem {
 				}
 			}
 		}
+	}
+
+	public ArrayList<Scholarship> getScholarshipsAvailableToStudents() {
+		ArrayList<Scholarship> availableScholarships = new ArrayList<Scholarship>();
+
+		for(Scholarship scholarship : this.allScholarships) {
+			if (scholarship.getIsApproved() && !scholarship.getIsArchived()) {
+				availableScholarships.add(scholarship);
+			}
+		}
+
+		return availableScholarships;
 	}
 
 }
