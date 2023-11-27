@@ -169,7 +169,6 @@ public class Main {
 		}
 		// else if (backend.getUserType().compareTo("admin") == 0) {
 		else if (backend.getCurrentUser() instanceof AdminProfile) {
-			// TODO: implement this!!
 			/*
 			 * - approve scholarships
 			 * - search students
