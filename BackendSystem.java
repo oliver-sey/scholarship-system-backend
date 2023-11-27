@@ -64,13 +64,13 @@ public class BackendSystem {
 		// TODO: **** get rid of this print debugging
 		// now that we have the full list of scholarships, archive past ones that are
 		// past due, and delete 5+ year old ones
-		System.out.println("Scholarships (without archived) before archiving past due: ");
-		this.printAllScholarships(false, false, true, true, true);
+		// System.out.println("Scholarships (without archived) before archiving past due: ");
+		// this.printAllScholarships(false, false, true, true, true);
 
 		this.archivePastDueScholarships();
 
-		System.out.println("\nScholarships (without archived) after archiving past due:");
-		this.printAllScholarships(false, false, true, true, true);
+		// System.out.println("\nScholarships (without archived) after archiving past due:");
+		// this.printAllScholarships(false, false, true, true, true);
 
 		// System.out.println("\nScholarships (without archived) after archiving past
 		// due:");
@@ -1289,8 +1289,6 @@ public class BackendSystem {
 	 *         // and the program should stop!!
 	 */
 	public boolean login() {
-		// TODO: implement me!!!
-
 		int returnVal = -1;
 		// the number of times the user gets a wrong password
 		int failedPWAttempts = 0;
@@ -1308,6 +1306,7 @@ public class BackendSystem {
 			// the first time, after that just ask them
 			// for their password
 			if (failedPWAttempts == 0) {
+				Main.scnr.nextLine();
 				System.out.print("Please enter your user type (as one word, i.e. 'student', 'admin', 'fundsteward'). ");
 				System.out.print("Please enter your user type: ");
 				userType = Main.scnr.nextLine();
