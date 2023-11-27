@@ -92,19 +92,19 @@ public class Main {
 
 						// want to keep this separate from userSelection, so we don't accidentally exit the outer do-while loop or something
 						int userAction = scnr.nextInt();
+						scnr.nextLine();
 
 						if (userAction == 1) {
 							quitBrowse = true;
 						}
 						else if (userAction == 2) {
-							scnr.nextLine();
-
+							
 							int fileIndex;
 							Boolean validSelection = false;
 							do {
 								System.out.print("Please enter the file index of the scholarship you want to view: ");
 								fileIndex = scnr.nextInt();
-
+								scnr.nextLine();
 								
 								if (backend.getOneScholarshipByFileIndex(fileIndex) == null) {
 									System.out.println("The scholarship with file index " + fileIndex + " could not be found.");
@@ -113,7 +113,7 @@ public class Main {
 								else {
 									// print the scholarship's information, in more detail than before
 									validSelection = true;
-									System.out.println(backend.getAllScholarships().get(fileIndex).getAllInfoString());
+									System.out.println(backend.getOneScholarshipByFileIndex(fileIndex).getAllInfoString());
 
 									System.out.println("\nPlease select an option:");
 									System.out.println("1 - go back");
@@ -121,12 +121,13 @@ public class Main {
 
 									System.out.print("Your choice: ");
 									userAction = scnr.nextInt();
+									scnr.nextLine();
+
 									if (userAction == 1) {
 										// do nothing?
 									}
 									else if (userAction == 2) {
-										
-										
+										backend.applyToScholarship(fileIndex);
 									}
 								}
 								

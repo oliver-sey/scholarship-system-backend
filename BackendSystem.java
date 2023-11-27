@@ -2139,17 +2139,145 @@ public class BackendSystem {
 	 * - ask if student wants to save or submit or discard
 	 * - store changes
 	 */
-	public void applyToScholarship(Scholarship scholarship) {
+	public void applyToScholarship(int fileIndex) throws IOException {
+		Boolean matchExists = false;
+		Scholarship scholarship = getOneScholarshipByFileIndex(fileIndex);
+
 		for (MatchRelationship match : this.allMatchRelationships) {
 			if (scholarship.getName().equals(match.getScholarshipName()) && currentUser.getName().equals(match.getStudentName())) {
-				if(match.getApplicationStatus().equals("in progress")) {
+				matchExists = true;
+				if (match.getApplicationStatus().equals("in progress")) {
+					int qIndex = 1;
+					System.out.println("Looks like you've started your application. This is what you have currently:");
+					System.out.println();
+
 					for (Map.Entry<String, String> pair : match.getApplication().entrySet()) {
-						
+						System.out.println("Question " + qIndex + ":");
+						System.out.println(pair.getKey());
+						System.out.println(pair.getValue());
+						qIndex++;
+					}
+
+					editApplication(match);
+				}
+				else if (match.getApplicationStatus().equals("submitted")) {
+					System.out.println("You've already applied!");
+				}
+				else {
+					int qIndex = 1;
+					System.out.println("Heres the application questions: ");
+					System.out.println();
+
+					for (Map.Entry<String, String> pair : match.getApplication().entrySet()) {
+						System.out.println("Question " + qIndex + ":");
+						System.out.println(pair.getKey());
+						qIndex++;
+					}
+
+					editApplication(match);
+				}
+			}
+
+		}
+
+		if (!matchExists) {
+			MatchRelationship newMatch = produceNewMatch((StudentProfile) currentUser, scholarship);
+
+			int qIndex = 1;
+			System.out.println("Heres the application questions: ");
+			System.out.println();
+
+			for (Map.Entry<String, String> pair : newMatch.getApplication().entrySet()) {
+				System.out.println("Question " + qIndex + ":");
+				System.out.println(pair.getKey());
+				qIndex++;
+			}
+
+			editApplication(newMatch);
+		}
+
+
+	}
+
+	public void editApplication(MatchRelationship match) throws IOException {
+		Boolean quit = false;
+		Boolean save = false;
+		int questionIndex;
+		int currIndex;
+		String answer;
+		String saveChoice;
+		String continueChoice;
+		
+
+		while (!quit) {
+			System.out.print("Enter the number of the question you'd like to answer or change: ");
+			questionIndex = Main.scnr.nextInt();
+			Main.scnr.nextLine();
+			currIndex = 1;
+
+			if (questionIndex < 1 || questionIndex > match.getApplication().size()) {
+				System.out.println("Not valid input. Please enter the number of a question.");
+			}
+			else {
+				System.out.println("Type your answer: ");
+				answer = Main.scnr.nextLine();
+
+				System.out.println("Your answer to question " + questionIndex + " is now:");
+				System.out.println(answer);
+				System.out.println("Would you like to save it? (y/n)");
+				saveChoice = Main.scnr.nextLine();
+
+				if (saveChoice.equals("y")) {
+					for (Map.Entry<String, String> pair : match.getApplication().entrySet()) {
+						if (currIndex == questionIndex) {
+							pair.setValue(answer);
+						}
+						currIndex++;
+					}
+
+					System.out.println("Change saved. Would you like to continue editing? (y/n)");
+					continueChoice = Main.scnr.nextLine();
+					if (!continueChoice.equals("y")) {
+						quit = true;
+					}
+
+					updateMatchFile(match);
+				}
+				else {
+					System.out.println("Changes discarded. Would you like to continue editing? (y/n)");
+					continueChoice = Main.scnr.nextLine();
+					if (!continueChoice.equals("y")) {
+						quit = true;
 					}
 				}
+				
+			}
+
+		}
+
+		int saveOrSubmit;
+		Boolean validInput = false;
+
+		while (!validInput) {
+			System.out.println("Would you like to submit this application or save it to continue later?");
+			System.out.println("1 - Save");
+			System.out.println("2 - Submit");
+
+			saveOrSubmit = Main.scnr.nextInt();
+			Main.scnr.nextLine();
+
+			if (saveOrSubmit == 1) {
+				validInput = true;
+				match.setApplicationToInProgress();
+			}
+			else if (saveOrSubmit == 2) {
+				validInput = true;
+				match.setApplicationToSubmitted();
+			}
+			else {
+				System.out.println("Invalid input. Please enter 1 or 2.");
 			}
 		}
 	}
-
 
 }
