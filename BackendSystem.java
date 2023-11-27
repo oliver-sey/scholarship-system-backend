@@ -429,8 +429,9 @@ public class BackendSystem {
 	 * @return - the number of scholarships that we set to archived. Don't have to
 	 *         do anything with this value,
 	 *         I just decided to add it
+	 * @throws IOException
 	 */
-	public int archivePastDueScholarships() {
+	public int archivePastDueScholarships() throws IOException {
 		int numSetToArchived = 0;
 
 		for (int i = 0; i < allScholarships.size(); i++) {
@@ -438,6 +439,7 @@ public class BackendSystem {
 			if (allScholarships.get(i).isPastDue()) {
 				allScholarships.get(i).setArchived(true);
 				numSetToArchived++;
+				updateScholarshipFile(allScholarships.get(i));
 			}
 		}
 
@@ -637,6 +639,7 @@ public class BackendSystem {
 		float matchPercentage = Float.parseFloat(detailsBr.readLine());
 		float matchIndex = Float.parseFloat(detailsBr.readLine());
 		String applicationStatus = detailsBr.readLine();
+		Boolean isActive = Boolean.parseBoolean(detailsBr.readLine());
 
 		detailsBr.close();
 
@@ -666,7 +669,7 @@ public class BackendSystem {
 		applicationBr.close();
 
 		return new MatchRelationship(student, scholarship, ID, matchPercentage, matchIndex, application,
-				applicationStatus);
+				applicationStatus, isActive);
 	}
 
 	public MatchRelationship produceNewMatch(StudentProfile student, Scholarship scholarship) throws IOException {
@@ -680,6 +683,7 @@ public class BackendSystem {
 				fileIndex);
 
 		storeNewMatch(newMatch);
+		this.allMatchRelationships.add(newMatch);
 		return newMatch;
 	}
 

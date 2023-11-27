@@ -9,6 +9,10 @@ public class MatchRelationship {
     private float matchIndex;
     private HashMap<String, String> application = new HashMap<String, String>();
     private String applicationStatus;
+    private Boolean isActive;
+
+    
+
 
     // input string of application questions into a hashmap as the keys
     public HashMap<String, String> InitializeApplication(ArrayList<String> applicationQuestions) {
@@ -65,11 +69,12 @@ public class MatchRelationship {
         this.application = InitializeApplication(inputScholarship.getApplication());
         this.applicationStatus = "not started";
         this.ID = ID;
+        this.isActive = true;
     }
 
     //for file read input
     public MatchRelationship(StudentProfile inputStudent, Scholarship inputScholarship, int ID, float inputMatchPercentage,
-            float inputMatchIndex, ArrayList<String> application, String applicationStatus) {
+            float inputMatchIndex, ArrayList<String> application, String applicationStatus, Boolean isActive) {
         this.student = inputStudent;
         this.scholarship = inputScholarship;
         this.ID = ID;
@@ -77,6 +82,7 @@ public class MatchRelationship {
         this.matchIndex = inputMatchIndex;
         this.application = InitializeApplication(application);
         this.applicationStatus = applicationStatus;
+        this.isActive = isActive;
     }
 
     public MatchRelationship() {
@@ -103,6 +109,10 @@ public class MatchRelationship {
 
     public String getStudentName() {
         return this.student.getName();
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
     }
 
     public String getScholarshipName() {
@@ -135,6 +145,10 @@ public class MatchRelationship {
         this.applicationStatus = "submitted";
     }
 
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+
     public void setApplication(ArrayList<String> inputApplication) {
         try {
             if (inputApplication.size() % 2 != 0) {
@@ -155,7 +169,8 @@ public class MatchRelationship {
         + this.scholarship.getName() + "\n"
         + this.matchPercentage + "\n"
         + this.matchIndex + "\n"
-        + this.applicationStatus;
+        + this.applicationStatus + "\n"
+        + this.isActive;
     }
 
     public String getApplicationFileText() {
