@@ -81,6 +81,122 @@ public class BackendSystem {
 
 	}
 
+	/**
+	 * calls get<profiletype>FromInput() to make a new object of the selected user type,
+	 * sets that to the currentUser, prints the profile details, adds it to the list of users of that type,
+	 * and adds it to a new fine
+	 * 
+	 * @throws Exception
+	 */
+	public void createNewProfile() throws Exception {
+		String userType;
+		boolean success = false;
+		do {
+			Main.scnr.nextLine();
+			System.out.println("Please enter your user type. (Enter as one word, i.e. student, fundsteward, etc.)");
+			userType = Main.scnr.nextLine();
+
+			/*
+			 * if (!(userType.equalsIgnoreCase("student") ||
+			 * userType.equalsIgnoreCase("admin")
+			 * || userType.equalsIgnoreCase("staff")
+			 * || userType.equalsIgnoreCase("donor") ||
+			 * userType.equalsIgnoreCase("fundsteward"))) {
+			 * System.out.println(
+			 * "That user type was not recognized. Accepted user types are: "
+			 * +
+			 * "student, admin, staff, donor, and fundsteward (capitalization doesn't matter).\n"
+			 * );
+			 * continue;
+			 * }
+			 */
+
+			if (userType.equalsIgnoreCase("student")) {
+				success = true;
+				StudentProfile newStudent = getStudentFromInput();
+				setCurrentUser(newStudent);
+				System.out.println(((StudentProfile) getCurrentUser()).toString());
+				// add this new profile to the list here in backend
+				allStudents.add(newStudent);
+				// store this new profile in a file
+				storeNewStudentProfile(newStudent);
+				// System.out.println("Made new folder and files for that student, the folder
+				// name should be /students/student" + (findNextFileIndex("student") -
+				// 1));
+				// System.out.println("!!!! Please be sure to delete that folder so we don't
+				// have duplicates.");
+			} 
+			else if (userType.equalsIgnoreCase("admin")) {
+				success = true;
+				AdminProfile newAdmin = getAdminFromInput();
+				setCurrentUser(newAdmin);
+				System.out.println(((AdminProfile) getCurrentUser()).toString());
+				// add this new profile to the list here in backend
+				allAdmins.add(newAdmin);
+				// store this new profile in a file
+				storeNewAdminProfile(newAdmin);
+				// System.out.println("Made new folder and files for that administrator, the
+				// folder name should be /administrators/admin" +
+				// (findNextFileIndex("admin") - 1));
+				// System.out.println("!!!! Please be sure to delete that folder so we don't
+				// have duplicates.");
+			} 
+			else if (userType.equalsIgnoreCase("staff")) {
+				success = true;
+				StaffProfile newStaff = getStaffFromInput();
+				setCurrentUser(newStaff);
+				System.out.println(((StaffProfile) getCurrentUser()).toString());
+				// add this new profile to the list here in backend
+				allStaff.add(newStaff);
+				// store this new profile in a file
+				storeNewStaffProfile(newStaff);
+				// System.out.println("Made new folder and files for that staff, the folder name
+				// should be /engr staff/staff" + (findNextFileIndex("staff") - 1));
+				// System.out.println("!!!! Please be sure to delete that folder so we don't
+				// have duplicates.");
+			} 
+			else if (userType.equalsIgnoreCase("fundsteward")) {
+				success = true;
+				FundStewardProfile newFundSteward = getFundStewardFromInput();
+				setCurrentUser(newFundSteward);
+				System.out.println(((FundStewardProfile) getCurrentUser()).toString());
+				// add this new profile to the list here in backend
+				allFundStewards.add(newFundSteward);
+				// store this new profile in a file
+				storeNewFundStewardProfile(newFundSteward);
+				// System.out.println("Made new folder and files for that fundsteward, the
+				// folder name should be /fundstewards/fundsteward" +
+				// (findNextFileIndex("fundsteward") - 1));
+				// System.out.println("!!!! Please be sure to delete that folder so we don't
+				// have duplicates.");
+			} 
+			else if (userType.equalsIgnoreCase("donor")) {
+				success = true;
+				DonorProfile newDonor = getDonorFromInput();
+				setCurrentUser(newDonor);
+				System.out.println(
+						"Here are the details you entered: " + ((DonorProfile) getCurrentUser()).toString());
+				// add this new profile to the list here in backend
+				allDonors.add(newDonor);
+				// store this new profile in a file
+				storeNewDonorProfile(newDonor);
+				// System.out.println("Made new folder and files for that donor, the folder name
+				// should be /donors/donor" + (findNextFileIndex("donor") - 1));
+				// System.out.println("!!!! Please be sure to delete that folder so we don't
+				// have duplicates.");
+			} 
+			else {
+				System.out.println("That user type was not recognized, please try again.");
+			}
+
+			// if the user successfully created an account, print this success message
+			if (success) {
+				System.out.println("New user profile created! Now please login using this account.");
+			}
+			// success is false by default, but is set to true if the user type is **valid
+		} while (!success);
+	}
+
 	public StudentProfile readStudentProfile(int fileIndex) throws IOException {
 		String folderPath = "students/student" + String.valueOf(fileIndex);
 		BufferedReader detailsBr = new BufferedReader(new FileReader(folderPath + "/details.txt"));
@@ -2190,7 +2306,7 @@ public class BackendSystem {
 		lastName = Main.scnr.nextLine();
 		StudentObj.setLastName(lastName);
 
-		System.out.println("Please enter your student ID");
+		System.out.println("Please enter your student ID number (an integer).");
 		studentID = Main.scnr.nextInt();
 		StudentObj.setStudentID(studentID);
 

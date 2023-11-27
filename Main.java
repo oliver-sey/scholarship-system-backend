@@ -27,8 +27,8 @@ public class Main {
 		int userChoice;
 		System.out.println("Welcome ot the UASAMS backend subsystem! Please select an option: \n1- Returning User\n2- New User");
 		userChoice = scnr.nextInt();
-		if(userChoice == 2){
-			createNewProfile(backend);  //INCOMPLETE- need to update profile lists when a new profile is added
+		if(userChoice == 2) {
+			backend.createNewProfile();  // TODO: INCOMPLETE- need to update profile lists when a new profile is added
 		}
 
 		// prompt the user to log in, when this line of code is done they are successfully logged in or the system should stop
@@ -998,86 +998,4 @@ public class Main {
 		// and then here we could check if the archive status got changed to true
 
 	}
-
-	public static void createNewProfile(BackendSystem backend) throws Exception{
-		//BackendSystem backend = new BackendSystem();
-		String userType;
-		boolean success = false;
-		do {
-			scnr.nextLine();
-			System.out.println("Please enter your usertype. (Enter as one word, i.e. student, fundsteward, etc.)");
-			//scnr.nextLine();
-			userType = scnr.nextLine();
-
-					/*if (!(userType.equalsIgnoreCase("student") || userType.equalsIgnoreCase("admin")
-							|| userType.equalsIgnoreCase("staff")
-							|| userType.equalsIgnoreCase("donor") || userType.equalsIgnoreCase("fundsteward"))) {
-						System.out.println(
-								"That user type was not recognized. Accepted user types are: "
-								+ "student, admin, staff, donor, and fundsteward (capitalization doesn't matter).\n");
-						continue;
-					}*/
-
-			if(userType.equalsIgnoreCase("student")){
-				success = true;
-				StudentProfile newStudent = new StudentProfile();
-				newStudent = backend.getStudentFromInput();
-				backend.setCurrentUser(newStudent);
-				System.out.println(((StudentProfile) backend.getCurrentUser()).toString());
-				backend.storeNewStudentProfile(newStudent);
-						//System.out.println("Made new folder and files for that student, the folder name should be /students/student" + (backend.findNextFileIndex("student") - 1));
-						//System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
-			}
-			else if(userType.equalsIgnoreCase("admin")){
-				success = true;
-				AdminProfile newAdmin = new AdminProfile();
-				newAdmin = backend.getAdminFromInput();
-				backend.setCurrentUser(newAdmin);
-				System.out.println(((AdminProfile) backend.getCurrentUser()).toString());
-				backend.storeNewAdminProfile(newAdmin);
-						//System.out.println("Made new folder and files for that administrator, the folder name should be /administrators/admin" + (backend.findNextFileIndex("admin") - 1));
-						//System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
-			}
-			else if(userType.equalsIgnoreCase("staff")){
-				success = true;
-				StaffProfile newStaff = new StaffProfile();
-				newStaff = backend.getStaffFromInput();
-				backend.setCurrentUser(newStaff);
-				System.out.println(((StaffProfile) backend.getCurrentUser()).toString());
-				backend.storeNewStaffProfile(newStaff);
-						//System.out.println("Made new folder and files for that staff, the folder name should be /engr staff/staff" + (backend.findNextFileIndex("staff") - 1));
-						//System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
-			}
-			else if(userType.equalsIgnoreCase("fundsteward")){
-				success = true;
-				FundStewardProfile newFundsteward = new FundStewardProfile();
-				newFundsteward = backend.getFundStewardFromInput();
-				backend.setCurrentUser(newFundsteward);
-				System.out.println(((FundStewardProfile) backend.getCurrentUser()).toString());
-				backend.storeNewFundStewardProfile(newFundsteward);
-						//System.out.println("Made new folder and files for that fundsteward, the folder name should be /fundstewards/fundsteward" + (backend.findNextFileIndex("fundsteward") - 1));
-						//System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
-			}
-			else if(userType.equalsIgnoreCase("donor")){
-				success = true;
-				DonorProfile newDonor = new DonorProfile();
-				newDonor = backend.getDonorFromInput();
-				backend.setCurrentUser(newDonor);
-				System.out.println("Here are the details you entered: " + ((DonorProfile) backend.getCurrentUser()).toString());
-				backend.storeNewDonorProfile(newDonor);
-						//System.out.println("Made new folder and files for that donor, the folder name should be /donors/donor" + (backend.findNextFileIndex("donor") - 1));
-						//System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
-			}
-			else {
-				System.out.println("That user type was not recognized, please try again.");
-			}
-
-			// if the user successfully created an account, print this success message
-			if (success) {
-				System.out.println("New user profile created! Now please login using this account.");
-			}
-		// success is false by default, but is set to true if the user type is **valid
-		} while (!success);
-	}
-
 }
