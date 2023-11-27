@@ -28,7 +28,13 @@ public class MatchRelationship {
         HashMap<String, String> application = new HashMap<String, String>();
 
         for (int i = 0; i < applicationQandA.size(); i = i + 2) {
-            application.put(applicationQandA.get(i), applicationQandA.get(i + 1));
+            if (applicationQandA.get(i + 1).equals("*")){
+                application.put(applicationQandA.get(i), "");
+            }
+            else{
+                application.put(applicationQandA.get(i), applicationQandA.get(i + 1));
+            }
+            
         }
 
         return application;
@@ -80,7 +86,7 @@ public class MatchRelationship {
         this.ID = ID;
         this.matchPercentage = inputMatchPercentage;
         this.matchIndex = inputMatchIndex;
-        this.application = InitializeApplication(application);
+        this.application = UpdateApplication(application);
         this.applicationStatus = applicationStatus;
         this.isActive = isActive;
     }
@@ -176,9 +182,17 @@ public class MatchRelationship {
     public String getApplicationFileText() {
         ArrayList<String> applicationList = new ArrayList<String>();
 
+        //pass string of line seperated values 
+        //pass a star if answer is empty
         for (HashMap.Entry<String, String> entry : this.application.entrySet()) {
             applicationList.add(entry.getKey());
-            applicationList.add(entry.getValue());
+            if (entry.getValue() == "") {
+                applicationList.add("*");
+            }
+            else {
+                applicationList.add(entry.getValue());
+            }
+            
         }
         
         String fileText = String.join("\n", applicationList);

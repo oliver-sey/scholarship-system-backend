@@ -1,8 +1,8 @@
 Valuing Icons Scholarship
 For students who have a great appreciation for icons throughout history.
 Jill Jackson
-500
-True
-True
+500.0
+true
+true
 2020-01-01
 2021-12-31
