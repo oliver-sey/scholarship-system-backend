@@ -94,8 +94,9 @@ public class Main {
 					Boolean quitBrowse = false;
 
 					while (!quitBrowse) {
-						// call printAllScholarships, we want basic info and no archived scholarships, yes approved scholarships, no unapproved scholarships
-						backend.printAllScholarships(false, false, true, false);
+						// call printAllScholarships, we want basic info and no archived scholarships, yes to not-archived,
+						// yes approved scholarships, no unapproved scholarships
+						backend.printAllScholarships(false, false, true, true, false);
 
 						System.out.println("What would you like to do:");
 						System.out.println("1 - Go back");
@@ -476,10 +477,10 @@ public class Main {
 			 */
 			do {
 				System.out.println("Options: ");
-				System.out.println("1 - view unapproved scholarships to approve or delete them");
+				System.out.println("1 - view unapproved scholarships, and then can approve or delete them");
 				System.out.println("2 - view all students");
 				// TODO: implement this!!
-				System.out.println("3 - view all scholarships (that are not archived)");
+				System.out.println("3 - view all active scholarships (that are approved and not archived)");
 				System.out.println("4 - award scholarship");
 
 				System.out.println("0 - EXIT");
@@ -492,7 +493,8 @@ public class Main {
 					System.out.println("Unapproved scholarships:");
 
 					// call printAllScholarships, we want basic info and only unapproved scholarships
-					backend.printAllScholarships(false, false, false, true);
+					// TODO: would we want archived scholarships here?
+					backend.printAllScholarships(false, false, true, false, true);
 
 					// prompt them to approve one scholarship
 
@@ -551,10 +553,10 @@ public class Main {
 				//Print all scholarships not archived
 				else if(userSelection == 3){
 
-					backend.printAllScholarships(false, false, true, false);						
-					boolean quitBrowse = true;
+					backend.printAllScholarships(false, false, true, true, false);						
+					boolean keepGoing = true;
 
-					while(quitBrowse){
+					do {
 						//gives the option to view a scholarship more indepth
 						System.out.println("What would you like to do:");
 						System.out.println("1 - Go back");
@@ -566,9 +568,9 @@ public class Main {
 						int userAction = scnr.nextInt();
 						scnr.nextLine();
 
-						//If the user wants to quir quitBrowse needs to be false
-						if(userAction == 1){
-							quitBrowse = false;
+						//If the user wants to quit, keepGoing needs to be false
+						if (userAction == 1) {
+							keepGoing = false;
 						}
 						else if (userAction == 2) {
 							
@@ -601,7 +603,7 @@ public class Main {
 							} while (!validSelection);
 						}
 
-					}
+					} while (keepGoing);
 
 				}
 
@@ -610,7 +612,8 @@ public class Main {
 					boolean quitBrowse = true;
 					int fileIndex;
 					while(quitBrowse){
-						backend.printAllScholarships(false, false, true, false);			
+						// we want only not-archived and yes approved scholarships for this
+						backend.printAllScholarships(false, false, true, true, false);			
 						//Grabs the index so that that scholarship can be printed
 						System.out.print("Please enter the file index of the scholarship you want to view: ");
 						fileIndex = scnr.nextInt();
@@ -889,14 +892,14 @@ public class Main {
 				System.out.println("\nTesting the printOneScholarship method (for #1, aka index 0):");
 				System.out.print(backend.getAllScholarships().get(1).getBasicInfoString());
 
-				System.out.println("\n\nTesting the printAllScholarships method (basic info, include archived and include approved and unapproved):");
-				backend.printAllScholarships(false, true, true, true);
+				System.out.println("\n\nTesting the printAllScholarships method (basic info, include everything):");
+				backend.printAllScholarships(false, true, true, true, true);
 
-				System.out.println("\n\nTesting the printAllScholarships method (basic info, do not include archived, include only unapproved):");
-				backend.printAllScholarships(false, false, false, true);
+				System.out.println("\n\nTesting the printAllScholarships method (basic info, do not include archived, include only *unapproved and non-archived):");
+				backend.printAllScholarships(false, false, true, false, true);
 
-				System.out.println("\n\nTesting the printAllScholarships method (**detailed info, do not include archived or unapproved, but include approved):");
-				backend.printAllScholarships(true, false, true, false);
+				System.out.println("\n\nTesting the printAllScholarships method (**detailed info, include only not archived, and yes approved):");
+				backend.printAllScholarships(true, false, true, true, false);
 			}
 
 			else if (userSelection == 10) {

@@ -357,7 +357,7 @@ public class Scholarship {
         String info;
 
         info = "Scholarship with ID #" + fileIndex + ": " + this.name + "\nDescription: " + this.description + "\n";
-	
+        info += "***get rid of this: isArchived: " + isArchived + "\n";
         info += "Award amount: " + String.format("%.2f", this.awardAmount) + "\n";
 		
 		info += "Due at the end of the day on: " + this.getDateDueString() + ", (format is YYYY-MM-DD)\n";
