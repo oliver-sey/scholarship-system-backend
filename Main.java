@@ -34,11 +34,11 @@ public class Main {
 				Scanner scnr = new Scanner(System.in);
 				System.out.print("Do you want to fully quit the program? (type y/n): ");
 				userInput = scnr.next();
-			// while the first letter of the user's input is either y or Y, keep going
-			} while (userInput.toLowerCase().charAt(0) == 'y');
+			// while the first letter of the user's input is either n or N, keep going
+			// they don't want to quit
+			} while (userInput.toLowerCase().charAt(0) == 'n');
 		}
 		// else just quit
-		scnr.close();
 	}
 
 
@@ -184,15 +184,6 @@ public class Main {
 				// if they want to view unapproved scholarships to approve them
 				if (userSelection == 1) {
 					System.out.println("Unapproved scholarships:");
-					// TODO: clean this up!!!
-					// ****old code:
-					// get all the unapproved scholarships and print a number and the scholarship name and description
-					// ArrayList<Scholarship> unapprovedSchols = new ArrayList<Scholarship>();
-					// for (int i = 0; i < unapprovedSchols.size(); i++) {
-					// 	System.out.println((i + 1) + ": " + unapprovedSchols.get(i).getName());
-					// 	System.out.println(unapprovedSchols.get(i).getDescription());
-					// 	System.out.println();
-					// }
 
 					// call printAllScholarships, we want basic info and only unapproved scholarships
 					backend.printAllScholarships(false, false, false, true);
