@@ -1054,7 +1054,7 @@ public class BackendSystem {
 	// searches a folder for a scholarship with inputted value
 	public ArrayList<Scholarship> searchScholarships(String inputCategory, String inputSearchValue) {
 		ArrayList<Scholarship> scholarshipsFound = new ArrayList<Scholarship>();
-		HashMap<String, String> requirements = new HashMap<String, String>();
+		HashMap<String, ArrayList<String>> requirements = new HashMap<String, ArrayList<String>>();
 		LocalDate inputDate;
 
 		if (inputCategory.compareTo("name") == 0) {
@@ -1147,11 +1147,14 @@ public class BackendSystem {
 			for (Scholarship scholarship : this.allScholarships) {
 				requirements = scholarship.getRequirements();
 
-				for (Map.Entry<String, String> entry : requirements.entrySet()) {
+				for (Map.Entry<String, ArrayList<String>> entry : requirements.entrySet()) {
 					if (entry.getKey().compareTo(inputCategory) == 0) {
-						if (entry.getValue().compareTo(inputSearchValue) == 0) {
-							scholarshipsFound.add(scholarship);
+						for (int i = 0; i < entry.getValue().size(); i++) {
+							if (entry.getValue().get(i).compareTo(inputSearchValue) == 0) {
+								scholarshipsFound.add(scholarship);
+							}
 						}
+						
 					}
 
 				}

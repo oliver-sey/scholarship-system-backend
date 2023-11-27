@@ -12,7 +12,7 @@ public class Scholarship {
     private ArrayList<StudentProfile> applicants = new ArrayList<StudentProfile>();
     private DonorProfile donor;
     private float awardAmount;
-    private HashMap<String, String> requirements = new HashMap<String, String>();
+    private HashMap<String, ArrayList<String>> requirements = new HashMap<String, ArrayList<String>>();
     private ArrayList<String> application = new ArrayList<String>();
     private boolean isArchived;
     private boolean isApproved;
@@ -103,11 +103,18 @@ public class Scholarship {
     }
 
     // initializes requirement categories and values into a hashmap
-    public HashMap<String, String> InitializeRequirements(ArrayList<String> inputRequirements) {
-        HashMap<String, String> requirements = new HashMap<String, String>();
+    public HashMap<String, ArrayList<String>> InitializeRequirements(ArrayList<String> inputRequirements) {
+        HashMap<String, ArrayList<String>> requirements = new HashMap<String, ArrayList<String>>();
 
         for (int i = 0; i < inputRequirements.size(); i = i + 2) {
-            requirements.put(inputRequirements.get(i), inputRequirements.get(i + 1));
+            if (requirements.get(inputRequirements.get(i)) == null) {
+                ArrayList<String> list = new ArrayList<String>();
+                list.add(inputRequirements.get(i + 1));
+                requirements.put(inputRequirements.get(i), list);
+            }
+            else {
+                requirements.get(inputRequirements.get(i)).add(inputRequirements.get(i + 1));
+            }
         }
 
         return requirements;
@@ -165,7 +172,7 @@ public class Scholarship {
         return this.donor;
     }
 
-    public HashMap<String, String> getRequirements() {
+    public HashMap<String, ArrayList<String>> getRequirements() {
         return this.requirements;
     }
 
@@ -252,7 +259,7 @@ public class Scholarship {
         this.donor = donor;
     }
 
-    public void setRequirements(HashMap<String, String> requirements) {
+    public void setRequirements(HashMap<String, ArrayList<String>> requirements) {
         this.requirements = requirements;
     }
 
@@ -300,9 +307,11 @@ public class Scholarship {
     public String getRequirementsFileText() {
         ArrayList<String> requirementsList = new ArrayList<String>();
 
-        for (HashMap.Entry<String, String> entry : this.requirements.entrySet()) {
-            requirementsList.add(entry.getKey());
-            requirementsList.add(entry.getValue());
+        for (HashMap.Entry<String, ArrayList<String>> entry : this.requirements.entrySet()) {
+            for (int i = 0; i < entry.getValue().size(); i++){
+                requirementsList.add(entry.getKey());
+                requirementsList.add(entry.getValue().get(i));
+            }
         }
         
         String fileText = String.join("\n", requirementsList);
@@ -351,8 +360,10 @@ public class Scholarship {
 
         info += "Requirements: {\n";
 
-        for (Map.Entry<String, String> reqValuePair : this.requirements.entrySet()) {
-			info += reqValuePair.getKey() + ": " + reqValuePair.getValue() + "\n";
+        for (Map.Entry<String, ArrayList<String>> reqValuePair : this.requirements.entrySet()) {
+            for (int i = 0; i < reqValuePair.getValue().size(); i++){
+                info += reqValuePair.getKey() + ": " + reqValuePair.getValue().get(i) + "\n";
+            }
 		}
 
         info += "}\n" + "Donor: " + this.donor.getName() + "\n" + "Date posted: " + getDateAddedString();
