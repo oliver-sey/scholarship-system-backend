@@ -2632,7 +2632,8 @@ public class BackendSystem {
 		ArrayList<MatchRelationship> matchesFound = new ArrayList<MatchRelationship>();
 
 		for (MatchRelationship match : this.allMatchRelationships) {
-			if(match.getStudentName().equals(((StudentProfile)currentUser).getName()) && match.getApplicationStatus().equals("submitted")) {
+			if(match.getStudentName().equals(((StudentProfile)currentUser).getName()) && match.getApplicationStatus().equals("submitted") 
+			&& match.getIsActive()) {
 				matchesFound.add(match);
 			}
 		}
@@ -2669,7 +2670,8 @@ public class BackendSystem {
 		ArrayList<MatchRelationship> inProgressMatches = new ArrayList<MatchRelationship>();
 
 		for (MatchRelationship match : this.allMatchRelationships) {
-			if(match.getStudentName().equals(((StudentProfile)currentUser).getName()) && match.getApplicationStatus().equals("in progress")) {
+			if(match.getStudentName().equals(((StudentProfile)currentUser).getName()) && match.getApplicationStatus().equals("in progress")
+			&& match.getIsActive()) {
 				inProgressMatches.add(match);
 			}
 		}
