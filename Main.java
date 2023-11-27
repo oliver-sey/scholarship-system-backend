@@ -34,9 +34,8 @@ public class Main {
 				Scanner scnr = new Scanner(System.in);
 				System.out.print("Do you want to fully quit the program? (type y/n): ");
 				userInput = scnr.next();
-			// while the first letter of the user's input is either n or N, keep going
-			// they don't want to quit
-			} while (userInput.toLowerCase().charAt(0) == 'n');
+			// while the first letter of the user's input is either y or Y, keep going
+			} while (userInput.toLowerCase().charAt(0) != 'y');
 		}
 		// else just quit
 	}
@@ -64,6 +63,8 @@ public class Main {
 
 				System.out.println("1 - View and edit your profile");
 				System.out.println("2 - See all active scholarships (can apply to them also)");
+				System.out.println("3 - See submitted applications");
+				System.out.println("4 - Search scholarships");
 				System.out.println("0 - EXIT");
 				
 				System.out.print("Your selection: ");
@@ -133,6 +134,111 @@ public class Main {
 								
 							} while (!validSelection);
 						}
+						
+					}
+					
+				}
+				else if (userSelection == 3) {
+
+				}
+				else if (userSelection == 4) {
+					Boolean quitSearch = false;
+					Boolean exitResults;
+
+					while (!quitSearch) {
+
+						System.out.println("1 - name");
+						System.out.println("2 - donor");
+						System.out.println("3 - due date");
+						System.out.println("4 - date posted");
+						System.out.println("5 - award amount");
+						System.out.println("6 - major");
+						System.out.println("7 - minor");
+						System.out.println("8 - isUSCitizen");
+						System.out.println("9 - GPA");
+						System.out.println("10 - inGoodStanding");
+						System.out.println("11 - hasAdvStanding");
+						System.out.println("12 - gradeLevel");
+						System.out.println("13 - gradYear");
+						System.out.println("14 - gender");
+						System.out.println("15 - isFullTimeStudent");
+						System.out.println("16 - isTransferStudent");
+						System.out.println("17 - curNumCredits");
+						System.out.println("18 - receivesFunding");
+
+						System.out.print("Enter the number of the category you'd like to search by: ");
+						int searchIndex = scnr.nextInt();
+						scnr.nextLine();
+
+						System.out.print("Enter the value to search: ");
+						String searchValue = scnr.nextLine();
+
+						ArrayList<Scholarship> scholarshipsFound = backend.searchScholarships(searchIndex, searchValue);
+
+						exitResults = false;
+
+						while (!exitResults) {
+							for (Scholarship schol : scholarshipsFound) {
+								System.out.println(schol.getBasicInfoString());
+							}
+
+							System.out.println("What would you like to do:");
+							System.out.println("1 - Expand a scholarship");
+							System.out.println("2 - Enter new search criteria");
+							System.out.println("3 - Exit search");
+
+							System.out.print("Your choice: ");
+
+							// want to keep this separate from userSelection, so we don't accidentally exit the outer do-while loop or something
+							int userAction = scnr.nextInt();
+							scnr.nextLine();
+
+							if (userAction == 3) {
+								exitResults = true;
+								quitSearch = true;
+							}
+							else if (userAction == 2) {
+								exitResults = true;
+							}
+							else if (userAction == 1) {
+								
+								int fileIndex;
+								Boolean validSelection = false;
+								do {
+									System.out.print("Please enter the file index of the scholarship you want to view: ");
+									fileIndex = scnr.nextInt();
+									scnr.nextLine();
+									
+									if (backend.getOneScholarshipByFileIndex(fileIndex) == null) {
+										System.out.println("The scholarship with file index " + fileIndex + " could not be found.");
+										System.out.println("Please enter a valid index.");
+									}
+									else {
+										// print the scholarship's information, in more detail than before
+										validSelection = true;
+										System.out.println(backend.getOneScholarshipByFileIndex(fileIndex).getAllInfoString());
+
+										System.out.println("\nPlease select an option:");
+										System.out.println("1 - go back");
+										System.out.println("2 - apply");
+
+										System.out.print("Your choice: ");
+										userAction = scnr.nextInt();
+										scnr.nextLine();
+
+										if (userAction == 1) {
+											// do nothing?
+										}
+										else if (userAction == 2) {
+											backend.applyToScholarship(fileIndex);
+										}
+									}
+									
+								} while (!validSelection);
+							}
+						}
+
+						
 					}
 					
 				}
@@ -177,6 +283,21 @@ public class Main {
 		// else if (backend.getUserType().compareTo("fund steward") == 0) {
 		else if (backend.getCurrentUser() instanceof FundStewardProfile) {
 			// TODO: implement this!!
+			/*
+			 * -view archived/awarded scholarships
+			 */
+			/* 
+				System.out.println("\nPlease enter a number to select which action you want to do:");
+
+				System.out.println("1 - View awarded scholarships");
+				System.out.println("0 - EXIT");
+				
+				System.out.print("Your selection: ");
+				userSelection = scnr.nextInt();
+
+				if(userSelection == 1){
+					backend.printAllScholarships(true, true, false, false);
+				}*/
 			System.out.println("Have to still implement oneUserAction() for FundStewardProfile.");
 		}
 		// else if (backend.getUserType().compareTo("admin") == 0) {
