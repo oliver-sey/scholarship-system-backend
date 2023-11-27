@@ -385,4 +385,21 @@ public class Scholarship {
                 + donor.getName() + ", awardAmount=" + awardAmount + ", requirements=" + requirements + ", application="
                 + application + ", isArchived=" + isArchived + ", isApproved=" + isApproved + ", dateAdded=" + dateAdded + ", dateDue=" + dateDue + "]";
     }
+    public void printApplicants() {
+        System.out.println("Applicants for Scholarship: " + this.getName());
+        System.out.println("----------------------------");
+    
+        if (applicants.isEmpty()) {
+            System.out.println("No applicants.");
+        } else {
+            for (StudentProfile applicant : applicants) {
+                System.out.println("Student ID: " + applicant.getStudentID());
+                System.out.println("Name: " + applicant.getFirstName() + " " + applicant.getLastName());
+                // Add more information as needed
+                System.out.println("-----------------------");
+            }
+        }
+
+        
+    }
 }
