@@ -480,7 +480,7 @@ public class Main {
 				System.out.println("2 - view all students");
 				// TODO: implement this!!
 				System.out.println("3 - view all scholarships (that are not archived)");
-				System.out.println("4 - archive a scholarship (set a recipient)");
+				System.out.println("4 - award scholarship");
 
 				System.out.println("0 - EXIT");
 
@@ -550,7 +550,7 @@ public class Main {
 
 				//Print all scholarships not archived
 				else if(userSelection == 3){
-					System.out.println("yay");
+
 					backend.printAllScholarships(false, false, true, false);						
 					boolean quitBrowse = true;
 
@@ -604,6 +604,82 @@ public class Main {
 					}
 
 				}
+
+				//award scholarship
+				else if(userSelection == 4){
+					boolean quitBrowse = true;
+					int fileIndex;
+					while(quitBrowse){
+						backend.printAllScholarships(false, false, true, false);			
+						//Grabs the index so that that scholarship can be printed
+						System.out.print("Please enter the file index of the scholarship you want to view: ");
+						fileIndex = scnr.nextInt();
+						scnr.nextLine();
+						//if the user does not select a valid scholarship reinquires user to select a valid scholarship
+						if (backend.getOneScholarshipByFileIndex(fileIndex) == null) {
+							System.out.println("The scholarship with file index " + fileIndex + " could not be found.");
+							System.out.println("Please enter a valid index.");
+						}
+						else {
+						int userAction = 7;
+							do{
+								//TODO Implement option 3 and fix 2 applicants printing
+							System.out.println("What would you like to do?");
+							System.out.println("1- list application");
+							System.out.println("2- list applicants");
+							System.out.println("3- list applications THIS HAS NOT BEEN DONE YET NEEDS TO BE IMPLEMENTED");
+							System.out.println("4- select recipient/archive scholarship");
+							System.out.println("0- EXIT");
+
+							
+							userAction = scnr.nextInt();
+							scnr.nextLine();
+								if(userAction == 1){
+									System.out.println(backend.getOneScholarshipByFileIndex(fileIndex).getApplication());
+								}
+								else if(userAction == 2){
+									//As of now prints out list of names and then student profiles? 
+									//need to add new lines 
+									//TODO check over this pls
+									System.out.println(backend.getOneScholarshipByFileIndex(fileIndex).getApplicantNames());
+									System.out.println(backend.getOneScholarshipByFileIndex(fileIndex).getApplicants());
+								}
+								else if(userAction == 3){
+									//not sure how to implement
+									//TODO Implement this
+								}
+								else if(userAction == 4){
+									StudentProfile recipient = null;
+									//continues to ask until valid name is inputed
+									while(recipient == null){
+										System.out.println("Enter recipient name (First Last): ");
+										String searchValue = scnr.nextLine();
+										//searches for students name that was inputed
+										for (StudentProfile student : backend.getAllStudents()) {
+											if (student.getName().compareTo(searchValue)==0) {
+												recipient = student;
+											}
+										}
+										if(recipient != null){
+											backend.AwardScholarship(recipient,backend.getOneScholarshipByFileIndex(fileIndex));
+										}
+										else{
+											System.out.println("Student not found please enter another name");
+										}
+									}
+									//backend.AwardScholarship(recipient,backend.getOneScholarshipByFileIndex(fileIndex));
+									//System.out.println(backend.getOneScholarshipByFileIndex(fileIndex).getRecipient());
+								}
+								else if(userAction == 0){
+									quitBrowse = false;
+								}
+
+							}while(userAction!=0);
+						}
+					}
+				}
+		
+
 
 			} while(userSelection != 0);
 		}
