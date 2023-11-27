@@ -13,28 +13,32 @@ import java.util.Scanner;
 public class Main {
 
 	public static Scanner scnr = new Scanner(System.in);
+
 	public static void main(String[] args) throws Exception {
 		BackendSystem backend = new BackendSystem();
 		// userRunSystem will prompt them to log in
 		userRunSystem(backend);
 
-		//runDifferentTests();
+		// runDifferentTests();
 
 		// **only close the Scanner at the very end, after everything is done
 		scnr.close();
 	}
 
-	// prompt the user to log in and answer security questions, and then let them perform one action at a time, until they want to quit 
-	public static void userRunSystem(BackendSystem backend) throws Exception {  //used to be IOException FYI
+	// prompt the user to log in and answer security questions, and then let them
+	// perform one action at a time, until they want to quit
+	public static void userRunSystem(BackendSystem backend) throws Exception { // used to be IOException FYI
 		int userChoice;
-		System.out.println("Welcome to the UASAMS backend subsystem! Please select an option: \n1- Returning User\n2- New User");
+		System.out.println(
+				"Welcome to the UASAMS backend subsystem! Please select an option: \n1- Returning User\n2- New User");
 		userChoice = scnr.nextInt();
 
-		if(userChoice == 2) {
-			backend.createNewProfile();  // TODO: INCOMPLETE- need to update profile lists when a new profile is added
+		if (userChoice == 2) {
+			backend.createNewProfile(); // TODO: INCOMPLETE- need to update profile lists when a new profile is added
 		}
 
-		// prompt the user to log in, when this line of code is done they are successfully logged in or the system should stop
+		// prompt the user to log in, when this line of code is done they are
+		// successfully logged in or the system should stop
 		boolean successfulLogin = backend.login();
 
 		if (successfulLogin) {
@@ -46,29 +50,29 @@ public class Main {
 				// see if they want to quit
 				System.out.print("Do you want to fully quit the program? (type y/n): ");
 				userInput = scnr.next();
-			// while the first letter of the user's input is either y or Y, keep going
+				// while the first letter of the user's input is either y or Y, keep going
 			} while (userInput.toLowerCase().charAt(0) != 'y');
 		}
 		// else just quit
 	}
 
-
 	/**
 	 * You should get the user to log in before calling this!
-	 * prompts the user for which action they want to perform based on their profile type
+	 * prompts the user for which action they want to perform based on their profile
+	 * type
 	 */
 	public static void oneUserAction(BackendSystem backend) throws IOException {
 		int userSelection = -1;
-		
+
 		// if (backend.getUserType().compareTo("student") == 0) {
 		if (backend.getCurrentUser() instanceof StudentProfile) {
 			/*
-			- edit profile
-			- see all scholarships
-			- see in-progress applications/ update application
-			- see submitted applications
-			- search scholarships
-			*/
+			 * - edit profile
+			 * - see all scholarships
+			 * - see in-progress applications/ update application
+			 * - see submitted applications
+			 * - search scholarships
+			 */
 			do {
 				System.out.println("\nPlease enter a number to select which action you want to do:");
 
@@ -78,23 +82,25 @@ public class Main {
 				System.out.println("4 - See submitted applications");
 				System.out.println("5 - Search scholarships");
 				System.out.println("0 - EXIT");
-				
+
 				System.out.print("Your selection: ");
 				userSelection = scnr.nextInt();
 
 				// is it as simple as this???
 				if (userSelection == 1) {
 					// typecast it to a StudentProfile because it will be a profile object,
-					// but this is ok because we will only get here if currentUser is a student object
-					backend.editStudentInfo((StudentProfile)backend.getCurrentUser());
+					// but this is ok because we will only get here if currentUser is a student
+					// object
+					backend.editStudentInfo((StudentProfile) backend.getCurrentUser());
 				}
-				
+
 				// see all scholarships and maybe apply
 				else if (userSelection == 2) {
 					Boolean quitBrowse = false;
 
 					while (!quitBrowse) {
-						// call printAllScholarships, we want basic info and no archived scholarships, yes to not-archived,
+						// call printAllScholarships, we want basic info and no archived scholarships,
+						// yes to not-archived,
 						// yes approved scholarships, no unapproved scholarships
 						backend.printAllScholarships(false, false, true, true, false);
 
@@ -104,30 +110,31 @@ public class Main {
 
 						System.out.print("Your choice: ");
 
-						// want to keep this separate from userSelection, so we don't accidentally exit the outer do-while loop or something
+						// want to keep this separate from userSelection, so we don't accidentally exit
+						// the outer do-while loop or something
 						int userAction = scnr.nextInt();
 						scnr.nextLine();
 
 						if (userAction == 1) {
 							quitBrowse = true;
-						}
-						else if (userAction == 2) {
-							
+						} else if (userAction == 2) {
+
 							int fileIndex;
 							Boolean validSelection = false;
 							do {
 								System.out.print("Please enter the file index of the scholarship you want to view: ");
 								fileIndex = scnr.nextInt();
 								scnr.nextLine();
-								
+
 								if (backend.getOneScholarshipByFileIndex(fileIndex) == null) {
-									System.out.println("The scholarship with file index " + fileIndex + " could not be found.");
+									System.out.println(
+											"The scholarship with file index " + fileIndex + " could not be found.");
 									System.out.println("Please enter a valid index.");
-								}
-								else {
+								} else {
 									// print the scholarship's information, in more detail than before
 									validSelection = true;
-									System.out.println(backend.getOneScholarshipByFileIndex(fileIndex).getAllInfoString());
+									System.out.println(
+											backend.getOneScholarshipByFileIndex(fileIndex).getAllInfoString());
 
 									System.out.println("\nPlease select an option:");
 									System.out.println("1 - go back");
@@ -139,19 +146,18 @@ public class Main {
 
 									if (userAction == 1) {
 										// do nothing?
-									}
-									else if (userAction == 2) {
+									} else if (userAction == 2) {
 										backend.applyToScholarship(fileIndex);
 									}
 								}
-								
+
 							} while (!validSelection);
 						}
-						
+
 					}
-					
+
 				}
-				//see applications in progress
+				// see applications in progress
 				else if (userSelection == 3) {
 					Boolean quit = false;
 					ArrayList<MatchRelationship> matchesFound = backend.getInProgressApplications();
@@ -174,25 +180,26 @@ public class Main {
 
 						if (userAction == 1) {
 							quit = true;
-						}
-						else if (userAction == 2) {
-							
+						} else if (userAction == 2) {
+
 							int fileIndex;
 							Boolean validSelection = false;
 							do {
-								System.out.print("Please enter the file index of the scholarship you want to view the application for: ");
+								System.out.print(
+										"Please enter the file index of the scholarship you want to view the application for: ");
 								fileIndex = scnr.nextInt();
 								scnr.nextLine();
-								
+
 								if (backend.getOneScholarshipByFileIndex(fileIndex) == null) {
-									System.out.println("The scholarship with file index " + fileIndex + " could not be found.");
+									System.out.println(
+											"The scholarship with file index " + fileIndex + " could not be found.");
 									System.out.println("Please enter a valid index.");
-								}
-								else {
+								} else {
 									// print the scholarship's information, in more detail than before
 									validSelection = true;
 									for (MatchRelationship match : matchesFound) {
-										if (match.getScholarshipName().equals(backend.getOneScholarshipByFileIndex(fileIndex).getName())){
+										if (match.getScholarshipName()
+												.equals(backend.getOneScholarshipByFileIndex(fileIndex).getName())) {
 											matchSelected = match;
 										}
 									}
@@ -218,22 +225,21 @@ public class Main {
 
 									if (userAction == 1) {
 										// do nothing?
-									}
-									else if (userAction == 2) {
+									} else if (userAction == 2) {
 										backend.editApplication(matchSelected);
 									}
 								}
-								
+
 							} while (!validSelection);
 						}
 
 					}
 				}
-				//get submitted applications
+				// get submitted applications
 				else if (userSelection == 4) {
 					backend.getSubmittedApplications();
 				}
-				//search for scholarships
+				// search for scholarships
 				else if (userSelection == 5) {
 					Boolean quitSearch = false;
 					Boolean exitResults;
@@ -266,24 +272,25 @@ public class Main {
 						System.out.print("Enter the value to search: ");
 						String searchValue = scnr.nextLine();
 
-						//uses search scholarship method to return search results
+						// uses search scholarship method to return search results
 						ArrayList<Scholarship> scholarshipsFound = backend.searchScholarships(searchIndex, searchValue);
 
 						exitResults = false;
 
-						//program will stay within search results until requested to exit or do new search
+						// program will stay within search results until requested to exit or do new
+						// search
 						while (!exitResults) {
 
-							//if no scholarships are found
+							// if no scholarships are found
 							if (scholarshipsFound.size() == 0) {
 								System.out.println("No scholarships found!");
 
 								System.out.println("What would you like to do:");
 								System.out.println("2 - Enter new search criteria");
 								System.out.println("3 - Exit search");
-								
+
 							}
-							//offers all options if scholarships are found
+							// offers all options if scholarships are found
 							else {
 								for (Scholarship schol : scholarshipsFound) {
 									System.out.println(schol.getBasicInfoString());
@@ -299,34 +306,36 @@ public class Main {
 
 							int userAction = scnr.nextInt();
 							scnr.nextLine();
-							
-							//quit search
+
+							// quit search
 							if (userAction == 3) {
 								exitResults = true;
 								quitSearch = true;
 							}
-							//start new search
+							// start new search
 							else if (userAction == 2) {
 								exitResults = true;
 							}
-							//look at scholarship
+							// look at scholarship
 							else if (userAction == 1) {
-								
+
 								int fileIndex;
 								Boolean validSelection = false;
 								do {
-									System.out.print("Please enter the file index of the scholarship you want to view: ");
+									System.out
+											.print("Please enter the file index of the scholarship you want to view: ");
 									fileIndex = scnr.nextInt();
 									scnr.nextLine();
-									
+
 									if (backend.getOneScholarshipByFileIndex(fileIndex) == null) {
-										System.out.println("The scholarship with file index " + fileIndex + " could not be found.");
+										System.out.println("The scholarship with file index " + fileIndex
+												+ " could not be found.");
 										System.out.println("Please enter a valid index.");
-									}
-									else {
+									} else {
 										// print the scholarship's information, in more detail than before
 										validSelection = true;
-										System.out.println(backend.getOneScholarshipByFileIndex(fileIndex).getAllInfoString());
+										System.out.println(
+												backend.getOneScholarshipByFileIndex(fileIndex).getAllInfoString());
 
 										System.out.println("\nPlease select an option:");
 										System.out.println("1 - go back");
@@ -338,42 +347,39 @@ public class Main {
 
 										if (userAction == 1) {
 											// do nothing?
-										}
-										else if (userAction == 2) {
+										} else if (userAction == 2) {
 											backend.applyToScholarship(fileIndex);
 										}
 									}
-									
+
 								} while (!validSelection);
 							}
 						}
 
-						
 					}
-					
+
 				}
 
-
-			} while(userSelection != 0);
+			} while (userSelection != 0);
 		}
 		// else if (backend.getUserType().compareTo("donor") == 0) {
 		else if (backend.getCurrentUser() instanceof DonorProfile) {
 			/*
-			- create and submit scholarship for review
-
-			*/
+			 * - create and submit scholarship for review
+			 * 
+			 */
 			do {
 				System.out.println("\nPlease enter a number to select which action you want to do:");
 
 				System.out.println("1 - See your posted scholarships");
 				System.out.println("2 - Enter a new scholarship");
 				System.out.println("0 - EXIT");
-				
+
 				System.out.print("Your selection: ");
 				userSelection = scnr.nextInt();
 
 				if (userSelection == 1) {
-					for (Scholarship scholarship : ((DonorProfile)backend.getCurrentUser()).getScholarships()) {
+					for (Scholarship scholarship : ((DonorProfile) backend.getCurrentUser()).getScholarships()) {
 						System.out.println(scholarship.getBasicInfoString());
 					}
 				}
@@ -385,7 +391,7 @@ public class Main {
 		}
 		// else if (backend.getUserType().compareTo("staff") == 0) {
 		else if (backend.getCurrentUser() instanceof StaffProfile) {
-			/* 
+			/*
 			 * -view all scholarships
 			 * -archive scholarships
 			 */
@@ -398,73 +404,72 @@ public class Main {
 			 * -view archived/awarded scholarships
 			 * 
 			 */
-			do{
-				//querys user about what they would like to do
+			do {
+				// querys user about what they would like to do
 				System.out.println("\nPlease enter a number to select which action you want to do:");
 
 				System.out.println("1 - View awarded scholarships");
 				System.out.println("0 - EXIT");
-				
+
 				System.out.print("Your selection: ");
 				userSelection = scnr.nextInt();
 
-				//runs through viewing an awarded scholarship
-				if(userSelection == 1){
-					//print out a list of all awarded scholarships that have been awarded
-					backend.printArchivedScholarships(false, true, true, false);						
+				// runs through viewing an awarded scholarship
+				if (userSelection == 1) {
+					// print out a list of all awarded scholarships that have been awarded
+					backend.printArchivedScholarships(false, true, true, false);
 					boolean quitBrowse = true;
-					while(quitBrowse){
-						//gives the option to view a scholarship more indepth
+					while (quitBrowse) {
+						// gives the option to view a scholarship more indepth
 						System.out.println("What would you like to do:");
 						System.out.println("1 - Go back");
 						System.out.println("2 - view one scholarship in more detail");
 
 						System.out.print("Your choice: ");
 
-						//need new variable for new loop
+						// need new variable for new loop
 						int userAction = scnr.nextInt();
 						scnr.nextLine();
 
-						//If the user wants to quir quitBrowse needs to be false
-						if(userAction == 1){
+						// If the user wants to quir quitBrowse needs to be false
+						if (userAction == 1) {
 							quitBrowse = false;
-						}
-						else if (userAction == 2) {
-							
+						} else if (userAction == 2) {
+
 							int fileIndex;
 							Boolean validSelection = false;
 							do {
-								//Grabs the index so that that scholarship can be printed
+								// Grabs the index so that that scholarship can be printed
 								System.out.print("Please enter the file index of the scholarship you want to view: ");
 								fileIndex = scnr.nextInt();
 								scnr.nextLine();
-								//if the user does not select a valid scholarship reinquires user
+								// if the user does not select a valid scholarship reinquires user
 								if (backend.getOneScholarshipByFileIndex(fileIndex) == null) {
-									System.out.println("The scholarship with file index " + fileIndex + " could not be found.");
+									System.out.println(
+											"The scholarship with file index " + fileIndex + " could not be found.");
 									System.out.println("Please enter a valid index.");
-								}
-								else {
+								} else {
 									// print the scholarship's information, in more detail
-									System.out.println(backend.getOneScholarshipByFileIndex(fileIndex).getAllInfoString());
+									System.out.println(
+											backend.getOneScholarshipByFileIndex(fileIndex).getAllInfoString());
 
 									System.out.println("\nEnter 1 to go back: ");
 									userAction = scnr.nextInt();
 									scnr.nextLine();
 
 									if (userAction == 1) {
-										//if the answer is valid it is true and restarts outer loop
+										// if the answer is valid it is true and restarts outer loop
 										validSelection = true;
 									}
 								}
-								
+
 							} while (!validSelection);
 						}
 
 					}
 				}
 
-			}while(userSelection != 0);
-
+			} while (userSelection != 0);
 
 		}
 		// else if (backend.getUserType().compareTo("admin") == 0) {
@@ -494,9 +499,9 @@ public class Main {
 				if (userSelection == 1) {
 					System.out.println("Unapproved scholarships:");
 
-					// call printAllScholarships, we want basic info and only unapproved scholarships
+					// call printAllScholarships, we want basic info and only unapproved
+					// scholarships
 					// TODO: would we want archived scholarships here?
-					
 
 					// prompt them to approve one scholarship
 
@@ -510,15 +515,15 @@ public class Main {
 
 						System.out.print("Your choice: ");
 
-						// want to keep this separate from userSelection, so we don't accidentally exit the outer do-while loop or something
+						// want to keep this separate from userSelection, so we don't accidentally exit
+						// the outer do-while loop or something
 						int userAction = scnr.nextInt();
 						scnr.nextLine();
 
 						if (userAction == 1) {
 							quit = true;
-						}
-						else if (userAction == 2) {
-							
+						} else if (userAction == 2) {
+
 							int fileIndex;
 							Boolean validSelection = false;
 
@@ -526,15 +531,16 @@ public class Main {
 								System.out.print("Please enter the file index of the scholarship you want to view: ");
 								fileIndex = scnr.nextInt();
 								scnr.nextLine();
-								
+
 								if (backend.getOneScholarshipByFileIndex(fileIndex) == null) {
-									System.out.println("The scholarship with file index " + fileIndex + " could not be found.");
+									System.out.println(
+											"The scholarship with file index " + fileIndex + " could not be found.");
 									System.out.println("Please enter a valid index.");
-								}
-								else {
+								} else {
 									// print the scholarship's information, in more detail than before
 									validSelection = true;
-									System.out.println(backend.getOneScholarshipByFileIndex(fileIndex).getAllInfoString());
+									System.out.println(
+											backend.getOneScholarshipByFileIndex(fileIndex).getAllInfoString());
 
 									System.out.println("\nPlease select an option:");
 									System.out.println("1 - Return to list");
@@ -547,15 +553,15 @@ public class Main {
 
 									if (userAction == 1) {
 										// do nothing?
-									}
-									else if (userAction == 2) {
+									} else if (userAction == 2) {
 										backend.getOneScholarshipByFileIndex(fileIndex).setApproved(true);
 										backend.updateScholarshipFile(backend.getOneScholarshipByFileIndex(fileIndex));
 
-										System.out.println(backend.getOneScholarshipByFileIndex(fileIndex).getName() + " is now approved!");
-									}
-									else if (userAction == 3) {
-										System.out.println("Are you sure you'd like to delete this scholarship from the system? (y/n)");
+										System.out.println(backend.getOneScholarshipByFileIndex(fileIndex).getName()
+												+ " is now approved!");
+									} else if (userAction == 3) {
+										System.out.println(
+												"Are you sure you'd like to delete this scholarship from the system? (y/n)");
 
 										String donorChoice = scnr.nextLine();
 
@@ -563,22 +569,22 @@ public class Main {
 											File file = new File("scholarships/sholarship" + fileIndex);
 											file.delete();
 
-											int index = backend.getAllScholarships().indexOf(backend.getOneScholarshipByFileIndex(fileIndex));
+											int index = backend.getAllScholarships()
+													.indexOf(backend.getOneScholarshipByFileIndex(fileIndex));
 											backend.getAllScholarships().remove(index);
 
 											System.out.println("Scholarship deleted.");
-										}
-										else {
+										} else {
 											System.out.println("Action dissmissed.");
 										}
 
 									}
 								}
-								
+
 							} while (!validSelection);
 						}
 
-					} while(!quit);
+					} while (!quit);
 				}
 
 				// view all students
@@ -586,7 +592,8 @@ public class Main {
 					Boolean quitBrowse = false;
 
 					while (!quitBrowse) {
-						// call printAllScholarships, we want basic info and no archived scholarships, yes to not-archived,
+						// call printAllScholarships, we want basic info and no archived scholarships,
+						// yes to not-archived,
 						// yes approved scholarships, no unapproved scholarships
 						for (StudentProfile student : backend.getAllStudents()) {
 							System.out.println(student.getBasicDetailsString());
@@ -599,38 +606,39 @@ public class Main {
 
 						System.out.print("Your choice: ");
 
-						// want to keep this separate from userSelection, so we don't accidentally exit the outer do-while loop or something
+						// want to keep this separate from userSelection, so we don't accidentally exit
+						// the outer do-while loop or something
 						int userAction = scnr.nextInt();
 						scnr.nextLine();
 
 						if (userAction == 1) {
 							quitBrowse = true;
-						}
-						else if (userAction == 2) {
-							
+						} else if (userAction == 2) {
+
 							int fileIndex;
 							Boolean validSelection = false;
 							do {
 								System.out.print("Please enter the index of the student you want to view: ");
 								fileIndex = scnr.nextInt();
 								scnr.nextLine();
-								
+
 								if (backend.getOneStudentByFileIndex(fileIndex) == null) {
-									System.out.println("The student with file index " + fileIndex + " could not be found.");
+									System.out.println(
+											"The student with file index " + fileIndex + " could not be found.");
 									System.out.println("Please enter a valid index.");
-								}
-								else {
+								} else {
 									// print the scholarship's information, in more detail than before
 									validSelection = true;
-									System.out.println(backend.getOneStudentByFileIndex(fileIndex).getAllDetailsString());
+									System.out
+											.println(backend.getOneStudentByFileIndex(fileIndex).getAllDetailsString());
 
 									System.out.println("\nPlease press enter when you'd return to the menu");
 									scnr.nextLine();
 								}
-								
+
 							} while (!validSelection);
 						}
-						
+
 					}
 				}
 
@@ -654,24 +662,25 @@ public class Main {
 						System.out.print("Enter the value to search: ");
 						String searchValue = scnr.nextLine();
 
-						//uses search scholarship method to return search results
+						// uses search scholarship method to return search results
 						ArrayList<StudentProfile> studentsFound = backend.searchStudents(searchIndex, searchValue);
 
 						exitResults = false;
 
-						//program will stay within search results until requested to exit or do new search
+						// program will stay within search results until requested to exit or do new
+						// search
 						while (!exitResults) {
 
-							//if no scholarships are found
+							// if no scholarships are found
 							if (studentsFound.size() == 0) {
 								System.out.println("No students found!");
 
 								System.out.println("What would you like to do:");
 								System.out.println("2 - Enter new search criteria");
 								System.out.println("3 - Exit search");
-								
+
 							}
-							//offers all options if scholarships are found
+							// offers all options if scholarships are found
 							else {
 								for (StudentProfile student : studentsFound) {
 									System.out.println(student.getBasicDetailsString());
@@ -687,97 +696,97 @@ public class Main {
 
 							int userAction = scnr.nextInt();
 							scnr.nextLine();
-							
-							//quit search
+
+							// quit search
 							if (userAction == 3) {
 								exitResults = true;
 								quitSearch = true;
 							}
-							//start new search
+							// start new search
 							else if (userAction == 2) {
 								exitResults = true;
 							}
-							//look at student
+							// look at student
 							else if (userAction == 1) {
-								
+
 								int fileIndex;
 								Boolean validSelection = false;
 								do {
 									System.out.print("Please enter the index of the student you want to view: ");
 									fileIndex = scnr.nextInt();
 									scnr.nextLine();
-									
+
 									if (backend.getOneStudentByFileIndex(fileIndex) == null) {
-										System.out.println("The student with file index " + fileIndex + " could not be found.");
+										System.out.println(
+												"The student with file index " + fileIndex + " could not be found.");
 										System.out.println("Please enter a valid index.");
-									}
-									else {
+									} else {
 										// print the scholarship's information, in more detail than before
 										validSelection = true;
-										System.out.println(backend.getOneStudentByFileIndex(fileIndex).getAllDetailsString());
+										System.out.println(
+												backend.getOneStudentByFileIndex(fileIndex).getAllDetailsString());
 
 										System.out.println("\nPlease press enter when you'd return to the menu");
 										scnr.nextLine();
 									}
-									
+
 								} while (!validSelection);
 							}
 						}
 
-						
 					}
 				}
 
-				//Print all scholarships not archived
-				else if(userSelection == 4){
+				// Print all scholarships not archived
+				else if (userSelection == 4) {
 
-					backend.printAllScholarships(false, false, true, true, false);						
+					backend.printAllScholarships(false, false, true, true, false);
 					boolean keepGoing = true;
 
 					do {
-						//gives the option to view a scholarship more indepth
+						// gives the option to view a scholarship more indepth
 						System.out.println("What would you like to do:");
 						System.out.println("1 - Go back");
 						System.out.println("2 - view one scholarship in more detail");
 
 						System.out.print("Your choice: ");
 
-						//need new variable for new loop
+						// need new variable for new loop
 						int userAction = scnr.nextInt();
 						scnr.nextLine();
 
-						//If the user wants to quit, keepGoing needs to be false
+						// If the user wants to quit, keepGoing needs to be false
 						if (userAction == 1) {
 							keepGoing = false;
-						}
-						else if (userAction == 2) {
-							
+						} else if (userAction == 2) {
+
 							int fileIndex;
 							Boolean validSelection = false;
 							do {
-								//Grabs the index so that that scholarship can be printed
+								// Grabs the index so that that scholarship can be printed
 								System.out.print("Please enter the file index of the scholarship you want to view: ");
 								fileIndex = scnr.nextInt();
 								scnr.nextLine();
-								//if the user does not select a valid scholarship reinquires user
+								// if the user does not select a valid scholarship reinquires user
 								if (backend.getOneScholarshipByFileIndex(fileIndex) == null) {
-									System.out.println("The scholarship with file index " + fileIndex + " could not be found.");
+									System.out.println(
+											"The scholarship with file index " + fileIndex + " could not be found.");
 									System.out.println("Please enter a valid index.");
-								}
-								else {
+								} else {
 									// print the scholarship's information, in more detail
-									System.out.println(backend.getOneScholarshipByFileIndex(fileIndex).getAllInfoString());
+									System.out.println(
+											backend.getOneScholarshipByFileIndex(fileIndex).getAllInfoString());
 
 									System.out.println("\nEnter 1 to go back: ");
 									userAction = scnr.nextInt();
 									scnr.nextLine();
 
 									if (userAction == 1) {
-										//if the answer is valid it is true and restarts outer loop
+										// if the answer is valid it is true and restarts outer loop
 										validSelection = true;
 									}
 								}
-								
+
 							} while (!validSelection);
 						}
 
@@ -791,49 +800,49 @@ public class Main {
 					}
 				}
 
-				//award scholarship
-				else if(userSelection == 6){
+				// award scholarship
+				else if (userSelection == 6) {
 					boolean quitBrowse = true;
 					int fileIndex;
-					while(quitBrowse){
+					while (quitBrowse) {
 						// we want only not-archived and yes approved scholarships for this
-						backend.printAllScholarships(false, false, true, true, false);			
-						//Grabs the index so that that scholarship can be printed
+						backend.printAllScholarships(false, false, true, true, false);
+						// Grabs the index so that that scholarship can be printed
 						System.out.print("Please enter the file index of the scholarship you want to view: ");
 						fileIndex = scnr.nextInt();
 						scnr.nextLine();
-						//if the user does not select a valid scholarship reinquires user to select a valid scholarship
+						// if the user does not select a valid scholarship reinquires user to select a
+						// valid scholarship
 						if (backend.getOneScholarshipByFileIndex(fileIndex) == null) {
 							System.out.println("The scholarship with file index " + fileIndex + " could not be found.");
 							System.out.println("Please enter a valid index.");
-						}
-						else {
-						int userAction = 7;
-							do{
-								//TODO Implement option 3 and fix 2 applicants printing
-							System.out.println("What would you like to do?");
-							System.out.println("1- view application");
-							System.out.println("2- list applicants");
-							//System.out.println("3- list applications THIS HAS NOT BEEN DONE YET NEEDS TO BE IMPLEMENTED");
-							System.out.println("0- EXIT");
+						} else {
+							int userAction = 7;
+							do {
+								// TODO Implement option 3 and fix 2 applicants printing
+								System.out.println("What would you like to do?");
+								System.out.println("1- view application");
+								System.out.println("2- list applicants");
+								// System.out.println("3- list applications THIS HAS NOT BEEN DONE YET NEEDS TO
+								// BE IMPLEMENTED");
+								System.out.println("0- EXIT");
 
-							
-							userAction = scnr.nextInt();
-							scnr.nextLine();
-								if(userAction == 1){
-									System.out.println(backend.getOneScholarshipByFileIndex(fileIndex).getApplication());
-								}
-								else if(userAction == 2){
-									//As of now prints out list of names and then student profiles 
-									//maybe take out names and just print profiles?
-									//TODO check over this pls
-									//MatchRelationship match = null;
+								userAction = scnr.nextInt();
+								scnr.nextLine();
+								if (userAction == 1) {
+									System.out
+											.println(backend.getOneScholarshipByFileIndex(fileIndex).getApplication());
+								} else if (userAction == 2) {
+									// As of now prints out list of names and then student profiles
+									// maybe take out names and just print profiles?
+									// TODO check over this pls
+									// MatchRelationship match = null;
 									Scholarship scholarship = backend.getOneScholarshipByFileIndex(fileIndex);
 									scholarship.printApplicants();
-									//TODO: print applications 
-									Integer selection =9; 
+									// TODO: print applications
+									Integer selection = 9;
 
-									while(selection !=0 ){
+									while (selection != 0) {
 										System.out.println("What would you like to do?");
 										System.out.println("1- Select a recipient");
 										System.out.println("2- View recipient");
@@ -842,56 +851,49 @@ public class Main {
 										selection = scnr.nextInt();
 										scnr.nextLine();
 
-										if(selection ==1 ){
+										if (selection == 1) {
 											StudentProfile recipient = null;
-											//continues to ask until valid name is inputed
-											while(recipient == null){
+											// continues to ask until valid name is inputed
+											while (recipient == null) {
 												System.out.println("Enter recipient name (First Last): ");
 												String searchValue = scnr.nextLine();
-												//if we remove the names then we should set recipent by ID
-												//Integer searchValue = scnr.nextInt();
-												//if(student.getID() == searchValue)
-												//searches for students name that was inputed
+												// if we remove the names then we should set recipent by ID
+												// Integer searchValue = scnr.nextInt();
+												// if(student.getID() == searchValue)
+												// searches for students name that was inputed
 												for (StudentProfile student : backend.getAllStudents()) {
-													if (student.getName().compareTo(searchValue)==0) {
+													if (student.getName().compareTo(searchValue) == 0) {
 														recipient = student;
 													}
 												}
-												if(recipient != null){
-													backend.AwardScholarship(recipient,backend.getOneScholarshipByFileIndex(fileIndex));
-												}
-												else{
+												if (recipient != null) {
+													backend.AwardScholarship(recipient,
+															backend.getOneScholarshipByFileIndex(fileIndex));
+												} else {
 													System.out.println("Student not found please enter another name");
 												}
 											}
-										}
-										else if(selection == 2){
+										} else if (selection == 2) {
 											StudentProfile recipient = scholarship.getRecipient();
 											System.out.println(recipient.getName());
 											System.out.println(scholarship.getRecipient());
 										}
 
 									}
-								}
-								else if(userAction == 0){
+								} else if (userAction == 0) {
 									quitBrowse = false;
 								}
 
-							}while(userAction!=0);
+							} while (userAction != 0);
 						}
 					}
 				}
-		
 
-
-			} while(userSelection != 0);
-		}
-		else {
+			} while (userSelection != 0);
+		} else {
 			// should never get here
 			System.out.println("Invalid user type in userOptions");
 		}
-		
-		
 
 	}
 
@@ -910,10 +912,11 @@ public class Main {
 			System.out.println("4 - test updateDonorProfileFile()");
 			System.out.println("5 - print all of one thing, can customize");
 			System.out.println("6 - test storeNewDonorProfile()");
-			System.out.println("7 - (**OUTDATED, use oneUserAction() method) login as an admin and then approve 1 preselected scholarship");
+			System.out.println(
+					"7 - (**OUTDATED, use oneUserAction() method) login as an admin and then approve 1 preselected scholarship");
 			System.out.println("8 - Edit student profile manually");
 			System.out.println("9 - Test printOneScholarship and printAllScholarships");
-			System.out.println("10 - test getScholarshipFromInput");			
+			System.out.println("10 - test getScholarshipFromInput");
 			System.out.println("11 - Add new user to the system");
 			System.out.println("12 - testing a student deleting themselves");
 
@@ -923,7 +926,6 @@ public class Main {
 
 			userSelection = scnr.nextInt();
 
-		
 			if (userSelection == 0) {
 				System.out.println("Exiting, thank you for using our Scholarship Management System today!");
 			}
@@ -942,11 +944,18 @@ public class Main {
 				// print the backend object to make sure everything worked ok
 				// System.out.println(backend.toString());
 				for (Scholarship scholarshipObj : backend.getAllScholarships()) {
-					System.out.print(scholarshipObj.getName() + ", due date: " + scholarshipObj.getDateDueString());// + ", due 5+ years ago: " + scholarshipObj.due5PlusYearsAgo());    
-					if(scholarshipObj.due5PlusYearsAgo() == true){
+					System.out.print(scholarshipObj.getName() + ", due date: " + scholarshipObj.getDateDueString());// +
+																													// ",
+																													// due
+																													// 5+
+																													// years
+																													// ago:
+																													// "
+																													// +
+																													// scholarshipObj.due5PlusYearsAgo());
+					if (scholarshipObj.due5PlusYearsAgo() == true) {
 						System.out.println(" -> Archived");
-					}
-					else{
+					} else {
 						System.out.println(" -> Available");
 					}
 				}
@@ -980,13 +989,15 @@ public class Main {
 
 				backend.updateDonorProfileFile(donorToUpdate);
 
-				System.out.println("Changed the details in the donor file, please check that it looks good and then enter anything in the console so we can restore the file to its original state.");
+				System.out.println(
+						"Changed the details in the donor file, please check that it looks good and then enter anything in the console so we can restore the file to its original state.");
 				System.out.println("Waiting for you to type anything: ");
 				scnr.next();
 
 				System.out.println("Reverting the file back to its original state");
-				
-				// change the properties in the DonorProfile object, **back to what they were before
+
+				// change the properties in the DonorProfile object, **back to what they were
+				// before
 				donorToUpdate.setFirstName(origFirstName);
 				donorToUpdate.setUsername(origUsername);
 				donorToUpdate.setOneSecurityQAnswer(1, origSeqQAnswer1);
@@ -1003,14 +1014,14 @@ public class Main {
 				// for admins
 				// System.out.println("all admin names: ");
 				// for (AdminProfile admin : backend.getAllAdmins()) {
-				// 	System.out.println("'" + admin.getName() + "'");
+				// System.out.println("'" + admin.getName() + "'");
 				// }
 
 				// for donors
 				// System.out.println("all donors: " + backend.getAllDonors());
 				// System.out.println("all donor names: ");
 				// for (DonorProfile donor : backend.getAllDonors()) {
-				// 	System.out.println("'" + donor.getName() + "'");
+				// System.out.println("'" + donor.getName() + "'");
 				// }
 
 				// for students
@@ -1022,34 +1033,36 @@ public class Main {
 				// for staff
 				// System.out.println("all staff names: ");
 				// for (StaffProfile staff : backend.getAllStaff()) {
-				// 	System.out.println("'" + staff.getName() + "'");
+				// System.out.println("'" + staff.getName() + "'");
 				// }
 
 				// for fund stewards
 				// System.out.println("all fund steward names: ");
 				// for (FundStewardProfile fundsteward : backend.getAllFundstewards()) {
-				//	System.out.println("'" + fundsteward.getName() + "'");
+				// System.out.println("'" + fundsteward.getName() + "'");
 				// }
 
 				// for scholarships
 				// System.out.println("all scholarships (detailed): ");
 				// for (Scholarship scholarship : backend.getAllScholarships()) {
-				// 	System.out.println(scholarship.getAllInfoString());
-				// 	System.out.println();
+				// System.out.println(scholarship.getAllInfoString());
+				// System.out.println();
 				// }
 			}
-			
+
 			else if (userSelection == 6) {
 				BackendSystem backend = new BackendSystem();
 
 				// TODO: just using the first one for now, not exactly sure
-				// pick one donor and make a duplicate folder with the files for that donor to test this
-				//DonorProfile donorToCopy = backend.getAllDonors().get(0);
+				// pick one donor and make a duplicate folder with the files for that donor to
+				// test this
+				// DonorProfile donorToCopy = backend.getAllDonors().get(0);
 				DonorProfile newDonor = backend.getDonorFromInput();
 
-				//backend.storeNewDonorProfile(donorToCopy);
+				// backend.storeNewDonorProfile(donorToCopy);
 				backend.storeNewDonorProfile(newDonor);
-				System.out.println("Made new folder and files for that donor, the folder name should be /donors/donor" + (backend.findNextFileIndex("donor") - 1));
+				System.out.println("Made new folder and files for that donor, the folder name should be /donors/donor"
+						+ (backend.findNextFileIndex("donor") - 1));
 				System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
 			}
 
@@ -1057,26 +1070,29 @@ public class Main {
 			else if (userSelection == 7) {
 				BackendSystem backend = new BackendSystem();
 
-				StudentProfile newStudent = new StudentProfile("Jess", "Mess", 12345, "user", "pass", "IE", true, "SFWEE", true,
-				3.6, true, true, "Freshman", 5, 2025, "Female", true, false, 12, false, "I love school!", "Smith",
-				"The eagles", "New York");
+				StudentProfile newStudent = new StudentProfile("Jess", "Mess", 12345, "user", "pass", "IE", true,
+						"SFWEE", true,
+						3.6, true, true, "Freshman", 5, 2025, "Female", true, false, 12, false, "I love school!",
+						"Smith",
+						"The eagles", "New York");
 
 				backend.setCurrentUser(newStudent);
 
 				System.out.println(backend.getCurrentUser().toString());
-				
+
 			}
 
 			else if (userSelection == 8) {
 				BackendSystem backend = new BackendSystem();
 
-				StudentProfile newStudent = new StudentProfile("Jess", "Mess", 12345, "user", "pass", "IE", true, "SFWEE", true,
-				3.6, true, true, "Freshman", 5, 2025, "Female", true, false, 12, false, "I love school!", "Smith",
-				"The eagles", "New York");
-				
+				StudentProfile newStudent = new StudentProfile("Jess", "Mess", 12345, "user", "pass", "IE", true,
+						"SFWEE", true,
+						3.6, true, true, "Freshman", 5, 2025, "Female", true, false, 12, false, "I love school!",
+						"Smith",
+						"The eagles", "New York");
+
 				backend.login();
 
-				
 			}
 
 			// test print scholarships
@@ -1089,10 +1105,12 @@ public class Main {
 				System.out.println("\n\nTesting the printAllScholarships method (basic info, include everything):");
 				backend.printAllScholarships(false, true, true, true, true);
 
-				System.out.println("\n\nTesting the printAllScholarships method (basic info, do not include archived, include only *unapproved and non-archived):");
+				System.out.println(
+						"\n\nTesting the printAllScholarships method (basic info, do not include archived, include only *unapproved and non-archived):");
 				backend.printAllScholarships(false, false, true, false, true);
 
-				System.out.println("\n\nTesting the printAllScholarships method (**detailed info, include only not archived, and yes approved):");
+				System.out.println(
+						"\n\nTesting the printAllScholarships method (**detailed info, include only not archived, and yes approved):");
 				backend.printAllScholarships(true, false, true, true, false);
 			}
 
@@ -1108,7 +1126,7 @@ public class Main {
 				System.out.println(infoString);
 			}
 
-			else if (userSelection == 11){
+			else if (userSelection == 11) {
 				BackendSystem backend = new BackendSystem();
 				String userType;
 
@@ -1116,58 +1134,70 @@ public class Main {
 				scnr.nextLine();
 				userType = scnr.nextLine();
 
-				/*if (!(userType.equalsIgnoreCase("student") || userType.equalsIgnoreCase("admin")
-						|| userType.equalsIgnoreCase("staff")
-						|| userType.equalsIgnoreCase("donor") || userType.equalsIgnoreCase("fundsteward"))) {
-					System.out.println(
-							"That user type was not recognized. Accepted user types are: "
-							+ "student, admin, staff, donor, and fundsteward (capitalization doesn't matter).\n");
-					continue;
-				}*/
+				/*
+				 * if (!(userType.equalsIgnoreCase("student") ||
+				 * userType.equalsIgnoreCase("admin")
+				 * || userType.equalsIgnoreCase("staff")
+				 * || userType.equalsIgnoreCase("donor") ||
+				 * userType.equalsIgnoreCase("fundsteward"))) {
+				 * System.out.println(
+				 * "That user type was not recognized. Accepted user types are: "
+				 * +
+				 * "student, admin, staff, donor, and fundsteward (capitalization doesn't matter).\n"
+				 * );
+				 * continue;
+				 * }
+				 */
 
-				if(userType.equalsIgnoreCase("student")){
+				if (userType.equalsIgnoreCase("student")) {
 					StudentProfile newStudent = new StudentProfile();
 					newStudent = backend.getStudentFromInput();
 					backend.setCurrentUser(newStudent);
 					System.out.println(((StudentProfile) backend.getCurrentUser()).toString());
 					backend.storeNewStudentProfile(newStudent);
-					System.out.println("Made new folder and files for that student, the folder name should be /students/student" + (backend.findNextFileIndex("student") - 1));
+					System.out.println(
+							"Made new folder and files for that student, the folder name should be /students/student"
+									+ (backend.findNextFileIndex("student") - 1));
 					System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
-				}
-				else if(userType.equalsIgnoreCase("admin")){
+				} else if (userType.equalsIgnoreCase("admin")) {
 					AdminProfile newAdmin = new AdminProfile();
 					newAdmin = backend.getAdminFromInput();
 					backend.setCurrentUser(newAdmin);
 					System.out.println(((AdminProfile) backend.getCurrentUser()).toString());
 					backend.storeNewAdminProfileFile(newAdmin);
-					System.out.println("Made new folder and files for that administrator, the folder name should be /administrators/admin" + (backend.findNextFileIndex("admin") - 1));
+					System.out.println(
+							"Made new folder and files for that administrator, the folder name should be /administrators/admin"
+									+ (backend.findNextFileIndex("admin") - 1));
 					System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
-				}
-				else if(userType.equalsIgnoreCase("staff")){
+				} else if (userType.equalsIgnoreCase("staff")) {
 					StaffProfile newStaff = new StaffProfile();
 					newStaff = backend.getStaffFromInput();
 					backend.setCurrentUser(newStaff);
 					System.out.println(((StaffProfile) backend.getCurrentUser()).toString());
 					backend.storeNewStaffProfile(newStaff);
-					System.out.println("Made new folder and files for that staff, the folder name should be /engr staff/staff" + (backend.findNextFileIndex("staff") - 1));
+					System.out.println(
+							"Made new folder and files for that staff, the folder name should be /engr staff/staff"
+									+ (backend.findNextFileIndex("staff") - 1));
 					System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
-				}
-				else if(userType.equalsIgnoreCase("fundsteward")){
+				} else if (userType.equalsIgnoreCase("fundsteward")) {
 					FundStewardProfile newFundsteward = new FundStewardProfile();
 					newFundsteward = backend.getFundStewardFromInput();
 					backend.setCurrentUser(newFundsteward);
 					System.out.println(((FundStewardProfile) backend.getCurrentUser()).toString());
 					backend.storeNewFundStewardProfile(newFundsteward);
-					System.out.println("Made new folder and files for that fundsteward, the folder name should be /fundstewards/fundsteward" + (backend.findNextFileIndex("fundsteward") - 1));
+					System.out.println(
+							"Made new folder and files for that fundsteward, the folder name should be /fundstewards/fundsteward"
+									+ (backend.findNextFileIndex("fundsteward") - 1));
 					System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
-				}
-				else if(userType.equalsIgnoreCase("donor")){
+				} else if (userType.equalsIgnoreCase("donor")) {
 					DonorProfile newDonor = new DonorProfile();
 					newDonor = backend.getDonorFromInput();
 					backend.setCurrentUser(newDonor);
 					System.out.println(((DonorProfile) backend.getCurrentUser()).toString());
 					backend.storeNewDonorProfile(newDonor);
-					System.out.println("Made new folder and files for that donor, the folder name should be /donors/donor" + (backend.findNextFileIndex("donor") - 1));
+					System.out
+							.println("Made new folder and files for that donor, the folder name should be /donors/donor"
+									+ (backend.findNextFileIndex("donor") - 1));
 					System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
 				}
 
@@ -1175,11 +1205,11 @@ public class Main {
 
 			// testing a student deleting themselves
 			else if (userSelection == 12) {
-				BackendSystem backend = new BackendSystem();	
+				BackendSystem backend = new BackendSystem();
 				System.out.println("Testing a student deleting themselves");
 				System.out.println("Please login as a student:");
 				backend.login();
-				
+
 				backend.deleteStudentProfile((StudentProfile) backend.getCurrentUser());
 				System.out.println("done");
 			}
