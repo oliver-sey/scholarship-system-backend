@@ -1248,7 +1248,6 @@ public class BackendSystem {
 			if (failedPWAttempts == 0) {
 				System.out.print("Please enter your user type (as one word, i.e. 'student', 'admin', 'fundsteward'). ");
 				System.out.print("Please enter your user type: ");
-				Main.scnr.nextLine();
 				userType = Main.scnr.nextLine();
 
 				// check for valid user type
@@ -2532,6 +2531,8 @@ public class BackendSystem {
 			else {
 				System.out.println("Invalid input. Please enter 1 or 2.");
 			}
+
+			updateMatchFile(match);
 		}
 	}
 
