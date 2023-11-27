@@ -18,11 +18,12 @@ public class Main {
 
 		//runDifferentTests();
 
+		// **only close the Scanner at the very end, after everything is done
+		scnr.close();
 	}
 
 	// prompt the user to log in and answer security questions, and then let them perform one action at a time, until they want to quit 
 	public static void userRunSystem(BackendSystem backend) throws Exception {  //used to be IOException FYI
-		Scanner scnr = new Scanner(System.in);
 		int userChoice;
 		System.out.println("Welcome ot the UASAMS backend subsystem! Please select an option: \n1- Returning User\n2- New User");
 		userChoice = scnr.nextInt();
@@ -40,14 +41,12 @@ public class Main {
 				oneUserAction(backend);
 
 				// see if they want to quit
-				//Scanner scnr = new Scanner(System.in);
 				System.out.print("Do you want to fully quit the program? (type y/n): ");
 				userInput = scnr.next();
 			// while the first letter of the user's input is either y or Y, keep going
 			} while (userInput.toLowerCase().charAt(0) != 'y');
 		}
 		// else just quit
-		scnr.close();
 	}
 
 
@@ -56,7 +55,6 @@ public class Main {
 	 * prompts the user for which action they want to perform based on their profile type
 	 */
 	public static void oneUserAction(BackendSystem backend) throws IOException {
-		//Scanner scnr = new Scanner(System.in);
 		int userSelection = -1;
 		
 		// if (backend.getUserType().compareTo("student") == 0) {
@@ -701,7 +699,6 @@ public class Main {
 	}
 
 	public static void runDifferentTests() throws Exception {
-		//Scanner scnr = new Scanner(System.in);
 		System.out.println("Hello! Welcome to the backend for our Scholarship Management System.");
 
 		// the number the user enters
@@ -982,8 +979,6 @@ public class Main {
 				System.out.println("Invalid selection, please try again");
 			}
 		} while (userSelection != 0);
-
-		scnr.close();
 	}
 
 	public static void check5YearsPastDue() throws IOException {
@@ -1009,6 +1004,7 @@ public class Main {
 		String userType;
 		boolean keepGoing = false;
 		do {
+			scnr.nextLine();
 			System.out.println("Please enter your usertype. (Enter as one word, i.e. student, fundsteward, etc.)");
 			//scnr.nextLine();
 			userType = scnr.nextLine();
@@ -1076,7 +1072,11 @@ public class Main {
 				System.out.println("That user type was not recognized, please try again.");
 				keepGoing = true;
 			}
-			System.out.println("New user profile created! Now please login using this account.");
+
+			// if the user successfully created an account, print this success message
+			if (!keepGoing) {
+				System.out.println("New user profile created! Now please login using this account.");
+			}
 		// keepGoing is false by default, but is set to true if the user type is invalid
 		} while (keepGoing);
 	}

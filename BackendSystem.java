@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
-import java.util.Scanner;
 
 public class BackendSystem {
 
@@ -1306,9 +1305,8 @@ public class BackendSystem {
 			// the first time, after that just ask them
 			// for their password
 			if (failedPWAttempts == 0) {
-				Main.scnr.nextLine();
-				System.out.print("Please enter your user type (as one word, i.e. 'student', 'admin', 'fundsteward'). ");
-				System.out.print("Please enter your user type: ");
+				// Main.scnr.nextLine();
+				System.out.print("Please enter your user type (as one word, i.e. 'student', 'admin', 'fundsteward'): ");
 				userType = Main.scnr.nextLine();
 
 				// check for valid user type
@@ -1797,10 +1795,8 @@ public class BackendSystem {
 			System.out.println("18: Number of credits: " + student.getCurNumCredits());
 			System.out.println("19: Personal statement: " + student.getPersonalStatement());
 
-			Scanner scnr = new Scanner(System.in);
-
 			System.out.print("\nEnter the number of the profile attribute you would like to change, or -1 to exit: ");
-			choice = scnr.nextInt();
+			choice = Main.scnr.nextInt();
 
 			// -1, the user wants to exit
 			if (choice == -1) {
@@ -1810,57 +1806,57 @@ public class BackendSystem {
 
 			// Choice 1: first name (String)
 			else if (choice == 1) {
-				scnr.nextLine();
+				Main.scnr.nextLine();
 				System.out.print("Enter the new first name: ");
-				String newFirstName = scnr.nextLine();
+				String newFirstName = Main.scnr.nextLine();
 				student.setFirstName(newFirstName);
 			}
 
 			// Choice 2: Last Name (String)
 			else if (choice == 2) {
-				scnr.nextLine();
+				Main.scnr.nextLine();
 				System.out.print("Enter the new last name: ");
-				String newLastName = scnr.nextLine();
+				String newLastName = Main.scnr.nextLine();
 				student.setLastName(newLastName);
 			}
 
 			// Choice 3: Username (String)
 			else if (choice == 3) {
-				scnr.nextLine();
+				Main.scnr.nextLine();
 				System.out.print("Enter the new username: ");
-				String newUsername = scnr.nextLine();
+				String newUsername = Main.scnr.nextLine();
 				student.setUsername(newUsername);
 			}
 
 			// Choice 4: Password (String)
 			else if (choice == 4) {
-				scnr.nextLine();
+				Main.scnr.nextLine();
 				System.out.print("Enter the new password: ");
-				String newPassword = scnr.nextLine();
+				String newPassword = Main.scnr.nextLine();
 				student.setPassword(newPassword);
 			}
 
 			// Choice 5: Major (String)
 			else if (choice == 5) {
-				scnr.nextLine();
+				Main.scnr.nextLine();
 				System.out.print("Enter the new major: ");
-				String newMajor = scnr.nextLine();
+				String newMajor = Main.scnr.nextLine();
 				student.setMajor(newMajor);
 			}
 
 			// Choice 6: Minor (String)
 			else if (choice == 6) {
 				if (student.getHasAMinor()) {
-					scnr.nextLine();
+					Main.scnr.nextLine();
 					Boolean changeMinor = false;
 
 					while (!changeMinor) {
 						System.out.print("Would you like to change or remove your minor? (c/r): ");
-						String changeMinorChoice = scnr.nextLine();
+						String changeMinorChoice = Main.scnr.nextLine();
 						if (changeMinorChoice.compareTo("c") == 0) {
 							changeMinor = true;
 							System.out.print("Enter the new minor: ");
-							String newMinor = scnr.nextLine();
+							String newMinor = Main.scnr.nextLine();
 
 							student.setMinor(newMinor);
 						} else if (changeMinorChoice.compareTo("r") == 0) {
@@ -1873,9 +1869,9 @@ public class BackendSystem {
 					}
 
 				} else {
-					scnr.nextLine();
+					Main.scnr.nextLine();
 					System.out.print("Enter the new minor: ");
-					String newMinor = scnr.nextLine();
+					String newMinor = Main.scnr.nextLine();
 
 					student.setMinor(newMinor);
 					student.setHasAMinor(true);
@@ -1885,64 +1881,64 @@ public class BackendSystem {
 			// Choice 7: US Citizen (boolean)
 			else if (choice == 7) {
 				System.out.print("Enter the new value (true/false): ");
-				boolean newBooleanValue = scnr.nextBoolean();
-				scnr.nextLine();
+				boolean newBooleanValue = Main.scnr.nextBoolean();
+				Main.scnr.nextLine();
 				student.setIsUSCitizen(newBooleanValue);
 			}
 
 			//Choice 8: GPA (Float)
 			else if (choice == 8) {
 				System.out.print("Enter the new GPA: ");
-				float newGPA = scnr.nextFloat();
-				scnr.nextLine();
+				float newGPA = Main.scnr.nextFloat();
+				Main.scnr.nextLine();
 				student.setGPA(newGPA);
 			}
 
 			// Choice 9: In Good Standing? (boolean)
 			else if (choice == 9) {
 				System.out.print("Enter the new value (true/false): ");
-				boolean newBooleanValue = scnr.nextBoolean();
-				scnr.nextLine();
+				boolean newBooleanValue = Main.scnr.nextBoolean();
+				Main.scnr.nextLine();
 				student.setInGoodStanding(newBooleanValue);
 			}
 
 			// Choice 10: Has Advanced Standing? (boolean)
 			else if (choice == 10) {
 				System.out.print("Enter the new value (true/false): ");
-				boolean newBooleanValue = scnr.nextBoolean();
-				scnr.nextLine();
+				boolean newBooleanValue = Main.scnr.nextBoolean();
+				Main.scnr.nextLine();
 				student.setHasAdvStanding(newBooleanValue);
 			}
 
 			// Choice 11: Year (String)
 			else if (choice == 11) {
-				scnr.nextLine();
+				Main.scnr.nextLine();
 				System.out.print("Enter the new grade year: ");
-				String newYear = scnr.nextLine();
+				String newYear = Main.scnr.nextLine();
 				student.setGradeLevel(newYear);
 			}
 
 			// Choice 12: Graduation Month (int)
 			else if (choice == 12) {
 				System.out.print("Enter the new graduation month (in number form with 2 digits): ");
-				int newMonth = scnr.nextInt();
-				scnr.nextLine();
+				int newMonth = Main.scnr.nextInt();
+				Main.scnr.nextLine();
 				student.setGradMonth(newMonth);
 			}
 
 			// Choice 13: Graduation Year (int)
 			else if (choice == 13) {
 				System.out.print("Enter the new graduation year (with 4 digits): ");
-				int newYear = scnr.nextInt();
-				scnr.nextLine();
+				int newYear = Main.scnr.nextInt();
+				Main.scnr.nextLine();
 				student.setGradYear(newYear);
 			}
 
 			// Choice 14: Gender (String)
 			else if (choice == 14) {
-				scnr.nextLine();
+				Main.scnr.nextLine();
 				System.out.print("Enter the new gender: ");
-				String newGender = scnr.nextLine();
+				String newGender = Main.scnr.nextLine();
 				student.setGender(newGender);
 			}
 
@@ -1950,8 +1946,8 @@ public class BackendSystem {
 			// receivesFunding)
 			else if (choice >= 15 && choice <= 17) {
 				System.out.print("Enter the new value (true/false): ");
-				boolean newBooleanValue = scnr.nextBoolean();
-				scnr.nextLine();
+				boolean newBooleanValue = Main.scnr.nextBoolean();
+				Main.scnr.nextLine();
 
 				if (choice == 15) {
 
@@ -1968,16 +1964,16 @@ public class BackendSystem {
 			// Choice 18: Number of Credits (int)
 			else if (choice == 18) {
 				System.out.print("Enter the new number of credits: ");
-				int newCredits = scnr.nextInt();
-				scnr.nextLine();
+				int newCredits = Main.scnr.nextInt();
+				Main.scnr.nextLine();
 				student.setCurNumCredits(newCredits);
 			}
 
 			// Choice 19: Personal Statement (String)
 			else if (choice == 19) {
-				scnr.nextLine();
+				Main.scnr.nextLine();
 				System.out.print("Enter the new personal statement: ");
-				String newStatement = scnr.nextLine();
+				String newStatement = Main.scnr.nextLine();
 				student.setPersonalStatement(newStatement);
 			}
 
@@ -1985,7 +1981,7 @@ public class BackendSystem {
 			if (choice <= 19 && choice >= 1) {
 
 				System.out.print("Would you like to change anything else? (y/n): ");
-				if (scnr.next().equals("n")) {
+				if (Main.scnr.next().equals("n")) {
 					end = true;
 
 					updateStudentProfileFile(student);
@@ -2005,40 +2001,37 @@ public class BackendSystem {
 
 		DonorProfile donorObj = new DonorProfile();
 		String firstName, lastName, username, password, securityQuestion1, securityQuestion2, securityQuestion3;
-		Scanner scnr = new Scanner(System.in);
 
 		System.out.println("Please enter in your first name.");
-		firstName = scnr.nextLine();
+		firstName = Main.scnr.nextLine();
 		donorObj.setFirstName(firstName);
 
 		System.out.println("Please enter in your last name.");
-		lastName = scnr.nextLine();
+		lastName = Main.scnr.nextLine();
 		donorObj.setLastName(lastName);
 
 		System.out.println("Please enter in your username.");
-		username = scnr.nextLine();
+		username = Main.scnr.nextLine();
 		donorObj.setUsername(username);
 
 		System.out.println("Please enter in your password.");
-		password = scnr.nextLine();
+		password = Main.scnr.nextLine();
 		donorObj.setPassword(password);
 
 		System.out.println(
 				"Please enter in your response for the first security question which is the following: What is your mother's maiden name?");
-		securityQuestion1 = scnr.nextLine();
+		securityQuestion1 = Main.scnr.nextLine();
 		donorObj.setOneSecurityQAnswer(1, securityQuestion1);
 
 		System.out.println(
 				"Please enter in your response for the first security question which is the following: What is the mascot of your middle school?");
-		securityQuestion2 = scnr.nextLine();
+		securityQuestion2 = Main.scnr.nextLine();
 		donorObj.setOneSecurityQAnswer(2, securityQuestion2);
 
 		System.out.println(
 				"Please enter in your response for the first security question which is the following: What is the name of the city you were born in?");
-		securityQuestion3 = scnr.nextLine();
+		securityQuestion3 = Main.scnr.nextLine();
 		donorObj.setOneSecurityQAnswer(3, securityQuestion3);
-
-		scnr.close();
 
 		return donorObj;
 	}
@@ -2049,40 +2042,38 @@ public class BackendSystem {
 
 		AdminProfile AdminObj = new AdminProfile();
 		String firstName, lastName, username, password, securityQuestion1, securityQuestion2, securityQuestion3;
-		Scanner scnr = new Scanner(System.in);
 
 		System.out.println("Please enter in your first name.");
-		firstName = scnr.nextLine();
+		firstName = Main.scnr.nextLine();
 		AdminObj.setFirstName(firstName);
 
 		System.out.println("Please enter in your last name.");
-		lastName = scnr.nextLine();
+		lastName = Main.scnr.nextLine();
 		AdminObj.setLastName(lastName);
 
 		System.out.println("Please enter in your username.");
-		username = scnr.nextLine();
+		username = Main.scnr.nextLine();
 		AdminObj.setUsername(username);
 
 		System.out.println("Please enter in your password.");
-		password = scnr.nextLine();
+		password = Main.scnr.nextLine();
 		AdminObj.setPassword(password);
 
 		System.out.println(
 				"Please enter in your response for the first security question which is the following: What is your mother's maiden name?");
-		securityQuestion1 = scnr.nextLine();
+		securityQuestion1 = Main.scnr.nextLine();
 		AdminObj.setOneSecurityQAnswer(1, securityQuestion1);
 
 		System.out.println(
 				"Please enter in your response for the first security question which is the following: What is the mascot of your middle school?");
-		securityQuestion2 = scnr.nextLine();
+		securityQuestion2 = Main.scnr.nextLine();
 		AdminObj.setOneSecurityQAnswer(2, securityQuestion2);
 
 		System.out.println(
 				"Please enter in your response for the first security question which is the following: What is the name of the city you were born in?");
-		securityQuestion3 = scnr.nextLine();
+		securityQuestion3 = Main.scnr.nextLine();
 		AdminObj.setOneSecurityQAnswer(3, securityQuestion3);
 
-		scnr.close();
 
 		return AdminObj;
 	}
@@ -2093,40 +2084,38 @@ public class BackendSystem {
 
 		FundStewardProfile FundStewardObj = new FundStewardProfile();
 		String firstName, lastName, username, password, securityQuestion1, securityQuestion2, securityQuestion3;
-		Scanner scnr = new Scanner(System.in);
 
 		System.out.println("Please enter in your first name.");
-		firstName = scnr.nextLine();
+		firstName = Main.scnr.nextLine();
 		FundStewardObj.setFirstName(firstName);
 
 		System.out.println("Please enter in your last name.");
-		lastName = scnr.nextLine();
+		lastName = Main.scnr.nextLine();
 		FundStewardObj.setLastName(lastName);
 
 		System.out.println("Please enter in your username.");
-		username = scnr.nextLine();
+		username = Main.scnr.nextLine();
 		FundStewardObj.setUsername(username);
 
 		System.out.println("Please enter in your password.");
-		password = scnr.nextLine();
+		password = Main.scnr.nextLine();
 		FundStewardObj.setPassword(password);
 
 		System.out.println(
 				"Please enter in your response for the first security question which is the following: What is your mother's maiden name?");
-		securityQuestion1 = scnr.nextLine();
+		securityQuestion1 = Main.scnr.nextLine();
 		FundStewardObj.setOneSecurityQAnswer(1, securityQuestion1);
 
 		System.out.println(
 				"Please enter in your response for the first security question which is the following: What is the mascot of your middle school?");
-		securityQuestion2 = scnr.nextLine();
+		securityQuestion2 = Main.scnr.nextLine();
 		FundStewardObj.setOneSecurityQAnswer(2, securityQuestion2);
 
 		System.out.println(
 				"Please enter in your response for the first security question which is the following: What is the name of the city you were born in?");
-		securityQuestion3 = scnr.nextLine();
+		securityQuestion3 = Main.scnr.nextLine();
 		FundStewardObj.setOneSecurityQAnswer(3, securityQuestion3);
 
-		scnr.close();
 
 		return FundStewardObj;
 	}
@@ -2138,45 +2127,43 @@ public class BackendSystem {
 		StaffProfile StaffObj = new StaffProfile();
 		String firstName, lastName, username, password, jobRole, securityQuestion1, securityQuestion2,
 				securityQuestion3;
-		Scanner scnr = new Scanner(System.in);
 
 		System.out.println("Please enter in your first name.");
-		firstName = scnr.nextLine();
+		firstName = Main.scnr.nextLine();
 		StaffObj.setFirstName(firstName);
 
 		System.out.println("Please enter in your last name.");
-		lastName = scnr.nextLine();
+		lastName = Main.scnr.nextLine();
 		StaffObj.setLastName(lastName);
 
 		System.out.println("Please enter in your username.");
-		username = scnr.nextLine();
+		username = Main.scnr.nextLine();
 		StaffObj.setUsername(username);
 
 		System.out.println("Please enter in your password.");
-		password = scnr.nextLine();
+		password = Main.scnr.nextLine();
 		StaffObj.setPassword(password);
 
 		System.out.println("Please enter in your job Role.");
-		jobRole = scnr.nextLine();
+		jobRole = Main.scnr.nextLine();
 		// getting errors for calling function setJobRole for some reason
 		StaffObj.setJobRole(jobRole);
 
 		System.out.println(
 				"Please enter in your response for the first security question which is the following: What is your mother's maiden name?");
-		securityQuestion1 = scnr.nextLine();
+		securityQuestion1 = Main.scnr.nextLine();
 		StaffObj.setOneSecurityQAnswer(1, securityQuestion1);
 
 		System.out.println(
 				"Please enter in your response for the first security question which is the following: What is the mascot of your middle school?");
-		securityQuestion2 = scnr.nextLine();
+		securityQuestion2 = Main.scnr.nextLine();
 		StaffObj.setOneSecurityQAnswer(2, securityQuestion2);
 
 		System.out.println(
 				"Please enter in your response for the first security question which is the following: What is the name of the city you were born in?");
-		securityQuestion3 = scnr.nextLine();
+		securityQuestion3 = Main.scnr.nextLine();
 		StaffObj.setOneSecurityQAnswer(3, securityQuestion3);
 
-		scnr.close();
 
 		return StaffObj;
 	}
