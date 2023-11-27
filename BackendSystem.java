@@ -2223,138 +2223,137 @@ public class BackendSystem {
 		int studentID, gradMonth, gradYear, numCredits;
 		float gpa;
 		char boolAnswer1, boolAnswer2, boolAnswer3, boolAnswer4, boolAnswer5, boolAnswer6, boolAnswer7;
-		Scanner scnr = new Scanner(System.in);
+		
 
 		System.out.println("Please enter in your first name.");
-		firstName = scnr.nextLine();
+		firstName = Main.scnr.nextLine();
 		StudentObj.setFirstName(firstName);
 
 		System.out.println("Please enter in your last name.");
-		lastName = scnr.nextLine();
+		lastName = Main.scnr.nextLine();
 		StudentObj.setLastName(lastName);
 
 		System.out.println("Please enter your student ID");
-		studentID = scnr.nextInt();
+		studentID = Main.scnr.nextInt();
 		StudentObj.setStudentID(studentID);
 
-		scnr.nextLine();
+		Main.scnr.nextLine();
 
 		System.out.println("Please enter in your username.");
-		username = scnr.nextLine();
+		username = Main.scnr.nextLine();
 		StudentObj.setUsername(username);
 
 		System.out.println("Please enter in your password.");
-		password = scnr.nextLine();
+		password = Main.scnr.nextLine();
 		StudentObj.setPassword(password);
 
 		System.out.println("Please enter in your major.");
-		major = scnr.nextLine();
+		major = Main.scnr.nextLine();
 		StudentObj.setMajor(major);
 
 		System.out.println("Do you have a minor? (y/n)");
-		boolAnswer1 = scnr.next().charAt(0);
-		scnr.nextLine();
+		boolAnswer1 = Main.scnr.next().charAt(0);
+		Main.scnr.nextLine();
 		if (boolAnswer1 == 'y' || boolAnswer1 == 'Y') {
 			StudentObj.setHasAMinor(true);
 			System.out.println("Please enter in your minor.");
-			minor = scnr.nextLine();
+			minor = Main.scnr.nextLine();
 			StudentObj.setMinor(minor);
 		}
 
 		System.out.println("Are you a US Citizen? (y/n)");
-		boolAnswer2 = scnr.next().charAt(0);
-		scnr.nextLine();
+		boolAnswer2 = Main.scnr.next().charAt(0);
+		Main.scnr.nextLine();
 		if (boolAnswer2 == 'y' || boolAnswer2 == 'Y') {
 			StudentObj.setIsUSCitizen(true);
 		}
 
 		System.out.println("Please enter in your GPA.");
-		gpa = scnr.nextFloat();
+		gpa = Main.scnr.nextFloat();
 		StudentObj.setGPA(gpa);
 
-		scnr.nextLine();
+		Main.scnr.nextLine();
 
 		System.out.println("Are you in Good Standing? (y/n)");
-		boolAnswer3 = scnr.next().charAt(0);
-		scnr.nextLine();
+		boolAnswer3 = Main.scnr.next().charAt(0);
+		Main.scnr.nextLine();
 		if (boolAnswer3 == 'y' || boolAnswer3 == 'Y') {
 			StudentObj.setInGoodStanding(true);
 		}
 
 		System.out.println("Do you have Advanced Standing? (y/n)");
-		boolAnswer4 = scnr.next().charAt(0);
-		scnr.nextLine();
+		boolAnswer4 = Main.scnr.next().charAt(0);
+		Main.scnr.nextLine();
 		if (boolAnswer4 == 'y' || boolAnswer4 == 'Y') {
 			StudentObj.setHasAdvStanding(true);
 		}
 
 		System.out.println("Please enter in your grade level (freshman, sophomore...).");
-		gradeLevel = scnr.nextLine();
+		gradeLevel = Main.scnr.nextLine();
 		StudentObj.setGradeLevel(gradeLevel);
 
 		System.out.println("Please enter your graduation Month (ex: 01)");
-		gradMonth = scnr.nextInt();
+		gradMonth = Main.scnr.nextInt();
 		StudentObj.setGradMonth(gradMonth);
 
-		scnr.nextLine();
+		Main.scnr.nextLine();
 
 		System.out.println("Please enter your graduation Year (ex: 2024)");
-		gradYear = scnr.nextInt();
+		gradYear = Main.scnr.nextInt();
 		StudentObj.setGradYear(gradYear);
 
-		scnr.nextLine();
+		Main.scnr.nextLine();
 
 		System.out.println("Please enter in your gender");
-		gender = scnr.nextLine();
+		gender = Main.scnr.nextLine();
 		StudentObj.setGender(gender);
 
 		System.out.println("Are you a Full Time Student? (y/n)");
-		boolAnswer5 = scnr.next().charAt(0);
-		scnr.nextLine();
+		boolAnswer5 = Main.scnr.next().charAt(0);
+		Main.scnr.nextLine();
 		if (boolAnswer5 == 'y' || boolAnswer5 == 'Y') {
 			StudentObj.setIsFullTimeStudent(true);
 		}
 
 		System.out.println("Are you a Transfer Student? (y/n)");
-		boolAnswer6 = scnr.next().charAt(0);
-		scnr.nextLine();
+		boolAnswer6 = Main.scnr.next().charAt(0);
+		Main.scnr.nextLine();
 		if (boolAnswer6 == 'y' || boolAnswer6 == 'Y') {
 			StudentObj.setIsTransferStudent(true);
 		}
 
 		System.out.println("Please enter the number of credits you are currently enrolled in.");
-		numCredits = scnr.nextInt();
+		numCredits = Main.scnr.nextInt();
 		StudentObj.setCurNumCredits(numCredits);
 
-		scnr.nextLine();
+		Main.scnr.nextLine();
 
 		System.out.println("Please enter in your personal statement (max 500 words)");
-		personalStatement = scnr.nextLine();
+		personalStatement = Main.scnr.nextLine();
 		StudentObj.setPersonalStatement(personalStatement);
 
 		System.out.println("Do you already recieve funding? (y/n)");
-		boolAnswer7 = scnr.next().charAt(0);
-		scnr.nextLine();
+		boolAnswer7 = Main.scnr.next().charAt(0);
+		Main.scnr.nextLine();
 		if (boolAnswer7 == 'y' || boolAnswer7 == 'Y') {
 			StudentObj.setReceivesFunding(true);
 		}
 
 		System.out.println(
 				"Please enter in your response for the first security question which is the following: What is your mother's maiden name?");
-		securityQuestion1 = scnr.nextLine();
+		securityQuestion1 = Main.scnr.nextLine();
 		StudentObj.setOneSecurityQAnswer(1, securityQuestion1);
 
 		System.out.println(
 				"Please enter in your response for the first security question which is the following: What is the mascot of your middle school?");
-		securityQuestion2 = scnr.nextLine();
+		securityQuestion2 = Main.scnr.nextLine();
 		StudentObj.setOneSecurityQAnswer(2, securityQuestion2);
 
 		System.out.println(
 				"Please enter in your response for the first security question which is the following: What is the name of the city you were born in?");
-		securityQuestion3 = scnr.nextLine();
+		securityQuestion3 = Main.scnr.nextLine();
 		StudentObj.setOneSecurityQAnswer(3, securityQuestion3);
 
-		scnr.close();
 
 		return StudentObj;
 	}
