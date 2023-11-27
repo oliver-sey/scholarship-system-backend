@@ -1344,45 +1344,44 @@ public class BackendSystem {
 		return scholarshipsFound;
 	}
 
-	public ArrayList<StudentProfile> searchStudents(String inputCategory, String inputSearchValue) {
+	public ArrayList<StudentProfile> searchStudents(int inputCategory, String inputSearchValue) {
 		ArrayList<StudentProfile> studentsFound = new ArrayList<StudentProfile>();
-		HashMap<String, String> requirements = new HashMap<String, String>();
 
-		if (inputCategory.compareTo("name") == 0) {
+		if (inputCategory == 1) {
 
 			for (StudentProfile student : this.allStudents) {
-				if (student.getName().compareTo(inputSearchValue) == 0) {
+				if (student.getName().equalsIgnoreCase(inputSearchValue)) {
 					studentsFound.add(student);
 				}
 			}
 
-		} else if (inputCategory.compareTo("year") == 0) {
+		} else if (inputCategory == 2) {
 
 			for (StudentProfile student : this.allStudents) {
-				if (student.getGradeLevel().compareTo(inputSearchValue) == 0) {
+				if (student.getGradeLevel().equalsIgnoreCase(inputSearchValue)) {
 					studentsFound.add(student);
 				}
 			}
 
-		} else if (inputCategory.compareTo("major") == 0) {
+		} else if (inputCategory == 3) {
 
 			for (StudentProfile student : this.allStudents) {
 
-				if (student.getMajor().compareTo(inputSearchValue) == 0) {
+				if (student.getMajor().equalsIgnoreCase(inputSearchValue)) {
 					studentsFound.add(student);
 				}
 			}
 
-		} else if (inputCategory.compareTo("minor") == 0) {
+		} else if (inputCategory == 4) {
 
 			for (StudentProfile student : this.allStudents) {
 
-				if (student.getMinor().compareTo(inputSearchValue) == 0) {
+				if (student.getMinor().equalsIgnoreCase(inputSearchValue)) {
 					studentsFound.add(student);
 				}
 			}
 
-		} else if (inputCategory.compareTo("GPA") == 0) {
+		} else if (inputCategory == 5) {
 
 			for (StudentProfile student : this.allStudents) {
 				if (Double.compare(student.getGPA(), Double.parseDouble(inputSearchValue)) >= 0) {
@@ -1789,6 +1788,17 @@ public class BackendSystem {
 		for (int i = 0; i < allScholarships.size(); i++) {
 			if (allScholarships.get(i).getFileIndex() == fileIndex) {
 				return allScholarships.get(i);
+			}
+		}
+
+		// if we didn't find anything, return null
+		return null;
+	}
+
+	public StudentProfile getOneStudentByFileIndex(int fileIndex) {
+		for (int i = 0; i < allStudents.size(); i++) {
+			if (allStudents.get(i).getFileIndex() == fileIndex) {
+				return allStudents.get(i);
 			}
 		}
 
