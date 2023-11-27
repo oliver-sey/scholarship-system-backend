@@ -507,7 +507,6 @@ public class Main {
 				System.out.println("1 - View unapproved scholarships, and then can approve or delete them");
 				System.out.println("2 - View all students");
 				System.out.println("3 - Search students");
-				// TODO: implement this!!
 				System.out.println("4 - View all active scholarships");
 				System.out.println("5 - View all archived scholarships");
 				System.out.println("6 - Award scholarship");
