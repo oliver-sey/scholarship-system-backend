@@ -411,6 +411,17 @@ public class StudentProfile extends Profile {
 
 	@Override
 	public String toString() {
+		// moved the string that this used to return, to getAllDetailsString
+		return this.getAllDetailsString();
+	}
+
+	public String getBasicDetailsString() {
+		String output = firstName + " " + lastName + ", " + gradeLevel + ", " + major;
+
+		return output;
+	}
+
+	public String getAllDetailsString() {
 		return "StudentProfile [studentID=" + studentID + ", major=" + major + ", minor=" + minor + ", hasAMinor="
 				+ hasAMinor + ", isUSCitizen=" + isUSCitizen + ", GPA=" + GPA + ", inGoodStanding=" + inGoodStanding
 				+ ", hasAdvStanding=" + hasAdvStanding + ", gradeLevel=" + gradeLevel + ", gradMonth=" + gradMonth
@@ -419,5 +430,4 @@ public class StudentProfile extends Profile {
 				+ ", curNumCredits=" + curNumCredits + ", receivesFunding=" + receivesFunding + ", personalStatement="
 				+ personalStatement + "]";
 	}
-
 }
