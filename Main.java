@@ -78,36 +78,42 @@ public class Main {
 				
 				// see all scholarships and maybe apply
 				else if (userSelection == 2) {
-					// call printAllScholarships, we want basic info and no archived scholarships, yes approved scholarships, no unapproved scholarships
-					backend.printAllScholarships(false, false, true, false);
+					Boolean quitBrowse = false;
 
-					System.out.println("What would you like to do:");
-					System.out.println("1 - Go back");
-					System.out.println("2 - view one scholarship in more detail (can also apply to it)");
+					while (!quitBrowse) {
+						// call printAllScholarships, we want basic info and no archived scholarships, yes approved scholarships, no unapproved scholarships
+						backend.printAllScholarships(false, false, true, false);
 
-					System.out.print("Your choice: ");
+						System.out.println("What would you like to do:");
+						System.out.println("1 - Go back");
+						System.out.println("2 - view one scholarship in more detail (can also apply to it)");
 
-					// want to keep this separate from userSelection, so we don't accidentally exit the outer do-while loop or something
-					int userAction = scnr.nextInt();
+						System.out.print("Your choice: ");
 
-					if (userAction == 1) {
-						// do nothing?
-					}
-					else if (userAction == 2) {
-						scnr.nextLine();
+						// want to keep this separate from userSelection, so we don't accidentally exit the outer do-while loop or something
+						int userAction = scnr.nextInt();
 
-						int fileIndex;
-						do {
-							System.out.print("Please enter the file index of the scholarship you want to view, or -1 to quit: ");
-							fileIndex = scnr.nextInt();
+						if (userAction == 1) {
+							quitBrowse = true;
+						}
+						else if (userAction == 2) {
+							scnr.nextLine();
 
-							if (fileIndex != -1) {
+							int fileIndex;
+							Boolean validSelection = false;
+							do {
+								System.out.print("Please enter the file index of the scholarship you want to view: ");
+								fileIndex = scnr.nextInt();
+
+								
 								if (backend.getOneScholarshipByFileIndex(fileIndex) == null) {
 									System.out.println("The scholarship with file index " + fileIndex + " could not be found.");
+									System.out.println("Please enter a valid index.");
 								}
 								else {
 									// print the scholarship's information, in more detail than before
-									backend.printOneScholarshipDetailed(fileIndex);
+									validSelection = true;
+									System.out.println(backend.getAllScholarships().get(fileIndex).getAllInfoString());
 
 									System.out.println("\nPlease select an option:");
 									System.out.println("1 - go back");
@@ -119,13 +125,15 @@ public class Main {
 										// do nothing?
 									}
 									else if (userAction == 2) {
-										System.out.println("***Have to still implement applying!!!");
-										// TODO: implement applying from the terminal and add it here
+										
+										
 									}
 								}
-							}
-						} while (fileIndex != -1);
+								
+							} while (!validSelection);
+						}
 					}
+					
 				}
 
 
