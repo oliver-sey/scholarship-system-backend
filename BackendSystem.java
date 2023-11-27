@@ -98,6 +98,8 @@ public class BackendSystem {
 		this.allAdmins = instantiateAllAdmins();
 		this.allStaff = InstantiateAllStaff();
 		this.allFundStewards = instantiateAllFundStewards();
+
+		setScholarshipObjects();
 		// TODO: make the rest of the instantiate all methods
 	}
 
@@ -327,24 +329,38 @@ public class BackendSystem {
 
 		applicantsBr.close();
 
-		// find student objects
-		for (String applicantName : applicantNames) {
-			for (StudentProfile student : this.allStudents) {
-				if (applicantName.compareTo(student.getName()) == 0) {
-					applicants.add(student);
+		
+		return new Scholarship(name, description, donorName, awardAmount, requirements, application, applicantNames,
+				isApproved, isArchived, fileIndex, dateAddedString, dateDueString);
+
+	}
+
+	public void setScholarshipObjects() {
+		ArrayList<StudentProfile> applicants = new ArrayList<StudentProfile>();
+		DonorProfile correctDonor = new DonorProfile();
+
+		for (Scholarship schol : this.allScholarships) {
+			// find student objects
+			for (String applicantName : schol.getApplicantNames()) {
+				for (StudentProfile student : this.allStudents) {
+					if (applicantName.compareTo(student.getName()) == 0) {
+						applicants.add(student);
+					}
 				}
 			}
-		}
 
-		// find donor object
-		for (DonorProfile donor : this.allDonors) {
-			if (donorName.compareTo(donor.getName()) == 0) {
-				correctDonor = donor;
+			// find donor object
+			for (DonorProfile donor : this.allDonors) {
+				if (schol.getDonorName().compareTo(donor.getName()) == 0) {
+					correctDonor = donor;
+				}
 			}
-		}
 
-		return new Scholarship(name, description, correctDonor, awardAmount, requirements, application, applicants,
-				isApproved, isArchived, fileIndex, dateAddedString, dateDueString);
+			//setting the objects in each scholarship object
+			schol.setApplicants(applicants);
+			schol.setDonor(correctDonor);
+		}
+		
 
 	}
 
@@ -2098,5 +2114,25 @@ public class BackendSystem {
 
 		return StudentObj;
 	}
+
+	/*
+	 * - look for match object
+	 * - if exists, have student continue
+	 * - if does not exist, have student start
+	 * - ask if student wants to save or submit or discard
+	 * - store changes
+	 */
+	public void applyToScholarship(Scholarship scholarship) {
+		for (MatchRelationship match : this.allMatchRelationships) {
+			if (scholarship.getName().equals(match.getScholarshipName()) && currentUser.getName().equals(match.getStudentName())) {
+				if(match.getApplicationStatus().equals("in progress")) {
+					for (Map.Entry<String, String> pair : match.getApplication().entrySet()) {
+						
+					}
+				}
+			}
+		}
+	}
+
 
 }
