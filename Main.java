@@ -268,7 +268,7 @@ public class Main {
 				// print the backend object to make sure everything worked ok
 				// System.out.println(backend.toString());
 				for (Scholarship scholarshipObj : backend.getAllScholarships()) {
-					System.out.print(scholarshipObj.getName() + ", due date: " + scholarshipObj.getDateDueString() + ", due 5+ years ago: " + scholarshipObj.due5PlusYearsAgo());
+					System.out.print(scholarshipObj.getName() + ", due date: " + scholarshipObj.getDateDueString());// + ", due 5+ years ago: " + scholarshipObj.due5PlusYearsAgo());    
 					if(scholarshipObj.due5PlusYearsAgo() == true){
 						System.out.println(" -> Archived");
 					}
