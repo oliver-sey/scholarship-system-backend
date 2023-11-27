@@ -91,9 +91,18 @@ public class BackendSystem {
 
 	// constructor
 	public BackendSystem() throws NumberFormatException, IOException {
-		this.allStudents = InstantiateAllStudents();
+		// have to be careful about the order of these, because they rely on each other existing already
+		// scholarships relies on students and donors already existing
 		this.allScholarships = InstantiateAllScholarships();
+
+		// students relies on scholarships already existing
+		this.allStudents = InstantiateAllStudents();
+		// donors relies on scholarships already existing
 		this.allDonors = InstantiateAllDonors();
+		// TODO: have to write code to connect scholarships (which has just strings for students
+		// and donors), and connect it with actual student and donor objects!!!
+
+		// match relies on students and scholarships
 		this.allMatchRelationships = InstantiateAllMatches();
 		this.allAdmins = instantiateAllAdmins();
 		this.allStaff = InstantiateAllStaff();
@@ -101,6 +110,23 @@ public class BackendSystem {
 
 		setScholarshipObjects();
 		// TODO: make the rest of the instantiate all methods
+
+		
+		// now that we have the full list of scholarships, archive past ones that are past due, and delete 5+ year old ones
+		// System.out.println("Scholarships (without archived) before archiving past due: ");
+		// this.printAllScholarships(false, false, true, true);
+
+		// this.archivePastDueScholarships();
+
+		// System.out.println("\nScholarships (without archived) after archiving past due:");
+		// this.printAllScholarships(false, false, true, true);
+
+		// System.out.println("\nScholarships (without archived) after archiving past due:");
+		// this.printAllScholarships(true, false, true, true);
+		// this.deleteScholsDue5PlusYrsAgo();
+		// System.out.println("\nScholarships (**with archived) after deleting 5+ year old ones:");
+		// this.printAllScholarships(true, true, true, true);
+
 	}
 
 	public StudentProfile readStudentProfile(int fileIndex) throws IOException {
@@ -1639,15 +1665,6 @@ public class BackendSystem {
 		return allFundStewards;
 	}
 
-	public void testStoringStudents() throws Exception {
-		StudentProfile newStudent = new StudentProfile("Jess", "Mess", 12345, "user", "pass", "IE", true, "SFWEE", true,
-				3.6, true, true, "Freshman", 5, 2025, "Female", true, false, 12, false, "I love school!", "Smith",
-				"The eagles", "New York");
-
-		storeNewStudentProfile(newStudent);
-
-		System.out.print(newStudent.toString());
-	}
 
 	public void AwardScholarship(StudentProfile recipient, Scholarship scholarship) {
 		LocalDate today = LocalDate.now();
@@ -2055,7 +2072,7 @@ public class BackendSystem {
 		System.out.println("Please enter in your job Role.");
 		jobRole = scnr.nextLine();
 		//getting errors for calling function setJobRole for some reason
-		//StaffObj.setJobRole(jobRole);
+		StaffObj.setJobRole(jobRole);
 
 		System.out.println("Please enter in your response for the first security question which is the following: What is your mother's maiden name?");
 		securityQuestion1 = scnr.nextLine();
