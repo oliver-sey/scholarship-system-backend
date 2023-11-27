@@ -2563,11 +2563,17 @@ public class BackendSystem {
 		String userConfirm = Main.scnr.nextLine();
 
 		if (userConfirm.equals("y")) {
+			// add the scholarship to the all scholarships list
 			allScholarships.add(scholarship);
 
 			// print it to a new file
 			storeNewScholarship(scholarship);
 
+			// add the scholarship to the donor's list of scholarships
+			((DonorProfile) getCurrentUser()).addScholarship(scholarship);
+
+			System.out.println("Here are all your scholarships (approved or not, but ignoring archived): ");
+			System.out.println(((DonorProfile) getCurrentUser()).getScholarshipFileText());
 			return scholarship;
 		}
 		// else do nothing??
