@@ -75,7 +75,7 @@ public class BackendSystem {
 		String userType;
 		boolean success = false;
 		do {
-			Main.scnr.nextLine();
+			// Main.scnr.nextLine();
 			System.out.println("Please enter your user type. (Enter as one word, i.e. student, fundsteward, etc.)");
 			userType = Main.scnr.nextLine();
 
@@ -2562,10 +2562,13 @@ public class BackendSystem {
 		System.out.println("Enter the due date (in the format YYYY-MM-DD):");
 		String dateDueString = Main.scnr.nextLine();
 
+		// get the next available Scholarship file index
+		int fileIndex = findNextFileIndex("scholarship");
+
 		// Create a new Scholarship object
 		// have to have this up here so we can print the details
 		Scholarship scholarship = new Scholarship(name, description, donor, awardAmount, requirements, application,
-				dateDueString);
+				dateDueString, fileIndex);
 
 		System.out.println("Here is the scholarship you have created:");
 		System.out.println(scholarship.getAllInfoString());
@@ -2574,11 +2577,17 @@ public class BackendSystem {
 		String userConfirm = Main.scnr.nextLine();
 
 		if (userConfirm.equals("y")) {
+			// add the scholarship to the all scholarships list
 			allScholarships.add(scholarship);
 
 			// print it to a new file
 			storeNewScholarship(scholarship);
 
+			// add the scholarship to the donor's list of scholarships
+			((DonorProfile) getCurrentUser()).addScholarship(scholarship);
+
+			System.out.println("Here are all your scholarships (approved or not, but ignoring archived): ");
+			System.out.println(((DonorProfile) getCurrentUser()).getScholarshipFileText());
 			return scholarship;
 		}
 		// else do nothing??

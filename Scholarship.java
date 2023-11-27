@@ -33,7 +33,7 @@ public class Scholarship {
 
     // constructor for donor typing details in
     public Scholarship(String name, String description, DonorProfile donor, float awardAmount,
-            ArrayList<String> requirements, ArrayList<String> application, String dateDueString) {
+            ArrayList<String> requirements, ArrayList<String> application, String dateDueString, int fileIndex) {
         this.name = name;
         this.description = description;
         this.donor = donor;
@@ -62,7 +62,10 @@ public class Scholarship {
         // the dateAdded for this constructor (adding from the terminal), should just be today
         this.dateAdded = LocalDate.now();
         this.dateDue = LocalDate.parse(dateDueString);
+
+        this.fileIndex = fileIndex;
     }
+
 
     // constructor for loading data from files into program
     public Scholarship(String name, String description, String donorName, float awardAmount,
@@ -381,5 +384,22 @@ public class Scholarship {
         return "Scholarship [name=" + name + ", description=" + description + ", applicants=" + applicants + ", Donor="
                 + donor.getName() + ", awardAmount=" + awardAmount + ", requirements=" + requirements + ", application="
                 + application + ", isArchived=" + isArchived + ", isApproved=" + isApproved + ", dateAdded=" + dateAdded + ", dateDue=" + dateDue + "]";
+    }
+    public void printApplicants() {
+        System.out.println("Applicants for Scholarship: " + this.getName());
+        System.out.println("----------------------------");
+    
+        if (applicants.isEmpty()) {
+            System.out.println("No applicants.");
+        } else {
+            for (StudentProfile applicant : applicants) {
+                System.out.println("Student ID: " + applicant.getStudentID());
+                System.out.println("Name: " + applicant.getFirstName() + " " + applicant.getLastName());
+                // Add more information as needed
+                System.out.println("-----------------------");
+            }
+        }
+
+        
     }
 }
