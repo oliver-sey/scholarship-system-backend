@@ -1202,9 +1202,8 @@ public class BackendSystem {
 			// for their password
 			if (failedPWAttempts == 0) {
 				System.out.print("Please enter your user type (as one word, i.e. 'student', 'admin', 'fundsteward'). ");
-				// Main.scnr.nextLine();
 				System.out.print("Please enter your user type: ");
-				// Main.scnr.nextLine();
+				Main.scnr.nextLine();
 				userType = Main.scnr.nextLine();
 
 				// check for valid user type
@@ -1769,12 +1768,14 @@ public class BackendSystem {
 			else if (choice == 7) {
 				System.out.print("Enter the new value (true/false): ");
 				boolean newBooleanValue = scnr.nextBoolean();
+				scnr.nextLine();
 				student.setIsUSCitizen(newBooleanValue);
 			}
 
 			else if (choice == 8) {
 				System.out.print("Enter the new GPA: ");
 				float newGPA = scnr.nextFloat();
+				scnr.nextLine();
 				student.setGPA(newGPA);
 			}
 
@@ -1782,6 +1783,7 @@ public class BackendSystem {
 			else if (choice == 9) {
 				System.out.print("Enter the new value (true/false): ");
 				boolean newBooleanValue = scnr.nextBoolean();
+				scnr.nextLine();
 				student.setInGoodStanding(newBooleanValue);
 			}
 
@@ -1789,6 +1791,7 @@ public class BackendSystem {
 			else if (choice == 10) {
 				System.out.print("Enter the new value (true/false): ");
 				boolean newBooleanValue = scnr.nextBoolean();
+				scnr.nextLine();
 				student.setHasAdvStanding(newBooleanValue);
 			}
 
@@ -1804,6 +1807,7 @@ public class BackendSystem {
 			else if (choice == 12) {
 				System.out.print("Enter the new graduation month (in number form with 2 digits): ");
 				int newMonth = scnr.nextInt();
+				scnr.nextLine();
 				student.setGradMonth(newMonth);
 			}
 
@@ -1811,6 +1815,7 @@ public class BackendSystem {
 			else if (choice == 13) {
 				System.out.print("Enter the new graduation year (with 4 digits): ");
 				int newYear = scnr.nextInt();
+				scnr.nextLine();
 				student.setGradYear(newYear);
 			}
 
@@ -1827,6 +1832,7 @@ public class BackendSystem {
 			else if (choice >= 15 && choice <= 17) {
 				System.out.print("Enter the new value (true/false): ");
 				boolean newBooleanValue = scnr.nextBoolean();
+				scnr.nextLine();
 
 				if (choice == 15) {
 
@@ -1844,6 +1850,7 @@ public class BackendSystem {
 			else if (choice == 18) {
 				System.out.print("Enter the new number of credits: ");
 				int newCredits = scnr.nextInt();
+				scnr.nextLine();
 				student.setCurNumCredits(newCredits);
 			}
 
@@ -1857,12 +1864,12 @@ public class BackendSystem {
 
 			// if they entered a valid choice number, 1 through 19
 			if (choice <= 19 && choice >= 1) {
-				scnr.nextLine();
+				
 				System.out.print("Would you like to change anything else? (y/n): ");
 				if (scnr.next().equals("n")) {
 					end = true;
 					
-					//updateStudentProfileFile(student);
+					updateStudentProfileFile(student);
 				}
 			} else {
 				System.out.print("Please enter the number of your choice.");

@@ -379,9 +379,10 @@ public class Main {
 				3.6, true, true, "Freshman", 5, 2025, "Female", true, false, 12, false, "I love school!", "Smith",
 				"The eagles", "New York");
 				
+				backend.login();
 
-				backend.editStudentInfo(newStudent);
-				System.out.println(newStudent.toString());
+				backend.editStudentInfo((StudentProfile) backend.getCurrentUser());
+				System.out.println(((StudentProfile) backend.getCurrentUser()).toString());
 			}
 
 			// test print scholarships
