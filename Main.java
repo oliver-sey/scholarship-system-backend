@@ -3,6 +3,7 @@
  * A main file, that will run our whole project.
  */
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -27,6 +28,7 @@ public class Main {
 		int userChoice;
 		System.out.println("Welcome ot the UASAMS backend subsystem! Please select an option: \n1- Returning User\n2- New User");
 		userChoice = scnr.nextInt();
+
 		if(userChoice == 2) {
 			backend.createNewProfile();  // TODO: INCOMPLETE- need to update profile lists when a new profile is added
 		}
@@ -491,53 +493,89 @@ public class Main {
 
 					// call printAllScholarships, we want basic info and only unapproved scholarships
 					// TODO: would we want archived scholarships here?
-					backend.printAllScholarships(false, false, true, false, true);
+					
 
 					// prompt them to approve one scholarship
 
-					int adminAction = -1;
+					Boolean quit = false;
 					do {
-						System.out.println("Which actions would you like to perform on these archived scholarships: ");
-						System.out.println("1 - approve a scholarship");
-						System.out.println("2 - delete a scholarship");
-						System.out.println("0 - EXIT");
-						adminAction = scnr.nextInt();
+						backend.printAllScholarships(false, false, true, false, true);
+
+						System.out.println("What would you like to do:");
+						System.out.println("1 - Go back");
+						System.out.println("2 - view one scholarship in more detail");
+
+						System.out.print("Your choice: ");
+
+						// want to keep this separate from userSelection, so we don't accidentally exit the outer do-while loop or something
+						int userAction = scnr.nextInt();
 						scnr.nextLine();
 
-						// approve a scholarship
-						if (adminAction == 1) {
-							System.out.print("Please enter a scholarship ID that you want to approve, or -1 if you want to go back: ");
-							int scholFileIndexToApprove = scnr.nextInt();
-
-							// if they want to approve a scholarship
-							if (scholFileIndexToApprove != -1) {
-								// TODO: will this go all the way through the chain of pointers and actually change the original scholarship object????
-								System.out.println("Setting the scholarship to approved");
-								// unapprovedSchols.get(scholFileIndexToApprove).setApproved(true);
-								Scholarship scholToApprove = backend.getOneScholarshipByFileIndex(scholFileIndexToApprove);
-								scholToApprove.setApproved(true);
-
-								System.out.println("Checking if the scholarship was actually successfully approved. isApproved: " + backend.getOneScholarshipByFileIndex(scholFileIndexToApprove).getIsApproved());
-								// update the file
-								backend.updateScholarshipFile(scholToApprove);
-							}
+						if (userAction == 1) {
+							quit = true;
 						}
-						// delete a scholarship
-						else if (adminAction == 2) {
-							System.out.print("Please enter a scholarship ID that you want to delete: ");
-							int deleteFileIndex = scnr.nextInt();
-							scnr.nextLine();
+						else if (userAction == 2) {
+							
+							int fileIndex;
+							Boolean validSelection = false;
 
-							// try to remove the scholarship, but catch the exception if they enter an out of bounds value
-							// couldn't figure out how to implement this with if-statements
-							try {
-								backend.getAllScholarships().remove(deleteFileIndex);
-							} catch (IndexOutOfBoundsException e) {
-								// TODO: handle exception
-								System.out.println("That scholarship ID value was invalid.");
-							}
+							do {
+								System.out.print("Please enter the file index of the scholarship you want to view: ");
+								fileIndex = scnr.nextInt();
+								scnr.nextLine();
+								
+								if (backend.getOneScholarshipByFileIndex(fileIndex) == null) {
+									System.out.println("The scholarship with file index " + fileIndex + " could not be found.");
+									System.out.println("Please enter a valid index.");
+								}
+								else {
+									// print the scholarship's information, in more detail than before
+									validSelection = true;
+									System.out.println(backend.getOneScholarshipByFileIndex(fileIndex).getAllInfoString());
+
+									System.out.println("\nPlease select an option:");
+									System.out.println("1 - Return to list");
+									System.out.println("2 - Approve");
+									System.out.println("3 - Delete");
+
+									System.out.print("Your choice: ");
+									userAction = scnr.nextInt();
+									scnr.nextLine();
+
+									if (userAction == 1) {
+										// do nothing?
+									}
+									else if (userAction == 2) {
+										backend.getOneScholarshipByFileIndex(fileIndex).setApproved(true);
+										backend.updateScholarshipFile(backend.getOneScholarshipByFileIndex(fileIndex));
+
+										System.out.println(backend.getOneScholarshipByFileIndex(fileIndex).getName() + " is now approved!");
+									}
+									else if (userAction == 3) {
+										System.out.println("Are you sure you'd like to delete this scholarship from the system? (y/n)");
+
+										String donorChoice = scnr.nextLine();
+
+										if (donorChoice.equalsIgnoreCase("y")) {
+											File file = new File("scholarships/sholarship" + fileIndex);
+											file.delete();
+
+											int index = backend.getAllScholarships().indexOf(backend.getOneScholarshipByFileIndex(fileIndex));
+											backend.getAllScholarships().remove(index);
+
+											System.out.println("Scholarship deleted.");
+										}
+										else {
+											System.out.println("Action dissmissed.");
+										}
+
+									}
+								}
+								
+							} while (!validSelection);
 						}
-					} while(adminAction != 0);
+
+					} while(!quit);
 				}
 
 				// view all scholarships
