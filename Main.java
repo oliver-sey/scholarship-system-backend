@@ -11,9 +11,9 @@ public class Main {
 
 	public static Scanner scnr = new Scanner(System.in);
 	public static void main(String[] args) throws Exception {
-		// BackendSystem backend = new BackendSystem();
+		BackendSystem backend = new BackendSystem();
 		// userRunSystem will prompt them to log in
-		// userRunSystem(backend);
+		userRunSystem(backend);
 
 		runDifferentTests();
 
@@ -162,7 +162,6 @@ public class Main {
 		}
 		// else if (backend.getUserType().compareTo("admin") == 0) {
 		else if (backend.getCurrentUser() instanceof AdminProfile) {
-			// TODO: implement this!!
 			/*
 			 * - approve scholarships
 			 * - search students
@@ -432,7 +431,7 @@ public class Main {
 
 				backend.login();
 
-				String infoString = backend.getScholarshipFromInput().getAllInfoString();
+				String infoString = backend.createScholarshipFromInput().getAllInfoString();
 
 				System.out.println("The new scholarship:");
 				System.out.println(infoString);

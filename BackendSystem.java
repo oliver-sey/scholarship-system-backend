@@ -1054,7 +1054,7 @@ public class BackendSystem {
 	// searches a folder for a scholarship with inputted value
 	public ArrayList<Scholarship> searchScholarships(String inputCategory, String inputSearchValue) {
 		ArrayList<Scholarship> scholarshipsFound = new ArrayList<Scholarship>();
-		HashMap<String, String> requirements = new HashMap<String, String>();
+		HashMap<String, ArrayList<String>> requirements = new HashMap<String, ArrayList<String>>();
 		LocalDate inputDate;
 
 		if (inputCategory.compareTo("name") == 0) {
@@ -1147,11 +1147,14 @@ public class BackendSystem {
 			for (Scholarship scholarship : this.allScholarships) {
 				requirements = scholarship.getRequirements();
 
-				for (Map.Entry<String, String> entry : requirements.entrySet()) {
+				for (Map.Entry<String, ArrayList<String>> entry : requirements.entrySet()) {
 					if (entry.getKey().compareTo(inputCategory) == 0) {
-						if (entry.getValue().compareTo(inputSearchValue) == 0) {
-							scholarshipsFound.add(scholarship);
+						for (int i = 0; i < entry.getValue().size(); i++) {
+							if (entry.getValue().get(i).compareTo(inputSearchValue) == 0) {
+								scholarshipsFound.add(scholarship);
+							}
 						}
+						
 					}
 
 				}
@@ -1243,9 +1246,8 @@ public class BackendSystem {
 			// only ask them for their user type and password if they're trying to log in the first time, after that just ask them
 			// for their password
 			if (failedPWAttempts == 0) {
-				System.out.print("Please enter your user type (as one word, i.e. 'student', 'admin', 'fundsteward'). ");
-				System.out.print("Please enter your user type: ");
-				Main.scnr.nextLine();
+				// Main.scnr.nextLine();
+				System.out.print("Please enter your user type (as one word, i.e. 'student', 'admin', 'fundsteward', 'donor'): ");
 				userType = Main.scnr.nextLine();
 
 				// check for valid user type
@@ -2235,12 +2237,14 @@ public class BackendSystem {
 	}
 
 	/**
-	 * this is for a donor who is creating a new scholarship and typing in the details
+	 * this is for a donor who is creating a new scholarship and typing in the details. If they confirm it,
+	 * the scholarship gets added to allScholarships and printed to a new file
+	 * 
 	 * NOTE: this assumes that the currentUser is a Donor, who is also the only donor to this new scholarship
 	 * 
-	 * @return a scholarship object containing the info that was entered
+	 * @return a scholarship object containing the info that was entered, don't know if we'll need this
 	 */
-	public Scholarship getScholarshipFromInput() {
+	public Scholarship createScholarshipFromInput() throws IOException {
 		Main.scnr.nextLine();
 		System.out.println("Enter the name of the scholarship:");
         String name = Main.scnr.nextLine();
@@ -2357,10 +2361,29 @@ public class BackendSystem {
         System.out.println("Enter the due date (in the format YYYY-MM-DD):");
         String dateDueString = Main.scnr.nextLine();
 
-        // Create a new Scholarship object
-        Scholarship scholarship = new Scholarship(name, description, donor, awardAmount, requirements, application, dateDueString);
 
-		return scholarship;
+		// Create a new Scholarship object
+		// have to have this up here so we can print the details
+		Scholarship scholarship = new Scholarship(name, description, donor, awardAmount, requirements, application, dateDueString);
+
+		System.out.println("Here is the scholarship you have created:");
+		System.out.println(scholarship.getAllInfoString());
+
+		System.out.print("\nDo you want to add this new scholarship to the system? (y/n): ");
+		String userConfirm = Main.scnr.nextLine();
+
+		if (userConfirm.equals("y")) {
+			allScholarships.add(scholarship);
+			
+			// print it to a new file
+			storeNewScholarship(scholarship);
+
+			return scholarship;
+		}
+		// else do nothing??
+        
+		// we didn't actually add the scholarship to the system, so return null
+		return null;
 	}
 
 	/*
