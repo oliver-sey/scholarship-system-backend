@@ -375,7 +375,8 @@ public class Main {
 		// else if (backend.getUserType().compareTo("staff") == 0) {
 		else if (backend.getCurrentUser() instanceof StaffProfile) {
 			/* 
-			 * 
+			 * -view all scholarships
+			 * -archive scholarships
 			 */
 			System.out.println("Have to still implement oneUserAction() for StaffProfile.");
 		}
@@ -384,6 +385,7 @@ public class Main {
 			// TODO: implement this!!
 			/*
 			 * -view archived/awarded scholarships
+			 * 
 			 */
 			do{
 				//querys user about what they would like to do
@@ -452,7 +454,7 @@ public class Main {
 
 			}while(userSelection != 0);
 
-			System.out.println("Have to still implement oneUserAction() for FundStewardProfile.");
+
 		}
 		// else if (backend.getUserType().compareTo("admin") == 0) {
 		else if (backend.getCurrentUser() instanceof AdminProfile) {
