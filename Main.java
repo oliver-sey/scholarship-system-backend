@@ -941,7 +941,7 @@ public class Main {
 					newAdmin = backend.getAdminFromInput();
 					backend.setCurrentUser(newAdmin);
 					System.out.println(((AdminProfile) backend.getCurrentUser()).toString());
-					backend.storeNewAdminProfile(newAdmin);
+					backend.storeNewAdminProfileFile(newAdmin);
 					System.out.println("Made new folder and files for that administrator, the folder name should be /administrators/admin" + (backend.findNextFileIndex("admin") - 1));
 					System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
 				}
