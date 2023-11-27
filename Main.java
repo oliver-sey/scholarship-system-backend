@@ -5,6 +5,7 @@
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -149,16 +150,87 @@ public class Main {
 					}
 					
 				}
+				//see applications in progress
 				else if (userSelection == 3) {
 					Boolean quit = false;
+					ArrayList<MatchRelationship> matchesFound = backend.getInProgressApplications();
+					MatchRelationship matchSelected = new MatchRelationship();
 
 					while (!quit) {
-						
+						for (MatchRelationship match : matchesFound) {
+							System.out.println(match.getScholarship().getBasicInfoString());
+							System.out.println();
+						}
+
+						System.out.println("What would you like to do:");
+						System.out.println("1 - Go back");
+						System.out.println("2 - View one application in more detail");
+
+						System.out.print("Your choice: ");
+
+						int userAction = scnr.nextInt();
+						scnr.nextLine();
+
+						if (userAction == 1) {
+							quit = true;
+						}
+						else if (userAction == 2) {
+							
+							int fileIndex;
+							Boolean validSelection = false;
+							do {
+								System.out.print("Please enter the file index of the scholarship you want to view the application for: ");
+								fileIndex = scnr.nextInt();
+								scnr.nextLine();
+								
+								if (backend.getOneScholarshipByFileIndex(fileIndex) == null) {
+									System.out.println("The scholarship with file index " + fileIndex + " could not be found.");
+									System.out.println("Please enter a valid index.");
+								}
+								else {
+									// print the scholarship's information, in more detail than before
+									validSelection = true;
+									for (MatchRelationship match : matchesFound) {
+										if (match.getScholarshipName().equals(backend.getOneScholarshipByFileIndex(fileIndex).getName())){
+											matchSelected = match;
+										}
+									}
+
+									int qIndex = 1;
+									System.out.println("Your current application: ");
+									System.out.println();
+
+									for (Map.Entry<String, String> pair : matchSelected.getApplication().entrySet()) {
+										System.out.println("Question " + qIndex + ":");
+										System.out.println(pair.getKey());
+										System.out.println(pair.getValue());
+										qIndex++;
+									}
+
+									System.out.println("\nPlease select an option:");
+									System.out.println("1 - Go back");
+									System.out.println("2 - Edit application");
+
+									System.out.print("Your choice: ");
+									userAction = scnr.nextInt();
+									scnr.nextLine();
+
+									if (userAction == 1) {
+										// do nothing?
+									}
+									else if (userAction == 2) {
+										backend.editApplication(matchSelected);
+									}
+								}
+								
+							} while (!validSelection);
+						}
+
 					}
 				}
 				//get submitted applications
 				else if (userSelection == 4) {
-					backend.getSubmittedApplications((StudentProfile) backend.getCurrentUser());
+					backend.getSubmittedApplications();
 				}
 				//search for scholarships
 				else if (userSelection == 5) {

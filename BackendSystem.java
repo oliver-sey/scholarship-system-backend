@@ -429,8 +429,9 @@ public class BackendSystem {
 	 * @return - the number of scholarships that we set to archived. Don't have to
 	 *         do anything with this value,
 	 *         I just decided to add it
+	 * @throws IOException
 	 */
-	public int archivePastDueScholarships() {
+	public int archivePastDueScholarships() throws IOException {
 		int numSetToArchived = 0;
 
 		for (int i = 0; i < allScholarships.size(); i++) {
@@ -438,6 +439,7 @@ public class BackendSystem {
 			if (allScholarships.get(i).isPastDue()) {
 				allScholarships.get(i).setArchived(true);
 				numSetToArchived++;
+				updateScholarshipFile(allScholarships.get(i));
 			}
 		}
 
@@ -501,8 +503,8 @@ public class BackendSystem {
 	}
 
 	public void updateScholarshipFile(Scholarship scholarship) throws IOException {
-		int nextFileIndex = findNextFileIndex("scholarship");
-		File folder = new File("scholarships/scholarship" + String.valueOf(nextFileIndex));
+		int fileIndex = scholarship.getFileIndex();
+		File folder = new File("scholarships/scholarship" + String.valueOf(fileIndex));
 
 		File detailsFile = new File(folder, "details.txt");
 		FileWriter detailsWriter = new FileWriter(detailsFile, false);
@@ -637,6 +639,7 @@ public class BackendSystem {
 		float matchPercentage = Float.parseFloat(detailsBr.readLine());
 		float matchIndex = Float.parseFloat(detailsBr.readLine());
 		String applicationStatus = detailsBr.readLine();
+		Boolean isActive = Boolean.parseBoolean(detailsBr.readLine());
 
 		detailsBr.close();
 
@@ -666,7 +669,7 @@ public class BackendSystem {
 		applicationBr.close();
 
 		return new MatchRelationship(student, scholarship, ID, matchPercentage, matchIndex, application,
-				applicationStatus);
+				applicationStatus, isActive);
 	}
 
 	public MatchRelationship produceNewMatch(StudentProfile student, Scholarship scholarship) throws IOException {
@@ -680,6 +683,7 @@ public class BackendSystem {
 				fileIndex);
 
 		storeNewMatch(newMatch);
+		this.allMatchRelationships.add(newMatch);
 		return newMatch;
 	}
 
@@ -1089,6 +1093,7 @@ public class BackendSystem {
 	public ArrayList<Scholarship> searchScholarships(int inputCategory, String inputSearchValue) {
 		ArrayList<Scholarship> scholarshipsFound = new ArrayList<Scholarship>();
 		HashMap<String, ArrayList<String>> requirements = new HashMap<String, ArrayList<String>>();
+		ArrayList<Scholarship> scholarshipsToSearch = getScholarshipsAvailableToStudents();
 		LocalDate inputDate;
 
 		if (inputCategory == 1) {
@@ -1101,7 +1106,7 @@ public class BackendSystem {
 			Scholarship schol2 = new Scholarship();
 			Scholarship schol3 = new Scholarship();
 
-			for (Scholarship scholarship : this.allScholarships) {
+			for (Scholarship scholarship : scholarshipsToSearch) {
 				percentage = stringSimilarity(scholarship.getName(), inputSearchValue);
 
 				if (percentage - max1 > 0.00001) {
@@ -1129,7 +1134,7 @@ public class BackendSystem {
 
 		} else if (inputCategory == 2) {
 			// retrieves donor name from each scholarship
-			for (Scholarship scholarship : this.allScholarships) {
+			for (Scholarship scholarship : scholarshipsToSearch) {
 				if (inputSearchValue.compareTo(scholarship.getDonorName()) == 0) {
 					scholarshipsFound.add(scholarship);
 				}
@@ -1139,7 +1144,7 @@ public class BackendSystem {
 			// them
 			ArrayList<String> applicantNames = new ArrayList<String>();
 
-			for (Scholarship scholarship : this.allScholarships) {
+			for (Scholarship scholarship : scholarshipsToSearch) {
 				applicantNames = scholarship.getApplicantNames();
 
 				for (String name : applicantNames) {
@@ -1151,7 +1156,7 @@ public class BackendSystem {
 			}
 		} else if (inputCategory == 3) {
 
-			for (Scholarship scholarship : this.allScholarships) {
+			for (Scholarship scholarship : scholarshipsToSearch) {
 				inputDate = LocalDate.parse(inputSearchValue);
 				if (scholarship.getDateDue().compareTo(inputDate) == 0) {
 					scholarshipsFound.add(scholarship);
@@ -1160,7 +1165,7 @@ public class BackendSystem {
 
 		} else if (inputCategory == 4) {
 
-			for (Scholarship scholarship : this.allScholarships) {
+			for (Scholarship scholarship : scholarshipsToSearch) {
 				inputDate = LocalDate.parse(inputSearchValue);
 				if (scholarship.getDateAdded().compareTo(inputDate) == 0) {
 					scholarshipsFound.add(scholarship);
@@ -1169,12 +1174,28 @@ public class BackendSystem {
 
 		} else if (inputCategory == 5) {
 
-			for (Scholarship scholarship : this.allScholarships) {
+			for (Scholarship scholarship : scholarshipsToSearch) {
 				if (Float.compare(scholarship.getAwardAmount(), Float.parseFloat(inputSearchValue)) >= 0) {
 					scholarshipsFound.add(scholarship);
 				}
 			}
-		} else {
+		} else if (inputCategory == 9) {
+			for (Scholarship scholarship : scholarshipsToSearch) {
+				
+				requirements = scholarship.getRequirements();
+
+				for (Map.Entry<String, ArrayList<String>> entry : requirements.entrySet()) {
+					if (entry.getKey().equalsIgnoreCase("GPA")) {
+						if (Float.valueOf(entry.getValue().get(1)).compareTo(Float.valueOf(inputSearchValue)) <= 0){
+							scholarshipsFound.add(scholarship);
+						}
+
+					}
+
+				}
+			}
+
+		}else {
 			// assumes any search category will be a requirement
 			// retrieves requirement hashmap from scholarship and compares category and
 			// value
@@ -1190,9 +1211,6 @@ public class BackendSystem {
 					break;
 				case 8:
 					inputCategoryName = "US Citizen";
-					break;
-				case 9:
-					inputCategoryName = "GPA";
 					break;
 				case 10:
 					inputCategoryName = "Good Standing";
@@ -1227,7 +1245,7 @@ public class BackendSystem {
 			}
 
 
-			for (Scholarship scholarship : this.allScholarships) {
+			for (Scholarship scholarship : scholarshipsToSearch) {
 				
 				requirements = scholarship.getRequirements();
 
@@ -1902,6 +1920,7 @@ public class BackendSystem {
 				student.setIsUSCitizen(newBooleanValue);
 			}
 
+			//Choice 8: GPA (Float)
 			else if (choice == 8) {
 				System.out.print("Enter the new GPA: ");
 				float newGPA = scnr.nextFloat();
@@ -2007,16 +2026,6 @@ public class BackendSystem {
 		}
 	}
 
-	// this could work with the printAllScholarships method
-	public void browseScholarships() {
-		/*
-		 * 1. display 10 scholarship names
-		 * 2. allow student to select one or scroll or exit
-		 * 3. if selected, scholarship details displayed
-		 * 4. Return to list or exit if application opened
-		 * 5. Find a way to return with that scholorship
-		 */
-	}
 
 	// TODO: ****** test these q+a methods!
 
@@ -2555,7 +2564,6 @@ public class BackendSystem {
 
 	public void editApplication(MatchRelationship match) throws IOException {
 		Boolean quit = false;
-		Boolean save = false;
 		int questionIndex;
 		int currIndex;
 		String answer;
@@ -2632,11 +2640,12 @@ public class BackendSystem {
 		}
 	}
 
-	public void getSubmittedApplications (StudentProfile student) {
+	public void getSubmittedApplications () {
 		ArrayList<MatchRelationship> matchesFound = new ArrayList<MatchRelationship>();
 
 		for (MatchRelationship match : this.allMatchRelationships) {
-			if(match.getStudentName().equals(student.getName()) && match.getApplicationStatus().equals("submitted")) {
+			if(match.getStudentName().equals(((StudentProfile)currentUser).getName()) && match.getApplicationStatus().equals("submitted") 
+			&& match.getIsActive()) {
 				matchesFound.add(match);
 			}
 		}
@@ -2667,6 +2676,20 @@ public class BackendSystem {
 		}
 
 		return availableScholarships;
+	}
+
+	public ArrayList<MatchRelationship> getInProgressApplications() {
+		ArrayList<MatchRelationship> inProgressMatches = new ArrayList<MatchRelationship>();
+
+		for (MatchRelationship match : this.allMatchRelationships) {
+			if(match.getStudentName().equals(((StudentProfile)currentUser).getName()) && match.getApplicationStatus().equals("in progress")
+			&& match.getIsActive()) {
+				inProgressMatches.add(match);
+			}
+		}
+
+		return inProgressMatches;
+		
 	}
 
 }

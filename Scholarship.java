@@ -291,7 +291,9 @@ public class Scholarship {
         + getDonorName() + "\n"
         + this.awardAmount + "\n"
         + this.isApproved + "\n"
-        + this.isArchived;
+        + this.isArchived + "\n"
+        + this.getDateAddedString() + "\n"
+        + this.getDateDueString();
     }
 
     public String getApplicationFileText() {

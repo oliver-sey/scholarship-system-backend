@@ -3,6 +3,6 @@ If you are a struggling part time student, and you are also an engineering major
 Michael Lauria
 2000
 True
-True
-2020-01-01
-2021-12-31
+False
+2023-10-01
+2024-03-10

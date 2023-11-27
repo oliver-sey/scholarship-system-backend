@@ -1,3 +1,7 @@
+Full Time Student
+True
+GPA
+2.0
 Grade Level
 Freshman
 Grade Level
@@ -6,7 +10,3 @@ Grade Level
 Junior
 Grade Level
 Senior
-Full Time Student
-True
-GPA
-2.0

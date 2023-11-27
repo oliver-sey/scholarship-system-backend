@@ -1,6 +1,6 @@
-Oliver Seymour
+Katelyn McLean
 Women in Engineering
-57.8
-1.6
+17.0
+6.7
 in progress
-True
+true

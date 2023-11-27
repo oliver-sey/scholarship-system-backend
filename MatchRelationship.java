@@ -9,6 +9,10 @@ public class MatchRelationship {
     private float matchIndex;
     private HashMap<String, String> application = new HashMap<String, String>();
     private String applicationStatus;
+    private Boolean isActive;
+
+    
+
 
     // input string of application questions into a hashmap as the keys
     public HashMap<String, String> InitializeApplication(ArrayList<String> applicationQuestions) {
@@ -24,7 +28,13 @@ public class MatchRelationship {
         HashMap<String, String> application = new HashMap<String, String>();
 
         for (int i = 0; i < applicationQandA.size(); i = i + 2) {
-            application.put(applicationQandA.get(i), applicationQandA.get(i + 1));
+            if (applicationQandA.get(i + 1).equals("*")){
+                application.put(applicationQandA.get(i), "");
+            }
+            else{
+                application.put(applicationQandA.get(i), applicationQandA.get(i + 1));
+            }
+            
         }
 
         return application;
@@ -65,18 +75,24 @@ public class MatchRelationship {
         this.application = InitializeApplication(inputScholarship.getApplication());
         this.applicationStatus = "not started";
         this.ID = ID;
+        this.isActive = true;
     }
 
     //for file read input
     public MatchRelationship(StudentProfile inputStudent, Scholarship inputScholarship, int ID, float inputMatchPercentage,
-            float inputMatchIndex, ArrayList<String> application, String applicationStatus) {
+            float inputMatchIndex, ArrayList<String> application, String applicationStatus, Boolean isActive) {
         this.student = inputStudent;
         this.scholarship = inputScholarship;
         this.ID = ID;
         this.matchPercentage = inputMatchPercentage;
         this.matchIndex = inputMatchIndex;
-        this.application = InitializeApplication(application);
+        this.application = UpdateApplication(application);
         this.applicationStatus = applicationStatus;
+        this.isActive = isActive;
+    }
+
+    public MatchRelationship() {
+        
     }
 
     // getters
@@ -101,12 +117,20 @@ public class MatchRelationship {
         return this.student.getName();
     }
 
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
     public String getScholarshipName() {
         return this.scholarship.getName();
     }
 
     public int getID() {
         return this.ID;
+    }
+
+    public Scholarship getScholarship() {
+        return this.scholarship;
     }
 
     // setters
@@ -125,6 +149,10 @@ public class MatchRelationship {
 
     public void setApplicationToSubmitted() {
         this.applicationStatus = "submitted";
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
     }
 
     public void setApplication(ArrayList<String> inputApplication) {
@@ -147,15 +175,24 @@ public class MatchRelationship {
         + this.scholarship.getName() + "\n"
         + this.matchPercentage + "\n"
         + this.matchIndex + "\n"
-        + this.applicationStatus;
+        + this.applicationStatus + "\n"
+        + this.isActive;
     }
 
     public String getApplicationFileText() {
         ArrayList<String> applicationList = new ArrayList<String>();
 
+        //pass string of line seperated values 
+        //pass a star if answer is empty
         for (HashMap.Entry<String, String> entry : this.application.entrySet()) {
             applicationList.add(entry.getKey());
-            applicationList.add(entry.getValue());
+            if (entry.getValue() == "") {
+                applicationList.add("*");
+            }
+            else {
+                applicationList.add(entry.getValue());
+            }
+            
         }
         
         String fileText = String.join("\n", applicationList);
