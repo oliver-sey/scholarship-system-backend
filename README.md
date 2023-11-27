@@ -64,7 +64,7 @@ Currently Receives Funding
 ## In the Match folder:
 
 ### Scholarship Match Info File:
-Student name, scholarship name, Match percentage, match index, application status
+Student name, scholarship name, Match percentage, match index, application status, isActive
 
 ### Application File:
 Question 1, answer 1, question 2, answer2, etc.  
