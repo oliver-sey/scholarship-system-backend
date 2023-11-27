@@ -439,30 +439,45 @@ public class Main {
 					newStudent = backend.getStudentFromInput();
 					backend.setCurrentUser(newStudent);
 					System.out.println(((StudentProfile) backend.getCurrentUser()).toString());
+					backend.storeNewStudentProfile(newStudent);
+					System.out.println("Made new folder and files for that student, the folder name should be /students/student" + (backend.findNextFileIndex("student") - 1));
+					System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
 				}
 				else if(userType.equalsIgnoreCase("admin")){
 					AdminProfile newAdmin = new AdminProfile();
 					newAdmin = backend.getAdminFromInput();
 					backend.setCurrentUser(newAdmin);
 					System.out.println(((AdminProfile) backend.getCurrentUser()).toString());
+					backend.storeNewAdminProfile(newAdmin);
+					System.out.println("Made new folder and files for that administrator, the folder name should be /administrators/admin" + (backend.findNextFileIndex("admin") - 1));
+					System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
 				}
 				else if(userType.equalsIgnoreCase("staff")){
 					StaffProfile newStaff = new StaffProfile();
 					newStaff = backend.getStaffFromInput();
 					backend.setCurrentUser(newStaff);
 					System.out.println(((StaffProfile) backend.getCurrentUser()).toString());
+					backend.storeNewStaffProfile(newStaff);
+					System.out.println("Made new folder and files for that staff, the folder name should be /engr staff/staff" + (backend.findNextFileIndex("staff") - 1));
+					System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
 				}
 				else if(userType.equalsIgnoreCase("fundsteward")){
 					FundStewardProfile newFundsteward = new FundStewardProfile();
 					newFundsteward = backend.getFundStewardFromInput();
 					backend.setCurrentUser(newFundsteward);
 					System.out.println(((FundStewardProfile) backend.getCurrentUser()).toString());
+					backend.storeNewFundStewardProfile(newFundsteward);
+					System.out.println("Made new folder and files for that fundsteward, the folder name should be /fundstewards/fundsteward" + (backend.findNextFileIndex("fundsteward") - 1));
+					System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
 				}
 				else if(userType.equalsIgnoreCase("donor")){
 					DonorProfile newDonor = new DonorProfile();
 					newDonor = backend.getDonorFromInput();
 					backend.setCurrentUser(newDonor);
 					System.out.println(((DonorProfile) backend.getCurrentUser()).toString());
+					backend.storeNewDonorProfile(newDonor);
+					System.out.println("Made new folder and files for that donor, the folder name should be /donors/donor" + (backend.findNextFileIndex("donor") - 1));
+					System.out.println("!!!! Please be sure to delete that folder so we don't have duplicates.");
 				}
 
 			}
