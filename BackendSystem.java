@@ -2802,6 +2802,28 @@ public class BackendSystem {
 		
 	}
 
+	public ArrayList<Scholarship> getScholarshipsToBeAwarded() {
+		ArrayList<Scholarship> scholarshipsFound = new ArrayList<Scholarship>();
+
+		for (Scholarship schol : this.allScholarships) {
+			if (schol.getIsArchived() && !schol.getIsAwarded() && schol.getIsApproved()) {
+				scholarshipsFound.add(schol);
+			}
+		}
+
+		return scholarshipsFound;
+	}
+
+	public void awardScholarship(Scholarship scholarship, StudentProfile recipient) throws IOException {
+		scholarship.setAwarded(true);
+		scholarship.setRecipient(recipient);
+		scholarship.setRecipientName(recipient.getName());
+		recipient.addAwardReceived(scholarship);
+
+		updateScholarshipFile(scholarship);
+		updateStudentProfileFile(recipient);
+	}
+
 	/**
 	 * A recursive method to delete a folder and all the files in it
 	 * Or just to delete a file

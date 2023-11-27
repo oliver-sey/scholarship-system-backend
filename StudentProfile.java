@@ -369,8 +369,8 @@ public class StudentProfile extends Profile {
 		this.personalStatement = inputPersonalStatement;
 	}
 
-	public void setAwardsReceived(ArrayList<Scholarship> awardsReceived) {
-        this.awardsReceived = awardsReceived;
+	public void addAwardReceived(Scholarship awardReceived) {
+        this.awardsReceived.add(awardReceived);
     }
 
 	public void setFileIndex(int fileIndex) {

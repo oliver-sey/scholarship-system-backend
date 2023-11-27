@@ -841,100 +841,129 @@ public class Main {
 
 				// award scholarship
 				else if (userSelection == 6) {
-					boolean quitBrowse = true;
+					boolean quitBrowse = false;
 					int fileIndex;
-					while (quitBrowse) {
+
+					while (!quitBrowse) {
 						// we want only not-archived and yes approved scholarships for this
-						backend.printAllScholarships(false, false, true, true, false);
-						// Grabs the index so that that scholarship can be printed
-						System.out.print("Please enter the file index of the scholarship you want to view: ");
-						fileIndex = scnr.nextInt();
+						
+						for(Scholarship schol : backend.getScholarshipsToBeAwarded()) {
+							System.out.println(schol.getBasicInfoString());
+						}
+
+						System.out.println("What would you like to do:");
+						System.out.println("1 - Go back");
+						System.out.println("2 - view one scholarship in more detail");
+
+						System.out.print("Your choice: ");
+
+						// want to keep this separate from userSelection, so we don't accidentally exit
+						// the outer do-while loop or something
+						int userAction = scnr.nextInt();
 						scnr.nextLine();
-						// if the user does not select a valid scholarship reinquires user to select a
-						// valid scholarship
-						if (backend.getOneScholarshipByFileIndex(fileIndex) == null) {
-							System.out.println("The scholarship with file index " + fileIndex + " could not be found.");
-							System.out.println("Please enter a valid index.");
-						} else {
-							int userAction = 7;
+
+						if (userAction == 1) {
+							quitBrowse = true;
+						} else if (userAction == 2) {
+							Boolean validSelection = false;
+
 							do {
-								// TODO Implement option 3 and fix 2 applicants printing
-								System.out.println("What would you like to do?");
-								System.out.println("1- view application");
-								System.out.println("2- list applicants");
-								// System.out.println("3- list applications THIS HAS NOT BEEN DONE YET NEEDS TO
-								// BE IMPLEMENTED");
-								System.out.println("0- EXIT");
-
-								userAction = scnr.nextInt();
+								System.out.print("Please enter the file index of the scholarship you want to view: ");
+								int scholFileIndex = scnr.nextInt();
 								scnr.nextLine();
-								if (userAction == 1) {
-									System.out
-											.println(backend.getOneScholarshipByFileIndex(fileIndex).getApplication());
-								} else if (userAction == 2) {
-									// As of now prints out list of names and then student profiles
-									// maybe take out names and just print profiles?
-									// TODO check over this pls
-									// MatchRelationship match = null;
-									Scholarship scholarship = backend.getOneScholarshipByFileIndex(fileIndex);
-									scholarship.printApplicants();
-									// TODO: print applications
-									Integer selection = 9;
 
-									while (selection != 0) {
-										System.out.println("What would you like to do?");
-										System.out.println("1- Select a recipient");
-										System.out.println("2- View recipient");
-										System.out.println("0- EXIT");
+								if (backend.getOneScholarshipByFileIndex(scholFileIndex) == null) {
+									System.out.println(
+											"The scholarship with file index " + scholFileIndex + " could not be found.");
+									System.out.println("Please enter a valid index.");
+								} else {
+									// print the scholarship's information, in more detail than before
+									validSelection = true;
+									System.out.println(backend.getOneScholarshipByFileIndex(scholFileIndex).getAllInfoString());
 
-										selection = scnr.nextInt();
-										scnr.nextLine();
+									System.out.println("\nPlease select an option:");
+									System.out.println("1 - Return to list");
+									System.out.println("2 - See applicants");
 
-										if (selection == 1) {
-											StudentProfile recipient = null;
-											// continues to ask until valid name is inputed
-											while (recipient == null) {
-												System.out.println("Enter recipient name (First Last): ");
-												String searchValue = scnr.nextLine();
-												// if we remove the names then we should set recipent by ID
-												// Integer searchValue = scnr.nextInt();
-												// if(student.getID() == searchValue)
-												// searches for students name that was inputed
-												for (StudentProfile student : backend.getAllStudents()) {
-													if (student.getName().compareTo(searchValue) == 0) {
-														recipient = student;
-													}
-												}
-												if (recipient != null) {
-													backend.AwardScholarship(recipient,
-															backend.getOneScholarshipByFileIndex(fileIndex));
-												} else {
-													System.out.println("Student not found please enter another name");
-												}
+									System.out.print("Your choice: ");
+									userAction = scnr.nextInt();
+
+									if (userAction == 1) {
+										// do nothing?
+									} else if (userAction == 2) {
+										boolean quitStudentBrowse = false;
+
+										while (!quitStudentBrowse) {
+											for (StudentProfile applicant : backend.getOneScholarshipByFileIndex(scholFileIndex).getApplicants()) {
+												System.out.println(applicant.getBasicDetailsString());
 											}
-										} else if (selection == 2) {
-											StudentProfile recipient = scholarship.getRecipient();
-											System.out.println(recipient.getName());
-											System.out.println(scholarship.getRecipient());
+
+											System.out.println("What would you like to do:");
+											System.out.println("1 - Go back to scholarships");
+											System.out.println("2 - View student in more detail");
+
+											System.out.print("Your choice: ");
+
+											// want to keep this separate from userSelection, so we don't accidentally exit
+											// the outer do-while loop or something
+											int viewStudentAction = scnr.nextInt();
+											scnr.nextLine();
+
+											if (userAction == 1) {
+												quitStudentBrowse = true;
+											} else if (userAction == 2) {
+												Boolean validSelection2 = false;
+
+												do {
+													System.out.print("Please enter the index of the student you want to view: ");
+													int studentFileIndex = scnr.nextInt();
+													scnr.nextLine();
+
+													if (backend.getOneScholarshipByFileIndex(studentFileIndex) == null) {
+														System.out.println(
+																"The student with file index " + studentFileIndex + " could not be found.");
+														System.out.println("Please enter a valid index.");
+													} else {
+														// print the scholarship's information, in more detail than before
+														validSelection2 = true;
+														System.out.println(backend.getOneStudentByFileIndex(studentFileIndex).getAllDetailsString());
+
+														System.out.println("\nPlease select an option:");
+														System.out.println("1 - Return to applicant list");
+														System.out.println("2 - Award scholarship to this student");
+
+														System.out.print("Your choice: ");
+														userAction = scnr.nextInt();
+
+														if (userAction == 1) {
+															quitStudentBrowse = true;
+														} else if (userAction == 2) {
+															backend.awardScholarship(backend.getOneScholarshipByFileIndex(studentFileIndex), backend.getOneStudentByFileIndex(studentFileIndex));
+														}
+													}
+
+												} while (!validSelection2);
+											} 
+
 										}
+									} 
 
-									}
-								} else if (userAction == 0) {
-									quitBrowse = false;
-								}
-
-							} while (userAction != 0);
+								} 
+							} while (!validSelection);
 						}
 					}
+
+				} else {
+					// should never get here
+					System.out.println("Invalid user type in userOptions");
 				}
 
 			} while (userSelection != 0);
-		} else {
-			// should never get here
-			System.out.println("Invalid user type in userOptions");
 		}
+	} 
+		
 
-	}
+	
 
 	public static void runDifferentTests() throws Exception {
 		System.out.println("Hello! Welcome to the backend for our Scholarship Management System.");
