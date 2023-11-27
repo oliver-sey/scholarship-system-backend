@@ -37,32 +37,38 @@ public class Main {
 			backend.createNewProfile(); // TODO: INCOMPLETE- need to update profile lists when a new profile is added
 		}
 
-		// prompt the user to log in, when this line of code is done they are
-		// successfully logged in or the system should stop
-		boolean successfulLogin = backend.login();
+		
+		String userInput = "";
+		do {
+			// prompt them to login (if they are not already logged in),
+			// and then to do one action
+			oneUserAction(backend);
 
-		if (successfulLogin) {
-			String userInput = "";
-			do {
-				// prompt them for one action
-				oneUserAction(backend);
-
-				// see if they want to quit
-				System.out.print("Do you want to fully quit the program? (type y/n): ");
-				userInput = scnr.next();
-				// while the first letter of the user's input is either y or Y, keep going
-			} while (userInput.toLowerCase().charAt(0) != 'y');
-		}
-		// else just quit
+			// see if they want to quit
+			System.out.print("Do you want to fully quit the program? (type y/n): ");
+			userInput = scnr.next();
+			// while the first letter of the user's input is either y or Y, keep going
+		} while (userInput.toLowerCase().charAt(0) != 'y');
 	}
 
 	/**
-	 * You should get the user to log in before calling this!
-	 * prompts the user for which action they want to perform based on their profile
+	 * Prompts the user to log in if they are not already, then
+	 * prompts them for which action they want to perform based on their profile
 	 * type
 	 */
 	public static void oneUserAction(BackendSystem backend) throws IOException {
 		int userSelection = -1;
+
+		// if no one is currently logged in
+		if (backend.getCurrentUser() == null) {
+			// prompt them to log in
+			boolean successfulLogin = backend.login();
+
+			// if their login was not successful, exit this method early
+			if (!successfulLogin) {
+				return;
+			}
+		}
 
 		// if (backend.getUserType().compareTo("student") == 0) {
 		if (backend.getCurrentUser() instanceof StudentProfile) {
@@ -81,6 +87,8 @@ public class Main {
 				System.out.println("3 - See applications in progress");
 				System.out.println("4 - See submitted applications");
 				System.out.println("5 - Search scholarships");
+				System.out.println("6 - delete your profile and all associated data");
+
 				System.out.println("0 - EXIT");
 
 				System.out.print("Your selection: ");
@@ -358,6 +366,20 @@ public class Main {
 
 					}
 
+				}
+
+				// user wants to delete themselves
+				else if (userSelection == 6) {
+					StudentProfile loggedInStudent = (StudentProfile) backend.getCurrentUser();
+					// delete the currentUser, which is a student
+					backend.deleteStudentProfile(loggedInStudent);
+					// set userSelection to 0 so it exits this loop within the code for a student,
+					//  we don't want to let the student keep attempting actions after their account was deleted
+					userSelection = 0;
+
+					// TODO: is this right?? 
+					// set the current user to null so it stops being the student that deleted themselves
+					backend.setCurrentUser(null);
 				}
 
 			} while (userSelection != 0);
