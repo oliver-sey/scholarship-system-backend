@@ -1595,7 +1595,7 @@ public class BackendSystem {
 	 * which it should have to be, because you can't have e.g. two folders called 'Scholarship1' (fileIndex 1) in the same Scholarships folder.
 	 * 
 	 * @param fileIndex the fileIndex of the scholarship object you want, i.e. 3 if you want the scholarship whose details
-	 * are stored in the 'schoalrship3' folder
+	 * are stored in the 'scholarship3' folder
 	 * 
 	 * @return the Scholarship object, or null if nothing was found
 	 */
@@ -1928,6 +1928,7 @@ public class BackendSystem {
 		 */
 	}
 
+	// TODO: ****** test these q+a methods!
 
 	//Q&A with donor, passing in obj to create donor profile with appropriate associated information
 	public DonorProfile getDonorFromInput(){
@@ -2234,6 +2235,156 @@ public class BackendSystem {
 		scnr.close();
 
 		return StudentObj;
+	}
+
+	/**
+	 * this is for a donor who is creating a new scholarship and typing in the details. If they confirm it,
+	 * the scholarship gets added to allScholarships and printed to a new file
+	 * 
+	 * NOTE: this assumes that the currentUser is a Donor, who is also the only donor to this new scholarship
+	 * 
+	 * @return a scholarship object containing the info that was entered, don't know if we'll need this
+	 */
+	public Scholarship createScholarshipFromInput() throws IOException {
+		Main.scnr.nextLine();
+		System.out.println("Enter the name of the scholarship:");
+        String name = Main.scnr.nextLine();
+
+        System.out.println("Enter the description of the scholarship:");
+        String description = Main.scnr.nextLine();
+
+		// the donor is the current logged in user
+		// we are assuming that this code will only run when it is a DonorProfile, so it is safe to typecast this
+        DonorProfile donor = (DonorProfile)getCurrentUser();
+
+        System.out.println("Enter the award amount:");
+        float awardAmount = Main.scnr.nextFloat();
+        Main.scnr.nextLine(); // consume the newline character
+
+        System.out.println("Enter the requirements (comma-separated):");
+        ArrayList<String> requirements = new ArrayList<>();
+        
+		int userSelection = 0;
+		// loop through until they're done, adding one category and then the allowed valued for it, at a time
+        do {
+			System.out.print("Please enter a number, to add it as a requirement, or type -1 to exit"
+			+ " (Remember that you can add a requirement multiple times if you want to allow multiple different values): ");
+
+			System.out.println("1 - major");
+			System.out.println("2 - minor");
+			System.out.println("3 - hasAMinor");
+			System.out.println("4 - isUSCitizen");
+			System.out.println("5 - GPA");
+			System.out.println("6 - inGoodStanding");
+			System.out.println("7 - hasAdvStanding");
+			System.out.println("8 - gradeLevel");
+			System.out.println("9 - gradMonth");
+			System.out.println("10 - gradYear");
+			System.out.println("11 - gender");
+			System.out.println("12 - isFullTimeStudent");
+			System.out.println("13 - isTransferStudent");
+			System.out.println("14 - curNumCredits");
+			System.out.println("15 - receivesFunding");
+
+
+			System.out.print("Your selection: ");
+			userSelection = Main.scnr.nextInt();
+			// consume the newline
+			Main.scnr.nextLine();
+
+			if (userSelection == -1) {
+				break;
+			}
+			else if (userSelection == 1) {
+				requirements.add("major");
+			}
+			else if (userSelection == 2) {
+				requirements.add("minor");
+			}
+			else if (userSelection == 3) {
+				requirements.add("hasAMinor");
+			}
+			else if (userSelection == 4) {
+				requirements.add("isUSCitizen");
+			}
+			else if (userSelection == 5) {
+				requirements.add("GPA");
+			}
+			else if (userSelection == 6) {
+				requirements.add("inGoodStanding");
+			}
+			else if (userSelection == 7) {
+				requirements.add("hasAdvStanding");
+			}
+			else if (userSelection == 8) {
+				requirements.add("gradeLevel");
+			}
+			else if (userSelection == 9) {
+				requirements.add("gradMonth");
+			}
+			else if (userSelection == 10) {
+				requirements.add("gradYear");
+			}
+			else if (userSelection == 11) {
+				requirements.add("gender");
+			}
+			else if (userSelection == 12) {
+				requirements.add("isFullTimeStudent");
+			}
+			else if (userSelection == 13) {
+				requirements.add("isTransferStudent");
+			}
+			else if (userSelection == 14) {
+				requirements.add("curNumCredits");
+			}
+			else if (userSelection == 15) {
+				requirements.add("receivesFunding");
+			}
+
+            System.out.println("Enter the allowed value:");
+            String value = Main.scnr.nextLine();
+            requirements.add(value);
+        } while (userSelection != -1);
+
+        System.out.println("Enter the application details (line-separated):");
+        ArrayList<String> application = new ArrayList<>();
+        String applicationDetail;
+
+        while (true) {
+            System.out.println("Enter the application detail (or 'done' to finish):");
+            applicationDetail = Main.scnr.nextLine();
+            if (applicationDetail.equals("done")) {
+                break;
+            }
+            application.add(applicationDetail);
+        }
+
+        System.out.println("Enter the due date (in the format YYYY-MM-DD):");
+        String dateDueString = Main.scnr.nextLine();
+
+
+		// Create a new Scholarship object
+		// have to have this up here so we can print the details
+		Scholarship scholarship = new Scholarship(name, description, donor, awardAmount, requirements, application, dateDueString);
+
+		System.out.println("Here is the scholarship you have created:");
+		System.out.println(scholarship.getAllInfoString());
+
+		System.out.print("\nDo you want to add this new scholarship to the system? (y/n): ");
+		String userConfirm = Main.scnr.nextLine();
+
+		if (userConfirm.equals("y")) {
+			allScholarships.add(scholarship);
+			
+			// print it to a new file
+			storeNewScholarship(scholarship);
+
+			return scholarship;
+		}
+		// else do nothing??
+        
+		// we didn't actually add the scholarship to the system, so return null
+		return null;
 	}
 
 	/*
