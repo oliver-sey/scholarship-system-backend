@@ -21,6 +21,7 @@ public class Main {
 			BackendSystem backend = new BackendSystem();
 			userRunSystem(backend);
 
+			validInput = false;
 			while (!validInput) {
 				System.out.println();
 				System.out.println("Choose an option: ");
