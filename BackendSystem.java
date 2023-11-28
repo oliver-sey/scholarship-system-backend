@@ -101,7 +101,9 @@ public class BackendSystem {
 				success = true;
 				StudentProfile newStudent = getStudentFromInput();
 				// setCurrentUser(newStudent);
-				System.out.println(((StudentProfile) getCurrentUser()).toString());
+				// System.out.println(((StudentProfile) getCurrentUser()).toString());
+
+				System.out.println("Here are the details you entered: " + newStudent.toString());
 				// add this new profile to the list here in backend
 				allStudents.add(newStudent);
 				// store this new profile in a file
@@ -116,7 +118,9 @@ public class BackendSystem {
 				success = true;
 				AdminProfile newAdmin = getAdminFromInput();
 				// setCurrentUser(newAdmin);
-				System.out.println(((AdminProfile) getCurrentUser()).toString());
+				// System.out.println(((AdminProfile) getCurrentUser()).toString());
+				System.out.println("Here are the details you entered: " + newAdmin.toString());
+
 				// add this new profile to the list here in backend
 				allAdmins.add(newAdmin);
 				// store this new profile in a file
@@ -131,7 +135,9 @@ public class BackendSystem {
 				success = true;
 				StaffProfile newStaff = getStaffFromInput();
 				// setCurrentUser(newStaff);
-				System.out.println(((StaffProfile) getCurrentUser()).toString());
+				// System.out.println(((StaffProfile) getCurrentUser()).toString());
+				System.out.println("Here are the details you entered: " + newStaff.toString());
+
 				// add this new profile to the list here in backend
 				allStaff.add(newStaff);
 				// store this new profile in a file
@@ -145,7 +151,9 @@ public class BackendSystem {
 				success = true;
 				FundStewardProfile newFundSteward = getFundStewardFromInput();
 				// setCurrentUser(newFundSteward);
-				System.out.println(((FundStewardProfile) getCurrentUser()).toString());
+				// System.out.println(((FundStewardProfile) getCurrentUser()).toString());
+				System.out.println("Here are the details you entered: " + newFundSteward.toString());
+
 				// add this new profile to the list here in backend
 				allFundStewards.add(newFundSteward);
 				// store this new profile in a file
@@ -160,8 +168,9 @@ public class BackendSystem {
 				success = true;
 				DonorProfile newDonor = getDonorFromInput();
 				// setCurrentUser(newDonor);
-				System.out.println(
-						"Here are the details you entered: " + ((DonorProfile) getCurrentUser()).toString());
+				// System.out.println("Here are the details you entered: " + ((DonorProfile) getCurrentUser()).toString());
+				System.out.println("Here are the details you entered: " + newDonor.toString());
+
 				// add this new profile to the list here in backend
 				allDonors.add(newDonor);
 				// store this new profile in a file
