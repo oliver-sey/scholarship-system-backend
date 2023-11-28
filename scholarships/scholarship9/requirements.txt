@@ -1,3 +1,11 @@
+Full Time Student
+True
+Good Standing
+True
+Good Standing
+False
+GPA
+1.0
 Grade Level
 Freshman
 Grade Level
@@ -6,11 +14,3 @@ Grade Level
 Junior
 Grade Level
 Senior
-GPA
-1.0
-Full Time Student
-True
-Good Standing
-True
-Good Standing
-False

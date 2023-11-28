@@ -513,7 +513,7 @@ public class BackendSystem {
 
 		for (int i = 0; i < allScholarships.size(); i++) {
 			// if the due date has passed, set it to archived
-			if (allScholarships.get(i).isPastDue()) {
+			if (allScholarships.get(i).isPastDue() && !allScholarships.get(i).getIsArchived()) {
 				allScholarships.get(i).setArchived(true);
 				numSetToArchived++;
 				updateScholarshipFile(allScholarships.get(i));

@@ -409,7 +409,14 @@ public class Scholarship {
             }
 		}
 
-        info += "}\n" + "Donor: " + this.donor.getName() + "\n" + "Date posted: " + getDateAddedString();
+        info += "}\n" + "Donor: " + this.donor.getName() + "\n" + "Date posted: " + getDateAddedString() + "\n";
+
+        if (this.isAwarded) {
+            info += "Awarded to " + this.recipientName;
+        }
+        else {
+            info += "Has not been awrded.";
+        }
 
         return info;
     }
