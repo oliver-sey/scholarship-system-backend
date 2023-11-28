@@ -434,12 +434,14 @@ public class BackendSystem {
 	}
 
 	public void setScholarshipObjects() {
-		ArrayList<StudentProfile> applicants = new ArrayList<StudentProfile>();
-		DonorProfile correctDonor = new DonorProfile();
-		StudentProfile recipient = new StudentProfile();
+		
 
 		for (Scholarship schol : this.allScholarships) {
 			// find student objects
+			ArrayList<StudentProfile> applicants = new ArrayList<StudentProfile>();
+			DonorProfile correctDonor = new DonorProfile();
+			StudentProfile recipient = new StudentProfile();
+
 			for (String applicantName : schol.getApplicantNames()) {
 				for (StudentProfile student : this.allStudents) {
 					if (applicantName.equals(student.getName())) {
@@ -1304,7 +1306,7 @@ public class BackendSystem {
 
 				for (Map.Entry<String, ArrayList<String>> entry : requirements.entrySet()) {
 					if (entry.getKey().equalsIgnoreCase("GPA")) {
-						if (Float.valueOf(entry.getValue().get(1)).compareTo(Float.valueOf(inputSearchValue)) <= 0){
+						if (Float.valueOf(entry.getValue().get(0)).compareTo(Float.valueOf(inputSearchValue)) <= 0){
 							scholarshipsFound.add(scholarship);
 						}
 
