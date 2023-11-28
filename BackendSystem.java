@@ -93,11 +93,14 @@ public class BackendSystem {
 			 * continue;
 			 * }
 			 */
-
+			
+			// ***IMPORTANT: don't set the currentUser yet, because if it's null,
+			// then in the code after this method gets called, it will prompt the user to login,
+			// after which it will set the currentUser
 			if (userType.equalsIgnoreCase("student")) {
 				success = true;
 				StudentProfile newStudent = getStudentFromInput();
-				setCurrentUser(newStudent);
+				// setCurrentUser(newStudent);
 				System.out.println(((StudentProfile) getCurrentUser()).toString());
 				// add this new profile to the list here in backend
 				allStudents.add(newStudent);
@@ -112,7 +115,7 @@ public class BackendSystem {
 			else if (userType.equalsIgnoreCase("admin")) {
 				success = true;
 				AdminProfile newAdmin = getAdminFromInput();
-				setCurrentUser(newAdmin);
+				// setCurrentUser(newAdmin);
 				System.out.println(((AdminProfile) getCurrentUser()).toString());
 				// add this new profile to the list here in backend
 				allAdmins.add(newAdmin);
@@ -127,7 +130,7 @@ public class BackendSystem {
 			else if (userType.equalsIgnoreCase("staff")) {
 				success = true;
 				StaffProfile newStaff = getStaffFromInput();
-				setCurrentUser(newStaff);
+				// setCurrentUser(newStaff);
 				System.out.println(((StaffProfile) getCurrentUser()).toString());
 				// add this new profile to the list here in backend
 				allStaff.add(newStaff);
@@ -141,7 +144,7 @@ public class BackendSystem {
 			else if (userType.equalsIgnoreCase("fundsteward")) {
 				success = true;
 				FundStewardProfile newFundSteward = getFundStewardFromInput();
-				setCurrentUser(newFundSteward);
+				// setCurrentUser(newFundSteward);
 				System.out.println(((FundStewardProfile) getCurrentUser()).toString());
 				// add this new profile to the list here in backend
 				allFundStewards.add(newFundSteward);
@@ -156,7 +159,7 @@ public class BackendSystem {
 			else if (userType.equalsIgnoreCase("donor")) {
 				success = true;
 				DonorProfile newDonor = getDonorFromInput();
-				setCurrentUser(newDonor);
+				// setCurrentUser(newDonor);
 				System.out.println(
 						"Here are the details you entered: " + ((DonorProfile) getCurrentUser()).toString());
 				// add this new profile to the list here in backend
