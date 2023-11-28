@@ -2934,17 +2934,23 @@ public class BackendSystem {
 		allAdmins.remove(admin);
 	}
 
+	//function to allow admin access to delete an StudentProfile object and the associated file
 	public void adminDeleteStudentProfile(StudentProfile student){
 		char choice;
+		//display text asking user if they want to delete student profile
 		System.out.println("Would you like to delete student profile? (y/n)");
+		
+		//scan for users choice
 		choice = Main.scnr.next().charAt(0);
+		
+		//if users choice equals 'y', delete the folder and files associated with the object student and remove it
 		if(choice == 'y'){
 			int fileIndex = student.getFileIndex();
 			File studentFolder = new File("students/student"+fileIndex);
 			deleteFileOrFolder(studentFolder);
 			allStudents.remove(student);
 		}
-		//if choice == 'n', do nothing
+		//if choice == 'n' or anything else, do nothing
 		else{
 		}
 	}
