@@ -500,10 +500,16 @@ public class BackendSystem {
 
 		for (int i = 0; i < allScholarships.size(); i++) {
 			// if the due date has passed, set it to archived
-			if (allScholarships.get(i).isPastDue() && !allScholarships.get(i).getIsArchived()) {
+			if (allScholarships.get(i).isPastDue()) {
 				allScholarships.get(i).setArchived(true);
 				numSetToArchived++;
 				updateScholarshipFile(allScholarships.get(i));
+				for (MatchRelationship match : this.allMatchRelationships) {
+					if (match.getScholarshipName().equals(allScholarships.get(i).getName())) {
+						match.setIsActive(false);
+						updateMatchFile(match);
+					}
+				}
 			}
 		}
 

@@ -1,6 +1,6 @@
 Katelyn McLean
 Valuing Icons Scholarship
-92
+92.0
 2.6
 submitted
-False
+false

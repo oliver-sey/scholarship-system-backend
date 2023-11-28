@@ -213,6 +213,10 @@ public class Main {
 									}
 
 									int qIndex = 1;
+									System.out.printf("Match percentage: f%.1", matchSelected.getMatchPercentage());
+									System.out.println();
+									System.out.printf("Match Index: f%.2", matchSelected.getMatchIndex());
+									System.out.println();
 									System.out.println("Your current application: ");
 									System.out.println();
 

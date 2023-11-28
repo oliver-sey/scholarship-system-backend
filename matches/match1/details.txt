@@ -1,6 +1,6 @@
 Anna Fravel
 Valuing Icons Scholarship
-90
+90.0
 2.7
 submitted
-False
+false
