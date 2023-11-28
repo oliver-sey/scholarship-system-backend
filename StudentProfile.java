@@ -474,15 +474,10 @@ public class StudentProfile extends Profile {
 
 	/**
 	 * 
-	 * @return all the properties of this student, **except the personal statement since that makes it too long
+	 * @return a call to getAllDetailsString
 	 */
 	@Override
 	public String toString() {
-		return "StudentProfile [studentID=" + studentID + ", major=" + major + ", minor=" + minor + ", hasAMinor="
-				+ hasAMinor + ", isUSCitizen=" + isUSCitizen + ", GPA=" + GPA + ", inGoodStanding=" + inGoodStanding
-				+ ", hasAdvStanding=" + hasAdvStanding + ", gradeLevel=" + gradeLevel + ", gradMonth=" + gradMonth
-				+ ", gradYear=" + gradYear + ", gender=" + gender + ", extraDemographics=" + extraDemographics
-				+ ", isFullTimeStudent=" + isFullTimeStudent + ", isTransferStudent=" + isTransferStudent
-				+ ", curNumCredits=" + curNumCredits + ", receivesFunding=" + receivesFunding + "]";
+		return this.getAllDetailsString();
 	}
 }
