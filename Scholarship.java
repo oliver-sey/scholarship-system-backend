@@ -415,7 +415,7 @@ public class Scholarship {
             info += "Awarded to " + this.recipientName;
         }
         else {
-            info += "Has not been awrded.";
+            info += "Has not been awarded.";
         }
 
         return info;
