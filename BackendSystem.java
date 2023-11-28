@@ -2906,4 +2906,19 @@ public class BackendSystem {
 
 		allStudents.remove(student);
 	}
+
+	//function to delete an AdminProfile object and the associated files
+	public void deleteAdminProfile(AdminProfile admin){
+		//delete the folder and files associated with the object admin
+		int fileIndex = admin.getFileIndex();
+
+		//create a File object for the folder associated with this admin
+		File adminFolder = new File("admins/admin"+ fileIndex);
+
+		//call the deleteFileOrFolder function to delete adminFile object
+		deleteFileOrFolder(adminFolder);
+		
+		//remove admin object
+		allAdmins.remove(admin);
+	}
 }
