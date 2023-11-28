@@ -39,7 +39,7 @@ Like the other files, there is one property per line. They will be Question1, Qu
 
 ### Scholarship Details File (details.txt):
 There is one property per line. In order, they are:
-Name, description, donor name, award amount, isApproved, isArchived, dateAdded, and dateDue.
+Name, description, donor name, award amount, isApproved, isArchived, isAwarded, dateAdded, and dateDue.
 The two dates are in the format YYYY-MM-DD, and they eventually get parsed into LocalDate objects. (This is the format that LocalDate.parse(String) accepts).
 
 ### Scholarship Requirements File (requirements.txt):
@@ -83,7 +83,7 @@ Scholarship name 1, scholarship name 2
 TODO: fill this out!!
 
 ### Student Details File:
-firstName(str), lastName(str), studentID(int), username(str), password(strs), major(str), hasAMinor(T/F), minor(str), isUSCitizen(T/F), GPA(fl), inGoodStanding(T/F), hasAdvStanding(T/F), gradeLevel(str), gradMonth(int), gradYear(int), gender(str), isFullTimeStudent(T/F), isTransferStudent(T/F), curNumCredits(int), receivesFunding(T/F), personalStatement(str),secturityAnswer1(str), secturityAnswer2(str), secturityAnswer3(str)
+firstName(str), lastName(str), studentID(int), username(str), password(str), major(str), hasAMinor(T/F), minor(str), isUSCitizen(T/F), GPA(fl), inGoodStanding(T/F), hasAdvStanding(T/F), gradeLevel(str), gradMonth(int), gradYear(int), gender(str), isFullTimeStudent(T/F), isTransferStudent(T/F), curNumCredits(int), receivesFunding(T/F), personalStatement(str),securityAnswer1(str), securityAnswer2(str), securityAnswer3(str)
 
 ### Student Awards file
 List scholarships by name, line by line (str)
