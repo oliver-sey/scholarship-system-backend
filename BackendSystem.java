@@ -76,7 +76,7 @@ public class BackendSystem {
 		String userType;
 		boolean success = false;
 		do {
-			// Main.scnr.nextLine();
+			Main.scnr.nextLine();
 			System.out.println("Please enter your user type. (Enter as one word, i.e. student, fundsteward, etc.)");
 			userType = Main.scnr.nextLine();
 
@@ -94,12 +94,17 @@ public class BackendSystem {
 			 * continue;
 			 * }
 			 */
-
+			
+			// ***IMPORTANT: don't set the currentUser yet, because if it's null,
+			// then in the code after this method gets called, it will prompt the user to login,
+			// after which it will set the currentUser
 			if (userType.equalsIgnoreCase("student")) {
 				success = true;
 				StudentProfile newStudent = getStudentFromInput();
-				setCurrentUser(newStudent);
-				System.out.println(((StudentProfile) getCurrentUser()).toString());
+				// setCurrentUser(newStudent);
+				// System.out.println(((StudentProfile) getCurrentUser()).toString());
+
+				System.out.println("Here are the details you entered: " + newStudent.toString());
 				// add this new profile to the list here in backend
 				allStudents.add(newStudent);
 				// store this new profile in a file
@@ -113,8 +118,10 @@ public class BackendSystem {
 			else if (userType.equalsIgnoreCase("admin")) {
 				success = true;
 				AdminProfile newAdmin = getAdminFromInput();
-				setCurrentUser(newAdmin);
-				System.out.println(((AdminProfile) getCurrentUser()).toString());
+				// setCurrentUser(newAdmin);
+				// System.out.println(((AdminProfile) getCurrentUser()).toString());
+				System.out.println("Here are the details you entered: " + newAdmin.toString());
+
 				// add this new profile to the list here in backend
 				allAdmins.add(newAdmin);
 				// store this new profile in a file
@@ -128,8 +135,10 @@ public class BackendSystem {
 			else if (userType.equalsIgnoreCase("staff")) {
 				success = true;
 				StaffProfile newStaff = getStaffFromInput();
-				setCurrentUser(newStaff);
-				System.out.println(((StaffProfile) getCurrentUser()).toString());
+				// setCurrentUser(newStaff);
+				// System.out.println(((StaffProfile) getCurrentUser()).toString());
+				System.out.println("Here are the details you entered: " + newStaff.toString());
+
 				// add this new profile to the list here in backend
 				allStaff.add(newStaff);
 				// store this new profile in a file
@@ -142,8 +151,10 @@ public class BackendSystem {
 			else if (userType.equalsIgnoreCase("fundsteward")) {
 				success = true;
 				FundStewardProfile newFundSteward = getFundStewardFromInput();
-				setCurrentUser(newFundSteward);
-				System.out.println(((FundStewardProfile) getCurrentUser()).toString());
+				// setCurrentUser(newFundSteward);
+				// System.out.println(((FundStewardProfile) getCurrentUser()).toString());
+				System.out.println("Here are the details you entered: " + newFundSteward.toString());
+
 				// add this new profile to the list here in backend
 				allFundStewards.add(newFundSteward);
 				// store this new profile in a file
@@ -157,9 +168,10 @@ public class BackendSystem {
 			else if (userType.equalsIgnoreCase("donor")) {
 				success = true;
 				DonorProfile newDonor = getDonorFromInput();
-				setCurrentUser(newDonor);
-				System.out.println(
-						"Here are the details you entered: " + ((DonorProfile) getCurrentUser()).toString());
+				// setCurrentUser(newDonor);
+				// System.out.println("Here are the details you entered: " + ((DonorProfile) getCurrentUser()).toString());
+				System.out.println("Here are the details you entered: " + newDonor.toString());
+
 				// add this new profile to the list here in backend
 				allDonors.add(newDonor);
 				// store this new profile in a file
@@ -1451,14 +1463,21 @@ public class BackendSystem {
 		String userType = "";
 		String username = "";
 
+		int dowhileIterations = 0;
 		do {
 			// only ask them for their user type and password if they're trying to log in
 			// the first time, after that just ask them
 			// for their password
 			if (failedPWAttempts == 0) {
 				// Main.scnr.nextLine();
+				if (dowhileIterations == 0) {
+					Main.scnr.nextLine();
+				}
+				dowhileIterations++;
+
+				// Main.scnr.nextLine();
 				System.out.print("Please enter your user type (as one word, i.e. 'student', 'admin', 'fundsteward'): ");
-				Main.scnr.nextLine();
+				// Main.scnr.nextLine();
 				userType = Main.scnr.nextLine();
 
 				// check for valid user type
