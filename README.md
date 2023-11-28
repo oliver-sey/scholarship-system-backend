@@ -80,13 +80,11 @@ Scholarship name 1, scholarship name 2
 
 ### Student Awards File:
 
-TODO: fill this out!!
+List scholarships by name, line by line (str)
 
 ### Student Details File:
 firstName(str), lastName(str), studentID(int), username(str), password(str), major(str), hasAMinor(T/F), minor(str), isUSCitizen(T/F), GPA(fl), inGoodStanding(T/F), hasAdvStanding(T/F), gradeLevel(str), gradMonth(int), gradYear(int), gender(str), isFullTimeStudent(T/F), isTransferStudent(T/F), curNumCredits(int), receivesFunding(T/F), personalStatement(str),securityAnswer1(str), securityAnswer2(str), securityAnswer3(str)
 
-### Student Awards file
-List scholarships by name, line by line (str)
 
 ### Security Questions:
 Mother’s Maiden Name
