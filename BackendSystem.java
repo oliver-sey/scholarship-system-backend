@@ -2921,4 +2921,8 @@ public class BackendSystem {
 		//remove admin object
 		allAdmins.remove(admin);
 	}
+
+	public void adminDeleteStudentProfile(StudentProfile student){
+		
+	}
 }
