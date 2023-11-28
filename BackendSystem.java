@@ -2608,8 +2608,22 @@ public class BackendSystem {
 			application.add(applicationDetail);
 		}
 
-		System.out.println("Enter the due date (in the format YYYY-MM-DD):");
-		String dateDueString = Main.scnr.nextLine();
+		Boolean dayIsValid = false;
+		String dateDueString = "";
+
+		while (!dayIsValid) {
+			System.out.println("Enter the due date (in the format YYYY-MM-DD):");
+			dateDueString = Main.scnr.nextLine();
+			LocalDate dueDate = LocalDate.parse(dateDueString);
+
+			if (dueDate.isBefore(LocalDate.now()) || dueDate.isEqual(LocalDate.now())){
+				System.out.println("Due date must be after today.");
+			}
+			else {
+				dayIsValid = true;
+			}
+		}
+		
 
 		// get the next available Scholarship file index
 		int fileIndex = findNextFileIndex("scholarship");
