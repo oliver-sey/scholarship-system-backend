@@ -2939,7 +2939,10 @@ public class BackendSystem {
 		System.out.println("Would you like to delete student profile? (y/n)");
 		choice = Main.scnr.next().charAt(0);
 		if(choice == 'y'){
-			
+			int fileIndex = student.getFileIndex();
+			File studentFolder = new File("students/student"+fileIndex);
+			deleteFileOrFolder(studentFolder);
+			allStudents.remove(student);
 		}
 		//if choice == 'n', do nothing
 		else{
