@@ -979,9 +979,34 @@ public class Main {
 							} while (!validSelection);
 						}
 					}
-
+				
+				// find and delete student profile
 				} else if (userSelection == 7) {
+					System.out.println("Which student would you like to delete?");
+					// print the students, with their file index
+					for (StudentProfile student : backend.getAllStudents()) {
+						System.out.println(student.getBasicDetailsString());
+					}
 
+					System.out.print("Please enter the file index of the student you wish to delete: ");
+					int fileIndex = scnr.nextInt();
+					scnr.nextLine();
+
+					// print the student in more detail
+					System.out.println("The selected student's details:");
+					StudentProfile studentToDelete = backend.getOneStudentByFileIndex(fileIndex);
+					System.out.println(studentToDelete);
+
+					System.out.print("Are you sure you want to delete this student from the system? (y/n): ");
+					String userConfirmation = scnr.nextLine();
+
+					if (userConfirmation.equalsIgnoreCase("y")) {
+						System.out.println("Deleting the student");
+						backend.deleteStudentProfile(studentToDelete);
+					}
+					else {
+						System.out.println("Ok, will not delete the student. Exiting this menu");
+					}
 				}
 				else {
 					// should never get here
