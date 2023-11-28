@@ -1,0 +1,16 @@
+Full Time Student
+True
+Good Standing
+True
+Good Standing
+False
+GPA
+1.0
+Grade Level
+Freshman
+Grade Level
+Sophomore
+Grade Level
+Junior
+Grade Level
+Senior

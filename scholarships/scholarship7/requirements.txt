@@ -1,0 +1,24 @@
+Full Time Student
+False
+Major
+Aerospace Engineering
+Major
+Systems Engineering
+Major
+Industrial Engineering
+Major
+Mechanical Engineering
+Major
+Computer Engineering
+Major
+Architectural Engineering
+Major
+Mining Engineering
+Major
+Software Engineering
+Major
+Electrical Engineering
+GPA
+1.0
+Currently Receives Funding
+False

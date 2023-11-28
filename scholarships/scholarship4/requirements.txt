@@ -1,0 +1,16 @@
+Grade Level
+Sophomore
+Grade Level
+Junior
+Full Time Student
+True
+Graduation Month
+05
+Graduation Year
+2025
+Graduation Year
+2026
+Graduation Year
+2027
+Good Standing
+True

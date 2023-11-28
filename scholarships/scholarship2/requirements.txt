@@ -1,0 +1,12 @@
+Full Time Student
+True
+GPA
+2.0
+Grade Level
+Freshman
+Grade Level
+Sophomore
+Grade Level
+Junior
+Grade Level
+Senior
