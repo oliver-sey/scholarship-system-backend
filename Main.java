@@ -908,7 +908,7 @@ public class Main {
 
 									System.out.println("\nPlease select an option:");
 									System.out.println("1 - Return to list");
-									System.out.println("2 - See applicants");
+									System.out.println("2 - See applicants (and award scholarship)");
 
 									System.out.print("Your choice: ");
 									userAction = scnr.nextInt();
