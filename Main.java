@@ -5,9 +5,7 @@
 
 import java.io.File;
 import java.io.IOException;
-import java.security.KeyStore.TrustedCertificateEntry;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -15,19 +13,46 @@ public class Main {
 	public static Scanner scnr = new Scanner(System.in);
 
 	public static void main(String[] args) throws Exception {
-		BackendSystem backend = new BackendSystem();
-		// userRunSystem will prompt them to log in
-		userRunSystem(backend);
+		Boolean quitSystem = false;
+		Boolean validInput = false;
+		int endChoice;
 
-		// runDifferentTests();
+		do {
+			BackendSystem backend = new BackendSystem();
+			userRunSystem(backend);
 
-		// **only close the Scanner at the very end, after everything is done
+			while (!validInput) {
+				System.out.println();
+				System.out.println("Choose an option: ");
+				System.out.println("1 - Log in again");
+				System.out.println("2 - Close program");
+
+				endChoice = scnr.nextInt();
+
+				if (endChoice == 1){
+					validInput = true;
+				}
+				else if (endChoice == 2) {
+					validInput = true;
+					quitSystem = true;
+				}
+				else {
+					System.out.println("Please enter 1 or 2.");
+				}
+			}
+			
+		} while (!quitSystem);
+		
+
 		scnr.close();
 	}
 
 	// prompt the user to log in and answer security questions, and then let them
 	// perform one action at a time, until they want to quit
 	public static void userRunSystem(BackendSystem backend) throws Exception { // used to be IOException FYI
+		
+
+		
 		int userChoice;
 		System.out.println(
 				"Welcome to the UASAMS backend subsystem! Please select an option: \n1- Returning User\n2- New User");
@@ -45,10 +70,11 @@ public class Main {
 			oneUserAction(backend);
 
 			// see if they want to quit
-			System.out.print("Do you want to fully quit the program? (type y/n): ");
+			System.out.print("Are you sure you want to log out? (type y/n): ");
 			userInput = scnr.next();
 			// while the first letter of the user's input is either y or Y, keep going
 		} while (userInput.toLowerCase().charAt(0) != 'y');
+		
 	}
 
 	/**
@@ -861,7 +887,6 @@ public class Main {
 				// award scholarship
 				else if (userSelection == 6) {
 					boolean quitBrowse = false;
-					int fileIndex;
 
 					while (!quitBrowse) {
 						// we want only not-archived and yes approved scholarships for this
@@ -1095,15 +1120,7 @@ public class Main {
 				// print the backend object to make sure everything worked ok
 				// System.out.println(backend.toString());
 				for (Scholarship scholarshipObj : backend.getAllScholarships()) {
-					System.out.print(scholarshipObj.getName() + ", due date: " + scholarshipObj.getDateDueString());// +
-																													// ",
-																													// due
-																													// 5+
-																													// years
-																													// ago:
-																													// "
-																													// +
-																													// scholarshipObj.due5PlusYearsAgo());
+					System.out.print(scholarshipObj.getName() + ", due date: " + scholarshipObj.getDateDueString());
 					if (scholarshipObj.due5PlusYearsAgo() == true) {
 						System.out.println(" -> Archived");
 					} else {
