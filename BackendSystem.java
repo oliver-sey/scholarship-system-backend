@@ -2352,8 +2352,6 @@ public class BackendSystem {
 
 	// Q&A with student, passing in obj to create student profile with appropriate
 	// associated information
-	// TODO: (MiLee) basic outline of same Q&A as other profiles, not sure if we
-	// need to expand with more values?
 	public StudentProfile getStudentFromInput() {
 
 		StudentProfile StudentObj = new StudentProfile();
@@ -2937,6 +2935,14 @@ public class BackendSystem {
 	}
 
 	public void adminDeleteStudentProfile(StudentProfile student){
-		
+		char choice;
+		System.out.println("Would you like to delete student profile? (y/n)");
+		choice = Main.scnr.next().charAt(0);
+		if(choice == 'y'){
+			
+		}
+		//if choice == 'n', do nothing
+		else{
+		}
 	}
 }
