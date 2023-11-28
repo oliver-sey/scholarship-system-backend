@@ -931,12 +931,12 @@ public class Main {
 
 											// want to keep this separate from userSelection, so we don't accidentally exit
 											// the outer do-while loop or something
-											int viewStudentAction = scnr.nextInt();
+											int inputAction = scnr.nextInt();
 											scnr.nextLine();
 
-											if (userAction == 1) {
+											if (inputAction == 1) {
 												quitStudentBrowse = true;
-											} else if (userAction == 2) {
+											} else if (inputAction == 2) {
 												Boolean validSelection2 = false;
 
 												do {
@@ -958,11 +958,11 @@ public class Main {
 														System.out.println("2 - Award scholarship to this student");
 
 														System.out.print("Your choice: ");
-														userAction = scnr.nextInt();
+														inputAction = scnr.nextInt();
 
-														if (userAction == 1) {
+														if (inputAction == 1) {
 															quitStudentBrowse = true;
-														} else if (userAction == 2) {
+														} else if (inputAction == 2) {
 															backend.awardScholarship(backend.getOneScholarshipByFileIndex(studentFileIndex), backend.getOneStudentByFileIndex(studentFileIndex));
 														}
 													}
