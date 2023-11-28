@@ -2673,44 +2673,47 @@ public class BackendSystem {
 	public void applyToScholarship(int fileIndex) throws IOException {
 		Boolean matchExists = false;
 		Scholarship scholarship = getOneScholarshipByFileIndex(fileIndex);
+		MatchRelationship matchFound = new MatchRelationship();
 
 		for (MatchRelationship match : this.allMatchRelationships) {
 			if (scholarship.getName().equals(match.getScholarshipName())
 					&& currentUser.getName().equals(match.getStudentName())) {
 				matchExists = true;
-				if (match.getApplicationStatus().equals("in progress")) {
-					int qIndex = 1;
-					System.out.println("Looks like you've started your application. This is what you have currently:");
-					System.out.println();
-
-					for (Map.Entry<String, String> pair : match.getApplication().entrySet()) {
-						System.out.println("Question " + qIndex + ":");
-						System.out.println(pair.getKey());
-						System.out.println(pair.getValue());
-						qIndex++;
-					}
-
-					editApplication(match);
-				} else if (match.getApplicationStatus().equals("submitted")) {
-					System.out.println("You've already applied!");
-				} else {
-					int qIndex = 1;
-					System.out.println("Heres the application questions: ");
-					System.out.println();
-
-					for (Map.Entry<String, String> pair : match.getApplication().entrySet()) {
-						System.out.println("Question " + qIndex + ":");
-						System.out.println(pair.getKey());
-						qIndex++;
-					}
-
-					editApplication(match);
-				}
+				matchFound = match;
 			}
 
 		}
 
-		if (!matchExists) {
+		if (matchExists) {	
+			if (matchFound.getApplicationStatus().equals("in progress")) {
+				int qIndex = 1;
+				System.out.println("Looks like you've started your application. This is what you have currently:");
+				System.out.println();
+
+				for (Map.Entry<String, String> pair : matchFound.getApplication().entrySet()) {
+					System.out.println("Question " + qIndex + ":");
+					System.out.println(pair.getKey());
+					System.out.println(pair.getValue());
+					qIndex++;
+				}
+
+				editApplication(matchFound);
+			} else if (matchFound.getApplicationStatus().equals("submitted")) {
+				System.out.println("You've already applied!");
+			} else {
+				int qIndex = 1;
+				System.out.println("Heres the application questions: ");
+				System.out.println();
+
+				for (Map.Entry<String, String> pair : matchFound.getApplication().entrySet()) {
+					System.out.println("Question " + qIndex + ":");
+					System.out.println(pair.getKey());
+					qIndex++;
+				}
+
+				editApplication(matchFound);
+			}
+		} else {
 			MatchRelationship newMatch = produceNewMatch((StudentProfile) currentUser, scholarship);
 
 			int qIndex = 1;

@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class MatchRelationship {
     private StudentProfile student;
@@ -198,6 +199,29 @@ public class MatchRelationship {
         String fileText = String.join("\n", applicationList);
 
         return fileText;
+    }
+
+    public String getDetailsString() {
+        String info = "Scholarship Name: " + getScholarshipName() + "\n";
+        info += "Student Name: " + getStudentName() + "\n";
+
+        info += "Match percentage: " + String.format("%.1f", this.matchPercentage) + "%\n";
+
+        info += "Match Index: " + String.format("%.2f", this.matchIndex) + "\n";
+
+        info += "Current application: \n";
+
+        int qIndex = 1;
+        for (Map.Entry<String, String> pair : this.application.entrySet()) {
+            info += "Question " + qIndex + ": ";
+            info += pair.getKey() + "\n";
+            info += pair.getValue() + "\n";
+            qIndex++;
+        }
+
+        info += "Status of application: " + this.applicationStatus;
+
+        return info;
     }
 
 }

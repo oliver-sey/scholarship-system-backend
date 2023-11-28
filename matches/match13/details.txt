@@ -1,6 +1,6 @@
 Samantha Ohio
 Part Time Engineering Scholarship
-87
+50.0
 4.1
-submitted
-True
+not started
+true

@@ -212,20 +212,7 @@ public class Main {
 										}
 									}
 
-									int qIndex = 1;
-									System.out.printf("Match percentage: f%.1", matchSelected.getMatchPercentage());
-									System.out.println();
-									System.out.printf("Match Index: f%.2", matchSelected.getMatchIndex());
-									System.out.println();
-									System.out.println("Your current application: ");
-									System.out.println();
-
-									for (Map.Entry<String, String> pair : matchSelected.getApplication().entrySet()) {
-										System.out.println("Question " + qIndex + ":");
-										System.out.println(pair.getKey());
-										System.out.println(pair.getValue());
-										qIndex++;
-									}
+									System.out.println(matchSelected.getDetailsString());
 
 									System.out.println("\nPlease select an option:");
 									System.out.println("1 - Go back");
@@ -515,6 +502,7 @@ public class Main {
 				System.out.println("5 - View all archived scholarships");
 				System.out.println("6 - Award scholarship");
 				System.out.println("7 - Find and delete student profile");
+				System.out.println("8 - View and change a student/scholarship match");
 
 				System.out.println("0 - EXIT");
 
@@ -1012,6 +1000,41 @@ public class Main {
 					else {
 						System.out.println("Ok, will not delete the student. Exiting this menu");
 					}
+				} else if (userSelection == 8) {
+					MatchRelationship match = backend.getAllMatchRelationships().get(12);
+					float newPercentage = 0;
+
+					System.out.println();
+					System.out.println("Current match details: ");
+					System.out.println(match.getDetailsString());
+					System.out.println();
+
+					Boolean correctInput = false;
+					while (!correctInput) {
+						System.out.println("Enter the new match percentage: (0-100)");
+						newPercentage = scnr.nextFloat();
+						scnr.nextLine();
+
+						if (Float.compare(newPercentage, 0) >= 0 && Float.compare(newPercentage, 100) <= 0) {
+							correctInput = true;
+						}
+						else {
+							System.out.println("Enter value between 0 and 100.");
+						}
+					}
+
+					match.setMatchPercentage(newPercentage);
+					backend.updateMatchFile(match);
+
+					System.out.println();
+					System.out.println("New match details: ");
+					System.out.println(match.getDetailsString());
+					System.out.println();
+
+					System.out.println("Press enter to quit.");
+					scnr.nextLine();
+
+
 				}
 				else {
 					// should never get here
