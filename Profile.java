@@ -8,8 +8,6 @@ public abstract class Profile {
 	protected String firstName;
 	protected String lastName;
 	protected String username;
-	// TODO: is it ok that this is very low security storing the password as plain
-	// text??
 	protected String password;
 	protected int clearanceLevel;
 	protected int fileIndex;

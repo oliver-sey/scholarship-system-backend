@@ -115,7 +115,6 @@ public class StudentProfile extends Profile {
 	private String minor;
 	private boolean hasAMinor;
 
-	// TODO: what do we do for citizenship statuses?
 	private boolean isUSCitizen;
 
 	private double GPA;
@@ -130,7 +129,6 @@ public class StudentProfile extends Profile {
 
 	private String gender;
 
-	// TODO: what do we do for 'student demographics'?
 	private HashMap<String, String> extraDemographics = new HashMap<String, String>();
 
 	// for "type of student"
@@ -255,8 +253,6 @@ public class StudentProfile extends Profile {
 	}
 
 	// setters
-	// TODO: **** eventually add more to the setters to control what values can be
-	// set!
 
 	// a setter for int studentID
 	public void setStudentID(int inputStudentID) {
@@ -345,7 +341,6 @@ public class StudentProfile extends Profile {
 
 	// a setter for int curNumCredits
 	public void setCurNumCredits(int inputCurNumCredits) {
-		// TODO: what is a reasonable lower and upper limit for a number of credits?
 		if (inputCurNumCredits < 0 || inputCurNumCredits > 35) {
 			throw new IllegalArgumentException("curNumCredits must be >= 0 and <= 35");
 		}

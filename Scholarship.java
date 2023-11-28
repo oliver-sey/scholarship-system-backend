@@ -257,8 +257,6 @@ public class Scholarship {
 
     // setters
 
-    // TODO: ****check if all these auto-generated setters are good!!
-
     public void setName(String inputName) {
         this.name = inputName;
     }
@@ -276,7 +274,6 @@ public class Scholarship {
         this.applicants = applicants;
     }
 
-    // TODO: what to do for this???
     public void setDonor(DonorProfile donor) {
         this.donor = donor;
     }

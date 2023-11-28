@@ -529,7 +529,6 @@ public class BackendSystem {
 		return numSetToArchived;
 	}
 
-	// TODO: should this delete the files for the old scholarships??
 	/**
 	 * Deletes the objects for scholarships in allScholarships
 	 * that were due yesterday 5 years ago, or longer
@@ -701,7 +700,6 @@ public class BackendSystem {
 	}
 
 	// writes donor profile data to file
-	// TODO: finish updating this for donors
 	public void updateDonorProfileFile(DonorProfile donor) throws IOException {
 		String folderPath = "donors/donor" + String.valueOf(donor.getFileIndex());
 
@@ -1669,7 +1667,6 @@ public class BackendSystem {
 				}
 			}
 		} else if (userType.equalsIgnoreCase("FundSteward")) {
-			// TODO: implement this method for FundStewards!!
 			typeValid = true;
 			for (int i = 0; i < this.allFundStewards.size(); i++) {
 				if (allFundStewards.get(i).username.equalsIgnoreCase(enteredUsername)) {
@@ -1712,7 +1709,6 @@ public class BackendSystem {
 			// System.out.println("checkLoginDetails has not yet been implemented for
 			// FundStewards");
 		} else if (userType.equalsIgnoreCase("Staff")) {
-			// TODO: implement this method for Staffs!!
 			typeValid = true;
 			for (int i = 0; i < this.allStaff.size(); i++) {
 				if (allStaff.get(i).username.equalsIgnoreCase(enteredUsername)) {
@@ -2174,8 +2170,6 @@ public class BackendSystem {
 		}
 	}
 
-
-	// TODO: ****** test these q+a methods!
 
 	// Q&A with donor, passing in obj to create donor profile with appropriate
 	// associated information
@@ -2915,7 +2909,6 @@ public class BackendSystem {
 		int fileIndex = student.getFileIndex();
 
 		// make a File object for the folder associated with this student
-		// TODO: is this right?
 		File studentFolder = new File("students/student" + fileIndex);
 		deleteFileOrFolder(studentFolder);
 

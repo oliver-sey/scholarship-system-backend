@@ -59,7 +59,6 @@ public class DonorProfile extends Profile {
         return String.join("/n", scholarshipNames);
     }
 
-    // TODO: is this right?
     @Override
     public String toString() {
         String output = super.toString();

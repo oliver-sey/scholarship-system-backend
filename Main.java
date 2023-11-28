@@ -60,7 +60,7 @@ public class Main {
 		userChoice = scnr.nextInt();
 
 		if (userChoice == 2) {
-			backend.createNewProfile(); // TODO: INCOMPLETE- need to update profile lists when a new profile is added
+			backend.createNewProfile(); 
 		}
 
 		
@@ -395,7 +395,6 @@ public class Main {
 					//  we don't want to let the student keep attempting actions after their account was deleted
 					userSelection = 0;
 
-					// TODO: is this right?? 
 					// set the current user to null so it stops being the student that deleted themselves
 					backend.setCurrentUser(null);
 				}
@@ -424,7 +423,6 @@ public class Main {
 						System.out.println(scholarship.getBasicInfoString());
 					}
 				}
-				// TODO: is there more to do for this?
 				else if (userSelection == 2) {
 					backend.createScholarshipFromInput();
 				}
@@ -441,7 +439,6 @@ public class Main {
 		}
 		// else if (backend.getUserType().compareTo("fund steward") == 0) {
 		else if (backend.getCurrentUser() instanceof FundStewardProfile) {
-			// TODO: implement this!!
 			/*
 			 * -view archived/awarded scholarships
 			 * 
@@ -544,7 +541,6 @@ public class Main {
 
 					// call printAllScholarships, we want basic info and only unapproved
 					// scholarships
-					// TODO: would we want archived scholarships here?
 
 					// prompt them to approve one scholarship
 
@@ -1087,10 +1083,6 @@ public class Main {
 		Scholarship oldScholarship = backend.getAllScholarships().get(4);
 
 		System.out.println("Was due 5+ years ago: " + oldScholarship.due5PlusYearsAgo());
-		// TODO: eventually write code to archive scholarships past 5 years?? I guess
-		// it's not
-		// in the requirement but maybe we should add it
-
 		// and then here we could check if the archive status got changed to true
 
 	}
