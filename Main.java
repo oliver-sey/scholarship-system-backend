@@ -964,6 +964,7 @@ public class Main {
 															quitStudentBrowse = true;
 														} else if (inputAction == 2) {
 															backend.awardScholarship(backend.getOneScholarshipByFileIndex(studentFileIndex), backend.getOneStudentByFileIndex(studentFileIndex));
+															quitStudentBrowse = true;
 														}
 													}
 
