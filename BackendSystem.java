@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.BufferOverflowException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -1193,39 +1194,51 @@ public class BackendSystem {
 
 		if (inputCategory == 1) {
 
-			double percentage;
-			double max1 = 0.0;
-			double max2 = 0.0;
-			double max3 = 0.0;
-			Scholarship schol1 = new Scholarship();
-			Scholarship schol2 = new Scholarship();
-			Scholarship schol3 = new Scholarship();
-
+			Boolean foundExact = false;
 			for (Scholarship scholarship : scholarshipsToSearch) {
-				percentage = stringSimilarity(scholarship.getName(), inputSearchValue);
-
-				if (percentage - max1 > 0.00001) {
-					schol3 = schol2;
-					max3 = max2;
-					schol2 = schol1;
-					max2 = max1;
-					schol1 = scholarship;
-					max1 = percentage;
-				} else if (percentage - max2 > 0.00001) {
-					schol3 = schol2;
-					max3 = max2;
-					schol2 = scholarship;
-					max2 = percentage;
-				} else if (percentage - max3 > 0.00001) {
-					schol3 = scholarship;
-					max3 = percentage;
+				if (inputSearchValue.equalsIgnoreCase(scholarship.getName())) {
+					foundExact = true;
+					scholarshipsFound.add(scholarship);
 				}
-
 			}
 
-			scholarshipsFound.add(schol1);
-			scholarshipsFound.add(schol2);
-			scholarshipsFound.add(schol3);
+			if (!foundExact) {
+				
+				double percentage;
+				double max1 = 0.0;
+				double max2 = 0.0;
+				double max3 = 0.0;
+				Scholarship schol1 = new Scholarship();
+				Scholarship schol2 = new Scholarship();
+				Scholarship schol3 = new Scholarship();
+
+				for (Scholarship scholarship : scholarshipsToSearch) {
+					percentage = stringSimilarity(scholarship.getName(), inputSearchValue);
+
+					if (percentage - max1 > 0.00001) {
+						schol3 = schol2;
+						max3 = max2;
+						schol2 = schol1;
+						max2 = max1;
+						schol1 = scholarship;
+						max1 = percentage;
+					} else if (percentage - max2 > 0.00001) {
+						schol3 = schol2;
+						max3 = max2;
+						schol2 = scholarship;
+						max2 = percentage;
+					} else if (percentage - max3 > 0.00001) {
+						schol3 = scholarship;
+						max3 = percentage;
+					}
+
+				}
+
+				scholarshipsFound.add(schol1);
+				scholarshipsFound.add(schol2);
+				scholarshipsFound.add(schol3);
+			}
+
 
 		} else if (inputCategory == 2) {
 			// retrieves donor name from each scholarship
