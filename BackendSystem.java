@@ -2588,7 +2588,7 @@ public class BackendSystem {
 				requirements.add("receivesFunding");
 			}
 
-			System.out.println("Enter the allowed value:");
+			System.out.println("Enter the allowed value (booleans should be 'true' or 'false'):");
 			String value = Main.scnr.nextLine();
 			requirements.add(value);
 		} while (userSelection != -1);

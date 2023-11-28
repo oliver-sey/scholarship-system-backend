@@ -294,7 +294,7 @@ public class Main {
 						int searchIndex = scnr.nextInt();
 						scnr.nextLine();
 
-						System.out.print("Enter the value to search: ");
+						System.out.print("Enter the value to search (booleans should be 'true' or 'false'): ");
 						String searchValue = scnr.nextLine();
 
 						// uses search scholarship method to return search results
