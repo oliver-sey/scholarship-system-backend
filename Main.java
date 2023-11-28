@@ -514,6 +514,7 @@ public class Main {
 				System.out.println("4 - View all active scholarships");
 				System.out.println("5 - View all archived scholarships");
 				System.out.println("6 - Award scholarship");
+				System.out.println("7 - Find and delete student profile");
 
 				System.out.println("0 - EXIT");
 
@@ -979,7 +980,10 @@ public class Main {
 						}
 					}
 
-				} else {
+				} else if (userSelection == 7) {
+
+				}
+				else {
 					// should never get here
 					System.out.println("Invalid user type in userOptions");
 				}

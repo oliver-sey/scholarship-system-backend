@@ -2352,8 +2352,6 @@ public class BackendSystem {
 
 	// Q&A with student, passing in obj to create student profile with appropriate
 	// associated information
-	// TODO: (MiLee) basic outline of same Q&A as other profiles, not sure if we
-	// need to expand with more values?
 	public StudentProfile getStudentFromInput() {
 
 		StudentProfile StudentObj = new StudentProfile();
@@ -2608,8 +2606,22 @@ public class BackendSystem {
 			application.add(applicationDetail);
 		}
 
-		System.out.println("Enter the due date (in the format YYYY-MM-DD):");
-		String dateDueString = Main.scnr.nextLine();
+		Boolean dayIsValid = false;
+		String dateDueString = "";
+
+		while (!dayIsValid) {
+			System.out.println("Enter the due date (in the format YYYY-MM-DD):");
+			dateDueString = Main.scnr.nextLine();
+			LocalDate dueDate = LocalDate.parse(dateDueString);
+
+			if (dueDate.isBefore(LocalDate.now()) || dueDate.isEqual(LocalDate.now())){
+				System.out.println("Due date must be after today.");
+			}
+			else {
+				dayIsValid = true;
+			}
+		}
+		
 
 		// get the next available Scholarship file index
 		int fileIndex = findNextFileIndex("scholarship");
@@ -2905,5 +2917,35 @@ public class BackendSystem {
 		deleteFileOrFolder(studentFolder);
 
 		allStudents.remove(student);
+	}
+
+	//function to delete an AdminProfile object and the associated files
+	public void deleteAdminProfile(AdminProfile admin){
+		//delete the folder and files associated with the object admin
+		int fileIndex = admin.getFileIndex();
+
+		//create a File object for the folder associated with this admin
+		File adminFolder = new File("admins/admin"+ fileIndex);
+
+		//call the deleteFileOrFolder function to delete adminFile object
+		deleteFileOrFolder(adminFolder);
+		
+		//remove admin object
+		allAdmins.remove(admin);
+	}
+
+	public void adminDeleteStudentProfile(StudentProfile student){
+		char choice;
+		System.out.println("Would you like to delete student profile? (y/n)");
+		choice = Main.scnr.next().charAt(0);
+		if(choice == 'y'){
+			int fileIndex = student.getFileIndex();
+			File studentFolder = new File("students/student"+fileIndex);
+			deleteFileOrFolder(studentFolder);
+			allStudents.remove(student);
+		}
+		//if choice == 'n', do nothing
+		else{
+		}
 	}
 }
