@@ -305,7 +305,7 @@ public class Main {
 							// offers all options if scholarships are found
 							else {
 								for (Scholarship schol : scholarshipsFound) {
-									System.out.println(schol.getBasicInfoString());
+									System.out.println(schol.getBasicInfoString() + "\n");
 								}
 
 								System.out.println("What would you like to do:");
@@ -457,7 +457,7 @@ public class Main {
 						int userAction = scnr.nextInt();
 						scnr.nextLine();
 
-						// If the user wants to quir quitBrowse needs to be false
+						// If the user wants to quit, quitBrowse needs to be false
 						if (userAction == 1) {
 							quitBrowse = false;
 						} else if (userAction == 2) {
@@ -592,7 +592,7 @@ public class Main {
 										String donorChoice = scnr.nextLine();
 
 										if (donorChoice.equalsIgnoreCase("y")) {
-											File file = new File("scholarships/sholarship" + fileIndex);
+											File file = new File("scholarships/scholarship" + fileIndex);
 											file.delete();
 
 											int index = backend.getAllScholarships()
@@ -601,7 +601,7 @@ public class Main {
 
 											System.out.println("Scholarship deleted.");
 										} else {
-											System.out.println("Action dissmissed.");
+											System.out.println("Action dismissed.");
 										}
 
 									}
@@ -821,7 +821,7 @@ public class Main {
 					boolean keepGoing = true;
 
 					do {
-						//gives the option to view a scholarship more indepth
+						//gives the option to view a scholarship more in-depth
 						System.out.println("What would you like to do:");
 						System.out.println("1 - Go back");
 						System.out.println("2 - view one scholarship in more detail");
@@ -845,7 +845,7 @@ public class Main {
 								System.out.print("Please enter the file index of the scholarship you want to view: ");
 								fileIndex = scnr.nextInt();
 								scnr.nextLine();
-								//if the user does not select a valid scholarship reinquires user
+								//if the user does not select a valid scholarship re-inquires user
 								if (backend.getOneScholarshipByFileIndex(fileIndex) == null) {
 									System.out.println("The scholarship with file index " + fileIndex + " could not be found.");
 									System.out.println("Please enter a valid index.");

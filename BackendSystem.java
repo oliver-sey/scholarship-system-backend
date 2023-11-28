@@ -1503,8 +1503,8 @@ public class BackendSystem {
 
 			// possible return values from checkLoginDetails():
 			// 0 if the username and password matched,
-			// 1 if the password was wrong and they loose an attempt
-			// 2 if a wrong value was entered but they dont loose an attempt
+			// 1 if the password was wrong and they lose an attempt
+			// 2 if a wrong value was entered but they don't lose an attempt
 			returnVal = checkLoginDetails(userType, username, password);
 
 			if (returnVal == 0) {
@@ -2469,7 +2469,7 @@ public class BackendSystem {
 		personalStatement = Main.scnr.nextLine();
 		StudentObj.setPersonalStatement(personalStatement);
 
-		System.out.println("Do you already recieve funding? (y/n)");
+		System.out.println("Do you already receive funding? (y/n)");
 		boolAnswer7 = Main.scnr.next().charAt(0);
 		Main.scnr.nextLine();
 		if (boolAnswer7 == 'y' || boolAnswer7 == 'Y') {
