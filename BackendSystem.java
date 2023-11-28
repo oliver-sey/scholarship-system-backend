@@ -2630,28 +2630,34 @@ public class BackendSystem {
 
 		// Create a new Scholarship object
 		// have to have this up here so we can print the details
-		Scholarship scholarship = new Scholarship(name, description, donor, awardAmount, requirements, application,
+		Scholarship newScholarship = new Scholarship(name, description, donor, awardAmount, requirements, application,
 				dateDueString, fileIndex);
 
 		System.out.println("Here is the scholarship you have created:");
-		System.out.println(scholarship.getAllInfoString());
+		System.out.println(newScholarship.getAllInfoString());
 
 		System.out.print("\nDo you want to add this new scholarship to the system? (y/n): ");
 		String userConfirm = Main.scnr.nextLine();
 
 		if (userConfirm.equals("y")) {
 			// add the scholarship to the all scholarships list
-			allScholarships.add(scholarship);
+			allScholarships.add(newScholarship);
 
 			// print it to a new file
-			storeNewScholarship(scholarship);
+			storeNewScholarship(newScholarship);
 
 			// add the scholarship to the donor's list of scholarships
-			((DonorProfile) getCurrentUser()).addScholarship(scholarship);
+			((DonorProfile) getCurrentUser()).addScholarship(newScholarship);
 
 			System.out.println("Here are all your scholarships (approved or not, but ignoring archived): ");
-			System.out.println(((DonorProfile) getCurrentUser()).getScholarshipFileText());
-			return scholarship;
+			
+			// loop through and print all scholarships connected to the donor, that are not archived
+			for (Scholarship scholarship : ((DonorProfile) getCurrentUser()).getScholarships()) {
+				if (!scholarship.getIsArchived()) {
+					System.out.println(scholarship.getBasicInfoString());
+				}
+			}
+			return newScholarship;
 		}
 		// else do nothing??
 
@@ -2913,5 +2919,24 @@ public class BackendSystem {
 		deleteFileOrFolder(studentFolder);
 
 		allStudents.remove(student);
+	}
+
+	//function to delete an AdminProfile object and the associated files
+	public void deleteAdminProfile(AdminProfile admin){
+		//delete the folder and files associated with the object admin
+		int fileIndex = admin.getFileIndex();
+
+		//create a File object for the folder associated with this admin
+		File adminFolder = new File("admins/admin"+ fileIndex);
+
+		//call the deleteFileOrFolder function to delete adminFile object
+		deleteFileOrFolder(adminFolder);
+		
+		//remove admin object
+		allAdmins.remove(admin);
+	}
+
+	public void adminDeleteStudentProfile(StudentProfile student){
+		
 	}
 }
