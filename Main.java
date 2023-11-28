@@ -400,6 +400,7 @@ public class Main {
 				}
 
 			} while (userSelection != 0);
+			scnr.nextLine();
 		}
 		// else if (backend.getUserType().compareTo("donor") == 0) {
 		else if (backend.getCurrentUser() instanceof DonorProfile) {
@@ -427,6 +428,7 @@ public class Main {
 					backend.createScholarshipFromInput();
 				}
 			} while (userSelection != 0);
+			scnr.nextLine();
 		}
 		// else if (backend.getUserType().compareTo("staff") == 0) {
 		else if (backend.getCurrentUser() instanceof StaffProfile) {
@@ -1062,11 +1064,12 @@ public class Main {
 
 				}
 				else {
-					// should never get here
-					System.out.println("Invalid user type in userOptions");
+					
 				}
 
 			} while (userSelection != 0);
+
+			scnr.nextLine();
 		}
 	} 
 		
