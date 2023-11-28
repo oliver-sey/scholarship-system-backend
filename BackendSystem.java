@@ -1503,8 +1503,8 @@ public class BackendSystem {
 
 			// possible return values from checkLoginDetails():
 			// 0 if the username and password matched,
-			// 1 if the password was wrong and they loose an attempt
-			// 2 if a wrong value was entered but they dont loose an attempt
+			// 1 if the password was wrong and they lose an attempt
+			// 2 if a wrong value was entered but they don't lose an attempt
 			returnVal = checkLoginDetails(userType, username, password);
 
 			if (returnVal == 0) {
@@ -2469,7 +2469,7 @@ public class BackendSystem {
 		personalStatement = Main.scnr.nextLine();
 		StudentObj.setPersonalStatement(personalStatement);
 
-		System.out.println("Do you already recieve funding? (y/n)");
+		System.out.println("Do you already receive funding? (y/n)");
 		boolAnswer7 = Main.scnr.next().charAt(0);
 		Main.scnr.nextLine();
 		if (boolAnswer7 == 'y' || boolAnswer7 == 'Y') {
@@ -2932,26 +2932,5 @@ public class BackendSystem {
 		
 		//remove admin object
 		allAdmins.remove(admin);
-	}
-
-	//function to allow admin access to delete an StudentProfile object and the associated file
-	public void adminDeleteStudentProfile(StudentProfile student){
-		char choice;
-		//display text asking user if they want to delete student profile
-		System.out.println("Would you like to delete student profile? (y/n)");
-		
-		//scan for users choice
-		choice = Main.scnr.next().charAt(0);
-		
-		//if users choice equals 'y', delete the folder and files associated with the object student and remove it
-		if(choice == 'y'){
-			int fileIndex = student.getFileIndex();
-			File studentFolder = new File("students/student"+fileIndex);
-			deleteFileOrFolder(studentFolder);
-			allStudents.remove(student);
-		}
-		//if choice == 'n' or anything else, do nothing
-		else{
-		}
 	}
 }

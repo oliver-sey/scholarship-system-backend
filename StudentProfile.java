@@ -240,7 +240,7 @@ public class StudentProfile extends Profile {
 		return this.matchObjects;
 	}
 
-	//a getter for awardsRecieved
+	//a getter for awardsReceived
 	public ArrayList<Scholarship> getAwardsReceived() {
 		return this.awardsReceived;
 	}
