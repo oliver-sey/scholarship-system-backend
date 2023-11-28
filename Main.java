@@ -658,7 +658,7 @@ public class Main {
 									System.out
 											.println(backend.getOneStudentByFileIndex(fileIndex).getAllDetailsString());
 
-									System.out.println("\nPlease press enter when you'd return to the menu");
+									System.out.println("\nPlease press enter when you would like to return to the menu");
 									scnr.nextLine();
 								}
 
@@ -752,7 +752,7 @@ public class Main {
 										System.out.println(
 												backend.getOneStudentByFileIndex(fileIndex).getAllDetailsString());
 
-										System.out.println("\nPlease press enter when you'd return to the menu");
+										System.out.println("\nPlease press enter when you would like to return to the menu");
 										scnr.nextLine();
 									}
 
