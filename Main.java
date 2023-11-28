@@ -592,8 +592,13 @@ public class Main {
 										String donorChoice = scnr.nextLine();
 
 										if (donorChoice.equalsIgnoreCase("y")) {
-											File file = new File("scholarships/scholarship" + fileIndex);
-											file.delete();
+											File folder = new File("scholarships/scholarship" + fileIndex);
+
+											for (File child : folder.listFiles()) {
+												child.delete();
+											}
+											
+											folder.delete();
 
 											int index = backend.getAllScholarships()
 													.indexOf(backend.getOneScholarshipByFileIndex(fileIndex));
