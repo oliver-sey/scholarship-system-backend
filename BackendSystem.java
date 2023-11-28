@@ -2801,7 +2801,7 @@ public class BackendSystem {
 			}
 
 			updateMatchFile(match);
-			this.allMatchRelationships.add(match);
+			
 		}
 	}
 
