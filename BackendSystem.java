@@ -1255,7 +1255,7 @@ public class BackendSystem {
 		} else if (inputCategory == 2) {
 			// retrieves donor name from each scholarship
 			for (Scholarship scholarship : scholarshipsToSearch) {
-				if (inputSearchValue.compareTo(scholarship.getDonorName()) == 0) {
+				if (inputSearchValue.equalsIgnoreCase(scholarship.getDonorName())) {
 					scholarshipsFound.add(scholarship);
 				}
 			}
